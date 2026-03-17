@@ -6,4 +6,4 @@ categories: post, test
 tags:
 ---
 
-# hello, world! :grey_heart:
+# hello, world!
