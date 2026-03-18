@@ -2,24 +2,24 @@
   <h3 style="margin-top: 0; color: #00d4ff;">DLSS 5 Research Report</h3>
   <p style="color: #ccc; font-size: 0.95rem;">March 17, 2026 – AI-powered graphics deep dive</p>
 
-  <!-- Tiny iframe preview (scrollable, no controls) -->
-  <a href="/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" target="_blank" style="text-decoration: none;">
+  <!-- Clickable preview iframe -->
+  <a href="/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" target="_blank" style="text-decoration: none; display: block;">
     <iframe src="/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf#view=FitH" 
             width="100%" height="320" 
             style="border: none; border-radius: 8px; pointer-events: none;"></iframe>
   </a>
 
   <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: center;">
-    <!-- Open full -->
+    <!-- Open full in new tab -->
     <a href="/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" 
        target="_blank" 
        style="padding: 0.6rem 1.2rem; background: #00d4ff; color: black; border-radius: 6px; text-decoration: none; font-weight: bold;">
       Open Full PDF
     </a>
     
-    <!-- Download -->
+    <!-- Force download -->
     <a href="/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" 
-       download 
+       download="DLSS_5_Research_Report_March_17_2026.pdf"
        style="padding: 0.6rem 1.2rem; background: #444; color: white; border-radius: 6px; text-decoration: none;">
       Download
     </a>
