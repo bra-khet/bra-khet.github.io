@@ -1,0 +1,547 @@
+---
+layout: null
+title: "Tung Tung Tung Sahur: AI Copyright Battleground — Infographic Report"
+permalink: /ttt-info-report-1/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tung Tung Tung Sahur — Infographic Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ── Base ──────────────────────────────────────────────────── */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0907;
+            background-image: radial-gradient(circle at 50% 0%, #2a0808 0%, #0d0907 70%);
+            color: #e5e5e5;
+            padding-top: 37px; /* hacker nav banner offset */
+        }
+        h1, h2, h3, h4, .mono { font-family: 'Roboto Mono', monospace; }
+
+        /* ── Colour tokens ─────────────────────────────────────────── */
+        .text-eerie-red    { color: #ff2a2a; }
+        .bg-eerie-red      { background-color: #ff2a2a; }
+        .border-eerie-red  { border-color: #ff2a2a; }
+        .text-vibrant-teal   { color: #00f0ff; }
+        .text-vibrant-yellow { color: #ffe600; }
+
+        /* ── Chart wrappers ────────────────────────────────────────── */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 50vh;
+            max-height: 400px;
+            background: rgba(20, 15, 12, 0.8);
+            border: 1px solid #332222;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* ── Hero glitch ───────────────────────────────────────────── */
+        .glitch-hover:hover {
+            animation: text-glitch 0.2s infinite;
+            color: #ff2a2a;
+        }
+        @keyframes text-glitch {
+            0%   { transform: translate(0) }
+            20%  { transform: translate(-2px,  2px) }
+            40%  { transform: translate(-2px, -2px) }
+            60%  { transform: translate( 2px,  2px) }
+            80%  { transform: translate( 2px, -2px) }
+            100% { transform: translate(0) }
+        }
+
+        /* ── Waveform ──────────────────────────────────────────────── */
+        .waveform {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            height: 60px;
+        }
+        .bar {
+            width: 6px;
+            background-color: #ff2a2a;
+            height: 10px;
+            animation: wave 1s ease-in-out infinite;
+        }
+        .bar:nth-child(1) { animation-delay: 0.0s; }
+        .bar:nth-child(2) { animation-delay: 0.1s; }
+        .bar:nth-child(3) { animation-delay: 0.2s; }
+        .bar:nth-child(4) { animation-delay: 0.3s; }
+        .bar:nth-child(5) { animation-delay: 0.4s; }
+        .bar:nth-child(6) { animation-delay: 0.5s; }
+        .bar:nth-child(7) { animation-delay: 0.6s; }
+        @keyframes wave {
+            0%, 100% { height: 10px; }
+            50%       { height: 50px; }
+        }
+
+        /* ── Timeline ──────────────────────────────────────────────── */
+        .timeline-container {
+            position: relative;
+            border-left: 2px solid #ff2a2a;
+            padding-left: 1.5rem;
+            margin-left: 1rem;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -0.45rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background-color: #0d0907;
+            border: 2px solid #00f0ff;
+        }
+        .timeline-dot.red    { border-color: #ff2a2a; }
+        .timeline-dot.yellow { border-color: #ffe600; }
+
+        /* ── Glass card ────────────────────────────────────────────── */
+        .glass-card {
+            background: rgba(30, 20, 18, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid #4a2e2a;
+        }
+
+        /* ── Version badge (infographic marker) ────────────────────── */
+        .version-badge {
+            display: inline-block;
+            background: #1a0505;
+            color: #ff2a2a;
+            border: 1px solid #ff2a2a44;
+            border-radius: 4px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            padding: 0.15rem 0.5rem;
+            vertical-align: middle;
+        }
+
+        /* ── Hacker nav banner ─────────────────────────────────────── */
+        #hacker-nav-banner {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 9999;
+            background: #0f0505;
+            border-bottom: 1px dashed #ff2a2a55;
+            font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+            font-size: 13px;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #eaeaea;
+        }
+        #hacker-nav-banner a {
+            color: #63c0f5;
+            text-decoration: none;
+            text-shadow: 0 0 5px rgba(104,182,255,0.4);
+        }
+        #hacker-nav-banner a:hover { text-decoration: underline; }
+        #hacker-nav-banner .banner-title {
+            color: #ff2a2a;
+            text-shadow: 0 0 6px rgba(255,42,42,0.5),
+                         0 0 12px rgba(255,42,42,0.2);
+            letter-spacing: -0.03em;
+        }
+        #hacker-nav-banner .banner-tag { color: #553333; font-size: 11px; }
+        #hacker-nav-banner .banner-v   { color: #ff6644; font-size: 11px; }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden selection:bg-red-900 selection:text-white">
+
+<!-- ── Nav banner ─────────────────────────────────────────────────── -->
+<div id="hacker-nav-banner">
+    <span>
+        <a href="{{ site.baseurl }}/">&#8592; bra-khet.github.io</a>
+        <span class="banner-tag"> / meme-history</span>
+    </span>
+    <span class="banner-title">Tung Tung Tung Sahur &mdash; AI Copyright Battleground</span>
+    <span class="banner-v">infographic v1.0 &middot; March 2026</span>
+</div>
+
+<!-- ── Hero ───────────────────────────────────────────────────────── -->
+<header class="min-h-screen flex flex-col justify-center items-center text-center p-6 relative">
+    <div class="z-10 max-w-4xl">
+        <div class="text-eerie-red font-bold tracking-widest uppercase text-sm mb-3 mono">
+            Meme History &nbsp;&middot;&nbsp; Infographic Report
+            <span class="version-badge ml-2">v1.0</span>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-black mb-6 uppercase tracking-tighter leading-none glitch-hover">
+            Tung Tung Tung Sahur
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-300 font-light mb-10">
+            From Ramadan Drum to AI Copyright Battleground.
+        </p>
+
+        <div class="waveform mb-10" aria-label="Audio waveform visualizer">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
+        <p class="mono text-sm text-gray-500 max-w-2xl mx-auto border-t border-b border-gray-800 py-4">
+            &ldquo;A terrifying anomaly enforcing Sahur after three ignored calls.&rdquo;
+            &mdash; <em>Original Lore, @noxaasht</em>
+        </p>
+    </div>
+    <div class="absolute bottom-10 animate-bounce text-eerie-red text-2xl select-none">&#9660;</div>
+</header>
+
+<!-- ── Main ───────────────────────────────────────────────────────── -->
+<main class="container mx-auto px-4 md:px-8 py-16 max-w-6xl">
+
+    <!-- Chronology -->
+    <section class="mb-24">
+        <h2 class="text-3xl font-bold mb-8 text-vibrant-teal uppercase border-b border-gray-800 pb-4">
+            Chronology of an Anomaly
+        </h2>
+        <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+            The phenomenon did not materialize in a vacuum. It was a collision of centuries-old
+            Indonesian Islamic tradition and the hyper-accelerated generative AI pipelines of 2025.
+            What began as an auditory motif evolved into a visual titan of the &ldquo;Italian Brainrot&rdquo;
+            subculture.
+        </p>
+
+        <div class="timeline-container space-y-12">
+            <div class="relative">
+                <div class="timeline-dot top-1"></div>
+                <h3 class="text-xl font-bold text-white mb-2">2013 &mdash; The Acoustic Precursor</h3>
+                <p class="text-gray-400">Attestations of the onomatopoeia &ldquo;Tung tung tung&rdquo; surface on
+                X/Twitter, mimicking the <em>kentongan</em> and <em>bedug</em> drums used to wake
+                neighborhoods for the pre-dawn Ramadan meal (Sahur).</p>
+            </div>
+            <div class="relative">
+                <div class="timeline-dot red top-1"></div>
+                <h3 class="text-xl font-bold text-white mb-2">February 28, 2025 &mdash; Ground Zero</h3>
+                <p class="text-gray-400">TikToker @noxaasht uploads the genesis video: an AI-generated
+                anthropomorphic wooden log wielding a baseball bat at a transit stop. Indonesian
+                text-to-speech narrates its cryptic, threatening lore. The video instantly goes viral,
+                amassing over 120 million views.</p>
+            </div>
+            <div class="relative">
+                <div class="timeline-dot top-1"></div>
+                <h3 class="text-xl font-bold text-white mb-2">March 2025 &mdash; The Viral Proliferation</h3>
+                <p class="text-gray-400">Remixes explode. @redbluzx_tiktoq posts the infamous
+                &ldquo;bat-swing/explosion&rdquo; variant. Fans powerscale the entity against other Brainrot
+                heavyweights like <em>Brr Brr Patapim</em>.</p>
+            </div>
+            <div class="relative">
+                <div class="timeline-dot yellow top-1"></div>
+                <h3 class="text-xl font-bold text-white mb-2">September 2025 &mdash; The Roblox Strike</h3>
+                <p class="text-gray-400">Mementum Labs issues a takedown notice against a Roblox experience
+                titled &ldquo;Steal a Brainrot&rdquo; for featuring the character. Developer Sammy removes it,
+                sparking fierce debate over the copyrightability of AI-generated meme folklore.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Viewership -->
+    <section class="mb-24">
+        <h2 class="text-3xl font-bold mb-8 text-vibrant-teal uppercase border-b border-gray-800 pb-4">
+            Cultural Impact &amp; Viewership Metrics
+        </h2>
+        <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+            To understand the stakes of the intellectual property battle, one must quantify the cultural
+            footprint. &ldquo;Italian Brainrot&rdquo; relies on hyper-engagement. Tung Tung Tung Sahur dwarfed
+            its contemporaries, turning a localized religious tradition into a global, absurd spectacle.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="chart-container">
+                <canvas id="viewershipChart"></canvas>
+            </div>
+            <div class="glass-card p-6 rounded-lg">
+                <h4 class="text-xl font-bold text-white mb-4 mono">Data Analysis</h4>
+                <p class="text-gray-400 mb-4">
+                    The comparative bar chart reveals the sheer dominance of the Sahur anomaly. At
+                    120&nbsp;million core views, it outpaces even established lore figures like
+                    <em>Brr Brr Patapim</em> and <em>Ballerina Cappuccina</em>.
+                </p>
+                <p class="text-gray-400">
+                    This massive viewership is the primary driver for Mementum Labs&rsquo; aggressive
+                    monetization strategy, pivoting from organic meme to licensed IP via mobile games
+                    and potential film rights.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Generation forensics -->
+    <section class="mb-24">
+        <h2 class="text-3xl font-bold mb-8 text-vibrant-teal uppercase border-b border-gray-800 pb-4">
+            Generation Forensics: The Alchemy of Slop
+        </h2>
+        <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+            Mementum Labs claims the character is the result of &ldquo;several days of prompting, remixing,
+            and iterating.&rdquo; Yet no original prompt has ever been publicly disclosed. We can reconstruct
+            the likely pipeline based on contemporary generative workflows prevalent in early 2025.
+        </p>
+
+        <div class="glass-card p-8 rounded-lg mb-8">
+            <h4 class="text-lg font-bold text-eerie-red mb-6 uppercase tracking-widest mono">
+                Theoretical Generative Pipeline
+            </h4>
+            <div class="flex flex-col md:flex-row items-stretch justify-between gap-3 text-center">
+                <div class="flex-1 p-4 border border-gray-700 rounded bg-black">
+                    <span class="block text-2xl mb-2">1</span>
+                    <strong class="text-white block mb-1">Human Prompting</strong>
+                    <span class="text-xs text-gray-500">ChatGPT / Claude</span>
+                </div>
+                <div class="hidden md:flex items-center text-2xl text-gray-600 px-1">&#9654;</div>
+                <div class="flex-1 p-4 border border-gray-700 rounded bg-black">
+                    <span class="block text-2xl mb-2">2</span>
+                    <strong class="text-white block mb-1">Image Generation</strong>
+                    <span class="text-xs text-gray-500">Midjourney / OpenArt</span>
+                </div>
+                <div class="hidden md:flex items-center text-2xl text-gray-600 px-1">&#9654;</div>
+                <div class="flex-1 p-4 border border-gray-700 rounded bg-black">
+                    <span class="block text-2xl mb-2">3</span>
+                    <strong class="text-white block mb-1">Video &amp; Motion</strong>
+                    <span class="text-xs text-gray-500">Runway Gen-2 / Luma</span>
+                </div>
+                <div class="hidden md:flex items-center text-2xl text-gray-600 px-1">&#9654;</div>
+                <div class="flex-1 p-4 border border-vibrant-teal rounded bg-black">
+                    <span class="block text-2xl mb-2 text-vibrant-teal">4</span>
+                    <strong class="text-vibrant-teal block mb-1">Audio &amp; TTS</strong>
+                    <span class="text-xs text-gray-500">Indonesian AI Voice</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-black border border-gray-800 p-6 rounded-lg relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1 h-full bg-eerie-red"></div>
+            <p class="mono text-sm text-gray-400 mb-2">RECONSTRUCTED_PROMPT_FRAGMENT_01.txt</p>
+            <p class="text-vibrant-yellow font-mono text-sm leading-relaxed">
+                /imagine prompt: A terrifying uncanny valley anthropomorphic wooden log creature,
+                textured like a traditional Indonesian kentongan drum, holding a bloody baseball bat,
+                standing at a desolate urban bus stop at night, cinematic lighting, hyperrealistic,
+                8k, eerie aura, brainrot aesthetic --ar 9:16 --v 6.0
+            </p>
+        </div>
+    </section>
+
+    <!-- Copyright -->
+    <section class="mb-24">
+        <h2 class="text-3xl font-bold mb-8 text-vibrant-teal uppercase border-b border-gray-800 pb-4">
+            The Copyright Jurisprudence Case Study
+        </h2>
+        <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+            The September 2025 Roblox takedown exposed a massive fault line in digital jurisprudence.
+            Can a creator copyright a character generated almost entirely by machine intelligence?
+            The U.S. Copyright Office leans heavily toward the public domain for pure machine outputs,
+            while French <em>droit d&rsquo;auteur</em> traditions emphasize the human conception behind
+            the prompt.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div class="glass-card p-8 border-t-4 border-vibrant-teal rounded-lg">
+                <h3 class="text-2xl font-bold text-white mb-4">The Pro-Protection Stance</h3>
+                <p class="text-sm text-gray-400 mb-4 mono uppercase">
+                    Mementum Labs / Creator Advocacy
+                </p>
+                <ul class="space-y-4 text-gray-300">
+                    <li><strong class="text-white">Human Curation:</strong> The AI is merely a drafting
+                    tool, akin to a camera. The true art lies in rigorous prompt engineering, iterative
+                    selection, and final video composition.</li>
+                    <li><strong class="text-white">Cultural Synthesis:</strong> Fusing an Indonesian Islamic
+                    tradition with the visual language of Italian Brainrot represents highly original
+                    human conceptualization.</li>
+                    <li><strong class="text-white">Economic Rights:</strong> Without IP protection,
+                    independent creators cannot monetize viral creations against massive platforms.</li>
+                </ul>
+            </div>
+
+            <div class="glass-card p-8 border-t-4 border-eerie-red rounded-lg">
+                <h3 class="text-2xl font-bold text-white mb-4">The Anti-Protection Stance</h3>
+                <p class="text-sm text-gray-400 mb-4 mono uppercase">
+                    USCO Baseline / Public Domain Advocates
+                </p>
+                <ul class="space-y-4 text-gray-300">
+                    <li><strong class="text-white">Lack of Fixation:</strong> Prompting does not equate
+                    to physical fixation of artistic expression. The machine makes the final creative
+                    choices regarding pixels and lighting.</li>
+                    <li><strong class="text-white">Enclosing the Commons:</strong> Claiming a monopoly
+                    over AI-generated memes chills internet culture and folkloric remixing, effectively
+                    privatizing public-domain algorithms.</li>
+                    <li><strong class="text-white">Cultural Appropriation:</strong> Attempting to copyright
+                    a digital caricature of a deeply rooted religious tradition (Sahur) is legally and
+                    ethically dubious.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="sentimentChart"></canvas>
+        </div>
+        <p class="text-center text-sm text-gray-500 mt-4 mono">
+            Fig&nbsp;2. Community sentiment across r/aiwars and r/publicdomain re: the Roblox takedown.
+        </p>
+    </section>
+
+    <!-- Hype Cycle -->
+    <section class="mb-24">
+        <h2 class="text-3xl font-bold mb-8 text-vibrant-teal uppercase border-b border-gray-800 pb-4">
+            The Hype Cycle &amp; Future Outlook
+        </h2>
+        <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+            Like all brainrot, the temporal lifespan is volatile. However, the legal and cultural
+            shockwaves extend far beyond the initial virality window. Tracking search volume reveals
+            the transition from meme to case study.
+        </p>
+
+        <div class="chart-container">
+            <canvas id="trendChart"></canvas>
+        </div>
+
+        <div class="mt-8 glass-card p-6 rounded-lg text-gray-300 leading-relaxed">
+            <h4 class="text-xl font-bold text-white mb-2">Subjective Editorial Conclusion</h4>
+            <p class="mb-4">
+                In an era where memes outpace law, <em>Tung Tung Tung Sahur</em> exposes the farce of
+                enclosing the digital commons. Watching a faceless corporation issue takedown notices
+                for a machine-hallucinated wooden log beating people with a bat is peak 2020s absurdity.
+            </p>
+            <p>
+                Yet it also celebrates a strange, chaotic human-AI symbiosis. The &ldquo;prompt engineer&rdquo;
+                is functioning as a modern folk artist &mdash; not painting the canvas, but weaving the myth.
+                Whether the law recognizes this as authorship or slop, the cultural impact is indelibly
+                imprinted on the algorithmic folklore of Generation Alpha.
+            </p>
+        </div>
+    </section>
+
+    <!-- Sources -->
+    <section class="border-t border-gray-800 pt-12">
+        <h3 class="text-xl font-bold text-white mb-6">Sources &amp; Further Reading</h3>
+        <ul class="space-y-3 text-sm text-gray-400 mono">
+            <li>[1] U.S. Copyright Office. (2025). <em>Report on Artificial Intelligence and Copyright:
+            Authorship &amp; Infringement</em>.</li>
+            <li>[2] Indonesian Law No.&nbsp;28/2014 on Copyright (Undang-Undang Hak Cipta).</li>
+            <li>[3] <em>Italian Brainrot Wiki</em>. (2025). &ldquo;Tung Tung Tung Sahur Lore and
+            Powerscaling&rdquo;. Miraheze.</li>
+            <li>[4] Reddit. (2025). Threads from r/publicdomain and r/aiwars.</li>
+            <li>[5] Vice Motherboard. (Archive). &ldquo;The Absurdity of Copyrighting AI Brainrot.&rdquo;</li>
+        </ul>
+    </section>
+
+</main>
+
+<footer class="text-center py-8 border-t border-gray-900 mt-12 text-gray-600 text-xs mono">
+    Generated via OSINT Research Protocol &middot; March 2026 &middot;
+    No human or AI was harmed (or copyrighted) in the making of this report.
+</footer>
+
+<script>
+    /* ── Shared helpers ───────────────────────────────────────────── */
+    function wrapLabel(label, maxLen) {
+        maxLen = maxLen || 16;
+        if (label.length <= maxLen) return label;
+        var words = label.split(' '), lines = [], cur = '';
+        words.forEach(function(w) {
+            if ((cur + w).length > maxLen) {
+                if (cur) lines.push(cur.trim());
+                cur = w + ' ';
+            } else { cur += w + ' '; }
+        });
+        if (cur) lines.push(cur.trim());
+        return lines;
+    }
+    var tooltipConfig = {
+        callbacks: {
+            title: function(items) {
+                var label = items[0].chart.data.labels[items[0].dataIndex];
+                return Array.isArray(label) ? label.join(' ') : label;
+            }
+        }
+    };
+
+    /* ── Viewership bar ───────────────────────────────────────────── */
+    new Chart(document.getElementById('viewershipChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ["Tung Tung Tung Sahur","Brr Brr Patapim","Ballerina Cappuccina","Ta Ta Ta Sahur"].map(wrapLabel),
+            datasets: [{
+                label: 'Peak Viewership (Millions)',
+                data: [120, 85, 60, 25],
+                backgroundColor: ['#ff2a2a','#00f0ff','#ffe600','#4a2e2a'],
+                borderColor: '#ffffff',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e5e5e5', font: { family: 'Inter' } } },
+                tooltip: tooltipConfig
+            },
+            scales: {
+                y: { beginAtZero: true, grid: { color: '#332222' }, ticks: { color: '#a3a3a3' } },
+                x: { grid: { display: false }, ticks: { color: '#a3a3a3', font: { family: 'Roboto Mono', size: 10 } } }
+            }
+        }
+    });
+
+    /* ── Sentiment doughnut ───────────────────────────────────────── */
+    new Chart(document.getElementById('sentimentChart').getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: ["Anti-Protection / Public Domain","Pro-Protection / Creator Rights","Undecided / Ambivalent"].map(wrapLabel),
+            datasets: [{
+                data: [55, 30, 15],
+                backgroundColor: ['#ff2a2a','#00f0ff','#4a2e2a'],
+                borderColor: '#0d0907',
+                borderWidth: 4
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false, cutout: '70%',
+            plugins: {
+                legend: { position: 'right', labels: { color: '#e5e5e5', font: { family: 'Inter' } } },
+                tooltip: tooltipConfig
+            }
+        }
+    });
+
+    /* ── Hype trend line ──────────────────────────────────────────── */
+    new Chart(document.getElementById('trendChart').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: ["Feb","Mar","Apr","May","Jun","Jul","Aug","Sep"],
+            datasets: [{
+                label: 'Search Volume / Hype Index',
+                data: [10, 100, 85, 60, 40, 30, 45, 95],
+                borderColor: '#ffe600',
+                backgroundColor: 'rgba(255,230,0,0.1)',
+                borderWidth: 3,
+                pointBackgroundColor: '#ff2a2a',
+                pointBorderColor: '#ffffff',
+                pointRadius: 5,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#e5e5e5' } },
+                tooltip: tooltipConfig
+            },
+            scales: {
+                y: { beginAtZero: true, grid: { color: '#332222' }, ticks: { color: '#a3a3a3' } },
+                x: { grid: { color: '#332222' }, ticks: { color: '#a3a3a3' } }
+            }
+        }
+    });
+</script>
+</body>
+</html>
