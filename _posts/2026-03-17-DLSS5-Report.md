@@ -13,7 +13,7 @@ tags: ["NVIDIA", "DLSS 5", "Generative Neural Rendering", "RTX 50-Series", "Real
 
 <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: center;">
     <a href="/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" 
-       download="/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" 
+       download="/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf?raw=true" 
        target="_blank" rel="noopener">
        📥 Download Full 10-Page Research Report PDF (191 KB)
     </a>>
