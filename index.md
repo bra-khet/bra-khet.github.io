@@ -10,7 +10,7 @@ title: About
   </a>
 </h2>
 
-<p style="color: #ccc;">Research reports and technical analysis, hosted at <span style="color: #00ff5d;">/bra-khet.github.io </span></p>
+<p style="color: #ccc;">Research reports and technical analysis, hosted at <span style="color: #00ff5d; white-space: nowrap;">/bra-khet.github.io </span></p>
 
 <hr style="border-color: #333; margin: 2rem 0;" />
 
