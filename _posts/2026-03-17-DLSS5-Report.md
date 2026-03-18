@@ -9,7 +9,7 @@ layout: default
 # NVIDIA DLSS 5: Generative Neural Rendering for Real-Time Graphics
 
 **Publication Date:** March 17, 2026  
-**Version:** 1.0 (Full Technical Research Edition)  
+**Version:** 1.0
 **Document Length:** 10 pages | **Format:** PDF (~191 KB)  
 **Source:** NVIDIA GTC 2026 Keynote + Streamline SDK Briefings
 
