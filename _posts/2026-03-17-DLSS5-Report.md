@@ -35,5 +35,5 @@ Output is fully **deterministic** and **temporally coherent** (no jitter or hall
 
 Scheduled for **Fall 2026** on RTX 50-series GPUs; already confirmed for multiple AAA titles including *Starfield*, *Resident Evil Requiem*, *Assassin’s Creed Shadows*, *Hogwarts Legacy*, and *The Elder Scrolls IV: Oblivion Remastered*.
 
-**[📥 Download Full 10-Page Research Report PDF](_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf)**  
+**[📥 Download Full 10-Page Research Report PDF]([bra-khet.github.io/blob/main/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf])**  
 *Direct relative path:* `_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf` (GitHub Pages / Jekyll / Hugo / static-site compatible)
