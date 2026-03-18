@@ -25,9 +25,5 @@ title: About
        style="padding: 0.6rem 1.2rem; background: #333; color: #fff; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.9rem;">
       📥 Download
     </a>
-    <a href="/2026/03/17/DLSS5-Report.html"
-       style="padding: 0.6rem 1.2rem; background: #333; color: #00d4ff; border-radius: 6px; text-decoration: none; font-size: 0.9rem;">
-      → Read Post
-    </a>
   </div>
 </div>
