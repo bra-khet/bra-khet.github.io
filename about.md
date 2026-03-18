@@ -24,12 +24,7 @@
       Open Full PDF
     </a>
     
-    <!-- Force download with nicer filename -->
-    <a href="/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" 
-       download="DLSS_5_Research_Report_March_2026.pdf"
-       style="padding: 0.7rem 1.4rem; background: #444; color: white; border-radius: 6px; text-decoration: none;">
-      Download
-    </a>
+
   </div>
 </div>  <a href="/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" 
        target="_blank" 
@@ -37,11 +32,6 @@
       Open Full PDF
     </a>
     
-    <!-- Force download -->
-    <a href="/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" 
-       download="DLSS_5_Research_Report_March_17_2026.pdf"
-       style="padding: 0.6rem 1.2rem; background: #444; color: white; border-radius: 6px; text-decoration: none;">
-      Download
-    </a>
+    
   </div>
 </div>
