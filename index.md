@@ -26,4 +26,49 @@ title: About
       📥 Download
     </a>
   </div>
+
+<hr class="divider" />
+
+<hr class="divider" />
+
+<!-- ═══════════════════════════════════
+     GALLERY SECTION
+     To add your artwork:
+       1. Commit image files to /assets/img/
+          in your repo (jpg, png, gif, webp)
+       2. Replace the gallery-placeholder divs
+          with: <img src="/assets/img/yourfile.jpg" alt="description">
+       3. Add or remove .gallery-item blocks freely
+     
+     Animated GIFs work as-is.
+     For video loops, swap <img> for:
+       <video autoplay loop muted playsinline src="/assets/img/your.mp4">
+════════════════════════════════════ -->
+<div class="section-label">Art &amp; Works</div>
+
+<div class="gallery">
+
+  <div class="gallery-item">
+    <!-- Replace this div with your image tag -->
+    <div class="gallery-placeholder">[ artwork ]</div>
+  </div>
+
+  <div class="gallery-item">
+    <div class="gallery-placeholder">[ artwork ]</div>
+  </div>
+
+  <div class="gallery-item">
+    <div class="gallery-placeholder">[ artwork ]</div>
+  </div>
+
+  <div class="gallery-item">
+    <div class="gallery-placeholder">[ artwork ]</div>
+  </div>
+
+</div>
+
+<hr class="divider" />
+
+<hr class="divider" />
+  
 </div>
