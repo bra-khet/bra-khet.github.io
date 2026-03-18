@@ -2,7 +2,7 @@
 source              : .
 destination         : ./_site
 collections_dir     : .
-plugins_dir         : _plugins # takes an array of strings and loads plugins in that order
+plugins_dir         : _plugins
 layouts_dir         : _layouts
 data_dir            : _data
 includes_dir        : _includes
@@ -15,7 +15,7 @@ collections:
 # Handling Reading
 safe                : false
 include             : [".htaccess"]
-exclude             : ["Gemfile", "Gemfile.lock", "node_modules", "vendor/bundle/", "vendor/cache/", "vendor/gems/", "vendor/ruby/"]
+exclude             : ["Gemfile", "Gemfile.lock", "node_modules", "vendor/bundle/", "vendor/cache/", "vendor/gems/", "vendor/ruby/", "README.md"]
 keep_files          : [".git", ".svn"]
 encoding            : "utf-8"
 markdown_ext        : "markdown,mkdown,mkdn,mkd,md"
@@ -42,7 +42,7 @@ incremental         : false
 detach              : false
 port                : 4000
 host                : 127.0.0.1
-baseurl             : "" # does not include hostname
+baseurl             : ""
 show_dir_listing    : false
 
 # Outputting
@@ -64,13 +64,13 @@ kramdown:
   auto_ids          : true
   entity_output     : as_char
   toc_levels        : [1, 2, 3, 4, 5, 6]
-  
-# Theme
-remote_theme: pages-themes/hacker@v0.2.0
-plugins:
-  - jekyll-remote-theme
   smart_quotes      : lsquo,rsquo,ldquo,rdquo
   input             : GFM
   hard_wrap         : false
   footnote_nr       : 1
   show_warnings     : false
+
+# Theme
+remote_theme: pages-themes/hacker@v0.2.0
+plugins:
+  - jekyll-remote-theme
