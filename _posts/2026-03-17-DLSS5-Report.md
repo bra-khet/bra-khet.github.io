@@ -8,6 +8,15 @@ layout: default
 
 # NVIDIA DLSS 5: Generative Neural Rendering for Real-Time Graphics
 
+<div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: center;">
+    <!-- Open full in new tab -->
+    <a href="/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" 
+       target="_blank" 
+       style="padding: 0.6rem 1.2rem; background: #00d4ff; color: black; border-radius: 6px; text-decoration: none; font-weight: bold;">
+      Open Full PDF
+    </a>
+</div>
+
 **Publication Date:** March 17, 2026  
 **Version:** 1.0
 **Document Length:** 10 pages | **Format:** PDF (~191 KB)  
