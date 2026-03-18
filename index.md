@@ -28,7 +28,7 @@ title: About
   </div>
 <div>
   <p style="color: #aaa; font-size: 0.9rem; margin: 0.3rem 0 1rem;">March 18, 2026 · Research Report v1.1</p>
-  <a href="bra-khet.github.io/dlss-5-report-1-1/"
+  <a href="/dlss-5-report-1-1/"
      style="padding: 0.6rem 1.2rem; background: #7a3fff; color: #fff; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.9rem;">
     🌐 Interactive Report
   </a>
