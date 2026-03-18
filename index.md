@@ -31,6 +31,9 @@ title: About
       📥 Download
     </a>
   </div>
+  
+<hr style="padding: 0.6rem 1.2rem; class="divider" />
+   
 <div>
   <p style="color: #aaa; font-size: 0.9rem; margin: 0.3rem 0 1rem;">March 18, 2026 · Research Report v1.1</p>
   <a href="/dlss-5-report-1-1/"
@@ -38,9 +41,9 @@ title: About
     🌐 Interactive Report
   </a>
   </div>
-<hr class="divider" />
+<hr style="padding: 0.6rem 1.2rem; class="divider" />
 
-<hr class="divider" />
+<hr style="padding: 0.6rem 1.2rem; class="divider" />
 
 <!-- ═══════════════════════════════════
      GALLERY SECTION
