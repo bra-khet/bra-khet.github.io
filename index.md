@@ -62,8 +62,7 @@ title: About
      For video loops, swap <img> for:
        <video autoplay loop muted playsinline src="/assets/img/your.mp4">
 ════════════════════════════════════ -->
-<h3 style="color: #00d4ff;">Real Art</h3>
-
+<h3 style="color: #00d4ff; margin-top: 3.5rem;">Real Art</h3>
 <div class="gallery">
 <!-- place tags here -->
   
@@ -86,7 +85,3 @@ title: About
 </div>
 
 <hr class="divider" />
-
-<hr class="divider" />
-  
-</div>
