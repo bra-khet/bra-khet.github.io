@@ -8,7 +8,7 @@ tags: ["NVIDIA", "DLSS 5", "Generative Neural Rendering", "RTX 50-Series", "Real
 
 # NVIDIA DLSS 5: Generative Neural Rendering for Real-Time Graphics
 
-**[📋/📥 View/Download Full 10-Page Research Report PDF](https://docs.google.com/viewer?url=$/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf)**  
+**[📋/📥 View/Download Full 10-Page Research Report PDF](https://docs.google.com/viewer?url=$https://github.com/bra-khet/bra-khet.github.io/blob/b7ae11e4535713ebcfaa02e68aef1be0e0ccf8dd/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf)**  
 *Direct relative path:* `/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf` (GitHub Pages / Jekyll / Hugo / static-site compatible)
 
 <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: center;">
