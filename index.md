@@ -26,7 +26,12 @@ title: About
       📥 Download
     </a>
   </div>
-
+<div>
+  <a href="bra-khet.github.io/dlss-5-report-1-1/"
+     style="padding: 0.6rem 1.2rem; background: #7a3fff; color: #fff; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.9rem;">
+    🌐 Interactive Report
+  </a>
+</div>
 <hr class="divider" />
 
 <hr class="divider" />
