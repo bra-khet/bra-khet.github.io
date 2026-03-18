@@ -65,10 +65,55 @@ permalink: /dlss-5-report-1-1/
             transform: translateX(5px);
         }
     </style>
+    <!-- Hacker theme integration banner -->
+    <style>
+      #hacker-nav-banner {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 9999;
+        background: #151515;
+        border-bottom: 1px dashed #b5e853;
+        font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+        font-size: 13px;
+        padding: 8px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #eaeaea;
+      }
+      #hacker-nav-banner a {
+        color: #63c0f5;
+        text-decoration: none;
+        text-shadow: 0 0 5px rgba(104, 182, 255, 0.5);
+      }
+      #hacker-nav-banner a:hover { text-decoration: underline; }
+      #hacker-nav-banner .banner-title {
+        color: #b5e853;
+        text-shadow: 0 0 5px rgba(181, 232, 83, 0.3),
+                     0 0 10px rgba(181, 232, 83, 0.1);
+        letter-spacing: -0.03em;
+      }
+      #hacker-nav-banner .banner-tag {
+        color: #666;
+        font-size: 11px;
+      }
+      /* push everything down so banner doesn't overlap */
+      body { padding-top: 37px; }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-nvgreen-100 selection:text-nvgreen-900">
+<!-- Chosen Palette:  Hacker 2 Imitation by Claude Sonnet 4.6 NVIDIA Green Accents background ~#151515 (cod-grey) with a noise texture, text is light grey (gallery ~#eaeaea), accent green is #b5e853 (conifer), links are #63c0f5, and the font is Monaco/monospace.  -->    
+<div id="hacker-nav-banner">
+  <span>
+    <a href="{{ site.baseurl }}/">← bra-khet.github.io</a>
+    <span class="banner-tag"> / research</span>
+  </span>
+  <span class="banner-title">NVIDIA DLSS 5 — Generative Neural Rendering</span>
+  <span class="banner-tag">v1.1 · March 2026</span>
+</div>
 
-<!-- Chosen Palette: Clean Minimalist Light with NVIDIA Green Accents (Slate 50 background, Slate 800/900 text, #76B900 primary accent). -->
+    
+<!-- Chosen Palette: not anymore bub Clean Minimalist Light with NVIDIA Green Accents (Slate 50 background, Slate 800/900 text, #76B900 primary accent). -->
 
 <!-- Application Structure Plan: A dashboard-style layout with a fixed left navigation sidebar (on desktop) and a main scrolling content area. The structure translates the linear report into thematic, interactive zones: 1. Executive Dashboard (high-level stats), 2. Evolution & Architecture (charts/interactive diagrams explaining the tech), 3. Developer Control Center (interactive sliders demonstrating trade-offs), 4. Ecosystem & Launch (grids of games/hardware), and 5. Perspectives & Glossary. This non-linear structure allows users to explore technical specs, practical applications, or critical reception independently, catering to different user personas (devs vs. analysts). -->
 
