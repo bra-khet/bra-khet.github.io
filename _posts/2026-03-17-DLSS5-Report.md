@@ -1,9 +1,7 @@
 ---
 layout: post
-title: "NVIDIA DLSS 5: Generative Neural Rendering for Real-Time Graphics – Research Report"
+title: "NVIDIA DLSS 5: Generative Neural Rendering for Real-Time Graphics"
 date: 2026-03-17
-author: "ChatGPT-Assisted Technical Analysis"
-tags: ["NVIDIA", "DLSS 5", "Generative Neural Rendering", "RTX 50-Series", "Real-Time AI Graphics"]
 ---
 
 # NVIDIA DLSS 5: Generative Neural Rendering for Real-Time Graphics
