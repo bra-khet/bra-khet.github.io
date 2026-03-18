@@ -3,9 +3,14 @@ layout: default
 title: About
 ---
 
-<h2 style="color: #00d4ff;">About</h2>
+<h2 style="color: #00d4ff;">
+  <a href="https://bra-khet.github.io/about" 
+     style="color: inherit; text-decoration: none;">
+    About
+  </a>
+</h2>
 
-<p style="color: #ccc;">Research reports and technical analysis, hosted at bra-khet.github.io.</p>
+<p style="color: #ccc;">Research reports and technical analysis, hosted at <span style="color: #00ff5d;">/bra-khet.github.io </span></p>
 
 <hr style="border-color: #333; margin: 2rem 0;" />
 
