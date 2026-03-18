@@ -12,12 +12,11 @@ tags: ["NVIDIA", "DLSS 5", "Generative Neural Rendering", "RTX 50-Series", "Real
 *Direct relative path:* `/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf` (GitHub Pages / Jekyll / Hugo / static-site compatible)
 
 <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: center;">
-    <!-- Open full in new tab -->
-    <a href="/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" 
-       target="_blank" 
-       style="padding: 0.6rem 1.2rem; background: #00d4ff; color: black; border-radius: 6px; text-decoration: none; font-weight: bold;">
-      Open Full PDF
-    </a>
+    <a href="/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" 
+       download="/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" 
+       target="_blank" rel="noopener">
+       📥 Download Full 10-Page Research Report PDF (191 KB)
+    </a>>
 </div>
 
 **Publication Date:** March 17, 2026  
