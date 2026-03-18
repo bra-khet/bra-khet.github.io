@@ -1,0 +1,584 @@
+---
+layout: null
+title: "NVIDIA DLSS 5: Generative Neural Rendering"
+permalink: /dlss5-report/
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVIDIA DLSS 5: Generative Neural Rendering Research</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nvgreen: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#76B900', 
+                            900: '#14532d',
+                        },
+                        nvdark: '#0f172a'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+            overflow: hidden;
+        }
+        @media (max-width: 640px) {
+            .chart-container {
+                height: 250px;
+                max-height: 300px;
+            }
+        }
+        .nav-link.active {
+            color: #76B900;
+            border-left: 4px solid #76B900;
+            background-color: #f0fdf4;
+            font-weight: 600;
+        }
+        .flow-arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        .flow-box:hover .flow-arrow {
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-nvgreen-100 selection:text-nvgreen-900">
+
+<!-- Chosen Palette: Clean Minimalist Light with NVIDIA Green Accents (Slate 50 background, Slate 800/900 text, #76B900 primary accent). -->
+
+<!-- Application Structure Plan: A dashboard-style layout with a fixed left navigation sidebar (on desktop) and a main scrolling content area. The structure translates the linear report into thematic, interactive zones: 1. Executive Dashboard (high-level stats), 2. Evolution & Architecture (charts/interactive diagrams explaining the tech), 3. Developer Control Center (interactive sliders demonstrating trade-offs), 4. Ecosystem & Launch (grids of games/hardware), and 5. Perspectives & Glossary. This non-linear structure allows users to explore technical specs, practical applications, or critical reception independently, catering to different user personas (devs vs. analysts). -->
+
+<!-- Visualization & Content Choices: 
+1. Evolution Chart (Chart.js Line): Shows transition from performance to quality over DLSS generations. Justification: Best for temporal trends.
+2. Architecture Flow (Interactive HTML Grid): Explains inputs/outputs without complex graphics. Justification: Adheres to NO SVG rule while providing interactive step-by-step context.
+3. Developer Control Simulator (HTML Range Sliders + Progress Bars): Demonstrates the "70/30 safety valve" and masking trade-offs. Justification: Active learning via simulation makes abstract developer settings concrete.
+4. Perspectives Toggle (HTML Buttons/JS visibility): Compares proponent vs critic views. Justification: Saves space and directly juxtaposes the polarizing reception.
+5. Ecosystem (CSS Grid): Displays supported titles cleanly. Justification: Easy to scan.
+Method: All interactive elements powered by Vanilla JS, visualizations by Chart.js or Tailwind HTML. -->
+
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<div class="flex flex-col md:flex-row min-h-screen">
+    <nav class="w-full md:w-64 bg-white border-b md:border-b-0 md:border-r border-slate-200 fixed md:sticky top-0 z-50 h-auto md:h-screen overflow-y-auto">
+        <div class="p-6">
+            <h1 class="text-2xl font-bold text-nvdark leading-tight">NVIDIA <span class="text-nvgreen-700">DLSS 5</span></h1>
+            <p class="text-xs text-slate-500 mt-1 uppercase tracking-wider font-semibold">Research Update &bull; March 2026</p>
+        </div>
+        <ul class="flex md:flex-col overflow-x-auto md:overflow-hidden pb-2 md:pb-0 px-4 md:px-0 hide-scrollbar" id="nav-menu">
+            <li><a href="#executive" class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors active">Executive Summary</a></li>
+            <li><a href="#evolution" class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors">Evolution & Architecture</a></li>
+            <li><a href="#developer" class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors">Developer Controls</a></li>
+            <li><a href="#perspectives" class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors">Critical Analysis</a></li>
+            <li><a href="#ecosystem" class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors">Ecosystem & Games</a></li>
+            <li><a href="#glossary" class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors">Jargon Primer</a></li>
+        </ul>
+    </nav>
+
+    <main class="flex-1 p-6 md:p-12 lg:p-16 w-full max-w-7xl mx-auto mt-24 md:mt-0">
+        <header class="mb-16 border-b border-slate-200 pb-8">
+            <div class="inline-block bg-nvgreen-100 text-nvgreen-900 px-3 py-1 rounded-full text-xs font-bold mb-4 border border-nvgreen-500">GTC 2026 ANNOUNCEMENT</div>
+            <h2 class="text-4xl md:text-6xl font-extrabold text-nvdark tracking-tight mb-4">The "GPT Moment" for Graphics</h2>
+            <p class="text-xl text-slate-600 max-w-3xl leading-relaxed">NVIDIA DLSS 5 represents a paradigm shift from quantitative performance upscaling to qualitative, real-time generative neural rendering. It brings Hollywood-level photorealism to interactive graphics.</p>
+        </header>
+
+        <section id="executive" class="scroll-mt-24 mb-20">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-slate-800 mb-2">Executive Overview</h3>
+                <p class="text-slate-600">This section synthesizes the core announcements from GTC 2026, outlining the primary capabilities and operational envelope of DLSS 5. It establishes the baseline understanding of the technology's real-time generation capabilities.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-nvgreen-700 text-3xl font-black mb-2">&#10022;</div>
+                    <h4 class="font-bold text-slate-800 mb-1">Core Innovation</h4>
+                    <p class="text-sm text-slate-600">End-to-end generative neural rendering model replacing traditional light transport.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-nvgreen-700 text-3xl font-black mb-2">&#9635;</div>
+                    <h4 class="font-bold text-slate-800 mb-1">Performance</h4>
+                    <p class="text-sm text-slate-600">Real-time operation at up to 4K resolution on RTX 50-series (single GPU viable).</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-nvgreen-700 text-3xl font-black mb-2">&#8646;</div>
+                    <h4 class="font-bold text-slate-800 mb-1">Determinism</h4>
+                    <p class="text-sm text-slate-600">Strictly conditioned on 3D geometry; temporally coherent with no flickering.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-nvgreen-700 text-3xl font-black mb-2">&#9874;</div>
+                    <h4 class="font-bold text-slate-800 mb-1">Integration</h4>
+                    <p class="text-sm text-slate-600">Backward-compatible via Streamline SDK and UE5 plugin for Fall 2026 launch.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="evolution" class="scroll-mt-24 mb-20">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-slate-800 mb-2">Evolution & Architecture</h3>
+                <p class="text-slate-600">Analyze how DLSS has transitioned across generations. This section features interactive visualizations comparing historical performance focus versus the new generative quality focus, alongside a breakdown of the new neural rendering pipeline.</p>
+            </div>
+
+            <div class="bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm mb-8">
+                <h4 class="text-lg font-bold text-slate-800 mb-6 text-center">DLSS Paradigm Shift: Performance vs. Qualitative Fidelity</h4>
+                <div class="chart-container">
+                    <canvas id="evolutionChart"></canvas>
+                </div>
+                <p class="text-center text-sm text-slate-500 mt-4">Unlike DLSS 1-4 which focused on upscaling and frame generation, DLSS 5 introduces a new generative layer specifically for lighting and material synthesis.</p>
+            </div>
+
+            <h4 class="text-xl font-bold text-slate-800 mb-6">The DLSS 5 Hybrid Pipeline</h4>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4" id="architecture-diagram">
+                <div class="flow-box bg-slate-100 p-6 rounded-xl border border-slate-200 cursor-pointer hover:bg-white hover:shadow-md transition-all" data-target="arch-input">
+                    <h5 class="font-bold text-nvdark mb-2">1. Fixed Inputs</h5>
+                    <ul class="text-sm text-slate-600 space-y-1">
+                        <li>&bull; Per-frame Color Buffer</li>
+                        <li>&bull; Motion Vectors</li>
+                        <li class="italic mt-2">No depth, normal, or albedo maps required.</li>
+                    </ul>
+                    <div class="text-right mt-4 text-nvgreen-700 flow-arrow">&#10140;</div>
+                </div>
+
+                <div class="flow-box bg-nvdark text-white p-6 rounded-xl border border-nvdark cursor-pointer hover:shadow-lg transition-all" data-target="arch-core">
+                    <h5 class="font-bold mb-2">2. Neural Rendering Core</h5>
+                    <ul class="text-sm text-slate-300 space-y-1">
+                        <li>&bull; Probabilistic Synthesis</li>
+                        <li>&bull; Semantic Awareness</li>
+                        <li>&bull; Material Differentiation</li>
+                    </ul>
+                    <div class="text-right mt-4 text-nvgreen-500 flow-arrow">&#10140;</div>
+                </div>
+
+                <div class="flow-box bg-slate-100 p-6 rounded-xl border border-slate-200 cursor-pointer hover:bg-white hover:shadow-md transition-all" data-target="arch-output">
+                    <h5 class="font-bold text-nvdark mb-2">3. Deterministic Output</h5>
+                    <ul class="text-sm text-slate-600 space-y-1">
+                        <li>&bull; Photorealistic Lighting</li>
+                        <li>&bull; Subsurface Scattering</li>
+                        <li>&bull; Temporally Stable</li>
+                    </ul>
+                    <div class="text-right mt-4 text-nvgreen-700">&#10003;</div>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-nvgreen-50 border border-nvgreen-100 rounded-xl p-6 min-h-[120px] transition-all" id="arch-details">
+                <h5 class="font-bold text-nvgreen-900 mb-2">Interactive Architecture Overview</h5>
+                <p class="text-nvgreen-800 text-sm">Click or hover over the pipeline stages above to reveal detailed technical mechanics regarding inputs, neural processing, and rendering outputs.</p>
+            </div>
+        </section>
+
+        <section id="developer" class="scroll-mt-24 mb-20">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-slate-800 mb-2">Developer Control Surface</h3>
+                <p class="text-slate-600">While the neural model acts as a "black box" regarding raw inputs, NVIDIA provides a robust control surface via the Streamline SDK. Use the interactive tool below to simulate how Intensity, Blending, and Masking affect the final visual output and safeguard artistic intent.</p>
+            </div>
+
+            <div class="bg-nvdark rounded-2xl p-6 md:p-8 shadow-xl text-white">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    
+                    <div>
+                        <h4 class="text-lg font-bold mb-6 border-b border-slate-700 pb-2">Streamline SDK Parameters</h4>
+                        
+                        <div class="mb-6">
+                            <div class="flex justify-between mb-1">
+                                <label for="intensity" class="text-sm font-medium text-slate-300">Generative Intensity</label>
+                                <span id="intensity-val" class="text-sm font-bold text-nvgreen-500">50%</span>
+                            </div>
+                            <input type="range" id="intensity" min="0" max="100" value="50" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-nvgreen-500">
+                            <p class="text-xs text-slate-400 mt-1">Controls global generative strength.</p>
+                        </div>
+
+                        <div class="mb-6">
+                            <div class="flex justify-between mb-1">
+                                <label for="blend" class="text-sm font-medium text-slate-300">Generative/Original Blend Ratio</label>
+                                <span id="blend-val" class="text-sm font-bold text-nvgreen-500">70/30</span>
+                            </div>
+                            <input type="range" id="blend" min="0" max="100" value="70" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-nvgreen-500">
+                            <p class="text-xs text-slate-400 mt-1">The recommended safety valve for stylized titles.</p>
+                        </div>
+
+                        <div class="mb-6">
+                            <div class="flex justify-between mb-1">
+                                <label for="masking" class="text-sm font-medium text-slate-300">Semantic Masking Use</label>
+                                <span id="masking-val" class="text-sm font-bold text-nvgreen-500">Medium</span>
+                            </div>
+                            <input type="range" id="masking" min="0" max="100" value="50" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-nvgreen-500">
+                            <p class="text-xs text-slate-400 mt-1">Protects faces, UI, and primary characters.</p>
+                        </div>
+                    </div>
+
+                    
+                    <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 flex flex-col justify-center">
+                        <h4 class="text-center text-sm uppercase tracking-widest text-slate-400 mb-6 font-bold">Simulated Output Analysis</h4>
+                        
+                        <div class="mb-4">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Photorealism & Lighting Quality</span>
+                                <span id="realism-score">75%</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-2.5">
+                                <div id="realism-bar" class="bg-blue-500 h-2.5 rounded-full transition-all duration-300" style="width: 75%"></div>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Artistic Intent Preservation</span>
+                                <span id="intent-score">80%</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-2.5">
+                                <div id="intent-bar" class="bg-purple-500 h-2.5 rounded-full transition-all duration-300" style="width: 80%"></div>
+                            </div>
+                        </div>
+
+                        <div id="dev-warning" class="p-4 rounded-lg bg-slate-700 border border-slate-600 text-sm transition-all duration-300">
+                            <strong class="block text-nvgreen-500 mb-1">Optimal Tuning</strong>
+                            <span class="text-slate-300">Current settings offer a balanced blend of enhanced lighting while preserving character aesthetics through moderate masking.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white p-5 rounded-lg border border-slate-200">
+                    <h5 class="font-bold text-slate-800 mb-2">Pipeline Ordering</h5>
+                    <p class="text-sm text-slate-600">DLSS 5 should be executed <strong>after</strong> Super Resolution, Ray Reconstruction, and Frame Generation to ensure the neural layer receives the cleanest possible color and motion vectors.</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg border border-slate-200">
+                    <h5 class="font-bold text-slate-800 mb-2">Debug Facilities</h5>
+                    <p class="text-sm text-slate-600">The SDK provides heatmaps and mask overlays for rapid in-editor iteration, allowing developers to visually confirm which regions are protected from generative overrides.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="perspectives" class="scroll-mt-24 mb-20">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-slate-800 mb-2">Critical Analysis</h3>
+                <p class="text-slate-600">The introduction of generative AI into the final render pipeline has sparked significant industry debate. This section outlines the stark contrast between the technology's proponents and its early critics among artist communities.</p>
+            </div>
+
+            <div class="flex space-x-2 mb-6 border-b border-slate-200 pb-2">
+                <button class="perspective-btn px-6 py-2 rounded-t-lg font-bold text-sm bg-nvgreen-100 text-nvgreen-900 border-b-2 border-nvgreen-500" data-view="proponent">Proponents & Studios</button>
+                <button class="perspective-btn px-6 py-2 rounded-t-lg font-bold text-sm text-slate-500 hover:bg-slate-100 border-b-2 border-transparent" data-view="critic">Critics & Artists</button>
+            </div>
+
+            <div id="view-proponent" class="perspective-content block bg-white p-8 rounded-b-xl rounded-tr-xl border border-slate-200 shadow-sm">
+                <div class="flex items-start gap-4">
+                    <div class="text-4xl text-nvgreen-600">&#10004;</div>
+                    <div>
+                        <h4 class="text-xl font-bold text-slate-800 mb-3">The "Holy Grail" of Real-Time Graphics</h4>
+                        <ul class="space-y-4 text-slate-600">
+                            <li><strong class="text-slate-800">Transformative Pipeline:</strong> Closes the massive gap between real-time game engines and offline film rendering farms.</li>
+                            <li><strong class="text-slate-800">Unattainable Photorealism:</strong> Delivers complex light interactions (cinematic subsurface scattering, fabric sheen) that are mathematically prohibitive under standard ray-tracing budgets.</li>
+                            <li><strong class="text-slate-800">Developer Velocity:</strong> Allows iteration on lighting and material fidelity in days rather than weeks, as the neural network handles implicit light transport.</li>
+                            <li><strong class="text-slate-800">Control & Coherence:</strong> NVIDIA successfully embedded strict temporal stability, preventing the hallucinations common in image-gen models, while providing the Streamline SDK for overrides.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-critic" class="perspective-content hidden bg-white p-8 rounded-b-xl rounded-tr-xl border border-slate-200 shadow-sm">
+                <div class="flex items-start gap-4">
+                    <div class="text-4xl text-red-500">&#10008;</div>
+                    <div>
+                        <h4 class="text-xl font-bold text-slate-800 mb-3">The "AI Beauty Filter" Concern</h4>
+                        <ul class="space-y-4 text-slate-600">
+                            <li><strong class="text-slate-800">Loss of Stylistic Nuance:</strong> Early hands-on reports describe an over-applied "Snapchat filter" effect that homogenizes unique art directions into a standardized "AI aesthetic".</li>
+                            <li><strong class="text-slate-800">Uncanny Valley:</strong> If masking is not perfectly exhaustive, the network can subtly overwrite character faces, changing expressions or intended structural lighting, resulting in artificial-looking subjects.</li>
+                            <li><strong class="text-slate-800">Creative Tension:</strong> Highlights a fundamental conflict between algorithmic rendering efficiency and absolute adherence to creative fidelity.</li>
+                            <li><strong class="text-slate-800">Reliance on Masking:</strong> Puts the burden back on developers to painstakingly mask out areas where the generative effect shouldn't apply, somewhat negating the time saved.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ecosystem" class="scroll-mt-24 mb-20">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-slate-800 mb-2">Launch Ecosystem</h3>
+                <p class="text-slate-600">Details regarding the targeted Fall 2026 launch window, hardware prerequisites, and the studios already committed to integrating the technology.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-slate-800 text-white p-6 rounded-xl col-span-1 md:col-span-1 border border-slate-700 flex flex-col justify-center items-center text-center">
+                    <div class="text-nvgreen-500 text-5xl mb-2">&#9863;</div>
+                    <h4 class="font-bold text-xl mb-1">Target Window</h4>
+                    <p class="text-3xl font-black text-white">Fall 2026</p>
+                    <p class="text-sm text-slate-400 mt-2">Alongside next-gen hardware</p>
+                </div>
+                <div class="bg-slate-800 text-white p-6 rounded-xl col-span-1 md:col-span-2 border border-slate-700 flex flex-col justify-center">
+                    <h4 class="font-bold text-lg mb-4 text-nvgreen-500">Hardware Context</h4>
+                    <p class="text-slate-300 leading-relaxed">
+                        DLSS 5 is an <strong>RTX 50-series exclusive</strong> technology, leveraging advanced Tensor Cores on GeForce and compatible professional GPUs. While early tech demos utilized dual RTX 5090 configurations, the final production release is aggressively optimized for single-GPU deployment at interactive framerates.
+                    </p>
+                </div>
+            </div>
+
+            <h4 class="text-lg font-bold text-slate-800 mb-4">Confirmed Titles & Partners</h4>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div class="bg-white border border-slate-200 rounded-lg p-4 text-center text-sm font-semibold text-slate-700 shadow-sm">AION 2 <br><span class="text-xs text-slate-400 font-normal">NCSOFT</span></div>
+                <div class="bg-white border border-slate-200 rounded-lg p-4 text-center text-sm font-semibold text-slate-700 shadow-sm">AC Shadows <br><span class="text-xs text-slate-400 font-normal">Ubisoft</span></div>
+                <div class="bg-white border border-slate-200 rounded-lg p-4 text-center text-sm font-semibold text-slate-700 shadow-sm">Hogwarts Legacy <br><span class="text-xs text-slate-400 font-normal">Warner Bros.</span></div>
+                <div class="bg-white border border-slate-200 rounded-lg p-4 text-center text-sm font-semibold text-slate-700 shadow-sm">Resident Evil Requiem <br><span class="text-xs text-slate-400 font-normal">Capcom</span></div>
+                <div class="bg-white border border-slate-200 rounded-lg p-4 text-center text-sm font-semibold text-slate-700 shadow-sm">Starfield <br><span class="text-xs text-slate-400 font-normal">Bethesda</span></div>
+                <div class="bg-white border border-slate-200 rounded-lg p-4 text-center text-sm font-semibold text-slate-700 shadow-sm">Oblivion Remastered <br><span class="text-xs text-slate-400 font-normal">Bethesda</span></div>
+                <div class="bg-white border border-slate-200 rounded-lg p-4 text-center text-sm font-semibold text-slate-700 shadow-sm">Phantom Blade Zero <br><span class="text-xs text-slate-400 font-normal">Tencent</span></div>
+                <div class="bg-white border border-slate-200 rounded-lg p-4 text-center text-sm font-semibold text-slate-700 shadow-sm">NARAKA: BLADEPOINT <br><span class="text-xs text-slate-400 font-normal">NetEase</span></div>
+            </div>
+        </section>
+
+        <section id="glossary" class="scroll-mt-24 mb-20">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-slate-800 mb-2">Jargon Primer</h3>
+                <p class="text-slate-600">Clarifying technical terminology regarding DLSS 5 architecture.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="group bg-white border border-slate-200 rounded-xl p-5 hover:border-nvgreen-500 transition-colors">
+                    <h5 class="font-bold text-slate-800 mb-1 group-hover:text-nvgreen-700">Generative Neural Rendering</h5>
+                    <p class="text-sm text-slate-600">A deep-learning network that synthesizes new pixel-level details (shadows, material sheen) guided by 3D scene data, rather than just upscaling. Think of it as an intelligent, geometry-aware smart filter.</p>
+                </div>
+                <div class="group bg-white border border-slate-200 rounded-xl p-5 hover:border-nvgreen-500 transition-colors">
+                    <h5 class="font-bold text-slate-800 mb-1 group-hover:text-nvgreen-700">Color Buffer & Motion Vectors</h5>
+                    <p class="text-sm text-slate-600">The sole inputs for DLSS 5. <strong>Color Buffer</strong> is the raw shaded image. <strong>Motion Vectors</strong> track per-pixel movement between frames to ensure temporal stability.</p>
+                </div>
+                <div class="group bg-white border border-slate-200 rounded-xl p-5 hover:border-nvgreen-500 transition-colors">
+                    <h5 class="font-bold text-slate-800 mb-1 group-hover:text-nvgreen-700">Semantic Masking</h5>
+                    <p class="text-sm text-slate-600">A developer tool providing a grayscale/binary overlay instructing the AI to "ignore or reduce effect" in specific areas, crucial for protecting character faces and UI from alteration.</p>
+                </div>
+                <div class="group bg-white border border-slate-200 rounded-xl p-5 hover:border-nvgreen-500 transition-colors">
+                    <h5 class="font-bold text-slate-800 mb-1 group-hover:text-nvgreen-700">Deterministic / Temporally Coherent</h5>
+                    <p class="text-sm text-slate-600">The output is mathematically repeatable frame-to-frame without introducing random flickering or hallucinations, making it viable for real-time interactive gameplay.</p>
+                </div>
+                <div class="group bg-white border border-slate-200 rounded-xl p-5 hover:border-nvgreen-500 transition-colors">
+                    <h5 class="font-bold text-slate-800 mb-1 group-hover:text-nvgreen-700">Streamline SDK</h5>
+                    <p class="text-sm text-slate-600">NVIDIA's standardized integration framework. Developers write code once to enable the entire DLSS stack across different engines (including Unreal Engine 5).</p>
+                </div>
+                <div class="group bg-white border border-slate-200 rounded-xl p-5 hover:border-nvgreen-500 transition-colors">
+                    <h5 class="font-bold text-slate-800 mb-1 group-hover:text-nvgreen-700">End-to-End Trained</h5>
+                    <p class="text-sm text-slate-600">The network is optimized simultaneously on final image quality rather than piecemeal tasks, allowing implicit "understanding" of distinct materials like skin vs. metal.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="border-t border-slate-200 pt-8 mt-12 pb-12">
+            <p class="text-sm text-slate-500 text-center">Interactive Report based on "ChatGPT NVIDIA DLSS 5 Research Report" (March 17, 2026).</p>
+        </footer>
+    </main>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach((link) => {
+                link.classList.remove("active");
+                link.classList.remove("border-l-4", "border-nvgreen-700", "bg-nvgreen-50", "text-nvgreen-700", "font-semibold");
+                if (link.getAttribute("href").includes(current)) {
+                    link.classList.add("active", "border-l-4", "border-nvgreen-700", "bg-nvgreen-50", "text-nvgreen-700", "font-semibold");
+                }
+            });
+        });
+
+        const ctx = document.getElementById('evolutionChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['DLSS 1', 'DLSS 2', 'DLSS 3', 'DLSS 4.5', 'DLSS 5'],
+                datasets: [
+                    {
+                        label: 'Quantitative Performance (FPS Focus)',
+                        data: [20, 50, 85, 95, 100],
+                        borderColor: '#94a3b8',
+                        backgroundColor: 'rgba(148, 163, 184, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Qualitative Fidelity (Generative Focus)',
+                        data: [10, 25, 30, 45, 100],
+                        borderColor: '#76B900',
+                        backgroundColor: 'rgba(118, 185, 0, 0.2)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { font: { family: 'Inter', size: 12 } }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 110,
+                        title: { display: true, text: 'Relative Impact / Focus (%)', font: { size: 11 } }
+                    }
+                }
+            }
+        });
+
+        const archData = {
+            'arch-input': {
+                title: 'Fixed Input Interface',
+                desc: 'The model receives strictly limited data: the per-frame shaded color buffer and motion vectors. It does NOT require depth, normals, albedo, or semantic labels directly, simplifying engine integration while relying on pre-trained semantic awareness.'
+            },
+            'arch-core': {
+                title: 'Hybrid Probabilistic Prediction',
+                desc: 'Replaces brute-force path tracing sampling. The neural network uses embedded semantic awareness to differentiate materials (skin vs metal) and infer light transport implicitly, executing on RTX 50 Tensor Cores.'
+            },
+            'arch-output': {
+                title: 'Photorealistic Enhancement',
+                desc: 'Infuses each pixel with generated lighting, contact shadows, rim lighting, and material micro-details. Output is constrained by 3D geometry and motion vectors to guarantee temporal coherence (no flickering).'
+            }
+        };
+
+        const flowBoxes = document.querySelectorAll('.flow-box');
+        const archDetails = document.getElementById('arch-details');
+
+        flowBoxes.forEach(box => {
+            box.addEventListener('mouseenter', () => {
+                const target = box.getAttribute('data-target');
+                const data = archData[target];
+                archDetails.innerHTML = `
+                    <h5 class="font-bold text-nvgreen-900 mb-2">${data.title}</h5>
+                    <p class="text-nvgreen-800 text-sm leading-relaxed">${data.desc}</p>
+                `;
+            });
+            box.addEventListener('mouseleave', () => {
+                archDetails.innerHTML = `
+                    <h5 class="font-bold text-nvgreen-900 mb-2">Interactive Architecture Overview</h5>
+                    <p class="text-nvgreen-800 text-sm leading-relaxed">Hover over the pipeline stages above to reveal detailed technical mechanics regarding inputs, neural processing, and rendering outputs.</p>
+                `;
+            });
+        });
+
+        const intensitySlider = document.getElementById('intensity');
+        const blendSlider = document.getElementById('blend');
+        const maskingSlider = document.getElementById('masking');
+        
+        const realismScore = document.getElementById('realism-score');
+        const realismBar = document.getElementById('realism-bar');
+        const intentScore = document.getElementById('intent-score');
+        const intentBar = document.getElementById('intent-bar');
+        const devWarning = document.getElementById('dev-warning');
+
+        function updateSimulation() {
+            const intensity = parseInt(intensitySlider.value);
+            const blend = parseInt(blendSlider.value); 
+            const masking = parseInt(maskingSlider.value);
+
+            document.getElementById('intensity-val').textContent = intensity + '%';
+            document.getElementById('blend-val').textContent = blend + '/' + (100-blend);
+            
+            let maskLabel = 'Low';
+            if(masking > 33) maskLabel = 'Medium';
+            if(masking > 66) maskLabel = 'High';
+            document.getElementById('masking-val').textContent = maskLabel;
+
+            let realism = (intensity * 0.6) + (blend * 0.4);
+            if (realism > 100) realism = 100;
+
+            let intent = 100 - (intensity * 0.5) - ((blend - 50) * 0.5) + (masking * 0.8);
+            if (intent > 100) intent = 100;
+            if (intent < 10) intent = 10;
+
+            realismScore.textContent = Math.round(realism) + '%';
+            realismBar.style.width = realism + '%';
+            
+            intentScore.textContent = Math.round(intent) + '%';
+            intentBar.style.width = intent + '%';
+
+            if (realism > 80 && intent < 40) {
+                devWarning.className = 'p-4 rounded-lg bg-red-900/30 border border-red-700 text-sm transition-all duration-300';
+                devWarning.innerHTML = '<strong class="block text-red-400 mb-1">Warning: Uncanny Valley Risk</strong><span class="text-slate-300">High generative intensity with low masking overwrites character faces and stylistic intent. Enable higher masking.</span>';
+                intentBar.classList.replace('bg-purple-500', 'bg-red-500');
+            } else if (blend > 80 && masking < 50) {
+                devWarning.className = 'p-4 rounded-lg bg-yellow-900/30 border border-yellow-700 text-sm transition-all duration-300';
+                devWarning.innerHTML = '<strong class="block text-yellow-500 mb-1">Caution: Stylistic Drift</strong><span class="text-slate-300">Generative blend is very high. Consider returning to the 70/30 safety valve to preserve base art direction.</span>';
+                intentBar.classList.replace('bg-red-500', 'bg-purple-500');
+            } else {
+                devWarning.className = 'p-4 rounded-lg bg-slate-700 border border-slate-600 text-sm transition-all duration-300';
+                devWarning.innerHTML = '<strong class="block text-nvgreen-500 mb-1">Optimal Tuning</strong><span class="text-slate-300">Settings provide a balanced enhancement. Art direction is protected while environments gain photorealistic lighting.</span>';
+                intentBar.classList.remove('bg-red-500');
+                intentBar.classList.add('bg-purple-500');
+            }
+        }
+
+        intensitySlider.addEventListener('input', updateSimulation);
+        blendSlider.addEventListener('input', updateSimulation);
+        maskingSlider.addEventListener('input', updateSimulation);
+
+        const perspectiveBtns = document.querySelectorAll('.perspective-btn');
+        const perspectiveContents = document.querySelectorAll('.perspective-content');
+
+        perspectiveBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                perspectiveBtns.forEach(b => {
+                    b.classList.remove('bg-nvgreen-100', 'text-nvgreen-900', 'border-nvgreen-500');
+                    b.classList.add('text-slate-500', 'border-transparent');
+                });
+                
+                btn.classList.remove('text-slate-500', 'border-transparent');
+                btn.classList.add('bg-nvgreen-100', 'text-nvgreen-900', 'border-nvgreen-500');
+
+                const targetId = 'view-' + btn.getAttribute('data-view');
+                
+                perspectiveContents.forEach(content => {
+                    content.classList.add('hidden');
+                    content.classList.remove('block');
+                });
+                
+                document.getElementById(targetId).classList.remove('hidden');
+                document.getElementById(targetId).classList.add('block');
+            });
+        });
+
+    });
+</script>
+</body>
+</html>
