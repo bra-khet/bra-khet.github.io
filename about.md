@@ -3,23 +3,31 @@ layout: default
 title: About
 ---
 
-<div style="max-width: 600px; margin: 2rem auto; padding: 1rem; border: 1px solid #444; border-radius: 12px; background: #1a1a1a; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+<h2 style="color: #00d4ff;">About</h2>
 
-  <h3 style="margin-top: 0; color: #00d4ff;">DLSS 5 Research Report</h3>
+<p style="color: #ccc;">Research reports and technical analysis, hosted at bra-khet.github.io.</p>
 
-  <p style="color: #ccc; font-size: 0.95rem;">March 17, 2026</p>
+<hr style="border-color: #333; margin: 2rem 0;" />
 
-  <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+<h3 style="color: #00d4ff;">Latest Reports</h3>
+
+<div style="margin-top: 1.5rem; padding: 1rem; border: 1px solid #444; border-radius: 12px; background: #111; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+  <h4 style="margin-top: 0; color: #eee;">NVIDIA DLSS 5: Generative Neural Rendering</h4>
+  <p style="color: #aaa; font-size: 0.9rem; margin: 0.3rem 0 1rem;">March 17, 2026 · Research Report · 10 pages</p>
+  <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
     <a href="/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf"
        target="_blank" rel="noopener"
-       style="padding: 0.7rem 1.4rem; background: #00d4ff; color: black; border-radius: 6px; text-decoration: none; font-weight: bold;">
-      📋 Open Full PDF
+       style="padding: 0.6rem 1.2rem; background: #00d4ff; color: black; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.9rem;">
+      📋 View PDF
     </a>
     <a href="/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf"
        download
-       style="padding: 0.7rem 1.4rem; background: #444; color: #fff; border-radius: 6px; text-decoration: none; font-weight: bold;">
-      📥 Download PDF
+       style="padding: 0.6rem 1.2rem; background: #333; color: #fff; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.9rem;">
+      📥 Download
+    </a>
+    <a href="/2026/03/17/DLSS5-Report.html"
+       style="padding: 0.6rem 1.2rem; background: #333; color: #00d4ff; border-radius: 6px; text-decoration: none; font-size: 0.9rem;">
+      → Read Post
     </a>
   </div>
-
 </div>
