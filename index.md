@@ -61,7 +61,7 @@ title: About
   </div>
 
   <div class="gallery-item">
-    <img src="/assets/img/sonny-final1.png" alt="yes">
+    <img src="/assets/img/sonny-final 1.png" alt="yes">
   </div>
 
 </div>
