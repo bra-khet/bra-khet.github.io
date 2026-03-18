@@ -47,21 +47,22 @@ title: About
 <div class="section-label">Art &amp; Works</div>
 
 <div class="gallery">
-
+<!-- place tags here -->
+  
   <div class="gallery-item">
-    <!-- Replace this div with your image tag -->
     <img src="/assets/img/datboi-final1.png" alt="dat boi">
   </div>
+  
   <div class="gallery-item">
     <img src="/assets/img/deez-final1.png" alt="hah got em">
+  </div>
+  
+  <div class="gallery-item">
+    <img src="/assets/img/sonny-final 1.png" alt="yes">
   </div>
 
   <div class="gallery-item">
     <img src="/assets/img/son-final1.png" alt="௹">
-  </div>
-
-  <div class="gallery-item">
-    <img src="/assets/img/sonny-final 1.png" alt="yes">
   </div>
 
 </div>
