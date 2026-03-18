@@ -1,17 +1,37 @@
-<div style="max-width: 600px; margin: 2rem auto; padding: 1rem; border: 1px solid #444; border-radius: 12px; background: #1a1a1a; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+    <!-- Open full in new tab -->
+  <div style="max-width: 600px; margin: 2rem auto; padding: 1rem; border: 1px solid #444; border-radius: 12px; background: #1a1a1a; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
   <h3 style="margin-top: 0; color: #00d4ff;">DLSS 5 Research Report</h3>
-  <p style="color: #ccc; font-size: 0.95rem;">March 17, 2026 – AI-powered graphics deep dive</p>
+  <p style="color: #ccc; font-size: 0.95rem;">March 17, 2026</p>
 
-  <!-- Clickable preview iframe -->
+  <!-- Clickable preview area using <object> -->
   <a href="/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" target="_blank" style="text-decoration: none; display: block;">
-    <iframe src="/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf#view=FitH" 
-            width="100%" height="320" 
-            style="border: none; border-radius: 8px; pointer-events: none;"></iframe>
+    <object data="/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" 
+            type="application/pdf" 
+            width="100%" height="400" 
+            style="border: none; border-radius: 8px;">
+      <p style="color: #ff6b6b; text-align: center; padding: 1rem;">
+        PDF preview not supported in your browser.<br>
+        <strong>Click here to open the full report.</strong>
+      </p>
+    </object>
   </a>
 
-  <div style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: center;">
+  <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
     <!-- Open full in new tab -->
     <a href="/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" 
+       target="_blank" 
+       style="padding: 0.7rem 1.4rem; background: #00d4ff; color: black; border-radius: 6px; text-decoration: none; font-weight: bold;">
+      Open Full PDF
+    </a>
+    
+    <!-- Force download with nicer filename -->
+    <a href="/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" 
+       download="DLSS_5_Research_Report_March_2026.pdf"
+       style="padding: 0.7rem 1.4rem; background: #444; color: white; border-radius: 6px; text-decoration: none;">
+      Download
+    </a>
+  </div>
+</div>  <a href="/_data/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf" 
        target="_blank" 
        style="padding: 0.6rem 1.2rem; background: #00d4ff; color: black; border-radius: 6px; text-decoration: none; font-weight: bold;">
       Open Full PDF
