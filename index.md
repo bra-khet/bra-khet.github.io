@@ -201,14 +201,16 @@ title: About
 <h3 style="color: #00d4ff; margin-top: 3.5rem;">Real Art</h3>
 <div class="gallery">
 
-  <div class="gallery-item">
+ <!-- <div class="gallery-item">
     <img src="/assets/img/datboi-final1.png" alt="dat boi">
-  </div>
+  </div>-->
+  
+  <!-- <div class="gallery-item">
+    <img src="/assets/img/filename.ext" alt="desc">
+  </div>-->
+  
   <div class="gallery-item">
-    <img src="/assets/img/deez-final1.png" alt="hah got em">
-  </div>
-  <div class="gallery-item">
-    <img src="/assets/img/sonny-final 1.png" alt="yes">
+    <img src="/assets/img/ai-unity-ram-altman.png" alt="(✿◡‿◡)">
   </div>
 </div>
 
