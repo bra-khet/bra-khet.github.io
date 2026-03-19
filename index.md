@@ -103,7 +103,7 @@ title: About
      MEME HISTORY
 ════════════════════════════════════════════════════════════════ -->
 
-<h3 style="color: #ff4444; margin-top: 3rem; font-family: Monaco, monospace; letter-spacing: -0.02em;">
+<h3 style="color: #00ff5d; margin-top: 3rem; font-family: Monaco, monospace; letter-spacing: -0.02em;">
   Meme Review
 </h3>
 <p style="color: #ad6666; font-size: 0.8rem; font-family: Monaco, monospace; margin: 0.2rem 0 1rem;">
