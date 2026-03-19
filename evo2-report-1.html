@@ -133,7 +133,7 @@ permalink: /evo2-report-1/
                 6. Epigenetic Morse Code
             </button>
             <button data-target="glossary" class="w-full text-left px-6 py-3 text-sm font-semibold text-gray-400 hover:text-white transition-colors">
-                &#9782; Jargon Primer
+                &#9782; Appendix
             </button>
         </nav>
         <div class="p-4 border-t border-gray-800 text-xs text-gray-500 font-mono">
@@ -151,7 +151,7 @@ permalink: /evo2-report-1/
             <option value="sae">4. Internal Textbook</option>
             <option value="generation">5. Architect</option>
             <option value="epigenome">6. Morse Code</option>
-            <option value="glossary">Glossary</option>
+            <option value="glossary">Appendix</option>
         </select>
     </div>
 
@@ -163,15 +163,39 @@ permalink: /evo2-report-1/
             
             <section id="hero" class="content-section">
                 <div class="mb-8">
-                    <span class="px-3 py-1 bg-matrix text-black font-bold text-xs uppercase tracking-wider rounded-sm">Nature 2026</span>
+                    <a href="https://www.nature.com/articles/s41586-026-10176-5" target="_blank" rel="noopener"
+                       class="inline-flex items-center gap-2 px-3 py-1 bg-matrix text-black font-bold text-xs uppercase tracking-wider rounded-sm hover:bg-white transition-colors">
+                        Nature 2026 &nbsp;&#8599;
+                    </a>
                 </div>
                 <h1 class="text-5xl lg:text-7xl font-bold text-white leading-tight mb-6">
-                    Learning Life's Language <br>at <span class="text-matrix">Scale</span>.
+                    Cracking Life's Code <br>at <span class="text-matrix">Scale</span>.
                 </h1>
                 <p class="text-xl text-gray-400 mb-8 max-w-3xl leading-relaxed">
                     Welcome to the interactive deep dive into Evo 2, the world's first generalist genomic foundation model. Trained on 9.3 trillion letters of raw DNA across all domains of life, it learns biology without human labels.
                 </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+
+                <!-- Primary source card — prominent, full-width, centred above info cards -->
+                <div class="mt-12 w-full rounded-xl p-6 flex flex-col md:flex-row items-center gap-6 relative overflow-hidden"
+                     style="background: linear-gradient(135deg, #0d1f16 0%, #0f1a20 60%, #091410 100%); border: 1px solid rgba(0,255,159,0.3); box-shadow: 0 0 40px rgba(0,255,159,0.05), inset 0 1px 0 rgba(0,255,159,0.08);">
+                    <div class="absolute top-0 right-0 w-32 h-32 pointer-events-none" style="background: radial-gradient(circle at top right, rgba(0,255,159,0.07), transparent 70%);"></div>
+                    <div class="text-4xl shrink-0 select-none">&#128196;</div>
+                    <div class="flex-1 text-center md:text-left">
+                        <p class="text-xs font-mono text-matrix uppercase tracking-widest mb-1.5">Primary Source &mdash; Peer-Reviewed Research</p>
+                        <p class="text-white font-bold text-base md:text-lg leading-snug mb-1">
+                            Sequence modeling and design from molecular to genome scale with Evo 2
+                        </p>
+                        <p class="text-xs text-gray-500 font-mono mb-2">Arc Institute &amp; Stanford University &nbsp;&middot;&nbsp; <em>Nature</em>, 2026 &nbsp;&middot;&nbsp; DOI: 10.1038/s41586-026-10176-5</p>
+                        <p class="text-xs text-gray-600 leading-relaxed">This interactive report is a technical analysis and commentary derived directly from the above peer-reviewed publication. All primary findings, benchmark results, and experimental data belong to the original authors.</p>
+                    </div>
+                    <a href="https://www.nature.com/articles/s41586-026-10176-5"
+                       target="_blank" rel="noopener"
+                       class="shrink-0 px-5 py-3 border border-matrix text-matrix font-bold text-sm font-mono rounded hover:bg-matrix hover:text-black transition-colors whitespace-nowrap">
+                        Read Paper &#8599;
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <div class="bg-panel border border-gray-800 p-6 rounded-lg hover:border-matrix transition-colors">
                         <div class="text-3xl mb-4">&#128269;</div>
                         <h3 class="text-xl font-bold text-white mb-2">The Scale of the Breakthrough</h3>
@@ -385,8 +409,10 @@ permalink: /evo2-report-1/
             </section>
 
             <section id="glossary" class="content-section section-hidden">
-                <h2 class="text-3xl font-bold text-white border-b border-gray-800 pb-4 mb-6"><span class="text-matrix">&#9782;</span> Jargon Primer</h2>
-                <div class="grid md:grid-cols-2 gap-4">
+                <h2 class="text-3xl font-bold text-white border-b border-gray-800 pb-4 mb-6"><span class="text-matrix">&#9782;</span> Appendix</h2>
+
+                <h3 class="text-lg font-bold text-gray-300 mb-4">Glossary of Terms</h3>
+                <div class="grid md:grid-cols-2 gap-4 mb-12">
                     <div class="bg-panel p-4 rounded border border-gray-800">
                         <h4 class="text-matrix font-bold mb-1">Foundation Model</h4>
                         <p class="text-sm text-gray-400">A giant neural net trained on massive data to predict the next "letter". Becomes a Swiss-army knife for many tasks without needing to be retrained from scratch.</p>
@@ -407,6 +433,28 @@ permalink: /evo2-report-1/
                         <h4 class="text-white font-bold mb-1">StripedHyena 2</h4>
                         <p class="text-sm text-gray-400">The specific, highly efficient neural network architecture that allows Evo 2 to process sequences 1 million letters long without crashing standard computing clusters. It mixes convolutions with attention mechanisms.</p>
                     </div>
+                </div>
+
+                <h3 class="text-lg font-bold text-gray-300 mb-4 border-t border-gray-800 pt-8">Sources &amp; Citations</h3>
+                <div class="space-y-3 font-mono text-sm text-gray-500 mb-12">
+                    <div class="bg-panel border border-gray-800 rounded p-4">
+                        <span class="text-matrix font-bold">[1]</span> Nguyen, E., et al. (2026). <em>Sequence modeling and design from molecular to genome scale with Evo 2.</em> <strong class="text-gray-400">Nature.</strong> DOI: 10.1038/s41586-026-10176-5 &nbsp;
+                        <a href="https://www.nature.com/articles/s41586-026-10176-5" target="_blank" rel="noopener" class="text-cyan hover:underline">nature.com &#8599;</a>
+                    </div>
+                    <div class="bg-panel border border-gray-800 rounded p-4">
+                        <span class="text-matrix font-bold">[2]</span> Arc Institute. (2026). <em>Evo 2 model weights and OpenGenome2 dataset.</em> Hugging Face / Arc Institute. arc-institute.org
+                    </div>
+                    <div class="bg-panel border border-gray-800 rounded p-4">
+                        <span class="text-matrix font-bold">[3]</span> Anthropic. (2024). <em>Scaling and evaluating sparse autoencoders.</em> anthropic.com &nbsp;<span class="text-gray-600">(SAE methodology reference)</span>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-900 pt-8 text-center">
+                    <p class="text-xs text-gray-700 font-mono leading-relaxed">
+                        This report is a single-source analytical commentary on the Evo 2 paper (Nature, 2026).<br>
+                        Report structure informed by the <span class="text-gray-600">OSINT Research Protocol v1.0</span> — used here as an organizational reference framework, not as a generative template.<br>
+                        <span class="text-gray-800">&mdash; March 2026</span>
+                    </p>
                 </div>
             </section>
 
