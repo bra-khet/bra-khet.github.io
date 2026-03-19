@@ -18,17 +18,18 @@ title: About
 
 <!-- ════════════════════════════════════════════════════════════════
      LATEST REPORTS
-     Standard section — bright cyan heading, mid-grey card (#111)
 ════════════════════════════════════════════════════════════════ -->
 <h3 style="color: #00d4ff;">Latest Reports</h3>
 
-<div style="margin-top: 1.5rem; padding: 1rem 1.25rem; border: 1px solid #444;
+<!-- ── DLSS 5 ──────────────────────────────────────────────────── -->
+<h4 style="color: #76B900; font-family: Monaco, monospace; font-size: 0.9rem;
+           margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
+  NVIDIA DLSS 5: Generative Neural Rendering
+</h4>
+
+<div style="margin-top: 0.5rem; padding: 1rem 1.25rem; border: 1px solid #444;
             border-radius: 12px; background: #111;
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
-
-  <h4 style="margin-top: 0; color: #eee; font-family: Monaco, monospace; font-size: 0.95rem;">
-    NVIDIA DLSS 5: Generative Neural Rendering
-  </h4>
 
   <!-- v1.0 -->
   <p style="color: #aaa; font-size: 0.85rem; margin: 0.3rem 0 0.75rem; font-family: Monaco, monospace;">
@@ -68,16 +69,37 @@ title: About
 
 </div>
 
+<!-- ── Evo 2 ───────────────────────────────────────────────────── -->
+<h4 style="color: #00FF9F; font-family: Monaco, monospace; font-size: 0.9rem;
+           margin: 1.75rem 0 0.6rem; letter-spacing: -0.01em;">
+  Evo 2: Learning the Language of Life
+</h4>
+
+<div style="margin-top: 0.5rem; padding: 1rem 1.25rem;
+            border: 1px solid #1a4a3a;
+            border-left: 3px solid #00FF9F;
+            border-radius: 12px; background: #0a1510;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+
+  <!-- v1.0 -->
+  <p style="color: #6aaa8a; font-size: 0.85rem; margin: 0.3rem 0 0.75rem; font-family: Monaco, monospace;">
+    March 2026 &middot; Research Report v1.0
+  </p>
+  <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+    <a href="/evo2-report-1/"
+       style="padding: 0.55rem 1.1rem; background: transparent; color: #00FF9F;
+              border: 1px solid #00FF9F; border-radius: 6px; text-decoration: none;
+              font-weight: bold; font-size: 0.85rem; font-family: Monaco, monospace;"
+       onmouseover="this.style.background='#00FF9F';this.style.color='#000';"
+       onmouseout="this.style.background='transparent';this.style.color='#00FF9F';">
+      &#127760; Interactive Report
+    </a>
+  </div>
+
+</div>
+
 <!-- ════════════════════════════════════════════════════════════════
      MEME HISTORY
-     Distinct section — red accent heading, near-black card (#080808),
-     top border stripe in #ff2a2a, monospace throughout.
-
-     To add a new meme entry:
-       1. Add an <hr> separator then duplicate the entry block below
-       2. Set the accent color hex (used for border, tags, button)
-       3. Update: title, category tag, genre tag, date, blurb,
-                  button href, button emoji, and button label
 ════════════════════════════════════════════════════════════════ -->
 
 <h3 style="color: #ff4444; margin-top: 3rem; font-family: Monaco, monospace; letter-spacing: -0.02em;">
@@ -175,10 +197,6 @@ title: About
 
 <!-- ════════════════════════════════════════════════════════════════
      GALLERY
-     To add artwork: commit images to /assets/img/ and add a block:
-       <div class="gallery-item"><img src="/assets/img/file.png" alt="..."></div>
-     For video loops:
-       <video autoplay loop muted playsinline src="/assets/img/file.mp4">
 ════════════════════════════════════════════════════════════════ -->
 <h3 style="color: #00d4ff; margin-top: 3.5rem;">Real Art</h3>
 <div class="gallery">
@@ -192,10 +210,6 @@ title: About
   <div class="gallery-item">
     <img src="/assets/img/sonny-final 1.png" alt="yes">
   </div>
-  <div class="gallery-item">
-    <img src="/assets/img/son-final1.png" alt="&#3065;">
-  </div>
-
 </div>
 
 <hr class="divider" />
