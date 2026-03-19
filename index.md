@@ -19,8 +19,9 @@ title: About
 <!-- ════════════════════════════════════════════════════════════════
      LATEST REPORTS
 ════════════════════════════════════════════════════════════════ -->
-<h3 style="color: #00d4ff;">Latest Reports</h3>
-
+<h3 style="color: #00ff5d; margin-top: 3rem; font-family: Monaco, monospace; letter-spacing: -0.02em;">
+  Latest Reports
+</h3>
 <!-- ── DLSS 5 ──────────────────────────────────────────────────── -->
 <h4 style="color: #76B900; font-family: Monaco, monospace; font-size: 0.9rem;
            margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
@@ -105,7 +106,7 @@ title: About
 <h3 style="color: #ff4444; margin-top: 3rem; font-family: Monaco, monospace; letter-spacing: -0.02em;">
   Meme Review
 </h3>
-<p style="color: #553333; font-size: 0.8rem; font-family: Monaco, monospace; margin: 0.2rem 0 1rem;">
+<p style="color: #ad6666; font-size: 0.8rem; font-family: Monaco, monospace; margin: 0.2rem 0 1rem;">
   Investigative reports on the lifecycle, IP law, and cultural anatomy of memes.
 </p>
 
@@ -127,11 +128,11 @@ title: About
                    font-family: Monaco, monospace; letter-spacing: 0.06em; white-space: nowrap;">
         AI / IP Law
       </span>
-      <span style="font-size: 0.7rem; color: #553333; font-family: Monaco, monospace;">
+      <span style="font-size: 0.7rem; color: #ad6666; font-family: Monaco, monospace;">
         Italian Brainrot
       </span>
     </div>
-    <p style="color: #442222; font-size: 0.78rem; margin: 0 0 0.6rem; font-family: Monaco, monospace;">
+    <p style="color: #cf7272; font-size: 0.78rem; margin: 0 0 0.6rem; font-family: Monaco, monospace;">
       March 18, 2026
     </p>
     <div style="display: flex; gap: 0.65rem; flex-wrap: wrap;">
@@ -198,7 +199,9 @@ title: About
 <!-- ════════════════════════════════════════════════════════════════
      GALLERY
 ════════════════════════════════════════════════════════════════ -->
-<h3 style="color: #00d4ff; margin-top: 3.5rem;">Real Art</h3>
+<h3 style="color: #00ff5d; margin-top: 3rem; font-family: Monaco, monospace; letter-spacing: -0.02em;">
+  Real Art
+</h3>
 <div class="gallery">
 
  <!-- <div class="gallery-item">
