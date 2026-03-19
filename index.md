@@ -23,28 +23,6 @@ title: "|0⟩"
   Latest Reports
 </h3>
 
-  <!-- Lighting vs. Shading Primer -->
-  <h4 style="color: #aaa; font-size: 0.85rem; margin: 0.3rem 0 0.4rem; font-family: Monaco, monospace;">
-    Light Rendering Explainer  &middot;  March 19, 2026
-  </h4>
-  <p style="color: #666; font-size: 0.8rem; margin: 0 0 0.75rem; font-family: Monaco, monospace; line-height: 1.55;">
-    This primer breaks down the fundamental divide between how light arrives at a surface
-    and how that surface decides what to do with it &mdash; the hidden physics that every
-    modern 3D engine, from Unreal to path tracers, is built on top of.
-  </p>
-  <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-    <a href="/3d-light-shading-1/"
-       style="padding: 0.55rem 1.1rem; background: transparent; color: #22d3ee;
-              border: 1px solid #22d3ee; border-radius: 6px; text-decoration: none;
-              font-weight: bold; font-size: 0.85rem; font-family: Monaco, monospace;"
-       onmouseover="this.style.background='#22d3ee';this.style.color='#000';"
-       onmouseout="this.style.background='transparent';this.style.color='#22d3ee';">
-      &#127760; Interactive Report &mdash; Lighting vs. Shading
-    </a>
-  </div>
-  
-  <hr style="border: none; border-top: 1px dashed #2a2a2a; margin: 1.1rem 0;" />
-  
 <!-- ── DLSS 5 / Neural Rendering Series ──────────────────────── -->
 <h4 style="color: #76B900; font-family: Monaco, monospace; font-size: 0.9rem;
            margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
@@ -59,7 +37,7 @@ title: "|0⟩"
   <p style="color: #aaa; font-size: 0.85rem; margin: 0.3rem 0 0.75rem; font-family: Monaco, monospace;">
     March 17, 2026 &middot; Research Report v1.0 &middot; 10 pages
   </p>
-  <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.25rem;">
+  <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.75rem;">
     <a href="/pdf/ChatGPT_NVIDIA_DLSS_5_Research_Report_March_17_2026.pdf"
        target="_blank" rel="noopener"
        style="padding: 0.55rem 1.1rem; background: #00d4ff; color: #000;
@@ -76,13 +54,11 @@ title: "|0⟩"
     </a>
   </div>
 
-<!--  <hr style="border: none; border-top: 1px dashed #2a2a2a; margin: 1.1rem 0;" /> -->
-
   <!-- v1.1 -->
   <p style="color: #aaa; font-size: 0.85rem; margin: 0.3rem 0 0.75rem; font-family: Monaco, monospace;">
     March 18, 2026 &middot; Research Report v1.1
   </p>
-  <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+  <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.75rem;">
     <a href="/dlss-5-report-1-1/"
        style="padding: 0.55rem 1.1rem; background: #7a3fff; color: #fff;
               border-radius: 6px; text-decoration: none; font-weight: bold;
@@ -91,9 +67,26 @@ title: "|0⟩"
     </a>
   </div>
 
-  <hr style="border: none; border-top: 1px dashed #2a2a2a; margin: 1.1rem 0;" />
-
-
+  <!-- Lighting vs. Shading primer — inside the series card -->
+  <p style="color: #aaa; font-size: 0.85rem; margin: 0.3rem 0 0.4rem; font-family: Monaco, monospace;">
+    March 2026 &middot; Foundational Explainer
+  </p>
+  <p style="color: #666; font-size: 0.8rem; margin: 0 0 0.75rem; font-family: Monaco, monospace; line-height: 1.55;">
+    Before neural rendering makes sense, you need to understand the split it exploits.
+    This primer breaks down the fundamental divide between how light arrives at a surface
+    and how that surface decides what to do with it &mdash; the hidden physics that every
+    modern 3D engine, from Unreal to path tracers, is built on top of.
+  </p>
+  <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+    <a href="/3d-light-shading-1/"
+       style="padding: 0.55rem 1.1rem; background: transparent; color: #22d3ee;
+              border: 1px solid #22d3ee; border-radius: 6px; text-decoration: none;
+              font-weight: bold; font-size: 0.85rem; font-family: Monaco, monospace;"
+       onmouseover="this.style.background='#22d3ee';this.style.color='#000';"
+       onmouseout="this.style.background='transparent';this.style.color='#22d3ee';">
+      &#127760; Interactive Report &mdash; Lighting vs. Shading
+    </a>
+  </div>
 
 </div>
 
@@ -109,7 +102,6 @@ title: "|0⟩"
             border-radius: 12px; background: #0a1510;
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
 
-  <!-- v1.0 -->
   <p style="color: #6aaa8a; font-size: 0.85rem; margin: 0.3rem 0 0.75rem; font-family: Monaco, monospace;">
     March 2026 &middot; Research Report v1.0
   </p>
@@ -163,7 +155,6 @@ title: "|0⟩"
       March 18, 2026
     </p>
     <div style="display: flex; gap: 0.65rem; flex-wrap: wrap;">
-      <!-- Primary: Infographic report -->
       <a href="/ttt-info-report-1/"
          style="padding: 0.5rem 1rem; background: transparent; color: #ff2a2a;
                 border: 1px solid #ff2a2a; border-radius: 5px; text-decoration: none;
@@ -173,7 +164,6 @@ title: "|0⟩"
          onmouseout="this.style.background='transparent';this.style.color='#ff2a2a';">
         &#128249; Infographic v1.0
       </a>
-      <!-- Secondary: Narrative interactive report -->
       <a href="/tung-tung-tung-sahur/"
          style="padding: 0.5rem 1rem; background: transparent; color: #884444;
                 border: 1px solid #441515; border-radius: 5px; text-decoration: none;
