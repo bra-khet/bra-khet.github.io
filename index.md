@@ -1,6 +1,6 @@
 ---
 layout: default
-title: |0⟩ 
+title: "|0⟩"
 ---
 
 <h2 style="color: #00d4ff;">
