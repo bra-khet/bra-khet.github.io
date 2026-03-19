@@ -1,6 +1,6 @@
 ---
 layout: null
-title: "Lighting vs. Shading Architecture, Simplified"
+title: "Lighting vs. Shading: From Photons to Pixels"
 permalink: /3d-light-shading-1/
 ---
 
@@ -9,40 +9,75 @@ permalink: /3d-light-shading-1/
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lighting vs. Shading Architecture, Simplified</title>
+    <title>Lighting vs. Shading: From Photons to Pixels</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        /* ── Layout & Chart ──────────────────────────────────────────── */
         .chart-container { position: relative; width: 100%; max-width: 700px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
         @media (min-width: 768px) { .chart-container { height: 400px; } }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* ── Theme ───────────────────────────────────────────────────── */
         .neon-text { text-shadow: 0 0 10px rgba(34, 211, 238, 0.5), 0 0 20px rgba(34, 211, 238, 0.3); }
         .tab-active { background-color: #0891b2; color: white; border-color: #06b6d4; }
         .tab-inactive { background-color: transparent; color: #94a3b8; border-color: #334155; }
         .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
         .accordion-content { transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; max-height: 0; opacity: 0; overflow: hidden; }
         .accordion-open { max-height: 500px; opacity: 1; }
+
+        /* ── Hacker nav banner ───────────────────────────────────────── */
+        #hacker-nav-banner {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 9999;
+            background: #060c10;
+            border-bottom: 1px dashed rgba(6, 182, 212, 0.3);
+            font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+            font-size: 13px;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #eaeaea;
+        }
+        #hacker-nav-banner a {
+            color: #63c0f5;
+            text-decoration: none;
+            text-shadow: 0 0 5px rgba(104, 182, 255, 0.5);
+        }
+        #hacker-nav-banner a:hover { text-decoration: underline; }
+        #hacker-nav-banner .banner-title {
+            color: #22d3ee;
+            text-shadow: 0 0 5px rgba(34, 211, 238, 0.4),
+                         0 0 12px rgba(34, 211, 238, 0.15);
+            letter-spacing: -0.03em;
+        }
+        #hacker-nav-banner .banner-tag { color: #334155; font-size: 11px; }
+        #hacker-nav-banner .banner-v   { color: #0891b2; font-size: 11px; }
+
+        body { padding-top: 37px; }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-300 font-sans leading-relaxed selection:bg-cyan-500 selection:text-white antialiased">
 
-<!-- Chosen Palette: Slate (Dark Mode Base) with Cyan (Neon Accents) and Teals/Blues for Data Viz -->
-<!-- Application Structure Plan: The SPA is structured linearly to match the requested Phase 2 blueprint, but relies on interactive tabs, horizontal scrolling timelines, and expandable accordions to condense complex data. The "Architecture & Forensics" section uses a custom tabbed interface acting as a side-by-side comparison, allowing users to isolate 'Lighting' logic from 'Shading' logic before viewing the combined pipeline. This structure ensures scannability while maintaining post-graduate technical depth. -->
-<!-- Visualization & Content Choices: 
-1. Timeline -> Horizontal scroll container -> Interaction: Scroll/Swipe -> Justification: Shows progression without cluttering vertical space -> HTML/Tailwind.
-2. Render-Time Impact -> Bar Chart -> Interaction: Hover tooltips -> Justification: Directly compares computational weight of incident light vs surface response -> Chart.js.
-3. Market Share -> Doughnut Chart -> Interaction: Hover tooltips -> Justification: Shows adoption of physical vs custom shading workflows -> Chart.js.
-4. Pipeline Architecture -> Tabbed Side-by-Side Panels -> Interaction: Click tabs -> Justification: Forces the user to explicitly isolate the concepts, reinforcing the core thesis -> HTML/JS. 
--->
-<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<!-- ── Nav banner ─────────────────────────────────────────────────── -->
+<div id="hacker-nav-banner">
+    <span>
+        <a href="{{ site.baseurl }}/">&#8592; bra-khet.github.io</a>
+        <span class="banner-tag"> / research</span>
+    </span>
+    <span class="banner-title">Lighting vs. Shading &mdash; From Photons to Pixels</span>
+    <span class="banner-v">v1.0 &middot; March 2026</span>
+</div>
 
 <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     
     <header class="mb-20 text-center relative">
         <div class="absolute inset-0 bg-cyan-900/20 blur-[100px] rounded-full z-0 pointer-events-none"></div>
         <div class="relative z-10">
-            <span class="text-cyan-400 font-mono text-sm tracking-widest uppercase mb-4 block">OSINT Research Protocol v1.0 • Technical Analysis</span>
+            <span class="text-cyan-500 font-mono text-xs tracking-widest uppercase mb-4 block opacity-60">3D Graphics &nbsp;&middot;&nbsp; Neural Rendering Series &nbsp;&middot;&nbsp; Foundational Concepts</span>
             <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight">
                 Incident <span class="text-cyan-400 neon-text">Radiance</span> vs. Surface <span class="text-teal-400 neon-text">Response</span>
             </h1>
@@ -317,8 +352,8 @@ permalink: /3d-light-shading-1/
 
 </main>
 
-<footer class="text-center py-8 border-t border-gray-900 mt-12 text-gray-600 text-sm">
-  Generated via OSINT Research Protocol v1.0 | March 2026
+<footer class="text-center py-8 border-t border-gray-900 mt-12 text-gray-600 text-xs font-mono">
+    Generated via OSINT Research Protocol v1.0 &nbsp;&middot;&nbsp; March 2026 &nbsp;&middot;&nbsp; Neural Rendering Series
 </footer>
 
 <script>
