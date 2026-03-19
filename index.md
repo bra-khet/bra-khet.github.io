@@ -1,6 +1,6 @@
 ---
 layout: default
-title: About
+title: |0⟩ 
 ---
 
 <h2 style="color: #00d4ff;">
@@ -22,7 +22,8 @@ title: About
 <h3 style="color: #00ff5d; margin-top: 3rem; font-family: Monaco, monospace; letter-spacing: -0.02em;">
   Latest Reports
 </h3>
-<!-- ── DLSS 5 ──────────────────────────────────────────────────── -->
+
+<!-- ── DLSS 5 / Neural Rendering Series ──────────────────────── -->
 <h4 style="color: #76B900; font-family: Monaco, monospace; font-size: 0.9rem;
            margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
   NVIDIA DLSS 5: Generative Neural Rendering
@@ -68,11 +69,34 @@ title: About
     </a>
   </div>
 
+  <hr style="border: none; border-top: 1px dashed #2a2a2a; margin: 1.1rem 0;" />
+
+  <!-- Lighting vs. Shading Primer -->
+  <p style="color: #aaa; font-size: 0.85rem; margin: 0.3rem 0 0.4rem; font-family: Monaco, monospace;">
+    March 2026 &middot; Foundational Explainer
+  </p>
+  <p style="color: #666; font-size: 0.8rem; margin: 0 0 0.75rem; font-family: Monaco, monospace; line-height: 1.55;">
+    Before neural rendering makes sense, you need to understand the split it exploits.
+    This primer breaks down the fundamental divide between how light arrives at a surface
+    and how that surface decides what to do with it &mdash; the hidden physics that every
+    modern 3D engine, from Unreal to path tracers, is built on top of.
+  </p>
+  <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+    <a href="/3d-light-shading-1/"
+       style="padding: 0.55rem 1.1rem; background: transparent; color: #22d3ee;
+              border: 1px solid #22d3ee; border-radius: 6px; text-decoration: none;
+              font-weight: bold; font-size: 0.85rem; font-family: Monaco, monospace;"
+       onmouseover="this.style.background='#22d3ee';this.style.color='#000';"
+       onmouseout="this.style.background='transparent';this.style.color='#22d3ee';">
+      &#127760; Interactive Report &mdash; Lighting vs. Shading
+    </a>
+  </div>
+
 </div>
 
 <!-- ── Evo 2 ───────────────────────────────────────────────────── -->
 <h4 style="color: #00FF9F; font-family: Monaco, monospace; font-size: 0.9rem;
-           margin: 1.75rem 0 0.6rem; letter-spacing: -0.01em;">
+           margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
   Evo 2: Learning the Language of Life
 </h4>
 
