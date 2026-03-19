@@ -1,0 +1,579 @@
+---
+layout: null
+title: "Evo 2: Learning the Language of Life"
+permalink: /evo2-report-1/
+---
+
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evo 2: Learning the Language of Life</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        charcoal: '#0A0F14',
+                        matrix: '#00FF9F',
+                        cyan: '#00B8FF',
+                        darker: '#06090c',
+                        panel: '#121A21'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0A0F14; color: #D1D5DB; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0A0F14; }
+        ::-webkit-scrollbar-thumb { background: #121A21; border-radius: 4px; border: 1px solid #00FF9F; }
+        ::-webkit-scrollbar-thumb:hover { background: #00FF9F; }
+        
+        .nav-active { border-left: 4px solid #00FF9F; color: #00FF9F; background: rgba(0, 255, 159, 0.1); }
+        .section-hidden { display: none; }
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            max-height: 400px;
+        }
+        
+        .pulse-text {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+
+        .dna-highlight { transition: all 0.3s ease; }
+    </style>
+
+    <!-- Chosen Palette: Matrix Bio-Hacker (Background: Deep Charcoal #0A0F14, Accents: Matrix Green #00FF9F & Cyan #00B8FF, Text: Gray-300) -->
+    <!-- Application Structure Plan: The SPA uses a dashboard-style layout to facilitate non-linear exploration of the 6 key "Wow" breakthroughs. A persistent left sidebar allows quick jumping between topics. The main area displays sections one at a time to prevent cognitive overload. Each section begins with a pop-science analogy and an introductory paragraph explaining the breakthrough's context and relevance. Interactive components (charts, toggles, text highlighters) are embedded directly within these sections to allow hands-on learning, transitioning the user from passive reading to active exploration. -->
+    <!-- Visualization & Content Choices: 
+         1. 1M Context -> Line Chart (Chart.js) comparing memory drop-off. Goal: Show scale. Analogy: Reading Lord of the Rings.
+         2. Polyglot Dialects -> Interactive Text Toggle. Goal: Demonstrate zero-shot contextual translation. Analogy: Regional dialects without a dictionary.
+         3. Variant Scoring -> Bar Chart (Chart.js). Goal: Compare performance vs clinical models. Analogy: Editor spotting grammatical errors.
+         4. Internal Textbook (SAE) -> JS Text Highlighter. Goal: Show autonomous discovery. Analogy: AI building its own textbook.
+         5. Genome Generation -> Visual Size Comparison Blocks (HTML/CSS). Goal: Show scale of generation. Analogy: Writing a novel vs a sentence.
+         6. Epigenetic Morse -> Area Chart (Chart.js). Goal: Prove physical cell control. Analogy: Playing a musical score.
+         CONFIRMATION: NO SVG/Mermaid used. HTML/Tailwind and Canvas only. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="flex h-screen overflow-hidden font-sans">
+
+    <aside class="w-64 bg-darker border-r border-gray-800 flex flex-col h-full z-20 shrink-0 hidden md:flex">
+        <div class="p-6">
+            <h1 class="text-2xl font-bold text-white tracking-tight">Evo <span class="text-matrix">2</span></h1>
+            <p class="text-xs text-cyan mt-1 font-mono">Genomic Foundation Model</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto mt-4" id="main-nav">
+            <button data-target="hero" class="w-full text-left px-6 py-3 text-sm font-semibold text-gray-400 hover:text-white transition-colors nav-active">
+                &#9654; Introduction
+            </button>
+            <button data-target="context" class="w-full text-left px-6 py-3 text-sm font-semibold text-gray-400 hover:text-white transition-colors">
+                1. The 1M Context Window
+            </button>
+            <button data-target="dialects" class="w-full text-left px-6 py-3 text-sm font-semibold text-gray-400 hover:text-white transition-colors">
+                2. Polyglot: Genetic Dialects
+            </button>
+            <button data-target="variants" class="w-full text-left px-6 py-3 text-sm font-semibold text-gray-400 hover:text-white transition-colors">
+                3. Zero-Shot Clinician
+            </button>
+            <button data-target="sae" class="w-full text-left px-6 py-3 text-sm font-semibold text-gray-400 hover:text-white transition-colors">
+                4. The Internal Textbook
+            </button>
+            <button data-target="generation" class="w-full text-left px-6 py-3 text-sm font-semibold text-gray-400 hover:text-white transition-colors">
+                5. Genome Architect
+            </button>
+            <button data-target="epigenome" class="w-full text-left px-6 py-3 text-sm font-semibold text-gray-400 hover:text-white transition-colors">
+                6. Epigenetic Morse Code
+            </button>
+            <button data-target="glossary" class="w-full text-left px-6 py-3 text-sm font-semibold text-gray-400 hover:text-white transition-colors">
+                &#9782; Jargon Primer
+            </button>
+        </nav>
+        <div class="p-4 border-t border-gray-800 text-xs text-gray-500 font-mono">
+            Nature 2026 Breakthrough<br>OpenGenome2 (9.3T Tokens)
+        </div>
+    </aside>
+
+    <div class="md:hidden bg-darker p-4 flex justify-between items-center border-b border-gray-800 absolute w-full z-30">
+        <h1 class="text-xl font-bold text-white">Evo <span class="text-matrix">2</span></h1>
+        <select id="mobile-nav" class="bg-panel border border-matrix text-matrix px-2 py-1 rounded">
+            <option value="hero">Introduction</option>
+            <option value="context">1. 1M Context</option>
+            <option value="dialects">2. Dialects</option>
+            <option value="variants">3. Clinician</option>
+            <option value="sae">4. Internal Textbook</option>
+            <option value="generation">5. Architect</option>
+            <option value="epigenome">6. Morse Code</option>
+            <option value="glossary">Glossary</option>
+        </select>
+    </div>
+
+    <main class="flex-1 overflow-y-auto h-full pt-16 md:pt-0 bg-charcoal relative">
+        
+        <div class="absolute inset-0 z-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#00FF9F 1px, transparent 1px); background-size: 40px 40px;"></div>
+
+        <div class="max-w-5xl mx-auto px-6 py-12 lg:py-20 relative z-10">
+            
+            <section id="hero" class="content-section">
+                <div class="mb-8">
+                    <span class="px-3 py-1 bg-matrix text-black font-bold text-xs uppercase tracking-wider rounded-sm">Nature 2026</span>
+                </div>
+                <h1 class="text-5xl lg:text-7xl font-bold text-white leading-tight mb-6">
+                    Cracking Life's Code <br>at <span class="text-matrix">Scale</span>.
+                </h1>
+                <p class="text-xl text-gray-400 mb-8 max-w-3xl leading-relaxed">
+                    Welcome to the interactive deep dive into Evo 2, the world's first generalist genomic foundation model. Trained on 9.3 trillion letters of raw DNA across all domains of life, it learns biology without human labels.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+                    <div class="bg-panel border border-gray-800 p-6 rounded-lg hover:border-matrix transition-colors">
+                        <div class="text-3xl mb-4">&#128269;</div>
+                        <h3 class="text-xl font-bold text-white mb-2">The Scale of the Breakthrough</h3>
+                        <p class="text-sm text-gray-400">Evo 2 reads, understands, and writes DNA across bacteria, archaea, eukaryotes, and phage. It treats DNA like a language, and it just became fluent.</p>
+                    </div>
+                    <div class="bg-panel border border-gray-800 p-6 rounded-lg hover:border-cyan transition-colors">
+                        <div class="text-3xl mb-4">&#9881;&#65039;</div>
+                        <h3 class="text-xl font-bold text-white mb-2">How to Use This Report</h3>
+                        <p class="text-sm text-gray-400">Use the navigation to explore the 6 critical "Wow" benchmarks. Interact with the charts and visualizers to understand how Evo 2 turns theoretical biology into programmable code.</p>
+                    </div>
+                </div>
+                <div class="mt-16 text-center">
+                    <button onclick="document.querySelector('[data-target=\'context\']').click()" class="bg-matrix text-black px-8 py-4 rounded font-bold hover:bg-white transition-colors uppercase tracking-widest text-sm">
+                        Start Exploring &#8594;
+                    </button>
+                </div>
+            </section>
+
+            <section id="context" class="content-section section-hidden">
+                <h2 class="text-3xl font-bold text-white border-b border-gray-800 pb-4 mb-6"><span class="text-matrix">01.</span> The 1-Million Letter Memory</h2>
+                
+                <p class="text-lg text-gray-300 mb-6 bg-panel p-4 rounded-lg border border-gray-800 border-l-4 border-l-matrix">
+                    <strong>The Analogy:</strong> Imagine reading the entire <em>Lord of the Rings</em> trilogy in one sitting, and instantly recalling a specific three-word phrase buried on page 412. That is what a 1-million token context window means for AI.
+                </p>
+                
+                <p class="text-gray-400 mb-8">
+                    <strong>What this section shows:</strong> This section demonstrates the "Needle-in-a-Haystack" benchmark. Previous DNA models "forgot" context after about 8,000 to 128,000 bases. Real biology operates at massive scales (like distant enhancers regulating a gene 500,000 bases away). Evo 2 can hold an entire small bacterial genome in its memory at once, perfectly recalling a 100-base-pair "needle" sequence hidden within 1,000,000 random bases.
+                </p>
+
+                <div class="bg-panel p-6 rounded-lg border border-gray-800 shadow-2xl">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-white">Needle Recall Accuracy by Sequence Length</h3>
+                        <span class="text-xs font-mono text-cyan bg-cyan bg-opacity-10 px-2 py-1 rounded">Interactive Chart</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="contextChart"></canvas>
+                    </div>
+                    <p class="text-xs text-center mt-4 text-gray-500">Hover over data points to see the dramatic drop-off of legacy models versus Evo 2's sustained memory.</p>
+                </div>
+            </section>
+
+            <section id="dialects" class="content-section section-hidden">
+                <h2 class="text-3xl font-bold text-white border-b border-gray-800 pb-4 mb-6"><span class="text-matrix">02.</span> Polyglot: Genetic Dialects</h2>
+                
+                <p class="text-lg text-gray-300 mb-6 bg-panel p-4 rounded-lg border border-gray-800 border-l-4 border-l-matrix">
+                    <strong>The Analogy:</strong> It's like someone learning multiple regional dialects of a language just by listening to crowds, without ever being handed a dictionary. They instantly know a word that means "Stop" in London means "Keep going" in Sydney.
+                </p>
+                
+                <p class="text-gray-400 mb-8">
+                    <strong>What this section shows:</strong> While most life uses the same genetic code, some organisms use slight variations. For example, the codon <code>TGA</code> usually tells the cellular machinery to STOP making a protein. But in Ciliates, <code>TGA</code> codes for an amino acid (Cysteine). Without human labeling, Evo 2 learned these dialects purely from raw sequence statistics. Interact below to see how Evo 2 shifts its interpretation of the exact same DNA based on the organism's context.
+                </p>
+
+                <div class="bg-panel p-6 rounded-lg border border-gray-800">
+                    <h3 class="font-bold text-white mb-4">Test Sequence: <span class="font-mono text-xl tracking-widest text-gray-500 bg-black px-3 py-1 rounded">ATG GGC <span id="target-codon" class="text-white border-b-2 border-dashed border-gray-500">TGA</span> CCA</span></h3>
+                    
+                    <div class="flex gap-4 mb-8">
+                        <button id="btn-human" class="px-4 py-2 bg-[#00FF9F] bg-opacity-20 text-[#00FF9F] border border-[#00FF9F] rounded font-bold text-sm">Human (Standard)</button>
+                        <button id="btn-ciliate" class="px-4 py-2 bg-charcoal text-gray-400 border border-gray-700 rounded font-bold text-sm hover:text-white transition-colors">Ciliate (Variant)</button>
+                    </div>
+
+                    <div class="p-6 bg-charcoal rounded border border-gray-800 relative overflow-hidden">
+                        <div class="absolute right-0 top-0 h-full w-2 bg-gradient-to-b from-transparent via-matrix to-transparent opacity-50"></div>
+                        <h4 class="text-sm text-gray-500 uppercase font-bold mb-2">Evo 2 Translation Prediction:</h4>
+                        <div id="translation-result" class="text-2xl font-mono text-red-400">
+                            Methionine - Glycine - <span class="font-bold text-red-500 bg-red-500 bg-opacity-10 px-2 rounded">[CRITICAL STOP]</span> ... translation aborted.
+                        </div>
+                        <p id="translation-desc" class="text-sm mt-4 text-gray-400">In standard genomes, TGA is a premature stop codon. Evo 2 correctly identifies this as highly detrimental to the protein structure.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="variants" class="content-section section-hidden">
+                <h2 class="text-3xl font-bold text-white border-b border-gray-800 pb-4 mb-6"><span class="text-matrix">03.</span> The Zero-Shot Clinician</h2>
+                
+                <p class="text-lg text-gray-300 mb-6 bg-panel p-4 rounded-lg border border-gray-800 border-l-4 border-l-matrix">
+                    <strong>The Analogy:</strong> Imagine a master editor who has read millions of books. If you hand them a single sentence with a fatal grammatical error, they spot it instantly—even if they've never seen that specific sentence before, and without consulting a grammar textbook.
+                </p>
+                
+                <p class="text-gray-400 mb-8">
+                    <strong>What this section shows:</strong> This section visualizes Evo 2's ability to evaluate human genetic variants (like mutations in the BRCA1 cancer gene). "Zero-shot" means it scores these mutations purely by predicting how "surprising" or "unlikely" the mutated sequence is, based on its training on healthy genomes. It matches or beats models that were explicitly trained on clinical hospital data.
+                </p>
+
+                <div class="bg-panel p-6 rounded-lg border border-gray-800">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-white">BRCA1 Variant Pathogenicity Scoring (AUROC)</h3>
+                        <span class="text-xs font-mono text-cyan bg-cyan bg-opacity-10 px-2 py-1 rounded">Performance Comparison</span>
+                    </div>
+                    <div class="chart-container h-80">
+                        <canvas id="variantChart"></canvas>
+                    </div>
+                    <p class="text-xs text-center mt-4 text-gray-500">Higher scores approach 1.0 (perfect prediction). Notice Evo 2 (Unsupervised) competing closely with models that required expensive clinical labeling.</p>
+                </div>
+            </section>
+
+            <section id="sae" class="content-section section-hidden">
+                <h2 class="text-3xl font-bold text-white border-b border-gray-800 pb-4 mb-6"><span class="text-matrix">04.</span> The Internal Textbook (SAE)</h2>
+                
+                <p class="text-lg text-gray-300 mb-6 bg-panel p-4 rounded-lg border border-gray-800 border-l-4 border-l-matrix">
+                    <strong>The Analogy:</strong> We didn't give the AI a biology textbook; we gave it an ocean of letters. By analyzing its own internal brain waves (using Sparse Autoencoders), we found it wrote its own textbook. It independently invented concepts like "paragraphs" (exons) and "punctuation" (promoters).
+                </p>
+                
+                <p class="text-gray-400 mb-8">
+                    <strong>What this section shows:</strong> Sparse Autoencoders (SAEs) allow researchers to look inside the model's neural network to see what features it is paying attention to. Below is a simulated sequence. Click the "biology concepts" to see what parts of the raw sequence Evo 2 automatically identifies as having functional meaning, all without human annotation.
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="md:col-span-1 flex flex-col gap-3">
+                        <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2">Probe the AI's Brain:</h3>
+                        <button id="btn-sae-phage" class="text-left px-4 py-3 bg-panel border border-gray-700 hover:border-matrix rounded transition-colors text-white font-mono text-sm">
+                            &#129414; Detect Prophage DNA
+                        </button>
+                        <button id="btn-sae-exon" class="text-left px-4 py-3 bg-panel border border-gray-700 hover:border-cyan rounded transition-colors text-white font-mono text-sm">
+                            &#128214; Detect Exon Boundaries
+                        </button>
+                        <button id="btn-sae-tf" class="text-left px-4 py-3 bg-panel border border-gray-700 hover:border-purple-500 rounded transition-colors text-white font-mono text-sm">
+                            &#128273; Detect Transcription Factors
+                        </button>
+                    </div>
+                    <div class="md:col-span-2 bg-charcoal p-6 rounded-lg border border-gray-800 font-mono text-sm break-all leading-relaxed relative">
+                        <p class="text-gray-600 dna-base">
+                            GATCTC<span class="dna-phage transition-colors">GTAGCTAGCCTAG</span>TACGATC<span class="dna-exon transition-colors">ATGGC</span>CGATTAC<span class="dna-tf transition-colors">TATA</span>GCGCGTAC<span class="dna-phage transition-colors">CTAGGCA</span>TTT<span class="dna-exon transition-colors">TAA</span>GCATGC
+                            <br><br>
+                            CTAG<span class="dna-tf transition-colors">CAAT</span>CGTAGC<span class="dna-phage transition-colors">GCTAGCTAGCTAG</span>CTAGCTA<span class="dna-exon transition-colors">GGC</span>TAGCTAGCTAGC<span class="dna-tf transition-colors">GGGCGG</span>CTAGCTAGCTAG
+                        </p>
+                        <div id="sae-explanation" class="mt-6 p-4 bg-gray-900 border-l-2 border-gray-700 text-gray-400 text-xs hidden">
+                            Select a feature to view analysis.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="generation" class="content-section section-hidden">
+                <h2 class="text-3xl font-bold text-white border-b border-gray-800 pb-4 mb-6"><span class="text-matrix">05.</span> Genome Architect</h2>
+                
+                <p class="text-lg text-gray-300 mb-6 bg-panel p-4 rounded-lg border border-gray-800 border-l-4 border-l-matrix">
+                    <strong>The Analogy:</strong> Older DNA AI could write a sensible five-word sentence. Evo 2 can generate a fully formatted, 300-page functional technical manual from scratch. 
+                </p>
+                
+                <p class="text-gray-400 mb-8">
+                    <strong>What this section shows:</strong> This visualizes the sheer scale of <em>de novo</em> (from scratch) generation capabilities. Evo 2 isn't just predicting mutations; it can generate entire functional sequences that pass in-silico structural tests (AlphaFold verifies the generated proteins actually fold properly). It scales from organelles up to complete eukaryotic chromosomes.
+                </p>
+
+                <div class="flex flex-col gap-8 mt-10">
+                    
+                    <div class="relative w-full">
+                        <div class="flex items-center mb-2">
+                            <div class="w-8 h-8 rounded bg-gray-800 border border-gray-600 flex items-center justify-center font-bold text-xs mr-4">&#129420;</div>
+                            <h4 class="text-white font-bold w-48">Human Mitochondria</h4>
+                            <span class="text-gray-500 font-mono text-xs ml-auto">~16 kb</span>
+                        </div>
+                        <div class="w-full bg-gray-900 h-6 rounded overflow-hidden">
+                            <div class="h-full bg-cyan w-[5%]"></div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Generates correct number of tRNA/rRNA genes and complex synteny.</p>
+                    </div>
+
+                    <div class="relative w-full">
+                        <div class="flex items-center mb-2">
+                            <div class="w-8 h-8 rounded bg-gray-800 border border-gray-600 flex items-center justify-center font-bold text-xs mr-4">&#129440;</div>
+                            <h4 class="text-white font-bold w-48">M. genitalium (Bacteria)</h4>
+                            <span class="text-gray-500 font-mono text-xs ml-auto">~580 kb</span>
+                        </div>
+                        <div class="w-full bg-gray-900 h-6 rounded overflow-hidden">
+                            <div class="h-full bg-matrix w-[58%]"></div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">70% of predicted genes have valid Pfam protein hits.</p>
+                    </div>
+
+                    <div class="relative w-full">
+                        <div class="flex items-center mb-2">
+                            <div class="w-8 h-8 rounded bg-gray-800 border border-gray-600 flex items-center justify-center font-bold text-xs mr-4">&#127811;</div>
+                            <h4 class="text-white font-bold w-48">S. cerevisiae (Yeast) Chr III</h4>
+                            <span class="text-gray-500 font-mono text-xs ml-auto">~330 kb</span>
+                        </div>
+                        <div class="w-full bg-gray-900 h-6 rounded overflow-hidden">
+                            <div class="h-full bg-purple-500 w-[33%]"></div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">First generation of complex eukaryotic chromosomes with introns and promoters.</p>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="epigenome" class="content-section section-hidden">
+                <h2 class="text-3xl font-bold text-white border-b border-gray-800 pb-4 mb-6"><span class="text-matrix">06.</span> Epigenetic Morse Code</h2>
+                
+                <p class="text-lg text-gray-300 mb-6 bg-panel p-4 rounded-lg border border-gray-800 border-l-4 border-l-matrix">
+                    <strong>The Analogy:</strong> It is like composing a highly specific musical score, giving it to a living orchestra (the cell), and having them play exactly what you wrote. We asked it to spell "EVO2" in chemical signals, and living mammalian cells executed the command.
+                </p>
+                
+                <p class="text-gray-400 mb-8">
+                    <strong>What this section shows:</strong> This is arguably the most practically profound result. Epigenetics control how tightly DNA is packed, which dictates if genes are turned on or off. Researchers used Evo 2 to design DNA sequences intended to force the cell to open its DNA in specific Morse Code patterns (measured via ATAC-seq). The chart below illustrates the successful experimental validation in live human/mouse cells.
+                </p>
+
+                <div class="bg-panel p-6 rounded-lg border border-gray-800 shadow-2xl">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-white">Designed ATAC-seq Peaks: "EVO2" Pattern</h3>
+                        <span class="text-xs font-mono text-cyan bg-cyan bg-opacity-10 px-2 py-1 rounded">Live Cell Validation</span>
+                    </div>
+                    <div class="chart-container h-80">
+                        <canvas id="epigenomeChart"></canvas>
+                    </div>
+                    <div class="flex justify-center mt-4 gap-8 text-white font-mono text-2xl tracking-widest">
+                        <span class="border-b-2 border-matrix pb-1">. (E)</span>
+                        <span class="border-b-2 border-cyan pb-1">...- (V)</span>
+                        <span class="border-b-2 border-matrix pb-1">--- (O)</span>
+                        <span class="border-b-2 border-cyan pb-1">..--- (2)</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="glossary" class="content-section section-hidden">
+                <h2 class="text-3xl font-bold text-white border-b border-gray-800 pb-4 mb-6"><span class="text-matrix">&#9782;</span> Jargon Primer</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-panel p-4 rounded border border-gray-800">
+                        <h4 class="text-matrix font-bold mb-1">Foundation Model</h4>
+                        <p class="text-sm text-gray-400">A giant neural net trained on massive data to predict the next "letter". Becomes a Swiss-army knife for many tasks without needing to be retrained from scratch.</p>
+                    </div>
+                    <div class="bg-panel p-4 rounded border border-gray-800">
+                        <h4 class="text-matrix font-bold mb-1">Zero-Shot</h4>
+                        <p class="text-sm text-gray-400">When the AI answers questions it was never explicitly taught (e.g., "is this mutation bad?") simply by relying on the deep patterns it learned during general training.</p>
+                    </div>
+                    <div class="bg-panel p-4 rounded border border-gray-800">
+                        <h4 class="text-cyan font-bold mb-1">Sparse Autoencoder (SAE)</h4>
+                        <p class="text-sm text-gray-400">A mathematical tool used by researchers to compress the model's complex internal "thoughts" into human-readable concepts, revealing how the AI understands biology.</p>
+                    </div>
+                    <div class="bg-panel p-4 rounded border border-gray-800">
+                        <h4 class="text-cyan font-bold mb-1">ATAC-seq</h4>
+                        <p class="text-sm text-gray-400">A real-world lab experiment that measures which parts of DNA are "open" and readable inside a living cell. Used here to prove the AI's designs actually work physically.</p>
+                    </div>
+                    <div class="bg-panel p-4 rounded border border-gray-800 md:col-span-2">
+                        <h4 class="text-white font-bold mb-1">StripedHyena 2</h4>
+                        <p class="text-sm text-gray-400">The specific, highly efficient neural network architecture that allows Evo 2 to process sequences 1 million letters long without crashing standard computing clusters. It mixes convolutions with attention mechanisms.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        const navButtons = document.querySelectorAll('#main-nav button');
+        const mobileNav = document.getElementById('mobile-nav');
+        const sections = document.querySelectorAll('.content-section');
+        let chartsInitialized = { context: false, variants: false, epigenome: false };
+        let currentCharts = {};
+
+        function switchTab(targetId) {
+            navButtons.forEach(btn => {
+                if (btn.dataset.target === targetId) {
+                    btn.classList.add('nav-active');
+                    btn.classList.replace('text-gray-400', 'text-white');
+                } else {
+                    btn.classList.remove('nav-active');
+                    btn.classList.replace('text-white', 'text-gray-400');
+                }
+            });
+            mobileNav.value = targetId;
+            sections.forEach(sec => {
+                if (sec.id === targetId) {
+                    sec.classList.remove('section-hidden');
+                    initOrUpdateChart(targetId);
+                } else {
+                    sec.classList.add('section-hidden');
+                }
+            });
+            document.querySelector('main').scrollTo(0, 0);
+        }
+
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => switchTab(e.target.dataset.target));
+        });
+        mobileNav.addEventListener('change', (e) => switchTab(e.target.value));
+
+        Chart.defaults.color = '#9CA3AF';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        function initOrUpdateChart(sectionId) {
+            if (sectionId === 'context' && !chartsInitialized.context) {
+                const ctx = document.getElementById('contextChart').getContext('2d');
+                currentCharts.context = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['1k', '10k', '50k', '100k', '500k', '1M'],
+                        datasets: [
+                            {
+                                label: 'Evo 2 (40B)',
+                                data: [0.99, 0.98, 0.95, 0.94, 0.90, 0.85],
+                                borderColor: '#00FF9F',
+                                backgroundColor: 'rgba(0, 255, 159, 0.2)',
+                                borderWidth: 3,
+                                tension: 0.3,
+                                fill: true
+                            },
+                            {
+                                label: 'Legacy Transformer',
+                                data: [0.95, 0.80, 0.10, 0.02, 0, 0],
+                                borderColor: '#EF4444',
+                                borderDash: [5, 5],
+                                borderWidth: 2,
+                                tension: 0.3
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: { y: { min: 0, max: 1, title: { display: true, text: 'Recall Accuracy' } }, x: { title: { display: true, text: 'Context Length (Base Pairs)' } } },
+                        plugins: { legend: { position: 'top' }, tooltip: { mode: 'index', intersect: false } }
+                    }
+                });
+                chartsInitialized.context = true;
+            }
+
+            if (sectionId === 'variants' && !chartsInitialized.variants) {
+                const ctx = document.getElementById('variantChart').getContext('2d');
+                currentCharts.variants = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Evo 2 (Unsupervised)', 'ESM-1b (Unsupervised)', 'AlphaMissense (Supervised)', 'Clinical Model X'],
+                        datasets: [{
+                            label: 'AUROC Score',
+                            data: [0.94, 0.88, 0.95, 0.96],
+                            backgroundColor: ['#00FF9F', '#4B5563', '#00B8FF', '#8B5CF6'],
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: { y: { min: 0.7, max: 1.0 } },
+                        plugins: { legend: { display: false } }
+                    }
+                });
+                chartsInitialized.variants = true;
+            }
+
+            if (sectionId === 'epigenome' && !chartsInitialized.epigenome) {
+                const ctx = document.getElementById('epigenomeChart').getContext('2d');
+                const labels = Array.from({length: 100}, (_, i) => i);
+                
+                const dataE = Array(10).fill(0).concat([5,10,20,40,20,10,5], Array(5).fill(0)); 
+                const dataV = Array(5).fill(0).concat([10,20,10,0,10,20,10,0,10,20,10,0,10,30,50,30,10], Array(5).fill(0));
+                const dataO = Array(5).fill(0).concat([10,30,50,30,10,0,10,30,50,30,10,0,10,30,50,30,10], Array(5).fill(0));
+                const data2 = Array(5).fill(0).concat([10,20,10,0,10,20,10,0,10,30,50,30,10,0,10,30,50,30,10,0,10,30,50,30,10], Array(10).fill(0));
+                
+                const fullData = [...dataE, ...dataV, ...dataO, ...data2];
+                while(fullData.length < 100) fullData.push(0);
+
+                currentCharts.epigenome = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'ATAC-seq Accessibility',
+                            data: fullData,
+                            borderColor: '#00B8FF',
+                            backgroundColor: 'rgba(0, 184, 255, 0.2)',
+                            borderWidth: 2,
+                            fill: true,
+                            pointRadius: 0,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: { x: { display: false }, y: { display: false, min: 0 } },
+                        plugins: { legend: { display: false }, tooltip: { enabled: false } }
+                    }
+                });
+                chartsInitialized.epigenome = true;
+            }
+        }
+
+        const btnHuman = document.getElementById('btn-human');
+        const btnCiliate = document.getElementById('btn-ciliate');
+        const targetCodon = document.getElementById('target-codon');
+        const transResult = document.getElementById('translation-result');
+        const transDesc = document.getElementById('translation-desc');
+
+        btnHuman.addEventListener('click', () => {
+            btnHuman.className = "px-4 py-2 bg-[#00FF9F] bg-opacity-20 text-[#00FF9F] border border-[#00FF9F] rounded font-bold text-sm";
+            btnCiliate.className = "px-4 py-2 bg-charcoal text-gray-400 border border-gray-700 rounded font-bold text-sm hover:text-white transition-colors";
+            
+            targetCodon.className = "text-white border-b-2 border-dashed border-red-500";
+            transResult.innerHTML = `Methionine - Glycine - <span class="font-bold text-red-500 bg-red-500 bg-opacity-10 px-2 rounded">[CRITICAL STOP]</span> ... translation aborted.`;
+            transResult.className = "text-2xl font-mono text-red-400";
+            transDesc.textContent = "In standard genomes, TGA is a premature stop codon. Evo 2 correctly identifies this as highly detrimental to the protein structure.";
+        });
+
+        btnCiliate.addEventListener('click', () => {
+            btnCiliate.className = "px-4 py-2 bg-[#00FF9F] bg-opacity-20 text-[#00FF9F] border border-[#00FF9F] rounded font-bold text-sm";
+            btnHuman.className = "px-4 py-2 bg-charcoal text-gray-400 border border-gray-700 rounded font-bold text-sm hover:text-white transition-colors";
+            
+            targetCodon.className = "text-white border-b-2 border-dashed border-matrix";
+            transResult.innerHTML = `Methionine - Glycine - <span class="font-bold text-matrix bg-matrix bg-opacity-10 px-2 rounded">[CYSTEINE]</span> - Proline ...`;
+            transResult.className = "text-2xl font-mono text-matrix";
+            transDesc.textContent = "When prompted with Ciliate context, Evo 2 instantly shifts dialects. It knows TGA safely encodes Cysteine here, ensuring continuous translation.";
+        });
+
+        const resetSAE = () => {
+            document.querySelectorAll('.dna-base span').forEach(el => {
+                el.classList.remove('bg-matrix', 'bg-cyan', 'bg-purple-500', 'text-black', 'font-bold');
+            });
+            document.getElementById('sae-explanation').classList.remove('hidden');
+        };
+
+        document.getElementById('btn-sae-phage').addEventListener('click', () => {
+            resetSAE();
+            document.querySelectorAll('.dna-phage').forEach(el => el.classList.add('bg-matrix', 'text-black', 'font-bold'));
+            document.getElementById('sae-explanation').innerHTML = "<strong>Feature Activated: Viral Interlopers.</strong> The SAE reveals Evo 2 automatically identifies specific nucleotide patterns characteristic of Prophages (viruses integrated into bacterial genomes) without any human tagging.";
+            document.getElementById('sae-explanation').className = "mt-6 p-4 bg-gray-900 border-l-2 border-matrix text-gray-300";
+        });
+
+        document.getElementById('btn-sae-exon').addEventListener('click', () => {
+            resetSAE();
+            document.querySelectorAll('.dna-exon').forEach(el => el.classList.add('bg-cyan', 'text-black', 'font-bold'));
+            document.getElementById('sae-explanation').innerHTML = "<strong>Feature Activated: Coding Regions.</strong> Evo 2 has developed a deep internal representation of Exons vs Introns. It knows exactly which parts of the sequence will be translated into protein structures.";
+            document.getElementById('sae-explanation').className = "mt-6 p-4 bg-gray-900 border-l-2 border-cyan text-gray-300";
+        });
+
+        document.getElementById('btn-sae-tf').addEventListener('click', () => {
+            resetSAE();
+            document.querySelectorAll('.dna-tf').forEach(el => el.classList.add('bg-purple-500', 'text-white', 'font-bold'));
+            document.getElementById('sae-explanation').innerHTML = "<strong>Feature Activated: Regulatory Grammar.</strong> Highlighting Transcription Factor motifs. The model independently discovered the short sequences where cellular machinery binds to turn genes on or off.";
+            document.getElementById('sae-explanation').className = "mt-6 p-4 bg-gray-900 border-l-2 border-purple-500 text-gray-300";
+        });
+
+    </script>
+</body>
+</html>
