@@ -34,7 +34,7 @@ permalink: /evo2-report-1/
         }
     </script>
     <style>
-        body { background-color: #0A0F14; color: #D1D5DB; }
+        body { background-color: #0A0F14; color: #D1D5DB; padding-top: 37px; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0A0F14; }
         ::-webkit-scrollbar-thumb { background: #121A21; border-radius: 4px; border: 1px solid #00FF9F; }
@@ -62,21 +62,48 @@ permalink: /evo2-report-1/
         }
 
         .dna-highlight { transition: all 0.3s ease; }
-    </style>
 
-    <!-- Chosen Palette: Matrix Bio-Hacker (Background: Deep Charcoal #0A0F14, Accents: Matrix Green #00FF9F & Cyan #00B8FF, Text: Gray-300) -->
-    <!-- Application Structure Plan: The SPA uses a dashboard-style layout to facilitate non-linear exploration of the 6 key "Wow" breakthroughs. A persistent left sidebar allows quick jumping between topics. The main area displays sections one at a time to prevent cognitive overload. Each section begins with a pop-science analogy and an introductory paragraph explaining the breakthrough's context and relevance. Interactive components (charts, toggles, text highlighters) are embedded directly within these sections to allow hands-on learning, transitioning the user from passive reading to active exploration. -->
-    <!-- Visualization & Content Choices: 
-         1. 1M Context -> Line Chart (Chart.js) comparing memory drop-off. Goal: Show scale. Analogy: Reading Lord of the Rings.
-         2. Polyglot Dialects -> Interactive Text Toggle. Goal: Demonstrate zero-shot contextual translation. Analogy: Regional dialects without a dictionary.
-         3. Variant Scoring -> Bar Chart (Chart.js). Goal: Compare performance vs clinical models. Analogy: Editor spotting grammatical errors.
-         4. Internal Textbook (SAE) -> JS Text Highlighter. Goal: Show autonomous discovery. Analogy: AI building its own textbook.
-         5. Genome Generation -> Visual Size Comparison Blocks (HTML/CSS). Goal: Show scale of generation. Analogy: Writing a novel vs a sentence.
-         6. Epigenetic Morse -> Area Chart (Chart.js). Goal: Prove physical cell control. Analogy: Playing a musical score.
-         CONFIRMATION: NO SVG/Mermaid used. HTML/Tailwind and Canvas only. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+        /* ── Hacker nav banner ─────────────────────────────────────── */
+        #hacker-nav-banner {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 9999;
+            background: #060c10;
+            border-bottom: 1px dashed #00FF9F44;
+            font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+            font-size: 13px;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #eaeaea;
+        }
+        #hacker-nav-banner a {
+            color: #63c0f5;
+            text-decoration: none;
+            text-shadow: 0 0 5px rgba(104, 182, 255, 0.5);
+        }
+        #hacker-nav-banner a:hover { text-decoration: underline; }
+        #hacker-nav-banner .banner-title {
+            color: #00FF9F;
+            text-shadow: 0 0 5px rgba(0, 255, 159, 0.4),
+                         0 0 12px rgba(0, 255, 159, 0.15);
+            letter-spacing: -0.03em;
+        }
+        #hacker-nav-banner .banner-tag { color: #1a4a3a; font-size: 11px; }
+        #hacker-nav-banner .banner-v   { color: #00a066; font-size: 11px; }
+    </style>
 </head>
 <body class="flex h-screen overflow-hidden font-sans">
+
+<div id="hacker-nav-banner">
+    <span>
+        <a href="{{ site.baseurl }}/">← bra-khet.github.io</a>
+        <span class="banner-tag"> / research</span>
+    </span>
+    <span class="banner-title">Evo 2 — Learning the Language of Life</span>
+    <span class="banner-v">v1.0 · March 2026</span>
+</div>
 
     <aside class="w-64 bg-darker border-r border-gray-800 flex flex-col h-full z-20 shrink-0 hidden md:flex">
         <div class="p-6">
@@ -114,7 +141,7 @@ permalink: /evo2-report-1/
         </div>
     </aside>
 
-    <div class="md:hidden bg-darker p-4 flex justify-between items-center border-b border-gray-800 absolute w-full z-30">
+    <div class="md:hidden bg-darker p-4 flex justify-between items-center border-b border-gray-800 absolute w-full z-30" style="top:37px;">
         <h1 class="text-xl font-bold text-white">Evo <span class="text-matrix">2</span></h1>
         <select id="mobile-nav" class="bg-panel border border-matrix text-matrix px-2 py-1 rounded">
             <option value="hero">Introduction</option>
@@ -139,7 +166,7 @@ permalink: /evo2-report-1/
                     <span class="px-3 py-1 bg-matrix text-black font-bold text-xs uppercase tracking-wider rounded-sm">Nature 2026</span>
                 </div>
                 <h1 class="text-5xl lg:text-7xl font-bold text-white leading-tight mb-6">
-                    Cracking Life's Code <br>at <span class="text-matrix">Scale</span>.
+                    Learning Life's Language <br>at <span class="text-matrix">Scale</span>.
                 </h1>
                 <p class="text-xl text-gray-400 mb-8 max-w-3xl leading-relaxed">
                     Welcome to the interactive deep dive into Evo 2, the world's first generalist genomic foundation model. Trained on 9.3 trillion letters of raw DNA across all domains of life, it learns biology without human labels.
@@ -220,7 +247,7 @@ permalink: /evo2-report-1/
                 <h2 class="text-3xl font-bold text-white border-b border-gray-800 pb-4 mb-6"><span class="text-matrix">03.</span> The Zero-Shot Clinician</h2>
                 
                 <p class="text-lg text-gray-300 mb-6 bg-panel p-4 rounded-lg border border-gray-800 border-l-4 border-l-matrix">
-                    <strong>The Analogy:</strong> Imagine a master editor who has read millions of books. If you hand them a single sentence with a fatal grammatical error, they spot it instantly—even if they've never seen that specific sentence before, and without consulting a grammar textbook.
+                    <strong>The Analogy:</strong> Imagine a master editor who has read millions of books. You hand them a single sentence with a subtle mutation — a wrong word, a misplaced clause — and they catch it instantly, no reference book needed. Now imagine that "grammatical error" isn't a misplaced comma. <strong class="text-matrix">It's cancer.</strong>
                 </p>
                 
                 <p class="text-gray-400 mb-8">
@@ -280,7 +307,7 @@ permalink: /evo2-report-1/
                 <h2 class="text-3xl font-bold text-white border-b border-gray-800 pb-4 mb-6"><span class="text-matrix">05.</span> Genome Architect</h2>
                 
                 <p class="text-lg text-gray-300 mb-6 bg-panel p-4 rounded-lg border border-gray-800 border-l-4 border-l-matrix">
-                    <strong>The Analogy:</strong> Older DNA AI could write a sensible five-word sentence. Evo 2 can generate a fully formatted, 300-page functional technical manual from scratch. 
+                    <strong>The Analogy:</strong> Older DNA AI could write a sensible five-word sentence. Evo 2 can generate a fully formatted, 300-page functional technical manual from scratch — complete with working schematics. Think <em>Magikarp</em> vs. <em>Mewtwo</em>. Pokémon fans, you know.
                 </p>
                 
                 <p class="text-gray-400 mb-8">
@@ -332,11 +359,11 @@ permalink: /evo2-report-1/
                 <h2 class="text-3xl font-bold text-white border-b border-gray-800 pb-4 mb-6"><span class="text-matrix">06.</span> Epigenetic Morse Code</h2>
                 
                 <p class="text-lg text-gray-300 mb-6 bg-panel p-4 rounded-lg border border-gray-800 border-l-4 border-l-matrix">
-                    <strong>The Analogy:</strong> It is like composing a highly specific musical score, giving it to a living orchestra (the cell), and having them play exactly what you wrote. We asked it to spell "EVO2" in chemical signals, and living mammalian cells executed the command.
+                    <strong>The Analogy:</strong> Until now, we could <em>observe</em> the orchestra — cataloguing every instrument, every note they've ever played. Evo 2 hands us the conductor's baton. We compose the score. We hand it to a living cell. It plays <em>exactly</em> what we wrote — on demand. The team proved it by spelling "EVO2" in chemical signals across living mammalian cells. The cell didn't approximate it. <strong class="text-matrix">It executed it.</strong>
                 </p>
                 
                 <p class="text-gray-400 mb-8">
-                    <strong>What this section shows:</strong> This is arguably the most practically profound result. Epigenetics control how tightly DNA is packed, which dictates if genes are turned on or off. Researchers used Evo 2 to design DNA sequences intended to force the cell to open its DNA in specific Morse Code patterns (measured via ATAC-seq). The chart below illustrates the successful experimental validation in live human/mouse cells.
+                    <strong>What this section shows:</strong> This is the section where biology becomes <strong class="text-white">programmable</strong>. Epigenetics govern whether genes are switched on or off — not by changing the DNA sequence itself, but by controlling how tightly it is wound. For decades this layer felt almost unreachable: we could read it, but not reliably write to it. Evo 2 changes that. Researchers designed <em>synthetic</em> DNA sequences that forced live human and mouse cells to open their chromatin in precise, pre-specified patterns — verified by ATAC-seq in real lab conditions. This is not stochastic. Not approximate. The model produced sequences that drove the cell to a <strong class="text-matrix">chosen state</strong>. We are no longer waiting to see what biology randomly does. <strong class="text-white">We are telling it what to do.</strong>
                 </p>
 
                 <div class="bg-panel p-6 rounded-lg border border-gray-800 shadow-2xl">
@@ -353,6 +380,7 @@ permalink: /evo2-report-1/
                         <span class="border-b-2 border-matrix pb-1">--- (O)</span>
                         <span class="border-b-2 border-cyan pb-1">..--- (2)</span>
                     </div>
+                    <p class="text-center text-xs text-gray-500 mt-6 font-mono">Each peak is a designed sequence forcing chromatin to open at a specific location. This is not a natural signal — it is a <span class="text-matrix">human-specified command</span>, executed by a living cell.</p>
                 </div>
             </section>
 
@@ -548,7 +576,7 @@ permalink: /evo2-report-1/
 
         const resetSAE = () => {
             document.querySelectorAll('.dna-base span').forEach(el => {
-                el.classList.remove('bg-matrix', 'bg-cyan', 'bg-purple-500', 'text-black', 'font-bold');
+                el.classList.remove('bg-matrix', 'bg-cyan', 'bg-purple-500', 'text-black', 'text-white', 'font-bold');
             });
             document.getElementById('sae-explanation').classList.remove('hidden');
         };
