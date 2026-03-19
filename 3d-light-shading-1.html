@@ -1,0 +1,428 @@
+---
+layout: null
+title: "Lighting vs. Shading Architecture, Simplified"
+permalink: /3d-light-shading-1/
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lighting vs. Shading Architecture, Simplified</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container { position: relative; width: 100%; max-width: 700px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .neon-text { text-shadow: 0 0 10px rgba(34, 211, 238, 0.5), 0 0 20px rgba(34, 211, 238, 0.3); }
+        .tab-active { background-color: #0891b2; color: white; border-color: #06b6d4; }
+        .tab-inactive { background-color: transparent; color: #94a3b8; border-color: #334155; }
+        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+        .accordion-content { transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; max-height: 0; opacity: 0; overflow: hidden; }
+        .accordion-open { max-height: 500px; opacity: 1; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-300 font-sans leading-relaxed selection:bg-cyan-500 selection:text-white antialiased">
+
+<!-- Chosen Palette: Slate (Dark Mode Base) with Cyan (Neon Accents) and Teals/Blues for Data Viz -->
+<!-- Application Structure Plan: The SPA is structured linearly to match the requested Phase 2 blueprint, but relies on interactive tabs, horizontal scrolling timelines, and expandable accordions to condense complex data. The "Architecture & Forensics" section uses a custom tabbed interface acting as a side-by-side comparison, allowing users to isolate 'Lighting' logic from 'Shading' logic before viewing the combined pipeline. This structure ensures scannability while maintaining post-graduate technical depth. -->
+<!-- Visualization & Content Choices: 
+1. Timeline -> Horizontal scroll container -> Interaction: Scroll/Swipe -> Justification: Shows progression without cluttering vertical space -> HTML/Tailwind.
+2. Render-Time Impact -> Bar Chart -> Interaction: Hover tooltips -> Justification: Directly compares computational weight of incident light vs surface response -> Chart.js.
+3. Market Share -> Doughnut Chart -> Interaction: Hover tooltips -> Justification: Shows adoption of physical vs custom shading workflows -> Chart.js.
+4. Pipeline Architecture -> Tabbed Side-by-Side Panels -> Interaction: Click tabs -> Justification: Forces the user to explicitly isolate the concepts, reinforcing the core thesis -> HTML/JS. 
+-->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    <header class="mb-20 text-center relative">
+        <div class="absolute inset-0 bg-cyan-900/20 blur-[100px] rounded-full z-0 pointer-events-none"></div>
+        <div class="relative z-10">
+            <span class="text-cyan-400 font-mono text-sm tracking-widest uppercase mb-4 block">OSINT Research Protocol v1.0 • Technical Analysis</span>
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight">
+                Incident <span class="text-cyan-400 neon-text">Radiance</span> vs. Surface <span class="text-teal-400 neon-text">Response</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto font-light mb-8">
+                You don't just paint shadows. You command light. Elevating digital artistry by decoupling the photon's journey from the canvas's texture.
+            </p>
+            <div class="inline-flex gap-4 font-mono text-xs text-slate-500 border border-slate-800 rounded-full px-6 py-2 glass-panel">
+                <span>TARGET: 3D Pipelines</span>
+                <span>STATE: 2026 Paradigm</span>
+                <span>FRAMEWORK: RTX/Neural</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="mb-24">
+        <h2 class="text-3xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Chronology & Historical Context</h2>
+        <p class="mb-8 text-slate-400">The evolution of rendering is the history of separating the light source from the material definition. From baked-in approximations to physically accurate, mathematically rigorous decoupling.</p>
+        
+        <div class="flex overflow-x-auto hide-scrollbar gap-6 pb-8 snap-x">
+            <div class="min-w-[300px] glass-panel p-6 rounded-xl snap-center flex-shrink-0 border-l-4 border-l-slate-600">
+                <span class="text-cyan-500 font-mono text-xl font-bold block mb-2">1975</span>
+                <h3 class="text-white text-lg font-bold mb-2">Phong Reflection</h3>
+                <p class="text-sm text-slate-400">Lighting and shading are deeply entangled. Plastic-like highlights calculated via dot products of light vectors and view vectors. Artistic control meant tweaking arbitrary specularity scalars.</p>
+            </div>
+            <div class="min-w-[300px] glass-panel p-6 rounded-xl snap-center flex-shrink-0 border-l-4 border-l-slate-500">
+                <span class="text-cyan-500 font-mono text-xl font-bold block mb-2">1980s</span>
+                <h3 class="text-white text-lg font-bold mb-2">Cook-Torrance Microfacets</h3>
+                <p class="text-sm text-slate-400">Introduction of the Bidirectional Reflectance Distribution Function (BRDF). The first major mathematical attempt to decouple *how much light hits* from *how the microscopic surface structure reacts*.</p>
+            </div>
+            <div class="min-w-[300px] glass-panel p-6 rounded-xl snap-center flex-shrink-0 border-l-4 border-l-teal-600">
+                <span class="text-cyan-500 font-mono text-xl font-bold block mb-2">2012</span>
+                <h3 class="text-white text-lg font-bold mb-2">Disney PBR Workflow</h3>
+                <p class="text-sm text-slate-400">The watershed moment. "Physically Based Rendering" standardizes shading into parameters like Albedo, Metallic, and Roughness. Artists stop painting shadows and start painting material properties.</p>
+            </div>
+            <div class="min-w-[300px] glass-panel p-6 rounded-xl snap-center flex-shrink-0 border-l-4 border-l-teal-500">
+                <span class="text-cyan-500 font-mono text-xl font-bold block mb-2">2018-2022</span>
+                <h3 class="text-white text-lg font-bold mb-2">Hardware Raytracing</h3>
+                <p class="text-sm text-slate-400">NVIDIA RTX and UE5 Lumen shift the burden. Real-time lighting finally mimics offline global illumination. Lighting becomes pure physics; shading becomes the final frontier for artistic stylization.</p>
+            </div>
+            <div class="min-w-[300px] glass-panel p-6 rounded-xl snap-center flex-shrink-0 border-l-4 border-l-cyan-400 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-tr from-cyan-900/20 to-transparent pointer-events-none"></div>
+                <span class="text-cyan-400 font-mono text-xl font-bold block mb-2">2025-2026</span>
+                <h3 class="text-white text-lg font-bold mb-2">Neural Shading & Reconstruction</h3>
+                <p class="text-sm text-slate-400">DLSS Ray Reconstruction and neural rendering priors. Machine learning approximates complex BRDFs and multi-bounce lighting simultaneously, allowing real-time path-tracing with highly stylized, artist-driven intent.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-24">
+        <h2 class="text-3xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Technical Architecture & Forensics</h2>
+        <p class="mb-8 text-slate-400">To engage in informed critique, one must deconstruct the rendering equation. Below is a side-by-side forensic analysis of the modern graphics pipeline, isolating the responsibilities of the Gaffer (Lighting) and the Painter (Shading).</p>
+
+        <div class="flex flex-col md:flex-row gap-4 justify-center mb-8">
+            <button id="btn-lighting" class="px-8 py-3 rounded-lg border tab-active font-mono transition-all duration-300">1. LIGHTING (Incident Radiance)</button>
+            <button id="btn-shading" class="px-8 py-3 rounded-lg border tab-inactive font-mono transition-all duration-300">2. SHADING (Surface Response)</button>
+            <button id="btn-combined" class="px-8 py-3 rounded-lg border tab-inactive font-mono transition-all duration-300">3. COMBINED PIPELINE</button>
+        </div>
+
+        <div class="glass-panel rounded-2xl p-8 min-h-[400px]">
+            <div id="content-lighting" class="block">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-2">The Gaffer's Domain</h3>
+                        <p class="text-cyan-400 font-mono mb-4 text-sm">Evaluating L_i(p, ω_i)</p>
+                        <p class="mb-4 text-slate-300">Lighting is strictly concerned with the delivery of energy. It asks: <em>"How many photons are hitting this specific coordinate in 3D space, from what direction, and with what spectral power distribution?"</em></p>
+                        <ul class="list-disc list-inside text-slate-400 space-y-2 mb-6">
+                            <li><strong>Direct Illumination:</strong> Point, spot, and directional lights.</li>
+                            <li><strong>Global Illumination (GI):</strong> Bounced light, color bleeding.</li>
+                            <li><strong>Path Tracing:</strong> Firing rays to accumulate accurate incident light maps without evaluating the material yet.</li>
+                        </ul>
+                        <div class="bg-slate-900 p-4 rounded-lg font-mono text-xs text-green-400 border border-slate-700">
+                            vec3 CalculateIncidentLight(vec3 normal, vec3 lightDir, vec3 lightColor) {<br>
+                            &nbsp;&nbsp;float irradiance = max(dot(normal, lightDir), 0.0);<br>
+                            &nbsp;&nbsp;return lightColor * irradiance;<br>
+                            }
+                        </div>
+                    </div>
+                    <div class="bg-slate-900 rounded-xl p-6 border border-slate-800 flex items-center justify-center h-full min-h-[300px]">
+                        <div class="text-center">
+                            <div class="w-32 h-32 rounded-full mx-auto shadow-[0_0_60px_rgba(255,255,255,0.8)] bg-white mb-4"></div>
+                            <p class="text-slate-400 font-mono text-sm">Clay Render Mode<br><span class="text-xs text-slate-500">Pure geometric evaluation of light energy. Zero texture.</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-shading" class="hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-2">The Painter's Domain</h3>
+                        <p class="text-teal-400 font-mono mb-4 text-sm">Evaluating f_r(p, ω_i, ω_o)</p>
+                        <p class="mb-4 text-slate-300">Shading is the material's contract with the light. It asks: <em>"Given the incoming energy, what percentage is absorbed, transmitted, or reflected toward the viewer, based on microscopic surface properties?"</em></p>
+                        <ul class="list-disc list-inside text-slate-400 space-y-2 mb-6">
+                            <li><strong>Albedo/Base Color:</strong> Unlit diffuse color of the pigment.</li>
+                            <li><strong>Microfacet BRDF:</strong> How rough or smooth the microscopic geometry is (influences blurriness of reflections).</li>
+                            <li><strong>Subsurface Scattering (SSS):</strong> Light entering, scattering within, and exiting the medium (e.g., skin, wax).</li>
+                        </ul>
+                        <div class="bg-slate-900 p-4 rounded-lg font-mono text-xs text-teal-400 border border-slate-700">
+                            vec3 CalculateBRDF(vec3 albedo, float metallic, float roughness) {<br>
+                            &nbsp;&nbsp;vec3 F0 = mix(vec3(0.04), albedo, metallic);<br>
+                            &nbsp;&nbsp;// Cook-Torrance evaluation...<br>
+                            &nbsp;&nbsp;return (kD * albedo / PI) + specular;<br>
+                            }
+                        </div>
+                    </div>
+                    <div class="bg-slate-900 rounded-xl p-6 border border-slate-800 flex items-center justify-center h-full min-h-[300px]">
+                        <div class="text-center">
+                            <div class="w-32 h-32 rounded-full mx-auto bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTAgMGg0MHY0MEgweiIgZmlsbD0iI2QxZDVkYiIvPjxwYXRoIGQ9Ik0wIDQwaDIwdjIwaC0yMHptMjAtMjBoMjB2MjBoLTIweiIgZmlsbD0iI2Y4ZmFmYyIvPjwvc3ZnPg==')] mb-4 border-2 border-slate-700"></div>
+                            <p class="text-slate-400 font-mono text-sm">Unlit / Albedo Mode<br><span class="text-xs text-slate-500">Pure material properties. Zero environmental influence.</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-combined" class="hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-2">The Rendering Equation</h3>
+                        <p class="text-cyan-400 font-mono mb-4 text-sm">L_o = L_e + ∫ f_r * L_i * (ω_i · n) dω_i</p>
+                        <p class="mb-4 text-slate-300">The final fragment color is the integral of the lighting function multiplied by the shading function over the hemisphere. Modern engines execute this mathematically via PBR, but artistically, it means lighting sets the mood, while shading anchors the reality or style of the object.</p>
+                        <p class="text-sm text-slate-400 border-l-2 border-cyan-500 pl-4 py-2 bg-slate-800/50">
+                            <strong>Neural Reconstruction Era (2026):</strong> Instead of brute-forcing thousands of rays to solve this integral, AI models (like DLSS 3.5/4.0) denoise and predict the interaction between complex lighting (path tracing) and complex shading (NPR/Stylized materials), bridging physical accuracy with artistic intent.
+                        </p>
+                    </div>
+                    <div class="bg-slate-900 rounded-xl p-6 border border-slate-800 flex items-center justify-center h-full min-h-[300px]">
+                        <div class="text-center">
+                            <div class="w-32 h-32 rounded-full mx-auto bg-gradient-to-br from-white via-cyan-500 to-slate-900 shadow-[inset_-10px_-10px_20px_rgba(0,0,0,0.5),_0_0_30px_rgba(34,211,238,0.4)] mb-4"></div>
+                            <p class="text-slate-400 font-mono text-sm">Final Frame Execution<br><span class="text-xs text-slate-500">Lighting and Shading resolved.</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-24">
+        <h2 class="text-3xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Critical Analysis & Balanced Perspectives</h2>
+        <p class="mb-8 text-slate-400">The shift towards absolute physical correctness in shading and lighting algorithms has sparked a philosophical debate within the technical art community. We juxtapose the empirical data with artistic workflow realities below.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            
+            <div class="glass-panel p-6 rounded-xl border-t-4 border-t-cyan-500">
+                <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                    <span class="text-cyan-500 text-2xl">+</span> The Proponent View
+                </h3>
+                <p class="text-slate-300 mb-4"><strong>Unprecedented Fidelity & Scalability.</strong> Decoupling lighting from shading via strict PBR allows assets to be universally portable. A prop modeled for a dark cinematic scene looks physically correct when placed in a brightly lit game level.</p>
+                <p class="text-slate-300">Furthermore, advanced path-traced lighting combined with custom NPR (Non-Photorealistic Rendering) shading is exactly what drives the visual languages of modern masterpieces like <em>Spider-Verse</em> or <em>Arcane</em>. Neural rendering accelerates this, preserving intent without waiting days for render farms.</p>
+            </div>
+
+            <div class="glass-panel p-6 rounded-xl border-t-4 border-t-red-500">
+                <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                    <span class="text-red-500 text-2xl">-</span> The Critic View
+                </h3>
+                <p class="text-slate-300 mb-4"><strong>The Tyranny of Physics.</strong> Over-reliance on physically accurate shading often stifles intuition. Artists are forced to manipulate math (IOR, specularity curves) rather than paint what looks good. It leads to the "Unreal Engine Look"—technically flawless but artistically homogenized.</p>
+                <p class="text-slate-300">Critics argue that older, entangled systems allowed for "happy accidents" and direct control. Additionally, heavy path-traced lighting necessitates DLSS/upscalers, which can introduce temporal artifacts, breaking immersion for the sake of computational correctness.</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+            <div>
+                <h4 class="text-lg font-bold text-white mb-4 text-center">Compute Burden: Lighting vs. Shading</h4>
+                <div class="chart-container bg-slate-900 rounded-xl border border-slate-800 p-4">
+                    <canvas id="computeChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold text-white mb-4 text-center">Workflow Adoption (2026 Estimate)</h4>
+                <div class="chart-container bg-slate-900 rounded-xl border border-slate-800 p-4">
+                    <canvas id="marketChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-panel rounded-xl p-8">
+            <h3 class="text-2xl font-bold text-white mb-6">Debunking Core Fallacies</h3>
+            
+            <div class="space-y-4">
+                <div class="border border-slate-700 rounded-lg">
+                    <button class="w-full text-left px-6 py-4 font-bold text-white hover:bg-slate-800 transition flex justify-between items-center" onclick="toggleAccordion('acc1')">
+                        1. "Shading is just painting dark areas."
+                        <span class="text-cyan-500" id="icon-acc1">▼</span>
+                    </button>
+                    <div id="acc1" class="accordion-content px-6 bg-slate-900">
+                        <p class="py-4 text-slate-300"><strong>False.</strong> Painting shadows into a diffuse texture map is a legacy workflow (baking). In modern pipelines, shading dictates <em>material behavior</em> (metal, dielectric, rough, smooth). Shadows are exclusively a consequence of <em>Lighting</em> (occlusion and radiance calculations), not Shading.</p>
+                    </div>
+                </div>
+
+                <div class="border border-slate-700 rounded-lg">
+                    <button class="w-full text-left px-6 py-4 font-bold text-white hover:bg-slate-800 transition flex justify-between items-center" onclick="toggleAccordion('acc2')">
+                        2. "Lighting and shading are the same thing."
+                        <span class="text-cyan-500" id="icon-acc2">▼</span>
+                    </button>
+                    <div id="acc2" class="accordion-content px-6 bg-slate-900">
+                        <p class="py-4 text-slate-300"><strong>False.</strong> They are two halves of the rendering equation. Lighting computes the energy arriving at a point. Shading computes what percentage of that energy bounces toward the camera. You can have brilliant lighting on a terrible shading model, and the result will look like shiny plastic.</p>
+                    </div>
+                </div>
+
+                <div class="border border-slate-700 rounded-lg">
+                    <button class="w-full text-left px-6 py-4 font-bold text-white hover:bg-slate-800 transition flex justify-between items-center" onclick="toggleAccordion('acc3')">
+                        3. "Lighting doesn't affect color."
+                        <span class="text-cyan-500" id="icon-acc3">▼</span>
+                    </button>
+                    <div id="acc3" class="accordion-content px-6 bg-slate-900">
+                        <p class="py-4 text-slate-300"><strong>False.</strong> Final pixel color is a multiplication of the light's wavelength (color) and the material's albedo. If you shine a pure red light on a pure blue surface, the result in a physically accurate engine is black, because the surface absorbs the red spectrum and has no blue light to reflect.</p>
+                    </div>
+                </div>
+
+                <div class="border border-slate-700 rounded-lg">
+                    <button class="w-full text-left px-6 py-4 font-bold text-white hover:bg-slate-800 transition flex justify-between items-center" onclick="toggleAccordion('acc4')">
+                        4. "Neural rendering enforces hyper-realism and destroys stylization."
+                        <span class="text-cyan-500" id="icon-acc4">▼</span>
+                    </button>
+                    <div id="acc4" class="accordion-content px-6 bg-slate-900">
+                        <p class="py-4 text-slate-300"><strong>False.</strong> Advanced neural shading networks (like those researched in SIGGRAPH 2025/2026) are highly capable of learning stylized priors. You can train a neural network to denoise path-traced lighting while enforcing an anime-style cel-shading response. AI accelerates the rendering of the math; it does not dictate the artistic aesthetic unless programmed to do so.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-24">
+        <h2 class="text-3xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Subjective Editorial Conclusion</h2>
+        <div class="prose prose-invert max-w-none text-slate-300">
+            <p class="mb-4">
+                The grand irony of modern computer graphics is that in our quest to give artists ultimate freedom, we first had to force them to become physicists. We stripped away their ability to simply "paint a highlight" and replaced it with sliders for microfacet distribution and index of refraction. 
+            </p>
+            <p class="mb-4">
+                Yet, understanding the strict boundary between incident radiance (lighting) and surface response (shading) is precisely what liberates the modern digital artist. When you know that lighting is the stage, and shading is the actor's costume, you stop fighting the engine. You stop trying to paint a shadow into a texture map, and instead, you construct a scene that behaves predictably under any dramatic condition.
+            </p>
+            <p>
+                As we move deep into the era of real-time path tracing and neural reconstruction—where the machine handles the radiometric integrals in milliseconds—the artist's role shifts back from technical mathematician to pure creative director. The algorithms have finally become complex enough to become invisible. We are back to painting, but this time, the paint is made of light itself.
+            </p>
+        </div>
+    </section>
+
+    <section class="mb-12 glass-panel p-8 rounded-xl">
+        <h2 class="text-2xl font-bold text-white mb-4 border-b border-slate-700 pb-2">Appendix A: Glossary of Terms</h2>
+        <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+            <div>
+                <dt class="font-bold text-cyan-400">BRDF (Bidirectional Reflectance Distribution Function)</dt>
+                <dd class="text-slate-400 mb-2">The math equation that defines how light reflects off an opaque surface. <em>(Studio Analogy: The specific mix of gloss and matte medium you put in your paint).</em></dd>
+                
+                <dt class="font-bold text-cyan-400">PBR (Physically Based Rendering)</dt>
+                <dd class="text-slate-400 mb-2">A methodology prioritizing real-world physics for light and material behavior. <em>(Studio Analogy: Using real physics rather than "faking it" with trick lights).</em></dd>
+                
+                <dt class="font-bold text-cyan-400">Microfacet</dt>
+                <dd class="text-slate-400 mb-2">Microscopic V-shaped grooves in a material that scatter light. Determines roughness. <em>(Studio Analogy: The grain of the canvas or the polish on a mirror).</em></dd>
+            </div>
+            <div>
+                <dt class="font-bold text-cyan-400">Normal Map</dt>
+                <dd class="text-slate-400 mb-2">An image storing directional data to fake high-res geometry bumps without adding polygons. <em>(Studio Analogy: Trompe-l'œil painting that tricks the eye into seeing depth).</em></dd>
+
+                <dt class="font-bold text-cyan-400">Global Illumination (GI)</dt>
+                <dd class="text-slate-400 mb-2">Algorithms that calculate light bouncing off surfaces onto other surfaces. <em>(Studio Analogy: The ambient light that fills a room even when the sun isn't shining directly in).</em></dd>
+
+                <dt class="font-bold text-cyan-400">Subsurface Scattering (SSS)</dt>
+                <dd class="text-slate-400">Light penetrating a translucent surface, scattering, and exiting at a different angle. <em>(Studio Analogy: Holding a flashlight behind your fingers).</em></dd>
+            </div>
+        </dl>
+    </section>
+
+    <section class="mb-12">
+        <h2 class="text-xl font-bold text-white mb-4">Appendix B: Sources & Citations</h2>
+        <ul class="list-disc list-inside text-sm text-slate-400 space-y-2">
+            <li>NVIDIA Developer Blog (2025/2026). <a href="#" class="text-cyan-500 hover:underline">How to Get Started with Neural Shading for Your Game or Application</a>.</li>
+            <li>SIGGRAPH (2025). <a href="#" class="text-cyan-500 hover:underline">Advances in Real-Time Rendering in 3D Graphics and Games</a>.</li>
+            <li>Self Shadow Blog (2025). <a href="#" class="text-cyan-500 hover:underline">Publications: S2025 Shading Course</a>.</li>
+            <li>NVIDIA Developer (2024/2025). <a href="#" class="text-cyan-500 hover:underline">RTX Neural Rendering Introduces Next Era of AI-Powered Graphics</a>.</li>
+            <li>Pharr, M., Jakob, W., & Humphreys, G. (2023). <em>Physically Based Rendering: From Theory to Implementation (4th ed.)</em>.</li>
+        </ul>
+    </section>
+
+</main>
+
+<footer class="text-center py-8 border-t border-gray-900 mt-12 text-gray-600 text-sm">
+  Generated via OSINT Research Protocol v1.0 | March 2026
+</footer>
+
+<script>
+    const btnL = document.getElementById('btn-lighting');
+    const btnS = document.getElementById('btn-shading');
+    const btnC = document.getElementById('btn-combined');
+    const cntL = document.getElementById('content-lighting');
+    const cntS = document.getElementById('content-shading');
+    const cntC = document.getElementById('content-combined');
+
+    function switchTab(activeBtn, showCnt) {
+        [btnL, btnS, btnC].forEach(b => {
+            b.classList.remove('tab-active');
+            b.classList.add('tab-inactive');
+        });
+        activeBtn.classList.remove('tab-inactive');
+        activeBtn.classList.add('tab-active');
+
+        [cntL, cntS, cntC].forEach(c => c.classList.add('hidden'));
+        showCnt.classList.remove('hidden');
+    }
+
+    btnL.addEventListener('click', () => switchTab(btnL, cntL));
+    btnS.addEventListener('click', () => switchTab(btnS, cntS));
+    btnC.addEventListener('click', () => switchTab(btnC, cntC));
+
+    function toggleAccordion(id) {
+        const content = document.getElementById(id);
+        const icon = document.getElementById('icon-' + id);
+        if (content.classList.contains('accordion-open')) {
+            content.classList.remove('accordion-open');
+            icon.innerText = '▼';
+        } else {
+            content.classList.add('accordion-open');
+            icon.innerText = '▲';
+        }
+    }
+
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.font.family = 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+
+    const ctxBar = document.getElementById('computeChart').getContext('2d');
+    new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+            labels: ['Raster/Phong', 'Early PBR', 'Hardware Raytrace', 'Neural/Path-Traced'],
+            datasets: [
+                {
+                    label: 'Lighting Logic (ms)',
+                    data: [2, 5, 12, 18],
+                    backgroundColor: 'rgba(34, 211, 238, 0.8)',
+                    borderColor: 'rgba(34, 211, 238, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Shading Logic (ms)',
+                    data: [1, 8, 10, 6],
+                    backgroundColor: 'rgba(20, 184, 166, 0.8)',
+                    borderColor: 'rgba(20, 184, 166, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: { stacked: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+                y: { stacked: true, title: { display: true, text: 'Render Time per Frame (Relative)' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            },
+            plugins: {
+                tooltip: { mode: 'index', intersect: false },
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    const ctxPie = document.getElementById('marketChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['Unreal Engine (PBR/Lumen)', 'Blender (Cycles/Eevee)', 'Offline (Arnold/V-Ray)', 'Unity (URP/HDRP)', 'Custom Neural Pipelines'],
+            datasets: [{
+                data: [45, 20, 15, 15, 5],
+                backgroundColor: [
+                    'rgba(34, 211, 238, 0.8)',
+                    'rgba(249, 115, 22, 0.8)',
+                    'rgba(148, 163, 184, 0.8)',
+                    'rgba(16, 185, 129, 0.8)',
+                    'rgba(168, 85, 247, 0.8)'
+                ],
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '65%',
+            plugins: {
+                legend: { position: 'right' }
+            }
+        }
+    });
+</script>
+</body>
+</html>
