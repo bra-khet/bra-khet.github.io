@@ -12,20 +12,21 @@ permalink: /dlss-5-report-1-1/
     <title>NVIDIA DLSS 5: Generative Neural Rendering Research</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         nvgreen: {
-                            50: '#f0fdf4',
-                            100: '#dcfce7',
-                            500: '#22c55e',
-                            600: '#16a34a',
-                            700: '#76B900', 
-                            900: '#14532d',
+                            50:  '#0d1f05',
+                            100: '#142e07',
+                            500: '#76B900',
+                            600: '#8fd400',
+                            700: '#76B900',
+                            900: '#b5e853',
                         },
-                        nvdark: '#0f172a'
+                        nvdark: '#0d1117'
                     },
                     fontFamily: {
                         sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -34,7 +35,87 @@ permalink: /dlss-5-report-1-1/
             }
         }
     </script>
+
     <style>
+        /* ── Dark Mode Design Tokens ─────────────────────────── */
+        :root {
+            --bg-base:      #0d1117;
+            --bg-surface:   #161b22;
+            --bg-elevated:  #1c2128;
+            --bg-subtle:    #21262d;
+            --border:       #30363d;
+            --border-light: #21262d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-muted:   #656d76;
+            --green:        #76B900;
+            --green-bright: #b5e853;
+            --green-glow:   rgba(118, 185, 0, 0.18);
+            --green-dim:    rgba(118, 185, 0, 0.08);
+            --red-soft:     rgba(248, 81, 73, 0.15);
+            --yellow-soft:  rgba(210, 153, 34, 0.15);
+        }
+
+        /* ── Base ────────────────────────────────────────────── */
+        html, body {
+            background-color: var(--bg-base) !important;
+            color: var(--text-primary) !important;
+        }
+
+        ::selection {
+            background-color: var(--green-glow);
+            color: var(--green-bright);
+        }
+
+        /* ── Nav Sidebar ─────────────────────────────────────── */
+        nav {
+            background-color: var(--bg-surface) !important;
+            border-color: var(--border) !important;
+        }
+
+        nav h1 { color: var(--text-primary) !important; }
+        nav p  { color: var(--text-muted)    !important; }
+
+        .nav-link {
+            color: var(--text-secondary) !important;
+        }
+        .nav-link:hover {
+            background-color: var(--bg-elevated) !important;
+            color: var(--green-bright) !important;
+        }
+        .nav-link.active {
+            color: var(--green-bright) !important;
+            border-left: 4px solid var(--green) !important;
+            background-color: var(--green-dim) !important;
+            font-weight: 600;
+        }
+
+        /* ── Main & Header ───────────────────────────────────── */
+        header { border-color: var(--border) !important; }
+
+        .inline-block.bg-nvgreen-100 {
+            background-color: var(--green-dim) !important;
+            color: var(--green-bright)         !important;
+            border-color: var(--green)         !important;
+        }
+
+        header h2 { color: var(--text-primary) !important; }
+        header p  { color: var(--text-secondary) !important; }
+
+        /* ── Section headings & body copy ───────────────────── */
+        h3.text-slate-800, h4.text-slate-800, h5.text-slate-800,
+        .text-slate-800  { color: var(--text-primary)   !important; }
+        .text-nvdark     { color: var(--text-primary)   !important; }
+        .text-slate-600  { color: var(--text-secondary) !important; }
+        .text-slate-500  { color: var(--text-muted)     !important; }
+
+        /* ── Stat Cards (Executive) ──────────────────────────── */
+        .bg-white {
+            background-color: var(--bg-surface) !important;
+            border-color: var(--border)          !important;
+        }
+
+        /* ── Chart container ─────────────────────────────────── */
         .chart-container {
             position: relative;
             width: 100%;
@@ -46,63 +127,226 @@ permalink: /dlss-5-report-1-1/
             overflow: hidden;
         }
         @media (max-width: 640px) {
-            .chart-container {
-                height: 250px;
-                max-height: 300px;
-            }
+            .chart-container { height: 250px; max-height: 300px; }
         }
-        .nav-link.active {
-            color: #76B900;
-            border-left: 4px solid #76B900;
-            background-color: #f0fdf4;
-            font-weight: 600;
+
+        /* ── Architecture Flow ───────────────────────────────── */
+        .flow-box.bg-slate-100 {
+            background-color: var(--bg-elevated) !important;
+            border-color: var(--border)          !important;
         }
-        .flow-arrow {
-            display: inline-block;
-            transition: transform 0.3s ease;
+        .flow-box.bg-slate-100:hover {
+            background-color: var(--bg-subtle)   !important;
+            border-color: var(--green)           !important;
         }
-        .flow-box:hover .flow-arrow {
-            transform: translateX(5px);
+        .flow-box.bg-nvdark {
+            background-color: #0a0f16 !important;
+            border-color: var(--border) !important;
         }
-    </style>
-    <!-- Hacker theme integration banner -->
-    <style>
-      #hacker-nav-banner {
-        position: fixed;
-        top: 0; left: 0; right: 0;
-        z-index: 9999;
-        background: #151515;
-        border-bottom: 1px dashed #b5e853;
-        font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
-        font-size: 13px;
-        padding: 8px 20px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        color: #eaeaea;
-      }
-      #hacker-nav-banner a {
-        color: #63c0f5;
-        text-decoration: none;
-        text-shadow: 0 0 5px rgba(104, 182, 255, 0.5);
-      }
-      #hacker-nav-banner a:hover { text-decoration: underline; }
-      #hacker-nav-banner .banner-title {
-        color: #b5e853;
-        text-shadow: 0 0 5px rgba(181, 232, 83, 0.3),
-                     0 0 10px rgba(181, 232, 83, 0.1);
-        letter-spacing: -0.03em;
-      }
-      #hacker-nav-banner .banner-tag {
-        color: #666;
-        font-size: 11px;
-      }
-      /* push everything down so banner doesn't overlap */
-      body { padding-top: 37px; }
+
+        /* arch-details box */
+        #arch-details {
+            background-color: var(--green-dim)   !important;
+            border-color: var(--green)           !important;
+        }
+        #arch-details h5 { color: var(--green-bright) !important; }
+        #arch-details p  { color: #a8d672          !important; }
+
+        /* ── Developer Control Surface ───────────────────────── */
+        .bg-nvdark.rounded-2xl {
+            background-color: #090e14 !important;
+            border: 1px solid var(--border);
+        }
+
+        /* inner sim panel */
+        .bg-slate-800.rounded-xl.p-6.border.border-slate-700 {
+            background-color: var(--bg-elevated) !important;
+            border-color: var(--border)          !important;
+        }
+
+        .border-b.border-slate-700 {
+            border-color: var(--border) !important;
+        }
+
+        /* slider track */
+        input[type=range] {
+            background-color: var(--bg-subtle) !important;
+        }
+
+        /* progress bar bg */
+        .bg-slate-900 { background-color: var(--border-light) !important; }
+
+        /* dev warning states */
+        #dev-warning { border-color: var(--border) !important; }
+
+        .bg-slate-700 { background-color: var(--bg-elevated) !important; }
+
+        /* developer notes cards */
+        .bg-white.p-5 {
+            background-color: var(--bg-surface) !important;
+            border-color: var(--border)         !important;
+        }
+
+        /* ── Perspectives Tabs ───────────────────────────────── */
+        .border-b.border-slate-200 { border-color: var(--border) !important; }
+
+        .perspective-btn {
+            background-color: transparent;
+            color: var(--text-muted) !important;
+            border-color: transparent !important;
+        }
+        .perspective-btn.bg-nvgreen-100 {
+            background-color: var(--green-dim)   !important;
+            color: var(--green-bright)           !important;
+            border-color: var(--green)           !important;
+        }
+        .perspective-btn:hover {
+            background-color: var(--bg-elevated) !important;
+            color: var(--text-secondary)         !important;
+        }
+
+        .perspective-content {
+            background-color: var(--bg-surface) !important;
+            border-color: var(--border)         !important;
+        }
+
+        /* ── Ecosystem ───────────────────────────────────────── */
+        .bg-slate-800.text-white {
+            background-color: #090e14    !important;
+            border-color: var(--border)  !important;
+        }
+
+        .text-nvgreen-500 { color: var(--green-bright) !important; }
+        .text-slate-300   { color: #b1bac4             !important; }
+        .text-slate-400   { color: var(--text-muted)   !important; }
+        .text-slate-500   { color: var(--text-muted)   !important; }
+
+        /* game title cards */
+        .bg-white.border.border-slate-200.rounded-lg {
+            background-color: var(--bg-surface) !important;
+            border-color: var(--border)         !important;
+            color: var(--text-primary)          !important;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        .bg-white.border.border-slate-200.rounded-lg:hover {
+            border-color: var(--green) !important;
+            background-color: var(--bg-elevated) !important;
+        }
+        .bg-white.border.border-slate-200.rounded-lg span {
+            color: var(--text-muted) !important;
+        }
+
+        /* ── Glossary ─────────────────────────────────────────── */
+        .group.bg-white.border.border-slate-200.rounded-xl {
+            background-color: var(--bg-surface) !important;
+            border-color: var(--border)         !important;
+        }
+        .group.bg-white.border.border-slate-200.rounded-xl:hover {
+            border-color: var(--green) !important;
+            background-color: var(--bg-elevated) !important;
+        }
+        .group-hover\:text-nvgreen-700:is(.group:hover *) {
+            color: var(--green-bright) !important;
+        }
+
+        /* ── Footer ──────────────────────────────────────────── */
+        footer { border-color: var(--border) !important; }
+        footer p { color: var(--text-muted)  !important; }
+
+        /* ── Hacker Nav Banner ───────────────────────────────── */
+        #hacker-nav-banner {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 9999;
+            background: #090e14;
+            border-bottom: 1px dashed var(--green);
+            font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+            font-size: 13px;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-primary);
+        }
+        #hacker-nav-banner a {
+            color: #58a6ff;
+            text-decoration: none;
+            text-shadow: 0 0 6px rgba(88, 166, 255, 0.4);
+        }
+        #hacker-nav-banner a:hover { text-decoration: underline; }
+        #hacker-nav-banner .banner-title {
+            color: var(--green-bright);
+            text-shadow: 0 0 8px rgba(181, 232, 83, 0.4),
+                         0 0 16px rgba(181, 232, 83, 0.15);
+            letter-spacing: -0.03em;
+        }
+        #hacker-nav-banner .banner-tag { color: var(--text-muted); font-size: 11px; }
+
+        body { padding-top: 37px; }
+
+        /* ── Subtle Grain Overlay on body ────────────────────── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            background-size: 128px 128px;
+        }
+
+        /* ── Card Hover Polish ───────────────────────────────── */
+        .shadow-sm {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3) !important;
+        }
+        .shadow-xl {
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4) !important;
+        }
+        .hover\:shadow-md:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5) !important;
+        }
+        .hover\:shadow-lg:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6) !important;
+        }
+
+        /* ── Green accent text used throughout ───────────────── */
+        .text-nvgreen-700 { color: var(--green)        !important; }
+        .text-nvgreen-600 { color: var(--green-bright) !important; }
+        .text-nvgreen-900 { color: var(--green-bright) !important; }
+
+        /* Arrow accents */
+        .flow-arrow { display: inline-block; transition: transform 0.3s ease; }
+        .flow-box:hover .flow-arrow { transform: translateX(5px); }
+
+        /* ── Range Input Thumb ───────────────────────────────── */
+        input[type=range]::-webkit-slider-thumb {
+            background: var(--green) !important;
+            box-shadow: 0 0 6px var(--green-glow);
+        }
+        input[type=range]::-moz-range-thumb {
+            background: var(--green) !important;
+        }
+
+        /* ── Scrollbar ───────────────────────────────────────── */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-base); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--green); }
+
+        /* ── Accessible focus ring ───────────────────────────── */
+        :focus-visible {
+            outline: 2px solid var(--green);
+            outline-offset: 2px;
+        }
+
+        /* ── WCAG contrast fix for muted label text in dev section */
+        .text-slate-300.text-sm { color: #c9d1d9 !important; }
+        .text-sm.text-slate-400 { color: #8b949e !important; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-nvgreen-100 selection:text-nvgreen-900">
-<!-- Chosen Palette:  Hacker 2 Imitation by Claude Sonnet 4.6 NVIDIA Green Accents background ~#151515 (cod-grey) with a noise texture, text is light grey (gallery ~#eaeaea), accent green is #b5e853 (conifer), links are #63c0f5, and the font is Monaco/monospace.  -->    
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
 <div id="hacker-nav-banner">
   <span>
     <a href="{{ site.baseurl }}/">← bra-khet.github.io</a>
@@ -112,34 +356,19 @@ permalink: /dlss-5-report-1-1/
   <span class="banner-tag">v1.1 · March 2026</span>
 </div>
 
-    
-<!-- Chosen Palette: not anymore bub Clean Minimalist Light with NVIDIA Green Accents (Slate 50 background, Slate 800/900 text, #76B900 primary accent). -->
-
-<!-- Application Structure Plan: A dashboard-style layout with a fixed left navigation sidebar (on desktop) and a main scrolling content area. The structure translates the linear report into thematic, interactive zones: 1. Executive Dashboard (high-level stats), 2. Evolution & Architecture (charts/interactive diagrams explaining the tech), 3. Developer Control Center (interactive sliders demonstrating trade-offs), 4. Ecosystem & Launch (grids of games/hardware), and 5. Perspectives & Glossary. This non-linear structure allows users to explore technical specs, practical applications, or critical reception independently, catering to different user personas (devs vs. analysts). -->
-
-<!-- Visualization & Content Choices: 
-1. Evolution Chart (Chart.js Line): Shows transition from performance to quality over DLSS generations. Justification: Best for temporal trends.
-2. Architecture Flow (Interactive HTML Grid): Explains inputs/outputs without complex graphics. Justification: Adheres to NO SVG rule while providing interactive step-by-step context.
-3. Developer Control Simulator (HTML Range Sliders + Progress Bars): Demonstrates the "70/30 safety valve" and masking trade-offs. Justification: Active learning via simulation makes abstract developer settings concrete.
-4. Perspectives Toggle (HTML Buttons/JS visibility): Compares proponent vs critic views. Justification: Saves space and directly juxtaposes the polarizing reception.
-5. Ecosystem (CSS Grid): Displays supported titles cleanly. Justification: Easy to scan.
-Method: All interactive elements powered by Vanilla JS, visualizations by Chart.js or Tailwind HTML. -->
-
-<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-
 <div class="flex flex-col md:flex-row min-h-screen">
     <nav class="w-full md:w-64 bg-white border-b md:border-b-0 md:border-r border-slate-200 fixed md:sticky top-0 z-50 h-auto md:h-screen overflow-y-auto">
         <div class="p-6">
             <h1 class="text-2xl font-bold text-nvdark leading-tight">NVIDIA <span class="text-nvgreen-700">DLSS 5</span></h1>
             <p class="text-xs text-slate-500 mt-1 uppercase tracking-wider font-semibold">Research Update &bull; March 2026</p>
         </div>
-        <ul class="flex md:flex-col overflow-x-auto md:overflow-hidden pb-2 md:pb-0 px-4 md:px-0 hide-scrollbar" id="nav-menu">
-            <li><a href="#executive" class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors active">Executive Summary</a></li>
-            <li><a href="#evolution" class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors">Evolution & Architecture</a></li>
-            <li><a href="#developer" class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors">Developer Controls</a></li>
+        <ul class="flex md:flex-col overflow-x-auto md:overflow-hidden pb-2 md:pb-0 px-4 md:px-0" id="nav-menu">
+            <li><a href="#executive"    class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors active">Executive Summary</a></li>
+            <li><a href="#evolution"    class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors">Evolution &amp; Architecture</a></li>
+            <li><a href="#developer"    class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors">Developer Controls</a></li>
             <li><a href="#perspectives" class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors">Critical Analysis</a></li>
-            <li><a href="#ecosystem" class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors">Ecosystem & Games</a></li>
-            <li><a href="#glossary" class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors">Jargon Primer</a></li>
+            <li><a href="#ecosystem"    class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors">Ecosystem &amp; Games</a></li>
+            <li><a href="#glossary"     class="nav-link block px-6 py-3 text-sm text-slate-600 hover:bg-slate-50 hover:text-nvgreen-700 whitespace-nowrap md:whitespace-normal transition-colors">Jargon Primer</a></li>
         </ul>
     </nav>
 
@@ -150,12 +379,12 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
             <p class="text-xl text-slate-600 max-w-3xl leading-relaxed">NVIDIA DLSS 5 represents a paradigm shift from quantitative performance upscaling to qualitative, real-time generative neural rendering. It brings Hollywood-level photorealism to interactive graphics.</p>
         </header>
 
+        <!-- ── Executive Summary ─────────────────────────────── -->
         <section id="executive" class="scroll-mt-24 mb-20">
             <div class="mb-8">
                 <h3 class="text-2xl font-bold text-slate-800 mb-2">Executive Overview</h3>
                 <p class="text-slate-600">This section synthesizes the core announcements from GTC 2026, outlining the primary capabilities and operational envelope of DLSS 5. It establishes the baseline understanding of the technology's real-time generation capabilities.</p>
             </div>
-            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
                     <div class="text-nvgreen-700 text-3xl font-black mb-2">&#10022;</div>
@@ -180,9 +409,10 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
             </div>
         </section>
 
+        <!-- ── Evolution & Architecture ─────────────────────── -->
         <section id="evolution" class="scroll-mt-24 mb-20">
             <div class="mb-8">
-                <h3 class="text-2xl font-bold text-slate-800 mb-2">Evolution & Architecture</h3>
+                <h3 class="text-2xl font-bold text-slate-800 mb-2">Evolution &amp; Architecture</h3>
                 <p class="text-slate-600">Analyze how DLSS has transitioned across generations. This section features interactive visualizations comparing historical performance focus versus the new generative quality focus, alongside a breakdown of the new neural rendering pipeline.</p>
             </div>
 
@@ -191,7 +421,7 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
                 <div class="chart-container">
                     <canvas id="evolutionChart"></canvas>
                 </div>
-                <p class="text-center text-sm text-slate-500 mt-4">Unlike DLSS 1-4 which focused on upscaling and frame generation, DLSS 5 introduces a new generative layer specifically for lighting and material synthesis.</p>
+                <p class="text-center text-sm text-slate-500 mt-4">Unlike DLSS 1–4 which focused on upscaling and frame generation, DLSS 5 introduces a new generative layer specifically for lighting and material synthesis.</p>
             </div>
 
             <h4 class="text-xl font-bold text-slate-800 mb-6">The DLSS 5 Hybrid Pipeline</h4>
@@ -205,7 +435,6 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
                     </ul>
                     <div class="text-right mt-4 text-nvgreen-700 flow-arrow">&#10140;</div>
                 </div>
-
                 <div class="flow-box bg-nvdark text-white p-6 rounded-xl border border-nvdark cursor-pointer hover:shadow-lg transition-all" data-target="arch-core">
                     <h5 class="font-bold mb-2">2. Neural Rendering Core</h5>
                     <ul class="text-sm text-slate-300 space-y-1">
@@ -215,7 +444,6 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
                     </ul>
                     <div class="text-right mt-4 text-nvgreen-500 flow-arrow">&#10140;</div>
                 </div>
-
                 <div class="flow-box bg-slate-100 p-6 rounded-xl border border-slate-200 cursor-pointer hover:bg-white hover:shadow-md transition-all" data-target="arch-output">
                     <h5 class="font-bold text-nvdark mb-2">3. Deterministic Output</h5>
                     <ul class="text-sm text-slate-600 space-y-1">
@@ -229,10 +457,11 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
 
             <div class="mt-6 bg-nvgreen-50 border border-nvgreen-100 rounded-xl p-6 min-h-[120px] transition-all" id="arch-details">
                 <h5 class="font-bold text-nvgreen-900 mb-2">Interactive Architecture Overview</h5>
-                <p class="text-nvgreen-800 text-sm">Click or hover over the pipeline stages above to reveal detailed technical mechanics regarding inputs, neural processing, and rendering outputs.</p>
+                <p class="text-nvgreen-800 text-sm">Hover over the pipeline stages above to reveal detailed technical mechanics regarding inputs, neural processing, and rendering outputs.</p>
             </div>
         </section>
 
+        <!-- ── Developer Controls ────────────────────────────── -->
         <section id="developer" class="scroll-mt-24 mb-20">
             <div class="mb-8">
                 <h3 class="text-2xl font-bold text-slate-800 mb-2">Developer Control Surface</h3>
@@ -241,10 +470,8 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
 
             <div class="bg-nvdark rounded-2xl p-6 md:p-8 shadow-xl text-white">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    
                     <div>
                         <h4 class="text-lg font-bold mb-6 border-b border-slate-700 pb-2">Streamline SDK Parameters</h4>
-                        
                         <div class="mb-6">
                             <div class="flex justify-between mb-1">
                                 <label for="intensity" class="text-sm font-medium text-slate-300">Generative Intensity</label>
@@ -253,7 +480,6 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
                             <input type="range" id="intensity" min="0" max="100" value="50" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-nvgreen-500">
                             <p class="text-xs text-slate-400 mt-1">Controls global generative strength.</p>
                         </div>
-
                         <div class="mb-6">
                             <div class="flex justify-between mb-1">
                                 <label for="blend" class="text-sm font-medium text-slate-300">Generative/Original Blend Ratio</label>
@@ -262,7 +488,6 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
                             <input type="range" id="blend" min="0" max="100" value="70" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-nvgreen-500">
                             <p class="text-xs text-slate-400 mt-1">The recommended safety valve for stylized titles.</p>
                         </div>
-
                         <div class="mb-6">
                             <div class="flex justify-between mb-1">
                                 <label for="masking" class="text-sm font-medium text-slate-300">Semantic Masking Use</label>
@@ -273,20 +498,17 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
                         </div>
                     </div>
 
-                    
                     <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 flex flex-col justify-center">
                         <h4 class="text-center text-sm uppercase tracking-widest text-slate-400 mb-6 font-bold">Simulated Output Analysis</h4>
-                        
                         <div class="mb-4">
                             <div class="flex justify-between text-sm mb-1">
-                                <span>Photorealism & Lighting Quality</span>
+                                <span>Photorealism &amp; Lighting Quality</span>
                                 <span id="realism-score">75%</span>
                             </div>
                             <div class="w-full bg-slate-900 rounded-full h-2.5">
                                 <div id="realism-bar" class="bg-blue-500 h-2.5 rounded-full transition-all duration-300" style="width: 75%"></div>
                             </div>
                         </div>
-
                         <div class="mb-6">
                             <div class="flex justify-between text-sm mb-1">
                                 <span>Artistic Intent Preservation</span>
@@ -296,7 +518,6 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
                                 <div id="intent-bar" class="bg-purple-500 h-2.5 rounded-full transition-all duration-300" style="width: 80%"></div>
                             </div>
                         </div>
-
                         <div id="dev-warning" class="p-4 rounded-lg bg-slate-700 border border-slate-600 text-sm transition-all duration-300">
                             <strong class="block text-nvgreen-500 mb-1">Optimal Tuning</strong>
                             <span class="text-slate-300">Current settings offer a balanced blend of enhanced lighting while preserving character aesthetics through moderate masking.</span>
@@ -304,7 +525,7 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
                     </div>
                 </div>
             </div>
-            
+
             <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="bg-white p-5 rounded-lg border border-slate-200">
                     <h5 class="font-bold text-slate-800 mb-2">Pipeline Ordering</h5>
@@ -317,6 +538,7 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
             </div>
         </section>
 
+        <!-- ── Critical Analysis ─────────────────────────────── -->
         <section id="perspectives" class="scroll-mt-24 mb-20">
             <div class="mb-8">
                 <h3 class="text-2xl font-bold text-slate-800 mb-2">Critical Analysis</h3>
@@ -324,8 +546,8 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
             </div>
 
             <div class="flex space-x-2 mb-6 border-b border-slate-200 pb-2">
-                <button class="perspective-btn px-6 py-2 rounded-t-lg font-bold text-sm bg-nvgreen-100 text-nvgreen-900 border-b-2 border-nvgreen-500" data-view="proponent">Proponents & Studios</button>
-                <button class="perspective-btn px-6 py-2 rounded-t-lg font-bold text-sm text-slate-500 hover:bg-slate-100 border-b-2 border-transparent" data-view="critic">Critics & Artists</button>
+                <button class="perspective-btn px-6 py-2 rounded-t-lg font-bold text-sm bg-nvgreen-100 text-nvgreen-900 border-b-2 border-nvgreen-500" data-view="proponent">Proponents &amp; Studios</button>
+                <button class="perspective-btn px-6 py-2 rounded-t-lg font-bold text-sm text-slate-500 hover:bg-slate-100 border-b-2 border-transparent" data-view="critic">Critics &amp; Artists</button>
             </div>
 
             <div id="view-proponent" class="perspective-content block bg-white p-8 rounded-b-xl rounded-tr-xl border border-slate-200 shadow-sm">
@@ -337,7 +559,7 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
                             <li><strong class="text-slate-800">Transformative Pipeline:</strong> Closes the massive gap between real-time game engines and offline film rendering farms.</li>
                             <li><strong class="text-slate-800">Unattainable Photorealism:</strong> Delivers complex light interactions (cinematic subsurface scattering, fabric sheen) that are mathematically prohibitive under standard ray-tracing budgets.</li>
                             <li><strong class="text-slate-800">Developer Velocity:</strong> Allows iteration on lighting and material fidelity in days rather than weeks, as the neural network handles implicit light transport.</li>
-                            <li><strong class="text-slate-800">Control & Coherence:</strong> NVIDIA successfully embedded strict temporal stability, preventing the hallucinations common in image-gen models, while providing the Streamline SDK for overrides.</li>
+                            <li><strong class="text-slate-800">Control &amp; Coherence:</strong> NVIDIA successfully embedded strict temporal stability, preventing the hallucinations common in image-gen models, while providing the Streamline SDK for overrides.</li>
                         </ul>
                     </div>
                 </div>
@@ -350,7 +572,7 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
                         <h4 class="text-xl font-bold text-slate-800 mb-3">The "AI Beauty Filter" Concern</h4>
                         <ul class="space-y-4 text-slate-600">
                             <li><strong class="text-slate-800">Loss of Stylistic Nuance:</strong> Early hands-on reports describe an over-applied "Snapchat filter" effect that homogenizes unique art directions into a standardized "AI aesthetic".</li>
-                            <li><strong class="text-slate-800">Uncanny Valley:</strong> If masking is not perfectly exhaustive, the network can subtly overwrite character faces, changing expressions or intended structural lighting, resulting in artificial-looking subjects.</li>
+                            <li><strong class="text-slate-800">Uncanny Valley:</strong> If masking is not perfectly exhaustive, the network can subtly overwrite character faces, changing expressions or intended structural lighting.</li>
                             <li><strong class="text-slate-800">Creative Tension:</strong> Highlights a fundamental conflict between algorithmic rendering efficiency and absolute adherence to creative fidelity.</li>
                             <li><strong class="text-slate-800">Reliance on Masking:</strong> Puts the burden back on developers to painstakingly mask out areas where the generative effect shouldn't apply, somewhat negating the time saved.</li>
                         </ul>
@@ -359,6 +581,7 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
             </div>
         </section>
 
+        <!-- ── Ecosystem ─────────────────────────────────────── -->
         <section id="ecosystem" class="scroll-mt-24 mb-20">
             <div class="mb-8">
                 <h3 class="text-2xl font-bold text-slate-800 mb-2">Launch Ecosystem</h3>
@@ -380,7 +603,7 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
                 </div>
             </div>
 
-            <h4 class="text-lg font-bold text-slate-800 mb-4">Confirmed Titles & Partners</h4>
+            <h4 class="text-lg font-bold text-slate-800 mb-4">Confirmed Titles &amp; Partners</h4>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div class="bg-white border border-slate-200 rounded-lg p-4 text-center text-sm font-semibold text-slate-700 shadow-sm">AION 2 <br><span class="text-xs text-slate-400 font-normal">NCSOFT</span></div>
                 <div class="bg-white border border-slate-200 rounded-lg p-4 text-center text-sm font-semibold text-slate-700 shadow-sm">AC Shadows <br><span class="text-xs text-slate-400 font-normal">Ubisoft</span></div>
@@ -393,19 +616,19 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
             </div>
         </section>
 
+        <!-- ── Glossary ───────────────────────────────────────── -->
         <section id="glossary" class="scroll-mt-24 mb-20">
             <div class="mb-8">
                 <h3 class="text-2xl font-bold text-slate-800 mb-2">Jargon Primer</h3>
                 <p class="text-slate-600">Clarifying technical terminology regarding DLSS 5 architecture.</p>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="group bg-white border border-slate-200 rounded-xl p-5 hover:border-nvgreen-500 transition-colors">
                     <h5 class="font-bold text-slate-800 mb-1 group-hover:text-nvgreen-700">Generative Neural Rendering</h5>
                     <p class="text-sm text-slate-600">A deep-learning network that synthesizes new pixel-level details (shadows, material sheen) guided by 3D scene data, rather than just upscaling. Think of it as an intelligent, geometry-aware smart filter.</p>
                 </div>
                 <div class="group bg-white border border-slate-200 rounded-xl p-5 hover:border-nvgreen-500 transition-colors">
-                    <h5 class="font-bold text-slate-800 mb-1 group-hover:text-nvgreen-700">Color Buffer & Motion Vectors</h5>
+                    <h5 class="font-bold text-slate-800 mb-1 group-hover:text-nvgreen-700">Color Buffer &amp; Motion Vectors</h5>
                     <p class="text-sm text-slate-600">The sole inputs for DLSS 5. <strong>Color Buffer</strong> is the raw shaded image. <strong>Motion Vectors</strong> track per-pixel movement between frames to ensure temporal stability.</p>
                 </div>
                 <div class="group bg-white border border-slate-200 rounded-xl p-5 hover:border-nvgreen-500 transition-colors">
@@ -434,196 +657,210 @@ Method: All interactive elements powered by Vanilla JS, visualizations by Chart.
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
 
-        const sections = document.querySelectorAll("section");
-        const navLinks = document.querySelectorAll(".nav-link");
+    /* ── Scroll-spy nav ─────────────────────────────────────── */
+    const sections  = document.querySelectorAll("section");
+    const navLinks  = document.querySelectorAll(".nav-link");
 
-        window.addEventListener("scroll", () => {
-            let current = "";
-            sections.forEach((section) => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= (sectionTop - 150)) {
-                    current = section.getAttribute("id");
-                }
-            });
-
-            navLinks.forEach((link) => {
-                link.classList.remove("active");
-                link.classList.remove("border-l-4", "border-nvgreen-700", "bg-nvgreen-50", "text-nvgreen-700", "font-semibold");
-                if (link.getAttribute("href").includes(current)) {
-                    link.classList.add("active", "border-l-4", "border-nvgreen-700", "bg-nvgreen-50", "text-nvgreen-700", "font-semibold");
-                }
-            });
+    window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach(section => {
+            if (scrollY >= section.offsetTop - 150) current = section.getAttribute("id");
         });
+        navLinks.forEach(link => {
+            link.classList.remove("active");
+            if (link.getAttribute("href").includes(current)) link.classList.add("active");
+        });
+    });
 
-        const ctx = document.getElementById('evolutionChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['DLSS 1', 'DLSS 2', 'DLSS 3', 'DLSS 4.5', 'DLSS 5'],
-                datasets: [
-                    {
-                        label: 'Quantitative Performance (FPS Focus)',
-                        data: [20, 50, 85, 95, 100],
-                        borderColor: '#94a3b8',
-                        backgroundColor: 'rgba(148, 163, 184, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        fill: true
-                    },
-                    {
-                        label: 'Qualitative Fidelity (Generative Focus)',
-                        data: [10, 25, 30, 45, 100],
-                        borderColor: '#76B900',
-                        backgroundColor: 'rgba(118, 185, 0, 0.2)',
-                        borderWidth: 3,
-                        tension: 0.4,
-                        fill: true
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: { font: { family: 'Inter', size: 12 } }
-                    },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
+    /* ── Evolution Chart (dark-mode aware) ─────────────────── */
+    const ctx = document.getElementById('evolutionChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['DLSS 1', 'DLSS 2', 'DLSS 3', 'DLSS 4.5', 'DLSS 5'],
+            datasets: [
+                {
+                    label: 'Quantitative Performance (FPS Focus)',
+                    data: [20, 50, 85, 95, 100],
+                    borderColor: '#4a5568',
+                    backgroundColor: 'rgba(74, 85, 104, 0.12)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#4a5568',
+                    pointBorderColor: '#1c2128',
+                    pointRadius: 4,
+                },
+                {
+                    label: 'Qualitative Fidelity (Generative Focus)',
+                    data: [10, 25, 30, 45, 100],
+                    borderColor: '#76B900',
+                    backgroundColor: 'rgba(118, 185, 0, 0.15)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#b5e853',
+                    pointBorderColor: '#1c2128',
+                    pointRadius: 4,
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: { family: 'Inter', size: 12 },
+                        color: '#8b949e',
+                        padding: 20,
                     }
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 110,
-                        title: { display: true, text: 'Relative Impact / Focus (%)', font: { size: 11 } }
-                    }
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: '#1c2128',
+                    titleColor: '#e6edf3',
+                    bodyColor: '#8b949e',
+                    borderColor: '#30363d',
+                    borderWidth: 1,
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: '#8b949e', font: { family: 'Inter' } },
+                    grid:  { color: 'rgba(48, 54, 61, 0.6)' },
+                },
+                y: {
+                    beginAtZero: true,
+                    max: 110,
+                    title: {
+                        display: true,
+                        text: 'Relative Impact / Focus (%)',
+                        color: '#656d76',
+                        font: { size: 11, family: 'Inter' }
+                    },
+                    ticks: { color: '#8b949e', font: { family: 'Inter' } },
+                    grid:  { color: 'rgba(48, 54, 61, 0.6)' },
                 }
             }
-        });
-
-        const archData = {
-            'arch-input': {
-                title: 'Fixed Input Interface',
-                desc: 'The model receives strictly limited data: the per-frame shaded color buffer and motion vectors. It does NOT require depth, normals, albedo, or semantic labels directly, simplifying engine integration while relying on pre-trained semantic awareness.'
-            },
-            'arch-core': {
-                title: 'Hybrid Probabilistic Prediction',
-                desc: 'Replaces brute-force path tracing sampling. The neural network uses embedded semantic awareness to differentiate materials (skin vs metal) and infer light transport implicitly, executing on RTX 50 Tensor Cores.'
-            },
-            'arch-output': {
-                title: 'Photorealistic Enhancement',
-                desc: 'Infuses each pixel with generated lighting, contact shadows, rim lighting, and material micro-details. Output is constrained by 3D geometry and motion vectors to guarantee temporal coherence (no flickering).'
-            }
-        };
-
-        const flowBoxes = document.querySelectorAll('.flow-box');
-        const archDetails = document.getElementById('arch-details');
-
-        flowBoxes.forEach(box => {
-            box.addEventListener('mouseenter', () => {
-                const target = box.getAttribute('data-target');
-                const data = archData[target];
-                archDetails.innerHTML = `
-                    <h5 class="font-bold text-nvgreen-900 mb-2">${data.title}</h5>
-                    <p class="text-nvgreen-800 text-sm leading-relaxed">${data.desc}</p>
-                `;
-            });
-            box.addEventListener('mouseleave', () => {
-                archDetails.innerHTML = `
-                    <h5 class="font-bold text-nvgreen-900 mb-2">Interactive Architecture Overview</h5>
-                    <p class="text-nvgreen-800 text-sm leading-relaxed">Hover over the pipeline stages above to reveal detailed technical mechanics regarding inputs, neural processing, and rendering outputs.</p>
-                `;
-            });
-        });
-
-        const intensitySlider = document.getElementById('intensity');
-        const blendSlider = document.getElementById('blend');
-        const maskingSlider = document.getElementById('masking');
-        
-        const realismScore = document.getElementById('realism-score');
-        const realismBar = document.getElementById('realism-bar');
-        const intentScore = document.getElementById('intent-score');
-        const intentBar = document.getElementById('intent-bar');
-        const devWarning = document.getElementById('dev-warning');
-
-        function updateSimulation() {
-            const intensity = parseInt(intensitySlider.value);
-            const blend = parseInt(blendSlider.value); 
-            const masking = parseInt(maskingSlider.value);
-
-            document.getElementById('intensity-val').textContent = intensity + '%';
-            document.getElementById('blend-val').textContent = blend + '/' + (100-blend);
-            
-            let maskLabel = 'Low';
-            if(masking > 33) maskLabel = 'Medium';
-            if(masking > 66) maskLabel = 'High';
-            document.getElementById('masking-val').textContent = maskLabel;
-
-            let realism = (intensity * 0.6) + (blend * 0.4);
-            if (realism > 100) realism = 100;
-
-            let intent = 100 - (intensity * 0.5) - ((blend - 50) * 0.5) + (masking * 0.8);
-            if (intent > 100) intent = 100;
-            if (intent < 10) intent = 10;
-
-            realismScore.textContent = Math.round(realism) + '%';
-            realismBar.style.width = realism + '%';
-            
-            intentScore.textContent = Math.round(intent) + '%';
-            intentBar.style.width = intent + '%';
-
-            if (realism > 80 && intent < 40) {
-                devWarning.className = 'p-4 rounded-lg bg-red-900/30 border border-red-700 text-sm transition-all duration-300';
-                devWarning.innerHTML = '<strong class="block text-red-400 mb-1">Warning: Uncanny Valley Risk</strong><span class="text-slate-300">High generative intensity with low masking overwrites character faces and stylistic intent. Enable higher masking.</span>';
-                intentBar.classList.replace('bg-purple-500', 'bg-red-500');
-            } else if (blend > 80 && masking < 50) {
-                devWarning.className = 'p-4 rounded-lg bg-yellow-900/30 border border-yellow-700 text-sm transition-all duration-300';
-                devWarning.innerHTML = '<strong class="block text-yellow-500 mb-1">Caution: Stylistic Drift</strong><span class="text-slate-300">Generative blend is very high. Consider returning to the 70/30 safety valve to preserve base art direction.</span>';
-                intentBar.classList.replace('bg-red-500', 'bg-purple-500');
-            } else {
-                devWarning.className = 'p-4 rounded-lg bg-slate-700 border border-slate-600 text-sm transition-all duration-300';
-                devWarning.innerHTML = '<strong class="block text-nvgreen-500 mb-1">Optimal Tuning</strong><span class="text-slate-300">Settings provide a balanced enhancement. Art direction is protected while environments gain photorealistic lighting.</span>';
-                intentBar.classList.remove('bg-red-500');
-                intentBar.classList.add('bg-purple-500');
-            }
         }
-
-        intensitySlider.addEventListener('input', updateSimulation);
-        blendSlider.addEventListener('input', updateSimulation);
-        maskingSlider.addEventListener('input', updateSimulation);
-
-        const perspectiveBtns = document.querySelectorAll('.perspective-btn');
-        const perspectiveContents = document.querySelectorAll('.perspective-content');
-
-        perspectiveBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                perspectiveBtns.forEach(b => {
-                    b.classList.remove('bg-nvgreen-100', 'text-nvgreen-900', 'border-nvgreen-500');
-                    b.classList.add('text-slate-500', 'border-transparent');
-                });
-                
-                btn.classList.remove('text-slate-500', 'border-transparent');
-                btn.classList.add('bg-nvgreen-100', 'text-nvgreen-900', 'border-nvgreen-500');
-
-                const targetId = 'view-' + btn.getAttribute('data-view');
-                
-                perspectiveContents.forEach(content => {
-                    content.classList.add('hidden');
-                    content.classList.remove('block');
-                });
-                
-                document.getElementById(targetId).classList.remove('hidden');
-                document.getElementById(targetId).classList.add('block');
-            });
-        });
-
     });
+
+    /* ── Architecture hover details ─────────────────────────── */
+    const archData = {
+        'arch-input': {
+            title: 'Fixed Input Interface',
+            desc:  'The model receives strictly limited data: the per-frame shaded color buffer and motion vectors. It does NOT require depth, normals, albedo, or semantic labels directly, simplifying engine integration while relying on pre-trained semantic awareness.'
+        },
+        'arch-core': {
+            title: 'Hybrid Probabilistic Prediction',
+            desc:  'Replaces brute-force path tracing sampling. The neural network uses embedded semantic awareness to differentiate materials (skin vs metal) and infer light transport implicitly, executing on RTX 50 Tensor Cores.'
+        },
+        'arch-output': {
+            title: 'Photorealistic Enhancement',
+            desc:  'Infuses each pixel with generated lighting, contact shadows, rim lighting, and material micro-details. Output is constrained by 3D geometry and motion vectors to guarantee temporal coherence (no flickering).'
+        }
+    };
+
+    const flowBoxes  = document.querySelectorAll('.flow-box');
+    const archDetails = document.getElementById('arch-details');
+
+    flowBoxes.forEach(box => {
+        box.addEventListener('mouseenter', () => {
+            const data = archData[box.getAttribute('data-target')];
+            archDetails.innerHTML = `
+                <h5 class="font-bold text-nvgreen-900 mb-2">${data.title}</h5>
+                <p class="text-nvgreen-800 text-sm leading-relaxed">${data.desc}</p>
+            `;
+        });
+        box.addEventListener('mouseleave', () => {
+            archDetails.innerHTML = `
+                <h5 class="font-bold text-nvgreen-900 mb-2">Interactive Architecture Overview</h5>
+                <p class="text-nvgreen-800 text-sm leading-relaxed">Hover over the pipeline stages above to reveal detailed technical mechanics regarding inputs, neural processing, and rendering outputs.</p>
+            `;
+        });
+    });
+
+    /* ── Developer sliders ──────────────────────────────────── */
+    const intensitySlider = document.getElementById('intensity');
+    const blendSlider     = document.getElementById('blend');
+    const maskingSlider   = document.getElementById('masking');
+    const realismScore    = document.getElementById('realism-score');
+    const realismBar      = document.getElementById('realism-bar');
+    const intentScore     = document.getElementById('intent-score');
+    const intentBar       = document.getElementById('intent-bar');
+    const devWarning      = document.getElementById('dev-warning');
+
+    function updateSimulation() {
+        const intensity = parseInt(intensitySlider.value);
+        const blend     = parseInt(blendSlider.value);
+        const masking   = parseInt(maskingSlider.value);
+
+        document.getElementById('intensity-val').textContent = intensity + '%';
+        document.getElementById('blend-val').textContent = blend + '/' + (100 - blend);
+
+        let maskLabel = 'Low';
+        if (masking > 33) maskLabel = 'Medium';
+        if (masking > 66) maskLabel = 'High';
+        document.getElementById('masking-val').textContent = maskLabel;
+
+        let realism = Math.min((intensity * 0.6) + (blend * 0.4), 100);
+        let intent  = Math.min(Math.max(100 - (intensity * 0.5) - ((blend - 50) * 0.5) + (masking * 0.8), 10), 100);
+
+        realismScore.textContent = Math.round(realism) + '%';
+        realismBar.style.width   = realism + '%';
+        intentScore.textContent  = Math.round(intent) + '%';
+        intentBar.style.width    = intent + '%';
+
+        if (realism > 80 && intent < 40) {
+            devWarning.className = 'p-4 rounded-lg border text-sm transition-all duration-300';
+            devWarning.style.cssText = 'background:rgba(248,81,73,0.12);border-color:#6e2c2c;';
+            devWarning.innerHTML = '<strong class="block mb-1" style="color:#ff7b7b">Warning: Uncanny Valley Risk</strong><span style="color:#c9d1d9">High generative intensity with low masking overwrites character faces and stylistic intent. Enable higher masking.</span>';
+            intentBar.className = intentBar.className.replace('bg-purple-500','').replace('bg-red-500','') + ' bg-red-500';
+        } else if (blend > 80 && masking < 50) {
+            devWarning.className = 'p-4 rounded-lg border text-sm transition-all duration-300';
+            devWarning.style.cssText = 'background:rgba(210,153,34,0.12);border-color:#6e5a1a;';
+            devWarning.innerHTML = '<strong class="block mb-1" style="color:#e3b341">Caution: Stylistic Drift</strong><span style="color:#c9d1d9">Generative blend is very high. Consider returning to the 70/30 safety valve to preserve base art direction.</span>';
+            intentBar.className = intentBar.className.replace('bg-red-500','').replace('bg-purple-500','') + ' bg-purple-500';
+        } else {
+            devWarning.className = 'p-4 rounded-lg border text-sm transition-all duration-300';
+            devWarning.style.cssText = 'background:#1c2128;border-color:#30363d;';
+            devWarning.innerHTML = '<strong class="block mb-1" style="color:#b5e853">Optimal Tuning</strong><span style="color:#c9d1d9">Settings provide a balanced enhancement. Art direction is protected while environments gain photorealistic lighting.</span>';
+            intentBar.className = intentBar.className.replace('bg-red-500','').replace('bg-purple-500','') + ' bg-purple-500';
+        }
+    }
+
+    intensitySlider.addEventListener('input', updateSimulation);
+    blendSlider.addEventListener('input', updateSimulation);
+    maskingSlider.addEventListener('input', updateSimulation);
+
+    /* ── Perspectives tabs ──────────────────────────────────── */
+    document.querySelectorAll('.perspective-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.perspective-btn').forEach(b => {
+                b.classList.remove('bg-nvgreen-100','text-nvgreen-900','border-nvgreen-500');
+                b.classList.add('text-slate-500','border-transparent');
+                b.style.backgroundColor = '';
+                b.style.color = '';
+                b.style.borderColor = 'transparent';
+            });
+            btn.classList.remove('text-slate-500','border-transparent');
+            btn.classList.add('bg-nvgreen-100','text-nvgreen-900','border-nvgreen-500');
+
+            const targetId = 'view-' + btn.getAttribute('data-view');
+            document.querySelectorAll('.perspective-content').forEach(c => {
+                c.classList.add('hidden'); c.classList.remove('block');
+            });
+            document.getElementById(targetId).classList.remove('hidden');
+            document.getElementById(targetId).classList.add('block');
+        });
+    });
+
+});
 </script>
 </body>
 </html>
