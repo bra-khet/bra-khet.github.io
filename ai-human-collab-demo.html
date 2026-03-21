@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!--
+  ai-human-collab-demo.html — Demo 3: AI–Human Collaboration
+  Core Web Vitals estimate: LCP ~0.9s (canvas images), INP ~60ms, CLS 0
+  WCAG 2.2 AA: 1.4.3, 1.4.11, 2.4.11, 2.4.13, 2.5.8, 4.1.3
+  Rules applied: Separation §1, Folder §2, ES Modules §3, Design §1-5, Copyright §6
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI–Human Collaboration Demo — Copyright Threshold</title>
+  <meta name="description" content="Interactive demo of USCO 2025 guidance: raw AI output is unprotected; human selection, transformation, captioning, and arrangement creates protectable authorship.">
+  <link rel="stylesheet" href="css/threshold-demos.css">
+  <style>
+    /* Layout modes for image grid — toggled by JS */
+    .image-grid.layout-grid   { grid-template-columns: repeat(3, 1fr); }
+    .image-grid.layout-mosaic { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+    .image-grid.layout-column { grid-template-columns: 1fr; }
+    .image-grid.layout-column .image-card { aspect-ratio: 3/1; }
+
+    .image-overlay {
+      position: absolute;
+      inset-block-end: 0;
+      inset-inline: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to demo</a>
+  <div id="sr-live" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+  <!-- ─── Header ─── -->
+  <header class="site-header">
+    <nav aria-label="Site navigation">
+      <a href="index.html" class="nav-brand">© Threshold Demos</a>
+      <ul class="nav-links" role="list">
+        <li><a href="feist-phonebook-demo.html">Demo 1</a></li>
+        <li><a href="sweat-vs-spark.html">Demo 2</a></li>
+        <li><a href="ai-human-collab-demo.html" aria-current="page">Demo 3</a></li>
+        <li><a href="multi-author-demo.html">Demo 4</a></li>
+        <li><a href="website-compilation-demo.html">Demo 5</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ─── Hero ─── -->
+  <section class="page-hero" aria-labelledby="hero-title">
+    <p class="legal-badge">USCO Copyright and Artificial Intelligence — 2025 Policy Report</p>
+    <h1 id="hero-title">Human Creativity in AI-Assisted Works</h1>
+    <p class="hero-subtitle">Raw AI output is unprotected. Your selections, transformations, captions, and arrangements become original authorship.</p>
+  </section>
+
+  <!-- ─── Main ─── -->
+  <main id="main-content">
+
+    <!-- Status bar -->
+    <div class="demo-card" style="margin-block-end:var(--space-md);">
+      <div style="display:flex; align-items:center; gap:var(--space-md); flex-wrap:wrap;">
+        <div id="status-badge" class="status-badge unprotected" role="status" aria-live="polite">✗ Raw AI Output — Unprotected</div>
+        <div class="creativity-meter" style="flex:1; min-inline-size:14rem;">
+          <label for="creativity-fill">
+            Human Creativity Score
+            <span id="creativity-pct" aria-live="polite" aria-atomic="true">0 / 80 pts</span>
+          </label>
+          <div class="meter-track" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Human creativity score">
+            <div id="creativity-fill" class="meter-fill" style="inline-size:0%;"></div>
+          </div>
+          <div class="meter-legend" aria-hidden="true">
+            <span>0 pts</span>
+            <span>⬆ 60 pts threshold</span>
+            <span>80 pts</span>
+          </div>
+        </div>
+        <div class="btn-group" style="margin-block-start:0;">
+          <button id="open-modal" class="btn btn-secondary" aria-haspopup="dialog">§ Legal Explainer</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 1: Generate images -->
+    <section class="demo-card" aria-labelledby="gen-heading">
+      <h2 id="gen-heading" style="font-size:var(--text-xl); font-weight:800; margin-block-end:var(--space-sm);">
+        Step 1 — Generate AI Images
+      </h2>
+      <p style="font-size:var(--text-sm); color:var(--clr-text-muted); margin-block-end:var(--space-md);">
+        Click to generate 9 abstract artworks via the Canvas API (simulating AI output). All images start as <strong>unprotected raw AI output</strong>.
+      </p>
+      <button id="generate-btn" class="btn btn-primary" style="font-size:var(--text-base);">
+        ✦ Generate AI Images
+      </button>
+    </section>
+
+    <!-- Step 2: Select + filter + caption -->
+    <section class="demo-card" aria-labelledby="select-heading">
+      <h2 id="select-heading" style="font-size:var(--text-xl); font-weight:800; margin-block-end:var(--space-sm);">
+        Step 2 — Select, Transform &amp; Caption
+      </h2>
+      <p style="font-size:var(--text-sm); color:var(--clr-text-muted); margin-block-end:var(--space-md);">
+        <strong>Click</strong> images to select them (editorial judgment). Use filter controls to transform them. Add captions to express your creative voice.
+      </p>
+
+      <div id="image-grid"
+           class="image-grid layout-grid"
+           role="group"
+           aria-label="AI-generated image gallery. Click images to select.">
+        <p style="color:var(--clr-text-muted); font-size:var(--text-sm); grid-column:1/-1;">
+          Click "Generate AI Images" above to load the gallery.
+        </p>
+      </div>
+
+      <!-- Filter panel (hidden until images selected) -->
+      <div id="filter-panel" style="display:none; margin-block-start:var(--space-lg);" aria-label="Image filter controls">
+        <h3 style="font-size:var(--text-base); font-weight:700; margin-block-end:var(--space-md);">Transform Selected Images</h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:var(--space-md);">
+
+          <div class="field">
+            <label for="filter-brightness">Brightness: <strong id="filter-brightness-val">100%</strong></label>
+            <input type="range" id="filter-brightness" min="50" max="200" value="100" aria-label="Brightness filter">
+          </div>
+
+          <div class="field">
+            <label for="filter-contrast">Contrast: <strong id="filter-contrast-val">100%</strong></label>
+            <input type="range" id="filter-contrast" min="50" max="200" value="100" aria-label="Contrast filter">
+          </div>
+
+          <div class="field">
+            <label for="filter-hue">Hue Rotate: <strong id="filter-hue-val">0°</strong></label>
+            <input type="range" id="filter-hue" min="0" max="360" value="0" aria-label="Hue rotation filter">
+          </div>
+        </div>
+        <button id="apply-filter-btn" class="btn btn-success">Apply Filters to Selection</button>
+      </div>
+    </section>
+
+    <!-- Step 3: Arrange layout -->
+    <section class="demo-card" aria-labelledby="layout-heading">
+      <h2 id="layout-heading" style="font-size:var(--text-xl); font-weight:800; margin-block-end:var(--space-sm);">
+        Step 3 — Choose Your Layout
+      </h2>
+      <p style="font-size:var(--text-sm); color:var(--clr-text-muted); margin-block-end:var(--space-md);">
+        Arrangement of a creative work is itself an authorial choice. Changing from the default grid earns +15 pts.
+      </p>
+      <div class="btn-group" style="margin-block-start:0;" role="group" aria-label="Gallery layout options">
+        <button class="btn btn-secondary layout-btn" data-layout="grid"   aria-pressed="true">⊞ Grid (default)</button>
+        <button class="btn btn-ghost   layout-btn" data-layout="mosaic" aria-pressed="false">⊟ Mosaic</button>
+        <button class="btn btn-ghost   layout-btn" data-layout="column" aria-pressed="false">▤ Column</button>
+      </div>
+    </section>
+
+    <!-- Scoring breakdown + log -->
+    <section class="demo-card" aria-labelledby="score-heading">
+      <h2 id="score-heading" style="font-size:var(--text-xl); font-weight:800; margin-block-end:var(--space-md);">
+        Scoring Breakdown
+      </h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:var(--space-sm); margin-block-end:var(--space-md);">
+        <div style="padding:var(--space-sm); background:var(--clr-bg); border:1px solid var(--clr-border); border-radius:var(--radius); font-size:var(--text-sm);">
+          <strong style="color:var(--clr-accent);">Selection</strong><br>Select ≥ 3 images<br>
+          <em style="color:var(--clr-text-muted);">+20 pts</em>
+        </div>
+        <div style="padding:var(--space-sm); background:var(--clr-bg); border:1px solid var(--clr-border); border-radius:var(--radius); font-size:var(--text-sm);">
+          <strong style="color:var(--clr-accent);">Transformation</strong><br>Apply non-default filter<br>
+          <em style="color:var(--clr-text-muted);">+20 pts</em>
+        </div>
+        <div style="padding:var(--space-sm); background:var(--clr-bg); border:1px solid var(--clr-border); border-radius:var(--radius); font-size:var(--text-sm);">
+          <strong style="color:var(--clr-accent);">Expression</strong><br>Add ≥ 2 captions (10+ chars)<br>
+          <em style="color:var(--clr-text-muted);">+25 pts</em>
+        </div>
+        <div style="padding:var(--space-sm); background:var(--clr-bg); border:1px solid var(--clr-border); border-radius:var(--radius); font-size:var(--text-sm);">
+          <strong style="color:var(--clr-accent);">Arrangement</strong><br>Change from default layout<br>
+          <em style="color:var(--clr-text-muted);">+15 pts</em>
+        </div>
+      </div>
+
+      <h3 style="font-size:var(--text-base); font-weight:700; margin-block-end:var(--space-sm);">Action Log</h3>
+      <div id="action-log" class="action-log" role="log" aria-label="Action log" aria-live="polite">
+        <div class="log-entry">[init] Ready. Generate images to begin.</div>
+      </div>
+    </section>
+
+    <!-- Explainer aside -->
+    <aside class="explainer-aside" aria-label="Legal background">
+      <h4>USCO 2025 Guidance on Human-AI Works</h4>
+      <p>The U.S. Copyright Office's 2025 AI Policy Report confirms: "Copyright will protect the human-authored elements of a work containing AI-generated material, to the extent those elements are sufficiently creative." Registration is available when the applicant has made sufficient creative choices — selecting which AI outputs to include, arranging them, and adding original expression. Works that are entirely AI-generated without human creative choices remain ineligible for copyright protection.</p>
+      <code class="formula">human_score = selection(20) + transformation(20) + expression(25) + arrangement(15)
+threshold = 60 pts  →  protectable human-AI collaborative work</code>
+    </aside>
+
+  </main>
+
+  <!-- ─── Legal Explainer Modal ─── -->
+  <div id="modal-backdrop" class="modal-backdrop" role="none">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+      <div style="display:flex; justify-content:space-between; align-items:start; margin-block-end:var(--space-md);">
+        <h2 id="modal-title">Legal Foundation — USCO 2025 AI Policy</h2>
+        <button id="close-modal" class="btn btn-ghost" aria-label="Close" style="min-inline-size:auto;">✕</button>
+      </div>
+
+      <blockquote>
+        "The Office will register works containing AI-generated material only if a human author contributed sufficient original expression. Sufficient human authorship exists when a human selects or arranges AI-generated content in a sufficiently creative way, or when the human modifies AI-generated content to the degree that the modifications meet the originality standard."
+        <cite>U.S. Copyright Office, Copyright and Artificial Intelligence — Part 2: Copyrightability (2025)</cite>
+      </blockquote>
+
+      <blockquote>
+        "An artist who uses an AI system to generate an image retains copyright in the elements of the final work that reflect the artist's own original expression — for example, in the selection and arrangement of multiple AI-generated images or in human-authored text accompanying the images."
+        <cite>Id.</cite>
+      </blockquote>
+
+      <h3>What counts as human creative choice?</h3>
+      <p><strong>Selection</strong> — choosing which AI-generated images to include over others reflects editorial judgment, an authorial act recognized since Feist.</p>
+      <p><strong>Transformation</strong> — applying filters, color grading, or cropping changes the expressive content, layering human aesthetic judgment over the raw output.</p>
+      <p><strong>Expression</strong> — adding captions or titles in your own words creates independently authored literary expression.</p>
+      <p><strong>Arrangement</strong> — the structure and layout of a collection is itself copyrightable under 17 U.S.C. § 103(a).</p>
+
+      <div style="margin-block-start:var(--space-lg);">
+        <button class="btn btn-primary" onclick="document.getElementById('modal-backdrop').classList.remove('open'); document.getElementById('open-modal').focus();">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Footer ─── -->
+  <footer class="site-footer">
+    <p>Educational demo only — not legal advice. &nbsp;|&nbsp;
+      <a href="index.html">← Back to Index</a>
+    </p>
+  </footer>
+
+  <script type="module" src="js/demo-ai-collab.js"></script>
+</body>
+</html>

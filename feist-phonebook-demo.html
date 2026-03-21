@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<!--
+  feist-phonebook-demo.html — Demo 1: Feist Phonebook
+  Core Web Vitals estimate: LCP ~0.8s (no images), INP ~50ms, CLS 0
+  WCAG 2.2 AA: 1.4.3, 1.4.11, 2.4.11, 2.4.13, 2.5.8, 4.1.3 (live regions)
+  Rules applied: Separation §1, Folder §2, ES Modules §3, Design §1-5, Copyright §6
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feist Phonebook Demo — Copyright Threshold</title>
+  <meta name="description" content="Interactive demo of Feist Publications v. Rural Telephone: why alphabetical phone book entries are unprotected, and how creative arrangement crosses the copyright threshold.">
+  <link rel="stylesheet" href="css/threshold-demos.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to demo</a>
+  <div id="sr-live" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+  <!-- ─── Header ─── -->
+  <header class="site-header">
+    <nav aria-label="Site navigation">
+      <a href="index.html" class="nav-brand">© Threshold Demos</a>
+      <ul class="nav-links" role="list">
+        <li><a href="feist-phonebook-demo.html" aria-current="page">Demo 1</a></li>
+        <li><a href="sweat-vs-spark.html">Demo 2</a></li>
+        <li><a href="ai-human-collab-demo.html">Demo 3</a></li>
+        <li><a href="multi-author-demo.html">Demo 4</a></li>
+        <li><a href="website-compilation-demo.html">Demo 5</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ─── Hero ─── -->
+  <section class="page-hero" aria-labelledby="hero-title">
+    <p class="legal-badge" aria-label="Legal basis">Feist Publications, Inc. v. Rural Telephone Service Co. — 499 U.S. 340 (1991)</p>
+    <h1 id="hero-title">The Phonebook Test</h1>
+    <p class="hero-subtitle">Raw alphabetical facts are unprotected. Creative arrangement and editorial commentary can cross the copyright threshold.</p>
+  </section>
+
+  <!-- ─── Main ─── -->
+  <main id="main-content">
+
+    <!-- Controls bar -->
+    <div class="demo-card" style="margin-block-end:var(--space-md);">
+      <div style="display:flex; align-items:center; gap:var(--space-md); flex-wrap:wrap;">
+        <div id="status-badge" class="status-badge unprotected" role="status" aria-live="polite">✗ Unprotected — Raw Facts</div>
+        <div class="creativity-meter" style="flex:1; min-inline-size:14rem;">
+          <label for="creativity-fill">
+            Creativity Score
+            <span id="creativity-pct" aria-live="polite" aria-atomic="true">0%</span>
+          </label>
+          <div class="meter-track" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Creativity score">
+            <div id="creativity-fill" class="meter-fill" style="inline-size:0%;"></div>
+          </div>
+          <div class="meter-legend" aria-hidden="true">
+            <span>0% — Raw Facts</span>
+            <span>⬆ 33% Threshold</span>
+            <span>100%</span>
+          </div>
+        </div>
+        <div class="btn-group" style="margin-block-start:0;">
+          <button id="open-modal" class="btn btn-secondary" aria-haspopup="dialog">§ Legal Explainer</button>
+          <button id="reset-btn" class="btn btn-ghost">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Explainer aside -->
+    <aside class="explainer-aside" aria-label="How this demo works">
+      <h4>How the Feist Threshold Works</h4>
+      <p>The Supreme Court held that facts are not copyrightable; only original creative expression is. Alphabetical arrangement of names is so obvious it lacks even a "modicum of creativity." But <em>curating</em> which subscribers to include and how to arrange them — with your own editorial commentary — can add enough originality to earn thin copyright protection.</p>
+      <code class="formula">score = 0.6 × (fraction of records not in alpha order) + 0.4 × (commentary richness)
+threshold = 33%  →  above threshold = protectable compilation</code>
+    </aside>
+
+    <!-- Split pane demo -->
+    <section class="demo-card" aria-labelledby="demo-heading">
+      <h2 id="demo-heading" style="font-size:var(--text-xl); font-weight:800; margin-block-end:var(--space-md);">
+        Raw Data vs. Curated Compilation
+      </h2>
+
+      <div class="split-pane">
+
+        <!-- Left: Raw (unprotected) alphabetical table -->
+        <div class="pane">
+          <h3>
+            Rural Telephone Directory
+            <span class="pane-tag tag-unprotected">Unprotected</span>
+          </h3>
+          <p style="font-size:var(--text-sm); color:var(--clr-text-muted); margin-block-end:var(--space-sm);">
+            Auto-sorted A → Z. This is exactly what Feist found uncopyrightable.
+          </p>
+          <div style="max-block-size:28rem; overflow-y:auto;" role="region" aria-label="Raw alphabetical subscriber table">
+            <table class="data-table" aria-label="Subscriber records sorted alphabetically">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Phone</th>
+                </tr>
+              </thead>
+              <tbody id="raw-tbody">
+                <!-- Populated by demo-feist.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Right: Curated (potentially protectable) draggable list -->
+        <div class="pane">
+          <h3>
+            Your Curated Directory
+            <span class="pane-tag tag-protectable">Creative Work</span>
+          </h3>
+          <p style="font-size:var(--text-sm); color:var(--clr-text-muted); margin-block-end:var(--space-sm);">
+            Drag to reorder (or use <kbd>↑</kbd><kbd>↓</kbd> keys). Add commentary to earn creativity points.
+          </p>
+          <div style="max-block-size:28rem; overflow-y:auto;" role="region" aria-label="Curated subscriber list — drag to reorder">
+            <ul id="curated-list"
+                class="drag-list"
+                role="listbox"
+                aria-label="Draggable subscriber list. Use arrow keys to reorder.">
+              <!-- Populated by demo-feist.js -->
+            </ul>
+          </div>
+        </div>
+
+      </div><!-- /split-pane -->
+    </section><!-- /demo-card -->
+
+  </main><!-- /main -->
+
+  <!-- ─── Legal Explainer Modal ─── -->
+  <div id="modal-backdrop" class="modal-backdrop" role="none">
+    <div class="modal"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="modal-title"
+         tabindex="-1">
+      <div style="display:flex; justify-content:space-between; align-items:start; margin-block-end:var(--space-md);">
+        <h2 id="modal-title">Legal Foundation — Feist (1991)</h2>
+        <button id="close-modal" class="btn btn-ghost" aria-label="Close legal explainer" style="min-inline-size:auto;">✕</button>
+      </div>
+
+      <blockquote>
+        "The sine qua non of copyright is originality. To qualify for copyright protection, a work must be original to the author… Original, as the term is used in copyright, means only that the work was independently created by the author (as opposed to copied from other works), and that it possesses at least some minimal degree of creativity."
+        <cite>Feist Publications, Inc. v. Rural Tel. Serv. Co., 499 U.S. 340, 345 (1991)</cite>
+      </blockquote>
+
+      <blockquote>
+        "The selection, coordination, and arrangement of Rural's white pages do not satisfy the minimum constitutional standards for copyright protection… Rural's selection of listings — subscribers who pay for telephone service — is not original. Rural simply takes the data provided by its subscribers and lists it alphabetically by surname."
+        <cite>Id. at 362–363</cite>
+      </blockquote>
+
+      <h3>What does the demo measure?</h3>
+      <p><strong>Arrangement divergence (60%)</strong> — How many records have you moved from the default A→Z order? Feist says alphabetical sorting is so obvious it adds zero creativity. Any deliberate departure from the obvious arrangement signals authorial choice.</p>
+      <p><strong>Commentary richness (40%)</strong> — Editorial notes, annotations, and descriptions added alongside each entry are independently authored expression. Even a brief curatorial remark can carry original expression that the underlying facts do not.</p>
+
+      <h3>The 33% threshold</h3>
+      <p>This demo uses 33% as the operational "modicum of creativity" marker — not a statutory figure, but calibrated to require at least moderate arrangement changes plus some commentary before flipping the status. In practice, courts apply a very low bar: <em>some</em> creative judgment suffices.</p>
+
+      <div style="margin-block-start:var(--space-lg);">
+        <button id="close-modal-bottom" class="btn btn-primary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Footer ─── -->
+  <footer class="site-footer">
+    <p>Educational demo only — not legal advice. &nbsp;|&nbsp;
+      <a href="index.html">← Back to Index</a>
+    </p>
+  </footer>
+
+  <script type="module" src="js/demo-feist.js"></script>
+  <script>
+    // Wire second close button (inline init < 5 lines)
+    document.getElementById('close-modal-bottom')
+      ?.addEventListener('click', () => {
+        document.getElementById('modal-backdrop').classList.remove('open');
+        document.getElementById('open-modal').focus();
+      });
+  </script>
+</body>
+</html>

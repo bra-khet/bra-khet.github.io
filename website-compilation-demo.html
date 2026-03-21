@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<!--
+  website-compilation-demo.html — Demo 5: Website Compilation
+  Core Web Vitals estimate: LCP ~0.7s, INP ~50ms, CLS 0
+  WCAG 2.2 AA: 1.4.3, 1.4.11, 2.4.11, 2.4.13, 2.5.8, 4.1.3
+  Rules applied: Separation §1, Folder §2, ES Modules §3, Design §1-5, Copyright §6
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Compilation Demo — Copyright Threshold</title>
+  <meta name="description" content="Interactive demo of thin copyright in curated websites: public-domain recipe data gains copyright protection through creative selection, personal annotation, and an interactive wine pairing tool.">
+  <link rel="stylesheet" href="css/threshold-demos.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to demo</a>
+  <div id="sr-live" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+  <!-- ─── Header ─── -->
+  <header class="site-header">
+    <nav aria-label="Site navigation">
+      <a href="index.html" class="nav-brand">© Threshold Demos</a>
+      <ul class="nav-links" role="list">
+        <li><a href="feist-phonebook-demo.html">Demo 1</a></li>
+        <li><a href="sweat-vs-spark.html">Demo 2</a></li>
+        <li><a href="ai-human-collab-demo.html">Demo 3</a></li>
+        <li><a href="multi-author-demo.html">Demo 4</a></li>
+        <li><a href="website-compilation-demo.html" aria-current="page">Demo 5</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ─── Hero ─── -->
+  <section class="page-hero" aria-labelledby="hero-title">
+    <p class="legal-badge">Feist § 103(b) — Thin Copyright in Curated Compilations</p>
+    <h1 id="hero-title">The Curated Website</h1>
+    <p class="hero-subtitle">Public-domain recipe data is free for all. Your creative curation, personal anecdotes, and interactive tools earn thin copyright protection for your website.</p>
+  </section>
+
+  <!-- ─── Main ─── -->
+  <main id="main-content">
+
+    <!-- Status bar -->
+    <div class="demo-card" style="margin-block-end:var(--space-md);">
+      <div style="display:flex; align-items:center; gap:var(--space-md); flex-wrap:wrap;">
+        <div id="status-badge" class="status-badge unprotected" role="status" aria-live="polite">✗ Public Domain — No Creative Selection</div>
+        <div class="creativity-meter" style="flex:1; min-inline-size:14rem;">
+          <label for="creativity-fill">
+            Website Creativity Score
+            <span id="creativity-pct" aria-live="polite" aria-atomic="true">0 / 80 pts</span>
+          </label>
+          <div class="meter-track" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Website creativity score">
+            <div id="creativity-fill" class="meter-fill" style="inline-size:0%;"></div>
+          </div>
+          <div class="meter-legend" aria-hidden="true">
+            <span>0 pts</span>
+            <span>⬆ 50 pts threshold</span>
+            <span>80 pts</span>
+          </div>
+        </div>
+        <div class="btn-group" style="margin-block-start:0;">
+          <button id="open-modal" class="btn btn-secondary" aria-haspopup="dialog">§ Legal Explainer</button>
+          <button id="reset-btn" class="btn btn-ghost">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scoring guide -->
+    <div class="demo-card" style="margin-block-end:var(--space-md);">
+      <h2 style="font-size:var(--text-lg); font-weight:700; margin-block-end:var(--space-md);">Creativity Scorecard</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:var(--space-sm);">
+        <div style="padding:var(--space-sm); background:var(--clr-bg); border:1px solid var(--clr-border); border-radius:var(--radius); font-size:var(--text-sm);">
+          <strong style="color:var(--clr-accent);">Curation Toggle</strong><br>Enable styled categories<br>
+          <em style="color:var(--clr-text-muted);">+10 pts</em>
+        </div>
+        <div style="padding:var(--space-sm); background:var(--clr-bg); border:1px solid var(--clr-border); border-radius:var(--radius); font-size:var(--text-sm);">
+          <strong style="color:var(--clr-accent);">Personal Anecdote ×3</strong><br>10+ chars each, max 3<br>
+          <em style="color:var(--clr-text-muted);">+15 pts each = 45 pts</em>
+        </div>
+        <div style="padding:var(--space-sm); background:var(--clr-bg); border:1px solid var(--clr-border); border-radius:var(--radius); font-size:var(--text-sm);">
+          <strong style="color:var(--clr-accent);">Wine Pairing Tool</strong><br>Use interactive tool<br>
+          <em style="color:var(--clr-text-muted);">+25 pts</em>
+        </div>
+      </div>
+    </div>
+
+    <!-- View toggle -->
+    <section class="demo-card" aria-labelledby="view-heading">
+      <div style="display:flex; align-items:center; gap:var(--space-md); flex-wrap:wrap; margin-block-end:var(--space-md);">
+        <div>
+          <h2 id="view-heading" style="font-size:var(--text-xl); font-weight:800;">
+            <span id="view-label">Raw Public-Domain List</span>
+          </h2>
+          <p style="font-size:var(--text-sm); color:var(--clr-text-muted);">10 pre-1928 recipes — all in the public domain</p>
+        </div>
+        <button id="toggle-curation-btn" class="btn btn-primary" aria-label="Toggle between raw list and curated view">
+          Enable Curated View →
+        </button>
+      </div>
+
+      <!-- Recipe container: populated by JS -->
+      <div id="recipe-container" role="region" aria-label="Recipe collection" aria-live="polite">
+        <!-- JS renders raw list or curated grid here -->
+      </div>
+    </section>
+
+    <!-- Wine pairing tool -->
+    <section class="demo-card" aria-labelledby="wine-heading">
+      <h2 id="wine-heading" style="font-size:var(--text-xl); font-weight:800; margin-block-end:var(--space-sm);">
+        ✦ Interactive Wine Pairing Tool
+      </h2>
+      <p style="font-size:var(--text-sm); color:var(--clr-text-muted); margin-block-end:var(--space-md);">
+        This interactive tool is itself a creative original work. Using it contributes +25 pts — the tool's logic (a curated knowledge base of pairings) is your original editorial judgment expressed as functionality.
+      </p>
+
+      <h3 style="font-size:var(--text-base); font-weight:700; margin-block-end:var(--space-xs);">Select a dish category:</h3>
+      <div class="wine-grid" role="group" aria-label="Food category buttons for wine pairing">
+        <button class="wine-btn" data-category="seafood"   aria-pressed="false">🦞 Seafood</button>
+        <button class="wine-btn" data-category="poultry"   aria-pressed="false">🍗 Poultry</button>
+        <button class="wine-btn" data-category="red"       aria-pressed="false">🥩 Red Meat</button>
+        <button class="wine-btn" data-category="vegetable" aria-pressed="false">🥗 Vegetable</button>
+        <button class="wine-btn" data-category="dessert"   aria-pressed="false">🍰 Dessert</button>
+      </div>
+
+      <div id="wine-result" class="wine-result" role="status" aria-live="polite" aria-label="Wine pairing result"></div>
+    </section>
+
+    <!-- Action log -->
+    <section class="demo-card" aria-labelledby="log-heading">
+      <h2 id="log-heading" style="font-size:var(--text-base); font-weight:700; margin-block-end:var(--space-sm);">Action Log</h2>
+      <div id="action-log" class="action-log" role="log" aria-label="Action log" aria-live="polite">
+        <div class="log-entry">[init] 10 public-domain recipes loaded. All facts are in the public domain.</div>
+      </div>
+    </section>
+
+    <!-- Explainer aside -->
+    <aside class="explainer-aside" aria-label="Legal background">
+      <h4>Thin Copyright in Curated Websites</h4>
+      <p>Under 17 U.S.C. § 103(b), copyright in compilations extends only to "the material contributed by the author of such work, as distinguished from the preexisting material." The underlying recipe data (pre-1928 = public domain) belongs to everyone. But the copyright owner of this curated website holds thin copyright in: the creative selection and arrangement of recipes, the personal anecdotes as independently authored literary works, and the original interactive wine-pairing functionality.</p>
+      <code class="formula">compilation_score = curation(10) + anecdotes(0–45) + wine_tool(25)
+threshold = 50 pts  →  thin copyright in UI/curation/commentary layer</code>
+    </aside>
+
+  </main>
+
+  <!-- ─── Legal Explainer Modal ─── -->
+  <div id="modal-backdrop" class="modal-backdrop" role="none">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+      <div style="display:flex; justify-content:space-between; align-items:start; margin-block-end:var(--space-md);">
+        <h2 id="modal-title">Legal Foundation — Compilation Copyright</h2>
+        <button id="close-modal" class="btn btn-ghost" aria-label="Close" style="min-inline-size:auto;">✕</button>
+      </div>
+
+      <blockquote>
+        "The copyright in a compilation or derivative work extends only to the material contributed by the author of such work, as distinguished from the preexisting material employed in the work, and does not imply any exclusive right in the preexisting material."
+        <cite>17 U.S.C. § 103(b)</cite>
+      </blockquote>
+
+      <blockquote>
+        "As a constitutional matter, copyright protects only those constituent elements of a work that possess more than a de minimis quantum of creativity… The selection, coordination, and arrangement of the facts must be made independently by the compiler and must entail a minimal degree of creativity."
+        <cite>Feist Publications, Inc. v. Rural Tel. Serv. Co., 499 U.S. 340, 358 (1991)</cite>
+      </blockquote>
+
+      <h3>What the thin copyright covers</h3>
+      <p><strong>Creative curation (+10 pts)</strong> — Choosing which of the thousands of available public-domain recipes to include, and organizing them into thematic categories, reflects editorial judgment that Feist protects as a creative selection.</p>
+      <p><strong>Personal anecdotes (+15 pts each)</strong> — These are independently authored literary works. A personal memory or contextual note about a recipe is original expression regardless of the recipe itself being in the public domain.</p>
+      <p><strong>Wine pairing tool (+25 pts)</strong> — The interactive tool embodies the author's original compilation of pairing knowledge expressed as functional software. The underlying food-wine relationships may be facts, but the curated knowledge base and its implementation is protectable.</p>
+
+      <h3>What the thin copyright does NOT cover</h3>
+      <p>The underlying recipe data — ingredients, techniques, names — remain in the public domain. Anyone may copy and republish those facts. The copyright owner cannot prevent use of the recipes themselves, only unauthorized copying of the curated selection, anecdotes, and tool code.</p>
+
+      <div style="margin-block-start:var(--space-lg);">
+        <button class="btn btn-primary" onclick="document.getElementById('modal-backdrop').classList.remove('open'); document.getElementById('open-modal').focus();">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Footer ─── -->
+  <footer class="site-footer">
+    <p>Educational demo only — not legal advice. &nbsp;|&nbsp;
+      <a href="index.html">← Back to Index</a>
+    </p>
+  </footer>
+
+  <script type="module" src="js/demo-compilation.js"></script>
+</body>
+</html>
