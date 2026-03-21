@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Copyright Threshold Demo | U.S. Copyright Law</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        },
+                        indigo: {
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Chart Container Requirements */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px; /* Constrain width for readability */
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px; /* Base height */
+            max-height: 400px; /* Prevent vertical overflow */
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        /* Custom scrollbar for better UI */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Canvas drawing styles */
+        #paintCanvas {
+            touch-action: none; /* Prevent scrolling while painting */
+            cursor: crosshair;
+        }
+
+        /* Meter transition */
+        .meter-fill {
+            transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <!-- Chosen Palette: Warm Neutrals (Slate) with Indigo Accents for authoritative/legal tone, and semantic colors (Emerald/Rose) for validation feedback. -->
+    
+    <!-- Application Structure Plan: 
+         1. Hero Section: Establishes context, objective, and overall tone.
+         2. Legal Framework (Data Viz): A scatter plot providing a macro-level view of current legal precedents (Thaler, Zarya, etc.) mapping human input to copyrightability.
+         3. Interactive Demos (Text, Visual, Arrangement): The core of the SPA. Segmented functionally to isolate different types of human contribution recognized by the USCO. Allows hands-on exploration of the 'black box' vs 'expressive control' concepts.
+         4. Assessment Quiz: Reinforces learning through practical scenarios.
+         5. Glossary: Quick reference for legal terminology.
+         Reasoning: This structure moves the user logically from high-level legal theory to hands-on practical application, ending with knowledge validation, ensuring the "case-by-case" nature of the law is deeply understood interactively. -->
+         
+    <!-- Visualization & Content Choices: 
+         - Legal Precedent Scatter Plot: Goal: Compare cases. Method: Chart.js Scatter Plot. Justification: Clearly illustrates the "threshold" line where human input surpasses the de minimis standard, making abstract legal outcomes visual and comparative. NO SVG used.
+         - Text Edit Meter: Goal: Inform/Change. Method: Vanilla JS string comparison (Levenshtein-esque) updating a styled HTML width/color bar. Justification: Provides immediate, tangible feedback on the "creative modification" category.
+         - Canvas Painting Meter: Goal: Change. Method: HTML5 Canvas pixel manipulation tracking. Justification: Replicates the "perceptible human input" standard (e.g., Rose Enigma) in visual works without relying on external libraries or SVGs.
+         - Grid Arrangement Selector: Goal: Organize. Method: HTML CSS Grid with JS state toggling. Justification: Directly simulates the "selection and coordination" standard (e.g., Zarya of the Dawn) using fundamental UI elements. -->
+         
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-indigo-700">&#9878; AI Copyright Demo</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+                    <a href="#framework" class="hover:text-indigo-600 transition-colors">Legal Framework</a>
+                    <a href="#demos" class="hover:text-indigo-600 transition-colors">Interactive Demos</a>
+                    <a href="#quiz" class="hover:text-indigo-600 transition-colors">Assessment</a>
+                    <a href="#glossary" class="hover:text-indigo-600 transition-colors">Glossary</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+        <!-- Header / Intro -->
+        <header class="text-center space-y-4 max-w-4xl mx-auto mt-8">
+            <div class="inline-block px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs font-semibold tracking-wide uppercase mb-2">March 2026 Update</div>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">Did I Do Enough?</h1>
+            <p class="text-xl md:text-2xl text-slate-600 font-serif">Illustrating the Threshold for Sufficient Creative Input in AI-Generated Content Under U.S. Copyright Law.</p>
+            <p class="text-base text-slate-500 max-w-2xl mx-auto mt-4">
+                U.S. copyright law requires human authorship. Machines operating without creative human intervention do not qualify. This interactive report breaks down the U.S. Copyright Office's 2025 guidelines to demonstrate exactly where the line is drawn.
+            </p>
+        </header>
+
+        <!-- Section 1: Legal Framework -->
+        <section id="framework" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-10">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-slate-900 mb-4 border-b pb-2 border-slate-100">1. The Legal Landscape & Precedents</h2>
+                <p class="text-slate-600 mb-4">
+                    This section visualizes the current legal standing based on recent judicial decisions (*Thaler v. Perlmutter*, 2023-2026) and Copyright Office guidance. The core principle is that copyright protects <strong>human control over expressive elements</strong>. Prompts alone act as a "black box" and do not confer control. 
+                </p>
+                <div class="grid md:grid-cols-2 gap-6 bg-slate-50 p-4 rounded-lg border border-slate-100 text-sm">
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-2">&#10060; Insufficient (Uncopyrightable)</h3>
+                        <ul class="list-disc pl-5 space-y-1 text-slate-600">
+                            <li>Purely AI-generated material (Thaler/DABUS).</li>
+                            <li>Outputs generated solely via text prompts, regardless of prompt length or detail.</li>
+                            <li>Minor, trivial (*de minimis*) edits to an AI output.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 mb-2">&#10004; Sufficient (Copyrightable)</h3>
+                        <ul class="list-disc pl-5 space-y-1 text-slate-600">
+                            <li>Creative modifications, additions, or deletions of AI output.</li>
+                            <li>Perceptible human expressive inputs integrated into the output (*Rose Enigma*).</li>
+                            <li>Creative selection and arrangement of multiple AI outputs (*Zarya of the Dawn*).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart Container -->
+            <div class="mt-8">
+                <h3 class="text-lg font-bold text-center text-slate-800 mb-2">Spectrum of Human Authorship vs. Copyrightability</h3>
+                <p class="text-center text-xs text-slate-500 mb-4">Mapping real-world precedents to the required threshold of creative input.</p>
+                <div class="chart-container">
+                    <canvas id="precedentChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Demos Area -->
+        <div id="demos" class="space-y-2 mb-8">
+            <h2 class="text-3xl font-bold text-slate-900 text-center">Interactive Threshold Demonstrations</h2>
+            <p class="text-center text-slate-600 max-w-3xl mx-auto pb-8">
+                The following three tools simulate the exact legal distinctions applied by the Copyright Office. They isolate specific variables of human input—editing, painting, and arranging—while holding the AI simulation constant. 
+            </p>
+
+            <!-- Demo 1: Text -->
+            <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="bg-indigo-50 px-6 py-4 border-b border-indigo-100 flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-indigo-900">&#128221; Demo 1: Creative Modification (Text)</h3>
+                    <span class="text-xs font-semibold bg-white text-indigo-600 px-2 py-1 rounded shadow-sm border border-indigo-100">Literary Works</span>
+                </div>
+                <div class="p-6 md:p-8">
+                    <p class="text-slate-600 mb-6 text-sm">
+                        <strong>Context:</strong> Using AI to generate text via a prompt yields no copyright. However, heavily modifying that text can cross the threshold. In this simulation, generate a base text, then manually rewrite substantial portions of it to see the legal status change based on human expression.
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- AI Side -->
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Your Prompt (Black Box Input)</label>
+                                <div class="flex">
+                                    <input type="text" id="textPrompt" value="Write a poem about the ocean." class="flex-1 rounded-l-md border-slate-300 border px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                    <button onclick="generateAIText()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-r-md text-sm font-medium transition-colors">Generate</button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">AI Output (Uncopyrightable Baseline)</label>
+                                <textarea id="aiBaseText" rows="6" readonly class="w-full rounded-md border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-500 cursor-not-allowed">Click generate to create an AI baseline...</textarea>
+                            </div>
+                        </div>
+
+                        <!-- Human Side -->
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Your Creative Modifications (Human Input)</label>
+                                <textarea id="userEditText" rows="6" oninput="assessTextModification()" class="w-full rounded-md border-indigo-300 border-2 px-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500 shadow-inner" placeholder="Edit the generated text here to add your own creative expression..."></textarea>
+                            </div>
+                            
+                            <!-- Analysis Result -->
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                <div class="flex justify-between items-end mb-2">
+                                    <span class="text-sm font-bold text-slate-700">Copyrightability Threshold</span>
+                                    <span id="textThresholdLabel" class="text-xs font-bold text-rose-600 uppercase tracking-wide">Insufficient</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-2.5 mb-2 overflow-hidden">
+                                    <div id="textMeterBar" class="bg-rose-500 h-2.5 rounded-full meter-fill" style="width: 0%"></div>
+                                </div>
+                                <p id="textFeedback" class="text-xs text-slate-500">Generate text, then begin editing to measure your creative input.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Demo 2: Visual -->
+            <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="bg-indigo-50 px-6 py-4 border-b border-indigo-100 flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-indigo-900">&#127912; Demo 2: Perceptible Human Input (Visual)</h3>
+                    <span class="text-xs font-semibold bg-white text-indigo-600 px-2 py-1 rounded shadow-sm border border-indigo-100">Pictorial Works</span>
+                </div>
+                <div class="p-6 md:p-8">
+                    <p class="text-slate-600 mb-6 text-sm">
+                        <strong>Context:</strong> Generating an image with an AI tool (like Midjourney) grants no copyright (e.g., *Thaler*). However, drawing over it, compositing, or significantly painting upon the AI base (*Rose Enigma* precedent) constitutes perceptible human input. Generate a procedural AI base, then use the brush to add your human expression.
+                    </p>
+                    
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <!-- Controls -->
+                        <div class="md:w-1/4 space-y-4">
+                            <button onclick="generateCanvasBase()" class="w-full bg-slate-800 hover:bg-slate-900 text-white px-4 py-3 rounded-md text-sm font-medium transition-colors shadow-sm">1. Generate AI Base</button>
+                            
+                            <div class="p-4 border border-slate-200 rounded-md bg-slate-50 space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">2. Brush Size (Human Tool)</label>
+                                    <input type="range" id="brushSize" min="2" max="30" value="10" class="w-full accent-indigo-600">
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="w-8 h-8 rounded-full bg-black border-2 border-slate-400 focus:ring-2 ring-indigo-500" onclick="setBrushColor('#000000')"></button>
+                                    <button class="w-8 h-8 rounded-full bg-indigo-600 border-2 border-slate-400 focus:ring-2 ring-indigo-500" onclick="setBrushColor('#4f46e5')"></button>
+                                    <button class="w-8 h-8 rounded-full bg-rose-500 border-2 border-slate-400 focus:ring-2 ring-indigo-500" onclick="setBrushColor('#f43f5e')"></button>
+                                    <button class="w-8 h-8 rounded-full bg-emerald-500 border-2 border-slate-400 focus:ring-2 ring-indigo-500" onclick="setBrushColor('#10b981')"></button>
+                                </div>
+                                <button onclick="clearHumanEdits()" class="w-full bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 px-3 py-2 rounded text-xs font-medium transition-colors mt-2">Clear My Edits</button>
+                            </div>
+                            
+                            <!-- Analysis -->
+                            <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm mt-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-sm font-bold text-slate-700">Modification Level</span>
+                                    <span id="canvasThresholdLabel" class="text-xs font-bold text-rose-600 uppercase">Insufficient</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-2 mb-2">
+                                    <div id="canvasMeterBar" class="bg-rose-500 h-2 rounded-full meter-fill" style="width: 0%"></div>
+                                </div>
+                                <p id="canvasFeedback" class="text-xs text-slate-500">Paint on the canvas to add human expressive elements.</p>
+                            </div>
+                        </div>
+
+                        <!-- Canvas Area -->
+                        <div class="md:w-3/4 flex justify-center items-center bg-slate-100 rounded-lg border-2 border-dashed border-slate-300 p-2 overflow-hidden relative">
+                            <!-- Overlay instructions before generation -->
+                            <div id="canvasOverlay" class="absolute inset-0 flex items-center justify-center bg-white/80 backdrop-blur-sm z-10 pointer-events-none">
+                                <span class="bg-slate-800 text-white px-4 py-2 rounded-md text-sm font-medium shadow-lg">Generate AI Base First</span>
+                            </div>
+                            <canvas id="paintCanvas" width="600" height="400" class="bg-white shadow-sm border border-slate-200 max-w-full h-auto rounded touch-none"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Demo 3: Arrangement -->
+            <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="bg-indigo-50 px-6 py-4 border-b border-indigo-100 flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-indigo-900">&#128450; Demo 3: Selection & Arrangement</h3>
+                    <span class="text-xs font-semibold bg-white text-indigo-600 px-2 py-1 rounded shadow-sm border border-indigo-100">Compilations</span>
+                </div>
+                <div class="p-6 md:p-8">
+                    <p class="text-slate-600 mb-6 text-sm">
+                        <strong>Context:</strong> Based on the *Zarya of the Dawn* precedent, while individual AI-generated images are uncopyrightable, the human author's creative selection, coordination, and arrangement of those images within a larger work (like a comic book) *is* protectable. Selecting just one or two is considered *de minimis* (too trivial). Select elements below to build a "compilation."
+                    </p>
+
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <!-- Grid -->
+                        <div class="md:w-2/3">
+                            <h4 class="text-sm font-bold text-slate-700 mb-3">Raw AI Generated Assets (Click to Select)</h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="arrangementGrid">
+                                <!-- Generated via JS -->
+                            </div>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="md:w-1/3">
+                            <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 h-full flex flex-col justify-center">
+                                <h4 class="text-sm font-bold text-slate-700 mb-4 text-center">Compilation Authorship</h4>
+                                
+                                <div class="text-center mb-6">
+                                    <span id="selectionCount" class="text-4xl font-extrabold text-indigo-600">0</span>
+                                    <span class="text-slate-500 block text-sm">Elements Arranged</span>
+                                </div>
+
+                                <div class="w-full bg-slate-200 rounded-full h-3 mb-3">
+                                    <div id="arrangeMeterBar" class="bg-rose-500 h-3 rounded-full meter-fill" style="width: 0%"></div>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <span id="arrangeThresholdLabel" class="inline-block px-3 py-1 rounded bg-rose-100 text-rose-700 text-sm font-bold uppercase tracking-wide mb-2">De Minimis</span>
+                                    <p id="arrangeFeedback" class="text-xs text-slate-600">Select at least 4 elements to demonstrate sufficient creative coordination.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Section 3: Assessment Quiz -->
+        <section id="quiz" class="bg-indigo-900 text-white rounded-2xl shadow-xl overflow-hidden relative">
+            <!-- Decorative background element -->
+            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-indigo-800 opacity-50 blur-3xl pointer-events-none"></div>
+            
+            <div class="p-8 md:p-12 relative z-10">
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <h2 class="text-3xl font-bold mb-4">Knowledge Assessment</h2>
+                    <p class="text-indigo-200 text-sm">Test your understanding of the Copyright Office guidelines using these real-world scenarios extracted directly from legal precedents.</p>
+                </div>
+
+                <div class="bg-white text-slate-800 rounded-xl p-6 md:p-8 max-w-3xl mx-auto shadow-2xl">
+                    <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
+                        <span class="text-sm font-bold text-slate-500 uppercase tracking-wide" id="quizProgress">Scenario 1 of 4</span>
+                        <span class="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded font-mono" id="quizCaseSource">Source: U.S. Copyright Office Report Part 2</span>
+                    </div>
+                    
+                    <h3 id="quizQuestion" class="text-xl font-serif font-medium text-slate-900 mb-8 leading-relaxed">
+                        Loading scenario...
+                    </h3>
+
+                    <div id="quizOptions" class="space-y-3">
+                        <!-- Options generated by JS -->
+                    </div>
+
+                    <div id="quizFeedbackContainer" class="hidden mt-6 p-4 rounded-lg border">
+                        <p id="quizFeedbackTitle" class="font-bold text-lg mb-1"></p>
+                        <p id="quizFeedbackText" class="text-sm text-slate-600 mb-4"></p>
+                        <button onclick="nextQuestion()" class="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2 rounded text-sm font-medium transition">Next Scenario &#8594;</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Glossary -->
+        <section id="glossary" class="border-t border-slate-200 pt-12 pb-8">
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">Appendix: Key Legal Terminology</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Terms -->
+                <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-indigo-700 mb-2 border-b border-slate-100 pb-2">Originality (*Feist* test)</h3>
+                    <p class="text-sm text-slate-600">The constitutional requirement that a work be created independently (not copied) and possess at least a "modicum of creativity." "Sweat of the brow" (pure effort) is insufficient.</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-indigo-700 mb-2 border-b border-slate-100 pb-2">Human Authorship</h3>
+                    <p class="text-sm text-slate-600">The requirement that a human being must control and determine the final expressive elements of a work. Non-humans (animals, machines, divine beings) cannot be authors.</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-indigo-700 mb-2 border-b border-slate-100 pb-2">Expressive Elements</h3>
+                    <p class="text-sm text-slate-600">The actual words, shapes, colors, or arrangement perceived in the final work. Ideas, facts, and underlying algorithms are not protected, only their specific *expression*.</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-indigo-700 mb-2 border-b border-slate-100 pb-2">De minimis</h3>
+                    <p class="text-sm text-slate-600">A legal concept meaning "too small or trivial to count." For example, arranging only two AI images, or changing three words in a 500-word generated essay, falls below the threshold of registrable creativity.</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-indigo-700 mb-2 border-b border-slate-100 pb-2">The "Black Box"</h3>
+                    <p class="text-sm text-slate-600">The USCO's characterization of generative AI. Because the user inputs a prompt but the AI determines the exact visual or textual output unpredictably, the user lacks sufficient control over the final expression.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- OSINT Protocol v1.1 Required Footer -->
+    <footer class="text-center py-8 border-t border-gray-900 mt-12 text-gray-600 text-sm">
+        Generated via OSINT Research Protocol v1.1 | March 2026
+    </footer>
+
+    <!-- Interactive Logic (Vanilla JS) -->
+    <script>
+        // --- 1. Chart.js Legal Precedent Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('precedentChart').getContext('2d');
+            
+            // Scatter plot data representing legal cases
+            const data = {
+                datasets: [{
+                    label: 'Uncopyrightable AI Focus',
+                    data: [
+                        {x: 0, y: 0.1, label: 'Thaler (Pure AI/DABUS)'},
+                        {x: 15, y: 0.15, label: 'Detailed Text Prompting'}
+                    ],
+                    backgroundColor: 'rgba(244, 63, 94, 0.7)', // Rose
+                    borderColor: 'rgb(225, 29, 72)',
+                    pointRadius: 8,
+                    pointHoverRadius: 10
+                }, {
+                    label: 'Copyrightable Human Authorship',
+                    data: [
+                        {x: 65, y: 0.8, label: 'Zarya (Arrangement of AI)'},
+                        {x: 80, y: 0.85, label: 'Rose Enigma (Manual Mod)'},
+                        {x: 95, y: 0.95, label: 'AI as Spellcheck Tool'}
+                    ],
+                    backgroundColor: 'rgba(16, 185, 129, 0.7)', // Emerald
+                    borderColor: 'rgb(5, 150, 105)',
+                    pointRadius: 8,
+                    pointHoverRadius: 10
+                }]
+            };
+
+            new Chart(ctx, {
+                type: 'scatter',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Essential for chart-container CSS constraints
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.raw.label;
+                                }
+                            }
+                        },
+                        annotation: {
+                            // Using standard Chart.js drawing to simulate annotations without an extra plugin to keep single-file light
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Degree of Human Expressive Control (%)', font: { weight: 'bold' } },
+                            min: -5, max: 105,
+                            grid: { drawBorder: false, color: (ctx) => ctx.tick.value === 50 ? 'rgba(79, 70, 229, 0.5)' : 'rgba(0,0,0,0.05)', lineWidth: (ctx) => ctx.tick.value === 50 ? 2 : 1 }
+                        },
+                        y: {
+                            title: { display: true, text: 'Probability of Copyright Registration', font: { weight: 'bold' } },
+                            min: 0, max: 1.1,
+                            ticks: { callback: function(value) { if(value===0) return 'None'; if(value===1) return 'Likely'; return ''; } }
+                        }
+                    },
+                    animation: { duration: 1500, easing: 'easeOutQuart' }
+                },
+                plugins: [{
+                    id: 'feistLine',
+                    beforeDraw: (chart) => {
+                        const {ctx, chartArea: {top, bottom}, scales: {x}} = chart;
+                        const xPixel = x.getPixelForValue(50);
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.strokeStyle = 'rgba(79, 70, 229, 0.4)'; // Indigo dashed
+                        ctx.lineWidth = 2;
+                        ctx.setLineDash([5, 5]);
+                        ctx.moveTo(xPixel, top);
+                        ctx.lineTo(xPixel, bottom);
+                        ctx.stroke();
+                        ctx.restore();
+                        
+                        ctx.font = '10px sans-serif';
+                        ctx.fillStyle = 'rgba(79, 70, 229, 0.8)';
+                        ctx.fillText('Feist Originality Threshold', xPixel + 5, top + 15);
+                    }
+                }]
+            });
+        });
+
+        // --- 2. Text Demo Logic ---
+        const aiSamples = [
+            "The rapid advancement of artificial intelligence has created profound shifts in the digital economy. Systems can now generate art, write code, and compose music. However, this raises questions about authorship.",
+            "In the neon-lit streets of Neo-Tokyo, a solitary figure walked through the synthetic rain. Memories of a past life flickered like corrupted data files in her neural implant.",
+            "To build a successful web application, developers must focus on user experience, performance optimization, and robust security protocols. Cloud infrastructure plays a vital role in scalability."
+        ];
+        
+        let currentAIText = "";
+
+        function generateAIText() {
+            // Simulate AI generation (random pick)
+            currentAIText = aiSamples[Math.floor(Math.random() * aiSamples.length)];
+            const baseArea = document.getElementById('aiBaseText');
+            baseArea.value = currentAIText;
+            
+            // Reset human edit area
+            const editArea = document.getElementById('userEditText');
+            editArea.value = currentAIText;
+            
+            // Add a visual flash to show generation
+            baseArea.classList.add('bg-indigo-100');
+            setTimeout(() => baseArea.classList.remove('bg-indigo-100'), 300);
+            
+            assessTextModification();
+        }
+
+        function calculateSimpleDiff(base, edited) {
+            // Simple heuristic for demo: compare lengths and simple word overlaps
+            if (!base || base.length === 0) return 0;
+            
+            const baseWords = base.toLowerCase().split(/\W+/).filter(w => w.length > 0);
+            const editedWords = edited.toLowerCase().split(/\W+/).filter(w => w.length > 0);
+            
+            if (baseWords.length === 0) return 100;
+
+            let unchangedCount = 0;
+            // Very naive check: how many original words remain? (Order independent for simplicity)
+            const editSet = new Set(editedWords);
+            baseWords.forEach(w => {
+                if (editSet.has(w)) unchangedCount++;
+            });
+
+            const changedRatio = 1 - (unchangedCount / baseWords.length);
+            
+            // Also factor in massive additions
+            const lengthRatio = edited.length / base.length;
+            let additionBonus = 0;
+            if (lengthRatio > 1.2) additionBonus = 0.2; // Added a lot of text
+
+            let totalChange = (changedRatio + additionBonus) * 100;
+            return Math.min(Math.max(totalChange, 0), 100); // Clamp 0-100
+        }
+
+        function assessTextModification() {
+            const edited = document.getElementById('userEditText').value;
+            let score = 0;
+            
+            if (currentAIText !== "") {
+                score = calculateSimpleDiff(currentAIText, edited);
+            }
+
+            const bar = document.getElementById('textMeterBar');
+            const label = document.getElementById('textThresholdLabel');
+            const feedback = document.getElementById('textFeedback');
+
+            bar.style.width = `${score}%`;
+
+            if (score < 15) {
+                bar.className = "h-2.5 rounded-full meter-fill bg-rose-500";
+                label.className = "text-xs font-bold text-rose-600 uppercase tracking-wide";
+                label.innerText = "De Minimis (Insufficient)";
+                feedback.innerText = "Minor word changes or spell-checking do not confer authorship to the underlying AI text.";
+            } else if (score < 40) {
+                bar.className = "h-2.5 rounded-full meter-fill bg-amber-500";
+                label.className = "text-xs font-bold text-amber-600 uppercase tracking-wide";
+                label.innerText = "Borderline";
+                feedback.innerText = "Moderate editing. The Office may register only the specific new sentences added, but not the whole text.";
+            } else {
+                bar.className = "h-2.5 rounded-full meter-fill bg-emerald-500";
+                label.className = "text-xs font-bold text-emerald-600 uppercase tracking-wide";
+                label.innerText = "Sufficient Modification";
+                feedback.innerText = "Significant human authorship detected. The work as a whole likely qualifies as a human-authored derivative work.";
+            }
+        }
+
+        // --- 3. Canvas Painting Demo Logic ---
+        const canvas = document.getElementById('paintCanvas');
+        const ctxCanvas = canvas.getContext('2d', { willReadFrequently: true });
+        let isDrawing = false;
+        let currentColor = '#000000';
+        let aiBaseGenerated = false;
+        let initialImageData = null;
+
+        // Resize logic to keep internal resolution
+        function initCanvas() {
+            // Fill white initially
+            ctxCanvas.fillStyle = '#ffffff';
+            ctxCanvas.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        initCanvas();
+
+        function generateCanvasBase() {
+            document.getElementById('canvasOverlay').style.display = 'none';
+            ctxCanvas.fillStyle = '#e2e8f0'; // slate-200 base
+            ctxCanvas.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw "AI" abstract shapes
+            const colors = ['#94a3b8', '#cbd5e1', '#64748b', '#cbd5e1'];
+            for(let i=0; i<30; i++) {
+                ctxCanvas.fillStyle = colors[Math.floor(Math.random()*colors.length)];
+                ctxCanvas.globalAlpha = Math.random() * 0.5 + 0.3;
+                
+                if (Math.random() > 0.5) {
+                    ctxCanvas.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 40 + Math.random()*80, 40 + Math.random()*80);
+                } else {
+                    ctxCanvas.beginPath();
+                    ctxCanvas.arc(Math.random() * canvas.width, Math.random() * canvas.height, 20 + Math.random()*50, 0, Math.PI*2);
+                    ctxCanvas.fill();
+                }
+            }
+            ctxCanvas.globalAlpha = 1.0;
+            aiBaseGenerated = true;
+            
+            // Save state for comparison
+            initialImageData = ctxCanvas.getImageData(0, 0, canvas.width, canvas.height);
+            assessCanvasModification();
+        }
+
+        function setBrushColor(hex) { currentColor = hex; }
+        
+        function clearHumanEdits() {
+            if(!aiBaseGenerated) return;
+            // Restore base
+            ctxCanvas.putImageData(initialImageData, 0, 0);
+            assessCanvasModification();
+        }
+
+        // Drawing event listeners
+        function getMousePos(canvas, evt) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            // Standardizing for both mouse and touch
+            let clientX = evt.clientX;
+            let clientY = evt.clientY;
+            if (evt.touches && evt.touches.length > 0) {
+                clientX = evt.touches[0].clientX;
+                clientY = evt.touches[0].clientY;
+            }
+            return {
+                x: (clientX - rect.left) * scaleX,
+                y: (clientY - rect.top) * scaleY
+            };
+        }
+
+        const startDraw = (e) => {
+            if(!aiBaseGenerated) return;
+            e.preventDefault();
+            isDrawing = true;
+            const pos = getMousePos(canvas, e);
+            ctxCanvas.beginPath();
+            ctxCanvas.moveTo(pos.x, pos.y);
+        };
+
+        const draw = (e) => {
+            if(!isDrawing || !aiBaseGenerated) return;
+            e.preventDefault();
+            const pos = getMousePos(canvas, e);
+            const brushSize = document.getElementById('brushSize').value;
+            
+            ctxCanvas.lineWidth = brushSize;
+            ctxCanvas.lineCap = 'round';
+            ctxCanvas.lineJoin = 'round';
+            ctxCanvas.strokeStyle = currentColor;
+            
+            ctxCanvas.lineTo(pos.x, pos.y);
+            ctxCanvas.stroke();
+        };
+
+        const endDraw = () => {
+            if (isDrawing) {
+                isDrawing = false;
+                ctxCanvas.closePath();
+                assessCanvasModification();
+            }
+        };
+
+        canvas.addEventListener('mousedown', startDraw);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', endDraw);
+        canvas.addEventListener('mouseout', endDraw);
+        
+        // Touch support
+        canvas.addEventListener('touchstart', startDraw, {passive: false});
+        canvas.addEventListener('touchmove', draw, {passive: false});
+        canvas.addEventListener('touchend', endDraw);
+
+        function assessCanvasModification() {
+            if (!initialImageData) return;
+            
+            const currentData = ctxCanvas.getImageData(0, 0, canvas.width, canvas.height).data;
+            const baseData = initialImageData.data;
+            
+            let changedPixels = 0;
+            const totalPixels = canvas.width * canvas.height;
+            
+            // Compare pixels (RGBA array)
+            for (let i = 0; i < currentData.length; i += 4) {
+                // If RGB differs significantly
+                if (Math.abs(currentData[i] - baseData[i]) > 10 || 
+                    Math.abs(currentData[i+1] - baseData[i+1]) > 10 || 
+                    Math.abs(currentData[i+2] - baseData[i+2]) > 10) {
+                    changedPixels++;
+                }
+            }
+            
+            // Calculate percentage of canvas modified
+            const percentChanged = (changedPixels / totalPixels) * 100;
+            // Scale it so that ~20% coverage is considered "100% sufficient" for demo purposes
+            const score = Math.min((percentChanged / 15) * 100, 100); 
+
+            const bar = document.getElementById('canvasMeterBar');
+            const label = document.getElementById('canvasThresholdLabel');
+            const feedback = document.getElementById('canvasFeedback');
+
+            bar.style.width = `${score}%`;
+
+            if (score < 10) {
+                bar.className = "h-2 rounded-full meter-fill bg-rose-500";
+                label.className = "text-xs font-bold text-rose-600 uppercase tracking-wide";
+                label.innerText = "De Minimis";
+                feedback.innerText = "Trivial additions (e.g., a few dots or lines) are insufficient.";
+            } else if (score < 50) {
+                bar.className = "h-2 rounded-full meter-fill bg-amber-500";
+                label.className = "text-xs font-bold text-amber-600 uppercase tracking-wide";
+                label.innerText = "Partial Input";
+                feedback.innerText = "Only the specific drawn elements are copyrightable, not the base AI image.";
+            } else {
+                bar.className = "h-2 rounded-full meter-fill bg-emerald-500";
+                label.className = "text-xs font-bold text-emerald-600 uppercase tracking-wide";
+                label.innerText = "Substantial Modification";
+                feedback.innerText = "Sufficient human control demonstrated. Resembles the *Rose Enigma* precedent.";
+            }
+        }
+
+        // --- 4. Arrangement Demo Logic ---
+        const grid = document.getElementById('arrangementGrid');
+        let selectedItems = new Set();
+        
+        // Populate Grid
+        for(let i=1; i<=9; i++) {
+            const div = document.createElement('div');
+            div.className = "aspect-square rounded border-2 border-slate-200 bg-slate-100 flex flex-col items-center justify-center cursor-pointer hover:border-indigo-400 transition-all select-none relative overflow-hidden";
+            
+            // Abstract visual rep
+            div.innerHTML = `
+                <div class="w-1/2 h-1/2 bg-slate-300 rounded-sm mb-2 opacity-50" style="transform: rotate(${Math.random()*45}deg)"></div>
+                <span class="text-xs font-medium text-slate-500">Asset ${i}</span>
+                <div class="absolute inset-0 bg-indigo-600/20 hidden check-overlay flex items-center justify-center">
+                    <span class="text-indigo-700 text-2xl drop-shadow-md">&#10004;</span>
+                </div>
+            `;
+            
+            div.onclick = () => toggleArrangement(i, div);
+            grid.appendChild(div);
+        }
+
+        function toggleArrangement(id, el) {
+            const overlay = el.querySelector('.check-overlay');
+            if (selectedItems.has(id)) {
+                selectedItems.delete(id);
+                el.classList.remove('border-indigo-600', 'ring-2', 'ring-indigo-200');
+                el.classList.add('border-slate-200');
+                overlay.classList.add('hidden');
+            } else {
+                selectedItems.add(id);
+                el.classList.remove('border-slate-200');
+                el.classList.add('border-indigo-600', 'ring-2', 'ring-indigo-200');
+                overlay.classList.remove('hidden');
+            }
+            updateArrangementMeter();
+        }
+
+        function updateArrangementMeter() {
+            const count = selectedItems.size;
+            document.getElementById('selectionCount').innerText = count;
+            
+            const score = Math.min((count / 6) * 100, 100);
+            const bar = document.getElementById('arrangeMeterBar');
+            const label = document.getElementById('arrangeThresholdLabel');
+            const feedback = document.getElementById('arrangeFeedback');
+
+            bar.style.width = `${score}%`;
+
+            if (count < 3) {
+                bar.className = "bg-rose-500 h-3 rounded-full meter-fill";
+                label.className = "inline-block px-3 py-1 rounded bg-rose-100 text-rose-700 text-sm font-bold uppercase tracking-wide mb-2";
+                label.innerText = "De Minimis";
+                feedback.innerText = "Arranging only 1 or 2 items involves virtually no creative choice.";
+            } else if (count < 5) {
+                bar.className = "bg-amber-500 h-3 rounded-full meter-fill";
+                label.className = "inline-block px-3 py-1 rounded bg-amber-100 text-amber-700 text-sm font-bold uppercase tracking-wide mb-2";
+                label.innerText = "Borderline";
+                feedback.innerText = "Basic compilation. Protection covers ONLY the layout, not the images themselves.";
+            } else {
+                bar.className = "bg-emerald-500 h-3 rounded-full meter-fill";
+                label.className = "inline-block px-3 py-1 rounded bg-emerald-100 text-emerald-700 text-sm font-bold uppercase tracking-wide mb-2";
+                label.innerText = "Creative Compilation";
+                feedback.innerText = "Sufficient selection and coordination. This satisfies the *Zarya of the Dawn* precedent.";
+            }
+        }
+
+        // --- 5. Assessment Quiz Logic ---
+        const questions = [
+            { 
+                q: "You spend three hours writing a highly detailed, 500-word text prompt instructing an AI to generate an image of a cybernetic owl. You accept the first output exactly as generated. Is the image copyrightable?", 
+                source: "USCO Report Pt. 2 / Thaler",
+                options: [
+                    { text: "Yes, because of the significant human effort ('sweat of the brow').", correct: false },
+                    { text: "Yes, because the prompt was highly detailed and specific.", correct: false },
+                    { text: "No, because the AI acts as a 'black box' and the user does not control the final expressive elements.", correct: true }
+                ],
+                explanation: "Even with detailed prompts, the AI interprets them unpredictably. The user dictates the *idea*, but the AI dictates the *expression*."
+            },
+            { 
+                q: "You generate 8 AI images using Midjourney. You then bring them into a desktop publishing software, select 4 of them, arrange them into a specific sequential layout, and write your own original text dialogue for each. What is copyrightable?", 
+                source: "Zarya of the Dawn Precedent",
+                options: [
+                    { text: "The entire comic, including the AI images.", correct: false },
+                    { text: "Only the written text dialogue.", correct: false },
+                    { text: "The text dialogue AND the specific compilation/arrangement of the layout, but NOT the individual AI images.", correct: true }
+                ],
+                explanation: "This matches the 'Zarya' decision. Human authorship applies to the text and the *arrangement*, but the AI-generated images themselves must be disclaimed."
+            },
+            { 
+                q: "You use ChatGPT to generate a short story. You then rewrite 70% of the sentences, change the ending, and add a new character. Is your resulting story copyrightable?", 
+                source: "Modification Precedent",
+                options: [
+                    { text: "Yes, as a human-authored derivative work based on the AI output.", correct: true },
+                    { text: "No, any use of AI taints the entire work.", correct: false },
+                    { text: "Only the exact 30% that the AI generated is copyrightable.", correct: false }
+                ],
+                explanation: "Substantial creative modifications by a human author meet the threshold. You would claim copyright over your human contributions."
+            },
+            { 
+                q: "You write a novel entirely yourself in Microsoft Word. You then use an AI grammar tool to correct spelling mistakes and suggest comma placements. Is the novel copyrightable?", 
+                source: "Assistive Tool Definition",
+                options: [
+                    { text: "Yes, fully copyrightable. The AI was used purely as an assistive tool.", correct: true },
+                    { text: "No, you must disclaim the grammar corrections.", correct: false },
+                    { text: "It requires a special 'AI-assisted' registration category.", correct: false }
+                ],
+                explanation: "When AI is used for basic formatting, spell-checking, or ideation—where human expression strongly predominates—it does not alter the work's status as human-authored."
+            }
+        ];
+
+        let currentQuestionIdx = 0;
+
+        function renderQuestion() {
+            const q = questions[currentQuestionIdx];
+            document.getElementById('quizProgress').innerText = `Scenario ${currentQuestionIdx + 1} of ${questions.length}`;
+            document.getElementById('quizCaseSource').innerText = `Source: ${q.source}`;
+            document.getElementById('quizQuestion').innerText = q.q;
+            
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = '';
+            
+            document.getElementById('quizFeedbackContainer').classList.add('hidden');
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-lg border-2 border-slate-200 hover:border-indigo-400 hover:bg-slate-50 transition-colors font-medium text-slate-700 bg-white";
+                btn.innerText = opt.text;
+                btn.onclick = () => handleAnswer(opt.correct, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(isCorrect, selectedBtn) {
+            // Disable all buttons
+            const btns = document.getElementById('quizOptions').querySelectorAll('button');
+            btns.forEach(b => {
+                b.disabled = true;
+                b.classList.remove('hover:border-indigo-400', 'hover:bg-slate-50', 'cursor-pointer');
+            });
+
+            const feedbackContainer = document.getElementById('quizFeedbackContainer');
+            const title = document.getElementById('quizFeedbackTitle');
+            const text = document.getElementById('quizFeedbackText');
+
+            if (isCorrect) {
+                selectedBtn.classList.replace('border-slate-200', 'border-emerald-500');
+                selectedBtn.classList.add('bg-emerald-50');
+                feedbackContainer.classList.replace('border', 'border-emerald-200');
+                feedbackContainer.classList.add('bg-emerald-50');
+                title.className = "font-bold text-lg mb-1 text-emerald-800";
+                title.innerText = "Correct Analysis.";
+            } else {
+                selectedBtn.classList.replace('border-slate-200', 'border-rose-500');
+                selectedBtn.classList.add('bg-rose-50');
+                feedbackContainer.classList.replace('border', 'border-rose-200');
+                feedbackContainer.classList.add('bg-rose-50');
+                title.className = "font-bold text-lg mb-1 text-rose-800";
+                title.innerText = "Incorrect Analysis.";
+            }
+
+            text.innerText = questions[currentQuestionIdx].explanation;
+            feedbackContainer.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIdx++;
+            if (currentQuestionIdx >= questions.length) {
+                // Reset for demo purposes
+                currentQuestionIdx = 0;
+            }
+            // Cleanup feedback background classes for next render
+            const feedbackContainer = document.getElementById('quizFeedbackContainer');
+            feedbackContainer.className = "hidden mt-6 p-4 rounded-lg border";
+            renderQuestion();
+        }
+
+        // Init Quiz
+        document.addEventListener('DOMContentLoaded', renderQuestion);
+
+    </script>
+</body>
+</html>
