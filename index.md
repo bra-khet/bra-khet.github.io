@@ -120,6 +120,39 @@ title: "|0⟩"
 
 </div>
 
+<!-- ── Synth- vs. Tech- ─────────────────────────────────────────── -->
+<h4 style="color: #b06cff; font-family: Monaco, monospace; font-size: 0.9rem;
+           margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
+  Synth- vs. Tech-: Etymology &amp; Linguistics
+</h4>
+
+<div style="margin-top: 0.5rem; padding: 1rem 1.25rem;
+            border: 1px solid #2d1a4a;
+            border-left: 3px solid #b06cff;
+            border-radius: 12px; background: #100a18;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+
+  <p style="color: #8a6aaa; font-size: 0.85rem; margin: 0.3rem 0 0.5rem; font-family: Monaco, monospace;">
+    March 2026 &middot; Research Report v1.0
+  </p>
+  <p style="color: #7a5a9a; font-size: 0.8rem; margin: 0 0 0.75rem; font-family: Monaco, monospace; line-height: 1.55;">
+    A deep etymological investigation tracing the divergent paths of <em>synth-</em> and <em>tech-</em>
+    from Proto-Indo-European roots through Hellenic philosophy and the Industrial Revolution,
+    into contemporary corpus linguistics and AI futures.
+  </p>
+  <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+    <a href="/synth-tech-comparison/"
+       style="padding: 0.55rem 1.1rem; background: transparent; color: #b06cff;
+              border: 1px solid #b06cff; border-radius: 6px; text-decoration: none;
+              font-weight: bold; font-size: 0.85rem; font-family: Monaco, monospace;"
+       onmouseover="this.style.background='#b06cff';this.style.color='#000';"
+       onmouseout="this.style.background='transparent';this.style.color='#b06cff';">
+      &#127760; Interactive Report
+    </a>
+  </div>
+
+</div>
+
 <!-- ════════════════════════════════════════════════════════════════
      MEME HISTORY
 ════════════════════════════════════════════════════════════════ -->
@@ -231,9 +264,9 @@ title: "|0⟩"
     <img src="/assets/img/filename.ext" alt="desc">
   </div>-->
   
-  <div class="gallery-item">
+ <!-- <div class="gallery-item">
     <img src="/assets/img/ai-unity-ram-altman.png" alt="(✿◡‿◡)">
   </div>
-</div>
+</div>-->
 
 <hr class="divider" />

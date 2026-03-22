@@ -1,23 +1,29 @@
 /**
- * demo-ai-collab.js — Demo 3: AI–Human Collaboration
- * Legal concept: USCO 2025 guidance — raw AI output = unprotected;
- *   human selection, arrangement, transformation, and expression = protectable.
+ * demo-ai-collab.js — AI–Human Collaboration: Copyright Threshold Demo
+ * Legal concept: USCO 2025 + Feist 499 U.S. 340, 345 (1991).
+ *   The "modicum of creativity" bar is CONSTITUTIONALLY LOW.
+ *   Selecting one AI image + making any single creative edit is legally sufficient.
  *
  * How to test:
- *   1. Open ai-human-collab-demo.html and click "Generate AI Images"
- *   2. 9 abstract canvas images appear — all flagged [UNPROTECTED - Raw AI Output]
- *   3. Click images to select them (selection = authorial judgment)
- *   4. Use filter sliders to transform selected images (transformation = creative choice)
- *   5. Add captions to selected images (expression = independent authorship)
- *   6. Switch layout mode (Grid/Mosaic/Column) (arrangement = creative structure)
- *   7. Score accumulates; at ≥ 60 points → "Protectable Human-AI Work"
+ *   1. Page loads — one procedural AI image appears on the Fabric canvas.
+ *   2. Click the image → +5 pts (Selection). Status = pending.
+ *   3. Do ONE thing — brush stroke, adjust a filter slider, or move the image
+ *      → +5 pts (Transformation). Score = 10 ≥ PROTECT_THRESHOLD → "✓ Protectable"
+ *      → Entire page theme shifts to green (eureka moment).
+ *   4. Bonus actions (not required): add text caption ≥5 chars (+10), reposition
+ *      image (+10), export composition (+10). Max = 40 pts.
+ *   5. "Import Image" lets you load your own photo to edit instead.
+ *   6. "Regenerate" creates a new procedural image with a different palette/seed.
  *
- * Images are generated locally via Canvas API — no external fetch needed.
+ * Image generation: CPU-only Perlin fBm with domain warping — no WebGL, no GPU,
+ * no external fetch. Runs on any device with a <canvas> element.
+ * PRNG: mulberry32 (deterministic for a given seed).
+ *
+ * Requires global `fabric` from Fabric.js 5.3.1 (loaded synchronously in HTML).
  * Rules applied: Separation §1, ES Module §3, Performance §4, Accessibility §3
  */
 
-// ─── Image generation (abstract art via Canvas 2D) ───
-// Simulates "raw AI output" — colorful abstract shapes, reproducible per seed
+// ── Deterministic PRNG (mulberry32) ──────────────────────────────────────────
 function mulberry32(seed) {
   return () => {
     seed |= 0; seed = seed + 0x6D2B79F5 | 0;
@@ -27,218 +33,514 @@ function mulberry32(seed) {
   };
 }
 
-// Colour palettes for each generated image
+// ── 2D Perlin noise (classic permutation-table implementation) ─────────────
+/**
+ * Returns a noise(x, y) function seeded by `seed`.
+ * Output range: approximately [-1, +1].
+ */
+function buildPerlin(seed) {
+  const rng = mulberry32(seed);
+  const p = new Uint8Array(256);
+  for (let i = 0; i < 256; i++) p[i] = i;
+  // Fisher-Yates shuffle with seeded RNG
+  for (let i = 255; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    const tmp = p[i]; p[i] = p[j]; p[j] = tmp;
+  }
+  const perm = new Uint8Array(512);
+  for (let i = 0; i < 512; i++) perm[i] = p[i & 255];
+
+  const fade = t => t * t * t * (t * (t * 6 - 15) + 10);
+  const lerp  = (a, b, t) => a + t * (b - a);
+  const grad  = (h, x, y) => {
+    const c = h & 3;
+    const u = c < 2 ? x : y, v = c < 2 ? y : x;
+    return ((c & 1) ? -u : u) + ((c & 2) ? -v : v);
+  };
+
+  return (x, y) => {
+    const xi = Math.floor(x) & 255, yi = Math.floor(y) & 255;
+    const xf = x - Math.floor(x),   yf = y - Math.floor(y);
+    const u = fade(xf), v = fade(yf);
+    const aa = perm[perm[xi]   + yi],     ab = perm[perm[xi]   + yi + 1];
+    const ba = perm[perm[xi+1] + yi],     bb = perm[perm[xi+1] + yi + 1];
+    return lerp(
+      lerp(grad(aa, xf,   yf),   grad(ba, xf-1, yf),   u),
+      lerp(grad(ab, xf,   yf-1), grad(bb, xf-1, yf-1), u),
+      v
+    );
+  };
+}
+
+// ── Fractal Brownian Motion (layered noise for organic complexity) ─────────
+/**
+ * Stacks `octaves` noise samples at increasing frequencies / decreasing
+ * amplitudes — the "fBm" technique that mimics cloud, marble, and
+ * diffusion-model textures.
+ */
+function fbm(noiseFn, x, y, octaves = 5) {
+  let v = 0, amp = 0.5, freq = 1, max = 0;
+  for (let o = 0; o < octaves; o++) {
+    v   += amp * noiseFn(x * freq, y * freq);
+    max += amp;
+    amp  *= 0.52;
+    freq *= 2.1;
+  }
+  return v / max; // normalised to approx [-1, +1]
+}
+
+// ── Colour palettes ───────────────────────────────────────────────────────
 const PALETTES = [
-  ['#6366f1','#a5b4fc','#312e81'],
-  ['#f59e0b','#fde68a','#92400e'],
-  ['#10b981','#6ee7b7','#064e3b'],
-  ['#ef4444','#fca5a5','#7f1d1d'],
-  ['#8b5cf6','#ddd6fe','#4c1d95'],
-  ['#06b6d4','#a5f3fc','#164e63'],
-  ['#f97316','#fed7aa','#7c2d12'],
-  ['#84cc16','#d9f99d','#365314'],
-  ['#ec4899','#fbcfe8','#831843'],
+  ['#6366f1','#a5b4fc','#312e81'],  // 0 indigo
+  ['#f59e0b','#fde68a','#92400e'],  // 1 amber
+  ['#10b981','#6ee7b7','#064e3b'],  // 2 emerald
+  ['#ef4444','#fca5a5','#7f1d1d'],  // 3 red
+  ['#8b5cf6','#ddd6fe','#4c1d95'],  // 4 violet
+  ['#06b6d4','#a5f3fc','#164e63'],  // 5 cyan   (default)
+  ['#f97316','#fed7aa','#7c2d12'],  // 6 orange
+  ['#84cc16','#d9f99d','#365314'],  // 7 lime
+  ['#ec4899','#fbcfe8','#831843'],  // 8 pink
 ];
 
+// Runtime palette / seed state (mutable, cycle via Regenerate)
+let currentPaletteIdx = 5;
+let currentSeed       = 42;
+
+// ── Procedural image generation (CPU-only Perlin fBm + domain warping) ────
 /**
- * Paint a single abstract image onto an offscreen canvas.
- * Returns a data-URL (PNG).
- * @param {number} seed - deterministic seed
- * @param {string[]} palette - array of hex colors
+ * Paints a single "AI-like" abstract image onto an offscreen canvas using:
+ *   1. Three independent Perlin noise fields (different seeds)
+ *   2. Domain warping  — coord offsets before the main fBm sample
+ *      produce the dreamlike swirling shapes people associate with
+ *      diffusion-model output.
+ *   3. Tri-colour gradient mapped through the noise value.
+ *
+ * Performance: 320×240 @ 5 octaves ≈ 80–300 ms on phone / <50 ms on desktop.
+ *
+ * @param {number}   seed    — PRNG seed
+ * @param {string[]} palette — [primary, light, dark] hex colours
+ * @param {number}   W       — output width  (default 320)
+ * @param {number}   H       — output height (default 240)
+ * @returns {string} PNG data-URL
  */
-function generateImage(seed, palette) {
-  const W = 200, H = 150;
-  const canvas = document.createElement('canvas');
-  canvas.width = W; canvas.height = H;
-  const ctx = canvas.getContext('2d');
-  const r = mulberry32(seed);
+function generateProceduralImage(seed, palette, W = 320, H = 240) {
+  const cv  = document.createElement('canvas');
+  cv.width  = W; cv.height = H;
+  const ctx = cv.getContext('2d');
+  const img = ctx.createImageData(W, H);
+  const d   = img.data;
 
-  // Background gradient
-  const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, palette[2]);
-  bg.addColorStop(1, palette[0]);
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, W, H);
+  // Three noise fields: main, warp-x, warp-y
+  const n1 = buildPerlin(seed);
+  const n2 = buildPerlin(seed + 7919);
+  const n3 = buildPerlin(seed + 104729);
 
-  // Random shapes (circles + rects) — simulated generative AI brushstrokes
-  for (let i = 0; i < 18; i++) {
-    ctx.globalAlpha = 0.3 + r() * 0.5;
-    ctx.fillStyle = palette[Math.floor(r() * palette.length)];
-    if (r() > 0.5) {
-      ctx.beginPath();
-      ctx.arc(r() * W, r() * H, r() * 40 + 10, 0, Math.PI * 2);
-      ctx.fill();
-    } else {
-      const rw = r() * 80 + 20, rh = r() * 60 + 15;
-      ctx.fillRect(r() * (W - rw), r() * (H - rh), rw, rh);
+  // Parse hex to [r,g,b]
+  const hex2rgb = h => {
+    const n = parseInt(h.slice(1), 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  };
+  const c0 = hex2rgb(palette[0]); // primary
+  const c1 = hex2rgb(palette[1]); // light highlight
+  const c2 = hex2rgb(palette[2]); // dark shadow
+
+  for (let py = 0; py < H; py++) {
+    for (let px = 0; px < W; px++) {
+      // Map pixel to ~3.5×2.8 noise-space
+      const nx = px / W * 3.5;
+      const ny = py / H * 2.8;
+
+      // Domain warp: offset coords by separate fBm samples
+      const wx = nx + 1.8 * fbm(n2, nx,       ny      );
+      const wy = ny + 1.8 * fbm(n3, nx + 5.2, ny + 1.3);
+
+      // Main sample → normalise to [0, 1]
+      const t = (fbm(n1, wx, wy) + 1) * 0.5;
+
+      // Tri-colour gradient
+      let r, g, b;
+      if (t < 0.42) {
+        const s = t / 0.42;
+        r = c2[0] + (c0[0] - c2[0]) * s;
+        g = c2[1] + (c0[1] - c2[1]) * s;
+        b = c2[2] + (c0[2] - c2[2]) * s;
+      } else if (t < 0.78) {
+        const s = (t - 0.42) / 0.36;
+        r = c0[0] + (c1[0] - c0[0]) * s;
+        g = c0[1] + (c1[1] - c0[1]) * s;
+        b = c0[2] + (c1[2] - c0[2]) * s;
+      } else {
+        // Subtle highlight bloom at peaks
+        const s = (t - 0.78) / 0.22;
+        r = c1[0] + (255 - c1[0]) * s * 0.28;
+        g = c1[1] + (255 - c1[1]) * s * 0.28;
+        b = c1[2] + (255 - c1[2]) * s * 0.28;
+      }
+
+      const i = (py * W + px) * 4;
+      d[i]   = r | 0;
+      d[i+1] = g | 0;
+      d[i+2] = b | 0;
+      d[i+3] = 255;
     }
   }
-  ctx.globalAlpha = 1;
 
-  // Noise texture (subtle dots)
-  for (let i = 0; i < 200; i++) {
-    ctx.fillStyle = `rgba(255,255,255,${r() * 0.15})`;
-    ctx.fillRect(r() * W, r() * H, 2, 2);
+  ctx.putImageData(img, 0, 0);
+  return cv.toDataURL('image/png');
+}
+
+// ── Scoring constants ─────────────────────────────────────────────────────
+const WEIGHTS = {
+  select:    5,   // selecting the AI image — editorial judgment
+  transform: 5,   // any filter, brush stroke, scale, rotate — creative touch
+  caption:  10,   // IText object ≥ 5 chars — independent literary authorship
+  arrange:  10,   // moving image from original position — composition
+  export:   10,   // exporting the work — publication intent
+};
+const TOTAL_POSSIBLE    = 40;
+const PROTECT_THRESHOLD = 10;  // select(5) + any single edit(5) = sufficient
+
+// ── Mutable runtime state ─────────────────────────────────────────────────
+const state = {
+  hasSelected:    false,
+  hasTransformed: false,
+  hasCaption:     false,
+  hasArranged:    false,
+  hasExported:    false,
+  imageOrigLeft:  0,
+  imageOrigTop:   0,
+  currentTool:    'select',
+};
+
+// ── Fabric canvas instance ────────────────────────────────────────────────
+let fc = null;
+
+const CANVAS_W = 600;
+const CANVAS_H = 450;
+
+// Single image: 320×240 source displayed at scale 1.6875 → 540×405, centred
+const IMG_SRC_W = 320;
+const IMG_SRC_H = 240;
+const IMG_SCALE = 1.6875;
+const IMG_LEFT  = Math.round((CANVAS_W - IMG_SRC_W * IMG_SCALE) / 2);  // 30
+const IMG_TOP   = Math.round((CANVAS_H - IMG_SRC_H * IMG_SCALE) / 2);  // 22
+
+// ── Initialise Fabric canvas and load the AI image ────────────────────────
+function initCanvas() {
+  fc = new fabric.Canvas('workspace-canvas', {
+    width:                  CANVAS_W,
+    height:                 CANVAS_H,
+    backgroundColor:        '#0a0a14',
+    preserveObjectStacking: true,
+    selection:              true,
+  });
+
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas, { passive: true });
+
+  loadProceduralImage(currentSeed, PALETTES[currentPaletteIdx]);
+
+  fc.on('selection:created', onSelect);
+  fc.on('selection:updated', onSelect);
+  fc.on('object:modified',   onModified);
+  fc.on('path:created',      onPathCreated);
+  fc.on('text:changed',      onTextChanged);
+}
+
+/** Generate a new procedural image and add it as the sole fabric.Image. */
+function loadProceduralImage(seed, palette) {
+  // Remove existing AI images (keep overlays like text/brush)
+  const existing = fc.getObjects().filter(o => o.type === 'image' && o.data?.isAI);
+  existing.forEach(o => fc.remove(o));
+
+  logAction('Generating procedural image…', '');
+  announce('Generating AI image, please wait.');
+
+  // Defer to next frame so the log message renders before the blocking loop
+  requestAnimationFrame(() => {
+    const dataURL = generateProceduralImage(seed, palette);
+
+    fabric.Image.fromURL(dataURL, img => {
+      img.set({
+        left:              IMG_LEFT,
+        top:               IMG_TOP,
+        scaleX:            IMG_SCALE,
+        scaleY:            IMG_SCALE,
+        hasRotatingPoint:  false,
+        cornerSize:        8,
+        cornerStyle:       'circle',
+        borderColor:       '#a5b4fc',
+        cornerColor:       '#a5b4fc',
+      });
+      img.data = { isAI: true };
+
+      state.imageOrigLeft = IMG_LEFT;
+      state.imageOrigTop  = IMG_TOP;
+
+      fc.add(img);
+      fc.sendToBack(img);
+      fc.renderAll();
+
+      logAction('Procedural AI image loaded. [UNPROTECTED — Raw AI Output] until you make a creative choice.', 'unprotected');
+      announce('Canvas ready. Click the image to select it — that is your first creative act.');
+    });
+  });
+}
+
+/** Keep canvas visually responsive while preserving the logical 600×450 space. */
+function resizeCanvas() {
+  const container = document.getElementById('workspace-container');
+  if (!container || !fc) return;
+  const cw = container.clientWidth;
+  if (cw > 0 && cw < CANVAS_W) {
+    const z = cw / CANVAS_W;
+    fc.setZoom(z);
+    fc.setWidth(Math.round(CANVAS_W * z));
+    fc.setHeight(Math.round(CANVAS_H * z));
+  } else {
+    fc.setZoom(1);
+    fc.setWidth(CANVAS_W);
+    fc.setHeight(CANVAS_H);
+  }
+}
+
+// ── Canvas event handlers ─────────────────────────────────────────────────
+
+function onSelect(e) {
+  const obj = (e.selected || [])[0] || fc.getActiveObject();
+  if (!obj || obj.type !== 'image') return;
+  if (!state.hasSelected) {
+    state.hasSelected = true;
+    logAction('Image selected — editorial judgment. +5 pts.', 'protected');
+    updateScore();
+    announce('Image selected. Score updated. Now make any single edit to cross the threshold.');
+  }
+}
+
+function onModified(e) {
+  const obj = e.target;
+  if (!obj || obj.type !== 'image') return;
+
+  if (!state.hasTransformed) {
+    state.hasTransformed = true;
+    logAction('Image transformed (moved/scaled) — human composition choice. +5 pts.', 'accent');
+    updateScore();
   }
 
-  return canvas.toDataURL('image/png');
+  const moved = Math.abs(obj.left - state.imageOrigLeft) > 6
+             || Math.abs(obj.top  - state.imageOrigTop)  > 6;
+  if (moved && !state.hasArranged) {
+    state.hasArranged = true;
+    logAction('Image repositioned — arrangement as authorial act (§103(a)). +10 pts.', 'protected');
+    updateScore();
+  }
 }
 
-// ─── State ───
-const NUM_IMAGES = 9;
-let images = [];          // { id, src, selected, caption, filter }
-let layoutMode = 'grid';  // 'grid' | 'mosaic' | 'column'
-let generated = false;
-
-// Score weights (USCO 2025 human creativity factors)
-const WEIGHTS = {
-  select:    20, // selecting 3+ images (editorial judgment)
-  transform: 20, // applying non-default filter values
-  caption:   25, // adding at least 2 captions with ≥ 10 chars each
-  layout:    15, // changing from default grid layout
-};
-const TOTAL_POSSIBLE = Object.values(WEIGHTS).reduce((a, b) => a + b, 0); // 80
-const PROTECT_THRESHOLD = 60;
-
-// ─── Generate images ───
-function generateImages() {
-  if (generated) return;
-  generated = true;
-  images = PALETTES.map((palette, i) => ({
-    id: i,
-    src: generateImage(i * 1337 + 42, palette),
-    selected: false,
-    caption: '',
-    filter: { brightness: 100, contrast: 100, hue: 0 },
-  }));
-  renderGallery();
-  logAction('AI generated 9 abstract images. All flagged [UNPROTECTED – Raw AI Output].', 'unprotected');
-  document.getElementById('generate-btn').disabled = true;
-  document.getElementById('generate-btn').textContent = '✓ Images Generated';
-  updateScore();
+function onPathCreated() {
+  if (!state.hasTransformed) {
+    state.hasTransformed = true;
+    logAction('Brush stroke applied over AI image — human mark on AI output. +5 pts.', 'accent');
+    updateScore();
+    announce('Brush stroke recorded. Threshold may now be crossed.');
+  }
 }
 
-// ─── Render gallery ───
-function renderGallery() {
-  const grid = document.getElementById('image-grid');
-  if (!grid) return;
+function onTextChanged(e) {
+  const obj = e.target;
+  if (!obj) return;
+  const content = (obj.text || '').trim();
+  if (content.length >= 5 && !state.hasCaption) {
+    state.hasCaption = true;
+    logAction(`Caption added ("${content.substring(0, 40)}${content.length > 40 ? '…' : ''}") — independent literary authorship. +10 pts.`, 'protected');
+    updateScore();
+  }
+}
 
-  grid.className = `image-grid layout-${layoutMode}`;
-  grid.innerHTML = images.map(img => `
-    <div class="image-card${img.selected ? ' selected' : ''}"
-         data-id="${img.id}"
-         tabindex="0"
-         role="checkbox"
-         aria-checked="${img.selected}"
-         aria-label="Image ${img.id + 1}${img.selected ? ', selected' : ''}. Press Enter or Space to ${img.selected ? 'deselect' : 'select'}.">
-      <img src="${img.src}"
-           alt="AI-generated abstract artwork ${img.id + 1}"
-           style="${buildFilterCSS(img.filter)}"
-           loading="lazy">
-      ${img.selected ? `
-        <div class="image-overlay">
-          <label for="caption-${img.id}" class="sr-only">Caption for image ${img.id + 1}</label>
-          <input type="text"
-                 id="caption-${img.id}"
-                 class="image-caption-input"
-                 placeholder="Add your caption…"
-                 aria-label="Caption for image ${img.id + 1}"
-                 value="${escHtml(img.caption)}"
-                 maxlength="120">
-        </div>` : ''}
-    </div>`).join('');
+// ── Tool control ──────────────────────────────────────────────────────────
 
-  // Click / keyboard select
-  grid.querySelectorAll('.image-card').forEach(card => {
-    card.addEventListener('click',   onCardClick);
-    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onCardClick.call(card, e); } });
-  });
+function setTool(tool) {
+  state.currentTool = tool;
 
-  // Caption inputs
-  grid.querySelectorAll('.image-caption-input').forEach(input => {
-    input.addEventListener('input', e => {
-      e.stopPropagation();
-      const id = parseInt(input.id.replace('caption-', ''), 10);
-      images[id].caption = input.value;
-      updateScore();
-    });
-    input.addEventListener('click', e => e.stopPropagation());
-    input.addEventListener('keydown', e => e.stopPropagation());
+  if (tool === 'brush') {
+    fc.isDrawingMode = true;
+    if (!fc.freeDrawingBrush) fc.freeDrawingBrush = new fabric.PencilBrush(fc);
+    fc.freeDrawingBrush.width = 6;
+    fc.freeDrawingBrush.color = '#ff6b6b';
+  } else {
+    fc.isDrawingMode = false;
+  }
+
+  if (tool === 'text') {
+    addTextObject();
+    setTool('select');
+    return;
+  }
+
+  document.querySelectorAll('.tool-btn').forEach(b => {
+    b.setAttribute('aria-pressed', b.dataset.tool === tool ? 'true' : 'false');
   });
 }
 
-function buildFilterCSS(f) {
-  return `filter: brightness(${f.brightness}%) contrast(${f.contrast}%) hue-rotate(${f.hue}deg);`;
+function addTextObject() {
+  const text = new fabric.IText('My caption', {
+    left:            200, top: 180,
+    fontSize:        22,
+    fill:            '#ffffff',
+    fontFamily:      'system-ui, -apple-system, sans-serif',
+    backgroundColor: 'rgba(0,0,0,0.55)',
+    padding:         6,
+    borderColor:     '#a5b4fc',
+    cornerColor:     '#a5b4fc',
+  });
+  fc.add(text);
+  fc.setActiveObject(text);
+  text.enterEditing();
+  fc.renderAll();
+  logAction('Text object added. Edit it (≥ 5 chars) for +10 caption pts.', 'accent');
+  announce('Text object placed on canvas. Start typing your caption.');
 }
 
-// ─── Card select / deselect ───
-function onCardClick() {
-  if (!generated) return;
-  const id = parseInt(this.dataset.id, 10);
-  images[id].selected = !images[id].selected;
-  const verb = images[id].selected ? 'Selected' : 'Deselected';
-  logAction(`${verb} image ${id + 1}.`, images[id].selected ? 'protected' : '');
-  renderGallery();
-  updateScore();
-  updateFilterControls();
-}
-
-// ─── Filter controls ───
-function updateFilterControls() {
-  const selected = images.filter(i => i.selected);
-  const panel = document.getElementById('filter-panel');
-  if (!panel) return;
-  panel.style.display = selected.length > 0 ? 'block' : 'none';
-}
+// ── Apply Fabric image filters to the selected image ─────────────────────
 
 function applyFilters() {
-  const brightness = parseInt(document.getElementById('filter-brightness')?.value ?? 100, 10);
-  const contrast   = parseInt(document.getElementById('filter-contrast')?.value ?? 100, 10);
-  const hue        = parseInt(document.getElementById('filter-hue')?.value ?? 0, 10);
+  const obj = fc.getActiveObject();
+  if (!obj || obj.type !== 'image') {
+    logAction('Click the AI image on the canvas first, then move the sliders.', '');
+    announce('No image selected. Click the image on the canvas, then adjust the sliders.');
+    return;
+  }
 
-  images.forEach(img => {
-    if (img.selected) img.filter = { brightness, contrast, hue };
-  });
-  renderGallery();
-  updateScore();
-  logAction(`Applied filter: brightness ${brightness}%, contrast ${contrast}%, hue-rotate ${hue}°.`, 'accent');
+  const brightness = parseFloat(document.getElementById('slider-brightness')?.value ?? 0);
+  const contrast   = parseFloat(document.getElementById('slider-contrast')?.value   ?? 0);
+  const hue        = parseFloat(document.getElementById('slider-hue')?.value        ?? 0);
+
+  obj.filters = [];
+  if (brightness !== 0) obj.filters.push(new fabric.Image.filters.Brightness({ brightness }));
+  if (contrast   !== 0) obj.filters.push(new fabric.Image.filters.Contrast({ contrast }));
+  if (hue        !== 0) obj.filters.push(new fabric.Image.filters.HueRotation({ rotation: hue }));
+  obj.applyFilters();
+  fc.renderAll();
+
+  if (!state.hasTransformed) {
+    state.hasTransformed = true;
+    logAction(`Filter applied — brightness ${fmtN(brightness)}, contrast ${fmtN(contrast)}, hue ${fmtN(hue)}. +5 pts.`, 'accent');
+    updateScore();
+  } else {
+    logAction(`Filter updated — brightness ${fmtN(brightness)}, contrast ${fmtN(contrast)}, hue ${fmtN(hue)}.`);
+  }
 }
 
-// ─── Layout switch ───
-function setLayout(mode) {
-  layoutMode = mode;
-  document.querySelectorAll('.layout-btn').forEach(b => {
-    b.setAttribute('aria-pressed', b.dataset.layout === mode ? 'true' : 'false');
-  });
-  renderGallery();
-  updateScore();
-  logAction(`Layout changed to "${mode}".`, 'accent');
+function fmtN(n) { return (n >= 0 ? '+' : '') + n.toFixed(2); }
+
+// ── Import user image from file picker ───────────────────────────────────
+
+function importImage() {
+  const input = document.getElementById('import-file-input');
+  if (!input) return;
+  input.value = '';
+  input.click();
 }
 
-// ─── Score calculation ───
+function onImportFileChange(e) {
+  const file = e.target.files?.[0];
+  if (!file || !file.type.startsWith('image/')) return;
+
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const dataURL = ev.target.result;
+    // Remove existing AI images
+    const existing = fc.getObjects().filter(o => o.type === 'image' && o.data?.isAI);
+    existing.forEach(o => fc.remove(o));
+
+    fabric.Image.fromURL(dataURL, img => {
+      // Fit the image within the canvas while preserving aspect ratio
+      const scaleX = (CANVAS_W - 40) / img.width;
+      const scaleY = (CANVAS_H - 40) / img.height;
+      const scale  = Math.min(scaleX, scaleY, 2);
+      const left   = Math.round((CANVAS_W - img.width  * scale) / 2);
+      const top    = Math.round((CANVAS_H - img.height * scale) / 2);
+
+      img.set({
+        left, top, scaleX: scale, scaleY: scale,
+        hasRotatingPoint: false, cornerSize: 8, cornerStyle: 'circle',
+        borderColor: '#a5b4fc', cornerColor: '#a5b4fc',
+      });
+      img.data = { isAI: true };
+
+      state.imageOrigLeft = left;
+      state.imageOrigTop  = top;
+
+      fc.add(img);
+      fc.sendToBack(img);
+      fc.renderAll();
+
+      logAction(`Your image imported — "${file.name}". Runs 100% locally, nothing uploaded. Now edit to claim authorship.`, 'accent');
+      announce(`Image "${file.name}" imported. Click it to select, then edit to earn creativity points.`);
+    });
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── Regenerate procedural image ───────────────────────────────────────────
+
+function regenerateImage() {
+  // Advance seed and cycle palette
+  currentSeed       = (currentSeed + 1337) ^ 0x5EADBEEF;
+  currentPaletteIdx = (currentPaletteIdx + 1) % PALETTES.length;
+  loadProceduralImage(currentSeed, PALETTES[currentPaletteIdx]);
+  logAction('New procedural image generated.', '');
+}
+
+// ── Delete selected non-image object ─────────────────────────────────────
+
+function deleteSelected() {
+  const obj = fc.getActiveObject();
+  if (!obj) return;
+  if (obj.type === 'image') {
+    logAction('AI-generated images cannot be deleted — only annotated.', '');
+    return;
+  }
+  fc.remove(obj);
+  fc.renderAll();
+  logAction('Object removed from canvas.');
+}
+
+// ── Clear all overlays (brush paths + text), keep images ─────────────────
+
+function clearOverlays() {
+  const toRemove = fc.getObjects().filter(o => o.type !== 'image');
+  if (toRemove.length === 0) { logAction('No overlays to clear.'); return; }
+  toRemove.forEach(o => fc.remove(o));
+  fc.renderAll();
+  logAction('Brush strokes and text overlays cleared.');
+}
+
+// ── Export composition ────────────────────────────────────────────────────
+
+function exportComposition() {
+  if (!state.hasExported) {
+    state.hasExported = true;
+    logAction('Composition finalised and exported — publication intent. +10 pts.', 'protected');
+    updateScore();
+  }
+  const dataURL = fc.toDataURL({ format: 'png', quality: 0.92, multiplier: 1 });
+  const a = document.createElement('a');
+  a.href = dataURL;
+  a.download = 'human-ai-composition.png';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  announce('Composition exported as PNG.');
+}
+
+// ── Score calculation ─────────────────────────────────────────────────────
+
 function computeScore() {
-  if (!generated) return 0;
-  let score = 0;
-
-  // Selection: 3+ images selected
-  const selectedCount = images.filter(i => i.selected).length;
-  if (selectedCount >= 3) score += WEIGHTS.select;
-  else if (selectedCount >= 1) score += Math.round(WEIGHTS.select * selectedCount / 3);
-
-  // Transformation: at least one image has non-default filter values
-  const transformed = images.filter(i =>
-    i.selected && (i.filter.brightness !== 100 || i.filter.contrast !== 100 || i.filter.hue !== 0));
-  if (transformed.length > 0) score += WEIGHTS.transform;
-
-  // Caption: 2+ selected images with captions ≥ 10 chars
-  const captioned = images.filter(i => i.selected && i.caption.trim().length >= 10);
-  if (captioned.length >= 2) score += WEIGHTS.caption;
-  else if (captioned.length === 1) score += Math.round(WEIGHTS.caption * 0.5);
-
-  // Layout: not default 'grid'
-  if (layoutMode !== 'grid') score += WEIGHTS.layout;
-
-  return score;
+  return (state.hasSelected    ? WEIGHTS.select    : 0)
+       + (state.hasTransformed ? WEIGHTS.transform : 0)
+       + (state.hasCaption     ? WEIGHTS.caption   : 0)
+       + (state.hasArranged    ? WEIGHTS.arrange   : 0)
+       + (state.hasExported    ? WEIGHTS.export    : 0);
 }
 
 function updateScore() {
@@ -246,25 +548,44 @@ function updateScore() {
   const fill  = document.getElementById('creativity-fill');
   const pct   = document.getElementById('creativity-pct');
   const badge = document.getElementById('status-badge');
+  const track = document.querySelector('[role="meter"]');
 
-  if (fill)  { fill.style.inlineSize = `${Math.min(score / TOTAL_POSSIBLE * 100, 100)}%`; }
-  if (pct)   { pct.textContent = `${score} / ${TOTAL_POSSIBLE} pts`; }
+  const pctW = Math.min(score / TOTAL_POSSIBLE * 100, 100);
+  if (fill)  fill.style.inlineSize = `${pctW}%`;
+  if (pct)   pct.textContent = `${score} / ${TOTAL_POSSIBLE} pts`;
+  if (track) {
+    track.setAttribute('aria-valuenow', score);
+    track.setAttribute('aria-valuemax',  TOTAL_POSSIBLE);
+  }
 
   if (!badge) return;
+
   if (score >= PROTECT_THRESHOLD) {
     fill?.classList.add('above-threshold');
-    badge.className = 'status-badge protected';
+    badge.className   = 'status-badge protected';
     badge.textContent = '✓ Protectable Human–AI Work';
-    announce('Sufficient human creativity applied. This arrangement is protectable under USCO 2025 guidance.');
+
+    // ── Eureka theme shift ──
+    document.body.classList.add('eureka');
+    const flash = document.getElementById('eureka-flash');
+    flash?.classList.add('active');
+    setTimeout(() => flash?.classList.remove('active'), 180); // flash in, then CSS fades out
+
+    announce('Threshold crossed. Even this minimal creative input satisfies the constitutional "modicum of creativity" under Feist 499 U.S. 345 and USCO 2025. The whole page just turned green — that is the legal result of one selection + one edit.');
   } else {
     fill?.classList.remove('above-threshold');
-    badge.className = score > 0 ? 'status-badge pending' : 'status-badge unprotected';
-    badge.textContent = score > 0 ? `⟳ ${score} pts — Keep Adding Human Input` : '✗ Raw AI Output — Unprotected';
-    announce(`Score: ${score} of ${TOTAL_POSSIBLE} points. Add more human creativity to cross the threshold.`);
+    document.body.classList.remove('eureka');
+    document.getElementById('eureka-flash')?.classList.remove('active');
+    badge.className   = score > 0 ? 'status-badge pending' : 'status-badge unprotected';
+    badge.textContent = score > 0
+      ? `⟳ ${score} pts — One more edit crosses the threshold`
+      : '✗ Raw AI Output — Unprotected';
+    announce(`Score: ${score} of ${TOTAL_POSSIBLE}. Select the image then make any single edit to reach the 10-point threshold.`);
   }
 }
 
-// ─── Log / announce ───
+// ── ARIA live region + action log ─────────────────────────────────────────
+
 function logAction(msg, cls = '') {
   const log = document.getElementById('action-log');
   if (!log) return;
@@ -277,43 +598,56 @@ function logAction(msg, cls = '') {
 
 function announce(msg) {
   const live = document.getElementById('sr-live');
-  if (live) { live.textContent = ''; requestAnimationFrame(() => { live.textContent = msg; }); }
+  if (!live) return;
+  live.textContent = '';
+  requestAnimationFrame(() => { live.textContent = msg; });
 }
 
-function escHtml(str) {
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+// ── DOMContentLoaded entry point ──────────────────────────────────────────
 
-// ─── Init ───
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('generate-btn')?.addEventListener('click', generateImages);
-  document.getElementById('apply-filter-btn')?.addEventListener('click', applyFilters);
+  initCanvas();
 
-  document.querySelectorAll('.layout-btn').forEach(btn => {
-    btn.addEventListener('click', () => setLayout(btn.dataset.layout));
-  });
+  document.getElementById('tool-select')?.addEventListener('click',   () => setTool('select'));
+  document.getElementById('tool-brush')?.addEventListener('click',    () => setTool('brush'));
+  document.getElementById('tool-text')?.addEventListener('click',     () => setTool('text'));
+  document.getElementById('tool-delete')?.addEventListener('click',   deleteSelected);
+  document.getElementById('clear-overlays-btn')?.addEventListener('click', clearOverlays);
+  document.getElementById('export-btn')?.addEventListener('click',    exportComposition);
+  document.getElementById('apply-filters-btn')?.addEventListener('click', applyFilters);
+  document.getElementById('import-btn')?.addEventListener('click',    importImage);
+  document.getElementById('regenerate-btn')?.addEventListener('click', regenerateImage);
 
-  // Filter slider labels
-  ['brightness','contrast','hue'].forEach(name => {
-    const slider = document.getElementById(`filter-${name}`);
-    const label  = document.getElementById(`filter-${name}-val`);
+  const importInput = document.getElementById('import-file-input');
+  importInput?.addEventListener('change', onImportFileChange);
+
+  // Live slider value labels
+  ['brightness', 'contrast', 'hue'].forEach(name => {
+    const slider = document.getElementById(`slider-${name}`);
+    const label  = document.getElementById(`slider-${name}-val`);
     slider?.addEventListener('input', () => {
-      if (label) label.textContent = `${slider.value}${name === 'hue' ? '°' : '%'}`;
+      if (label) label.textContent = parseFloat(slider.value).toFixed(2);
     });
   });
 
   setupModal();
 });
 
+// ── Modal ─────────────────────────────────────────────────────────────────
+
 function setupModal() {
   const openBtn  = document.getElementById('open-modal');
   const closeBtn = document.getElementById('close-modal');
   const backdrop = document.getElementById('modal-backdrop');
   if (!openBtn || !backdrop) return;
-  openBtn.addEventListener('click', () => { backdrop.classList.add('open'); closeBtn?.focus(); });
+  openBtn.addEventListener('click',  () => { backdrop.classList.add('open'); closeBtn?.focus(); });
   closeBtn?.addEventListener('click', () => { backdrop.classList.remove('open'); openBtn.focus(); });
-  backdrop.addEventListener('click', e => { if (e.target === backdrop) { backdrop.classList.remove('open'); openBtn.focus(); } });
+  backdrop.addEventListener('click', e => {
+    if (e.target === backdrop) { backdrop.classList.remove('open'); openBtn.focus(); }
+  });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && backdrop.classList.contains('open')) { backdrop.classList.remove('open'); openBtn.focus(); }
+    if (e.key === 'Escape' && backdrop.classList.contains('open')) {
+      backdrop.classList.remove('open'); openBtn.focus();
+    }
   });
 }
