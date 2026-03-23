@@ -157,17 +157,12 @@ Language functions as the ultimate forensic ledger of human anxiety and ambition
 * **Ablaut / Apophony**: A regular, systematic variation of vowels in Indo-European languages (e.g., sing, sang, sung) that conveys grammatical, tense, or morphological function without altering the consonant root.  
 * **Bayesian Phylogenetics**: A highly computational statistical methodology used in evolutionary biology and historical linguistics. It employs algorithms to estimate the posterior probability and timing of evolutionary divergence, allowing for the dating of language splits.  
 * **Diachronic vs. Synchronic**: Diachronic refers to the study of language evolution across time (historical linguistics); Synchronic refers to the analysis of language structure and usage at a single, fixed moment in time.  
-* **Droit d’auteur**: The French legal term for "author's right," heavily utilized in discussions of intellectual property and creator rights regarding AI-generated media.  
 * **Hapax Legomenon**: A word, linguistic form, or specific compound that appears only once within a specific text or the entirety of a corpus. It is highly useful for identifying nascent neologisms and tracking morphological productivity.  
 * **Laryngeal Theory**: A foundational theory in PIE linguistics proposing the existence of specific, ancestral consonant sounds (\*h₁, \*h₂, \*h₃), which subsequently colored adjacent vowels and disappeared in all daughter languages except Anatolian.  
 * **MCMC (Markov chain Monte Carlo)**: A class of algorithms used for sampling from a probability distribution. In linguistics, MCMC is essential for generating and evaluating the posterior distribution of thousands of potential phylogenetic trees.  
-* **Motion Vectors**: In digital rendering and video generation, data that represents the movement of pixels between frames. Crucial in evaluating the fluidity of *synth-* generated media.  
-* **Physically Based Rendering (PBR)**: A computer graphics approach that seeks to render graphics in a way that more accurately models the flow of light in the real world, heavily reliant on the *tech-* stack of hardware.  
 * **PIE (Proto-Indo-European)**: The reconstructed, hypothetical ancestral language of the entire Indo-European family, believed to have been spoken circa 4500–2500 BCE.  
 * **Semantic Valence**: The inherent emotional, conceptual, or associative "flavor" a morpheme carries (e.g., *synth-* implies artificial/emergent/blended; *tech-* implies precise/procedural/dominant).  
-* **s-mobile**: An optional initial *s-* consonant observed in many PIE roots (e.g., \*(s)teg-), indicating early morphological flexibility and prefixal behavior.  
-* **Sparse Autoencoder**: An unsupervised machine learning algorithm used to learn efficient data codings, fundamentally powering the current generation of synthetic intelligence.
-
+* **s-mobile**: An optional initial *s-* consonant observed in many PIE roots (e.g., \*(s)teg-), indicating early morphological flexibility and prefixal behavior. 
 #### **Works cited**
 
 1. Proto-Indo-European language \- Wikipedia, accessed March 22, 2026, [https://en.wikipedia.org/wiki/Proto-Indo-European\_language](https://en.wikipedia.org/wiki/Proto-Indo-European_language)  
