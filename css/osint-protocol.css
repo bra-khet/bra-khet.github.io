@@ -377,21 +377,31 @@ ul.principle-list {
 }
 
 ul.principle-list li {
-  display: grid;
-  grid-template-columns: 1.6rem 1fr;
-  gap: .5rem;
+  display: flex;
+  gap: .55rem;
   align-items: start;
 }
 
+/* Bullet via ::before; the empty <span> in each li is suppressed */
 ul.principle-list li::before {
   content: '▸';
   color: var(--cyan);
   font-family: var(--font-mono);
   font-size: .85rem;
+  flex-shrink: 0;
   margin-top: .22rem;
+  line-height: 1;
 }
 
-ul.principle-list li span {
+/* Hide the structural empty span — ::before handles the glyph */
+ul.principle-list li > span:first-child:empty {
+  display: none;
+}
+
+/* Content span fills remaining width */
+ul.principle-list li > span:not(:empty) {
+  flex: 1;
+  min-width: 0;
   font-size: .93rem;
   color: var(--text-body);
   line-height: 1.65;
