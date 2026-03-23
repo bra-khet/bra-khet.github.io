@@ -43,11 +43,10 @@ title: "|0⟩"
   </p>
   <p style="color: #9ab8d0; font-size: 0.88rem; font-family: Monaco, monospace;
             line-height: 1.65; margin: 0;">
-    Before diving into the reports, learn exactly how I verify information using a
-    standardized, transparent OSINT protocol. This is the framework that makes every 
-    claim verifiable &mdash; reproducible steps,
-    scored sources, and a living-document update cycle that keeps the analysis current.
-    Every report on this site was produced under this protocol.
+    Before reading reports, learn how I verify information using a
+    standardized OSINT protocol. This is the framework that makes every 
+    claim verifiable &mdash; reproducible steps and 
+    scored sources.
   </p>
 </div>
 
