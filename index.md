@@ -62,7 +62,7 @@ title: "|0⟩"
 <!-- ── DLSS 5 / Neural Rendering Series ──────────────────────── -->
 <h4 style="color: #76B900; font-family: Monaco, monospace; font-size: 0.9rem;
            margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
-  NVIDIA DLSS 5: Generative Neural Rendering
+  NVIDIA DLSS 5
 </h4>
 
 <div style="margin-top: 0.5rem; padding: 1rem 1.25rem; border: 1px solid #444;
@@ -129,7 +129,7 @@ title: "|0⟩"
 <!-- ── Evo 2 ───────────────────────────────────────────────────── -->
 <h4 style="color: #00FF9F; font-family: Monaco, monospace; font-size: 0.9rem;
            margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
-  Evo 2: Learning the Language of Life
+  Evo 2
 </h4>
 
 <div style="margin-top: 0.5rem; padding: 1rem 1.25rem;
@@ -157,7 +157,7 @@ title: "|0⟩"
 <!-- ── Synth- vs. Tech- ─────────────────────────────────────────── -->
 <h4 style="color: #b06cff; font-family: Monaco, monospace; font-size: 0.9rem;
            margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
-  Synth- vs. Tech-: Etymology &amp; Linguistics
+  Synth- vs. Tech-
 </h4>
 
 <div style="margin-top: 0.5rem; padding: 1rem 1.25rem;
@@ -187,10 +187,10 @@ title: "|0⟩"
 
 </div>
 
-<!-- ── AI Infrastructure & Water ─────────────────────────────────── -->
+<!-- ── AI Infrastructure & Water [Claude, Uncomment this section when I update it with the water-report-2.md, I've disabled it until we re-draft it] ─────────────────────────────────── 
 <h4 style="color: #00b4d8; font-family: Monaco, monospace; font-size: 0.9rem;
            margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
-  AI Infrastructure &amp; Environment
+  AI Water Use - Infrastructure &amp; Environment
 </h4>
 
 <div style="margin-top: 0.5rem; padding: 1rem 1.25rem;
@@ -220,11 +220,12 @@ title: "|0⟩"
   </div>
 
 </div>
+-->
 
 <!-- ── Anti-AI Ideology Series ──────────────────────────────────── -->
 <h4 style="color: #06b6d4; font-family: Monaco, monospace; font-size: 0.9rem;
            margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
-  AI Use &amp; Anti-AI Ideology
+  AI Use by Anti-AI Users
 </h4>
 
 <div style="margin-top: 0.5rem; padding: 1rem 1.25rem;
