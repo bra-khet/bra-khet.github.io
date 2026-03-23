@@ -1,0 +1,701 @@
+---
+layout: null
+title: "AI Infrastructure & Water: Evaluating the Water-Energy Nexus"
+permalink: /ai-water-use-report-1/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Expert OSINT analysis of direct and indirect water consumption by U.S. AI data centers. Verifies FWPCOA claims against 2024–2026 LBNL, IEA, and HARC data. Covers thermodynamic tradeoffs, watershed risk zones, and emerging closed-loop cooling legislation. March 2026.">
+<title>AI Infrastructure &amp; Water: The Water-Energy Nexus | bra-khet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ site.baseurl }}/css/ai-water-use-report-1.css">
+</head>
+<body>
+
+<!-- Reading progress bar -->
+<div id="reading-progress" role="progressbar" aria-label="Reading progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
+<!-- Skip link -->
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<!-- ── Hacker nav banner ──────────────────────────────────────────── -->
+<div id="hacker-nav-banner" aria-label="Site navigation">
+  <span>
+    <a href="{{ site.baseurl }}/">← bra-khet.github.io</a>
+    <span class="banner-tag"> / research</span>
+  </span>
+  <span class="banner-title">AI Water-Energy Nexus</span>
+  <span class="banner-v">v1.0 · March 2026</span>
+</div>
+
+<div class="page-wrapper">
+
+  <!-- ── Sidebar TOC ──────────────────────────────────────────────── -->
+  <nav class="sidebar" aria-label="Table of contents">
+    <p class="toc-label">Contents</p>
+    <ul class="toc-list" role="list">
+      <li><a href="#executive-summary">Executive Summary</a></li>
+      <li><a href="#thermodynamics">Thermodynamics of Cooling</a></li>
+      <li><a href="#mitigation">Mitigation Trajectories</a></li>
+      <li><a href="#fwpcoa">FWPCOA Claim Verification</a></li>
+      <li><a href="#national-data">National Data &amp; Charts</a></li>
+      <li><a href="#location-dives">Location Deep-Dives</a></li>
+      <li><a href="#global">Global Perspective</a></li>
+      <li><a href="#policy">Mitigation &amp; Policy</a></li>
+      <li><a href="#debate">Balanced Debate</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+      <li><a href="#appendix">Appendix</a></li>
+      <li><a href="#works-cited">Works Cited</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Main content ────────────────────────────────────────────── -->
+  <main id="main-content" tabindex="-1">
+
+    <!-- ════════════════════════════════════════════════════════════
+         HERO
+    ═════════════════════════════════════════════════════════════ -->
+    <header class="report-hero">
+      <div class="report-meta">
+        <span class="badge badge-blue">OSINT Research Protocol v2.0</span>
+        <span class="badge badge-teal">March 2026</span>
+        <span class="badge badge-muted">Research Report v1.0</span>
+        <span class="badge badge-risk">High-Volatility Domain</span>
+      </div>
+
+      <h1 class="report-title">Evaluating the Water-Energy Nexus of AI Infrastructure</h1>
+      <p class="report-subtitle">Verifying FWPCOA Claims &amp; Assessing 2026 Watershed Impacts — An expert-level OSINT analysis of direct and indirect U.S. data center water consumption, with focus on over-allocated basins and the emerging legislative response.</p>
+
+      <div class="version-banner" aria-label="Version status">
+        v1.0 — Last Refreshed: March 2026 — Initial Release · 80 primary sources
+      </div>
+
+      <div class="hero-stats" role="list" aria-label="Key statistics">
+        <div class="hero-stat" role="listitem">
+          <span class="stat-val blue">66 B L</span>
+          <span class="stat-lbl">U.S. Direct Use 2023</span>
+        </div>
+        <div class="hero-stat" role="listitem">
+          <span class="stat-val orange">800 B L</span>
+          <span class="stat-lbl">Indirect via Grid 2023</span>
+        </div>
+        <div class="hero-stat" role="listitem">
+          <span class="stat-val red">45%</span>
+          <span class="stat-lbl">DCs in Water-Stressed Regions</span>
+        </div>
+        <div class="hero-stat" role="listitem">
+          <span class="stat-val teal">870%</span>
+          <span class="stat-lbl">Projected Phoenix Demand Spike</span>
+        </div>
+        <div class="hero-stat" role="listitem">
+          <span class="stat-val green">0.15 L/kWh</span>
+          <span class="stat-lbl">AWS Best-in-Class WUE</span>
+        </div>
+        <div class="hero-stat" role="listitem">
+          <span class="stat-val blue">2028</span>
+          <span class="stat-lbl">Projected Consumption Doubles</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ════════════════════════════════════════════════════════════
+         § 01 — EXECUTIVE SUMMARY
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="report-section" id="executive-summary">
+      <p class="section-eyebrow">§ 01</p>
+      <h2 class="section-heading">Executive Summary</h2>
+
+      <p>The rapid proliferation of artificial intelligence (AI) infrastructure has fundamentally altered the resource consumption profile of the global digital economy. As hyperscale data centers expand to accommodate the high-density computing clusters required for generative AI models, the thermodynamic necessity of thermal rejection has placed unprecedented strain on regional water resources. This report provides an exhaustive, expert-level analysis of direct and indirect data center water consumption in the United States as of 2026, with specific focus on highly stressed, over-allocated watersheds.<sup><a href="#src-1">[1]</a></sup></p>
+
+      <p>A central objective of this investigation is the systematic verification of claims presented in the Florida Water Pollution Control Operators Association (FWPCOA) article, "Myths vs. Reality: Data Centers And Water Usage," published January 23, 2026.<sup><a href="#src-1">[1]</a></sup> Verification against 2024–2026 data from the Lawrence Berkeley National Laboratory (LBNL), the International Energy Agency (IEA), the Houston Advanced Research Center (HARC), and hyperscaler sustainability disclosures reveals that several volumetric baselines cited in the FWPCOA article require critical revision to reflect the exponential escalation driven by AI hardware density.<sup><a href="#src-3">[3]</a></sup></p>
+
+      <div class="insight-grid" aria-label="Three primary debate-ready insights">
+        <div class="insight-card">
+          <div class="insight-number">01</div>
+          <p class="insight-title">The Thermodynamic Energy-Water Tradeoff</p>
+          <p class="insight-body">Closed-loop liquid cooling shifts the resource burden from direct water evaporation to increased electricity consumption — expanding the facility's <em>indirect</em> water footprint at thermoelectric power plants, which can eclipse direct savings depending on the regional grid mix.<sup><a href="#src-6">[6]</a></sup></p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-number">02</div>
+          <p class="insight-title">Geographic Mismatch</p>
+          <p class="insight-body">More than 45% of existing and planned hyperscale data centers are located in regions projected to face high-to-extreme water stress by 2050.<sup><a href="#src-9">[9]</a></sup> Phoenix and the Potomac Basin are approaching structural limits that threaten municipal supply reliability.</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-number">03</div>
+          <p class="insight-title">Mandated Engineering</p>
+          <p class="insight-body">In 2026, states have aggressively shifted from voluntary disclosure to mandated engineering. South Carolina and Kansas are pursuing legislation to legally require closed-loop, zero-evaporation cooling systems, fundamentally altering data center site economics.<sup><a href="#src-13">[13]</a></sup></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         § 02 — THERMODYNAMICS
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="report-section" id="thermodynamics">
+      <p class="section-eyebrow">§ 02</p>
+      <h2 class="section-heading">Theoretical Foundation: The Thermodynamics of Data Center Cooling</h2>
+
+      <p>Data-center thermal rejection is immutably governed by the second law of thermodynamics: electrical energy consumed by CPUs and GPUs is entirely converted into heat, which must be continuously transferred to an external environmental sink. The efficiency and resource intensity of this process depend entirely on the physical mechanism of heat transfer.</p>
+
+      <p class="section-subheading">Open-Loop Evaporative Cooling</p>
+      <p>Open-loop evaporative cooling has historically been the preferred methodology due to its superior energy efficiency. This system exploits the latent heat of vaporization — approximately 2,260 kilojoules per kilogram of water — by forcing ambient air across wetted media or spraying water into cooling towers.<sup><a href="#src-8">[8]</a></sup> However, approximately <strong>70–80% of water withdrawn is permanently evaporated</strong>, leaving behind concentrated dissolved solids (wastewater "blowdown").<sup><a href="#src-1">[1]</a></sup></p>
+
+      <p class="section-subheading">Closed-Loop Systems</p>
+      <p>Closed-loop cooling (dry coolers, direct-to-chip liquid, dielectric immersion) relies on sensible heat transfer. Because air's specific heat capacity is low (~1.006 kJ/kg-K), this requires substantially higher volumetric flow rates, large energy-intensive fans, and mechanical chillers.<sup><a href="#src-6">[6]</a></sup> Liquid cooling captures heat efficiently at the silicon level, minimizing direct water evaporation on-site — but requires more electricity for secondary heat rejection, driving up Power Usage Effectiveness (PUE).</p>
+
+      <div class="stat-callout" aria-label="WUE definition and key figures">
+        <span class="sc-value">WUE</span>
+        <div class="sc-text">
+          <strong>Water Usage Effectiveness</strong> = liters consumed per kWh of IT equipment energy. The legacy industry average for open-loop evaporative systems is <strong>~1.8 L/kWh</strong>. Highly optimized hybrid or closed-loop architectures can achieve <strong>below 0.3 L/kWh</strong>.<sup><a href="#src-17">[17]</a></sup> But evaluating WUE in isolation ignores the indirect water footprint: the LBNL calculates that while direct U.S. data center water consumption was 66 billion liters in 2023, the indirect footprint via the power grid was approximately <strong>800 billion liters</strong> — more than 12× greater.<sup><a href="#src-3">[3]</a></sup>
+        </div>
+      </div>
+
+      <div class="callout callout-warn">
+        <strong>The core tradeoff:</strong> Rack power densities have increased dramatically — from 5–15 kW for conventional cloud racks to 50–132 kW for AI-optimized NVIDIA Blackwell racks, with next-generation Rubin Ultra NVL576 configurations projected at up to 600 kW–1 MW per rack by 2027–2028.<sup><a href="#src-10">[10]</a></sup> This density makes traditional air cooling thermodynamically impossible, forcing rapid adoption of liquid cooling — but at the cost of higher electrical parasitic loads and expanded indirect water footprints.
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         § 03 — MITIGATION TRAJECTORIES
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="report-section" id="mitigation">
+      <p class="section-eyebrow">§ 03</p>
+      <h2 class="section-heading">Practical Applications: Mitigation Trajectories</h2>
+
+      <p>Dominant hyperscalers have initiated aggressive hydrological mitigation strategies in 2025–2026, centering on reclaimed wastewater and zero-evaporation reference architectures.</p>
+
+      <p class="section-subheading">Amazon Web Services (AWS)</p>
+      <p>AWS is aggressively pursuing its 2030 "water positive" pledge by integrating recycled wastewater at over <strong>120 locations globally</strong>. By 2024, AWS reported reaching 53% of its water-positive goal, operating at a global average WUE of <strong>0.15 L/kWh</strong>. AWS projects that combining recycled water with optimized evaporative cooling can reduce potable water reliance by up to <strong>85%</strong> compared to conventional methodologies.<sup><a href="#src-20">[20]</a></sup></p>
+
+      <p class="section-subheading">Microsoft</p>
+      <p>In late 2024, Microsoft launched a new datacenter design specifically optimized for AI workloads that consumes <strong>zero water for cooling</strong>. This architecture uses chip-level closed-loop liquid cooling networks; once filled during construction, the primary coolant circulates indefinitely without evaporation. Microsoft estimates this reference design saves <strong>125 million liters per facility annually</strong>. Pilot deployments are active in Phoenix, Arizona, and Mt. Pleasant, Wisconsin — though the tradeoff is a higher electrical burden.<sup><a href="#src-18">[18]</a></sup></p>
+
+      <p class="section-subheading">Google</p>
+      <p>Google uses a localized "climate-conscious cooling" framework: evaporative cooling in water-abundant regions; air-cooled chillers or non-potable water in arid regions. In 2023, Google consumed <strong>6.1 billion gallons of potable water</strong> globally. In 2024, the company replenished <strong>4.5 billion gallons</strong> (64% of freshwater consumption) through agricultural efficiency, leak repairs, and Colorado River Basin ecosystem restoration.<sup><a href="#src-25">[25]</a></sup></p>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         § 04 — FWPCOA VERIFICATION
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="report-section" id="fwpcoa">
+      <p class="section-eyebrow">§ 04</p>
+      <h2 class="section-heading">Verification of FWPCOA Article Claims</h2>
+
+      <p>The FWPCOA published "Myths vs. Reality: Data Centers And Water Usage" in early 2026.<sup><a href="#src-1">[1]</a></sup> A rigorous verification of its five primary claims against 2024–2026 empirical data yields the following assessments:</p>
+
+      <!-- Claim 1 -->
+      <div class="claim-card">
+        <div class="claim-header">
+          <span class="claim-label">Claim 1: 75–90% of data centers worldwide rely on water-based cooling; only 10–25% are completely water-free. Large facilities predominantly use open-loop evaporative systems.</span>
+          <span class="verdict-badge verdict-accurate">✓ Accurate</span>
+        </div>
+        <p class="claim-analysis">The structural legacy of the data center industry is built upon the energy efficiency of evaporative cooling towers. LBNL and industry analyses confirm that completely water-free environments are largely restricted to smaller enterprise facilities, specialized edge deployments, or specific hyperscale builds in highly restricted desert environments.<sup><a href="#src-1">[1]</a></sup></p>
+      </div>
+
+      <!-- Claim 2 -->
+      <div class="claim-card">
+        <div class="claim-header">
+          <span class="claim-label">Claim 2: Closed-loop systems reduce freshwater use by up to 70% and return ~90–95% as wastewater.</span>
+          <span class="verdict-badge verdict-revised">⚠ Needs Revision</span>
+        </div>
+        <p class="claim-analysis">While accurate that hybrid liquid-air systems can reduce evaporative consumption by ~70% vs. legacy open-loop, the "90–95% wastewater return" assertion is thermodynamically flawed for a <em>true</em> closed-loop design. A genuine closed-loop system requires only an initial charge of coolant with virtually zero ongoing withdrawal — it does not continuously withdraw massive water volumes to return 95% of them. The FWPCOA conflates the low consumptive ratio of certain hybrid systems with the operational mechanics of true closed-loop liquid cooling.<sup><a href="#src-1">[1]</a></sup></p>
+      </div>
+
+      <!-- Claim 3 -->
+      <div class="claim-card">
+        <div class="claim-header">
+          <span class="claim-label">Claim 3: A medium facility uses ~100 million gallons annually; hyperscale peak usage reaches 1–5 million gallons per day.</span>
+          <span class="verdict-badge verdict-accurate">✓ Generally Accurate</span>
+        </div>
+        <p class="claim-analysis">The 100 million gallon annual figure for a "medium" facility is representative of older enterprise infrastructure. The hyperscale peak metric of 1–5 million gallons per day is thoroughly corroborated by 2025–2026 data. Facilities engaged in high-density AI training can demand upwards of <strong>3.7–5 million gallons daily</strong> during peak summer heat when evaporative systems run at maximum capacity.<sup><a href="#src-28">[28]</a></sup></p>
+      </div>
+
+      <!-- Claim 4 -->
+      <div class="claim-card">
+        <div class="claim-header">
+          <span class="claim-label">Claim 4: U.S. total consumption is 449 million gallons per day (2021 baseline), with 70–80% evaporation and ~1.8 L/kWh legacy WUE.</span>
+          <span class="verdict-badge verdict-outdated">✗ Severely Outdated</span>
+        </div>
+        <p class="claim-analysis">The total volumetric claim is severely outdated. The 2024 LBNL U.S. Data Center Energy Usage Report confirmed direct water consumption of <strong>66 billion liters (17.4 billion gallons annually, ~47.7 million gallons per day)</strong> in 2023, while indirect consumption at thermoelectric plants reached <strong>800 billion liters (~578 million gallons per day)</strong>.<sup><a href="#src-3">[3]</a></sup> The combined 2023 footprint heavily eclipses the cited 2021 data. Projections suggest consumption will double or quadruple by 2028. The evaporation fraction (70–80%) and legacy WUE (1.8 L/kWh) remain thermodynamically accurate for older open-loop infrastructure.</p>
+      </div>
+
+      <!-- Claim 5 -->
+      <div class="claim-card">
+        <div class="claim-header">
+          <span class="claim-label">Claim 5: Google and AWS are examples of operators utilizing reclaimed water.</span>
+          <span class="verdict-badge verdict-accurate">✓ Highly Accurate</span>
+        </div>
+        <p class="claim-analysis">Hyperscaler sustainability disclosures from 2025–2026 confirm aggressive scaling of reclaimed wastewater infrastructure. AWS is actively targeting 120 locations for recycled water integration.<sup><a href="#src-20">[20]</a></sup> Google extensively utilizes non-potable canal and industrial water at massive campuses in Belgium and the Netherlands.<sup><a href="#src-24">[24]</a></sup> This trend is expanding rapidly.</p>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         § 05 — NATIONAL DATA & CHARTS
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="report-section" id="national-data">
+      <p class="section-eyebrow">§ 05</p>
+      <h2 class="section-heading">National Data &amp; Trend Analysis (2026 U.S. Focus)</h2>
+
+      <p>The integration of AI has decoupled data center resource trajectories from historical norms. Prior to 2020, massive shifts toward cloud virtualization allowed computing output to grow while electricity and water usage remained relatively flat.<sup><a href="#src-32">[32]</a></sup> Generative AI — relying on thousands of synchronized chips — has shattered this efficiency plateau.</p>
+
+      <p>According to the 2024 LBNL report, total direct water consumption by U.S. data centers in 2023 stood at <strong>66 billion liters</strong>. Hyperscale and colocation facilities accounted for an overwhelming <strong>84%</strong> of this total.<sup><a href="#src-3">[3]</a></sup> Direct water consumption is projected to double or quadruple by 2028; under high-growth scenarios, hyperscale facilities alone are forecasted to consume <strong>60–124 billion liters annually</strong> by decade's end. The indirect water footprint at thermoelectric plants dwarfs direct consumption — approximately <strong>800 billion liters</strong> in 2023, projected to exceed <strong>1,500 billion liters by 2028</strong>.</p>
+
+      <div class="callout callout-info">
+        <strong>The AI Power Multiplier:</strong> A standard internet search consumes ~0.3 Wh. An advanced generative AI query requires 2.9–40 Wh depending on model complexity.<sup><a href="#src-35">[35]</a></sup> In 2023, data centers consumed 176–183 TWh (4.0–4.4% of U.S. grid demand). By 2028, the IEA and LBNL project data centers could consume 6.7–12.0% of total U.S. electricity.<sup><a href="#src-34">[34]</a></sup>
+      </div>
+
+      <div class="charts-grid">
+
+        <div class="chart-container">
+          <p class="chart-title">U.S. National Water Withdrawals by Sector</p>
+          <div class="chart-canvas-wrapper">
+            <canvas id="chartNationalPie" aria-label="Doughnut chart showing U.S. water withdrawals by sector" role="img"></canvas>
+          </div>
+          <p class="chart-caption">Source: USGS Water Use Data; LBNL 2024 Report.<sup><a href="#src-3">[3]</a></sup> Data centers represent ~1% nationally but are the fastest-growing sector and geographically concentrated in vulnerable watersheds.</p>
+        </div>
+
+        <div class="chart-container">
+          <p class="chart-title">WUE Comparison: Hyperscalers vs. Legacy vs. Peak</p>
+          <div class="chart-canvas-wrapper">
+            <canvas id="chartWUE" aria-label="Bar chart comparing Water Usage Effectiveness across operators" role="img"></canvas>
+          </div>
+          <p class="chart-caption">Source: AWS Sustainability Report; Microsoft Datacenter Sustainability; LBNL; arXiv 2603.02705.<sup><a href="#src-17">[17]</a> <a href="#src-31">[31]</a> <a href="#src-44">[44]</a></sup> Arizona peak WUE during summer heat waves exceeds 9 L/kWh as hybrid systems shift fully to evaporative mode.</p>
+        </div>
+
+      </div>
+
+      <div class="chart-container">
+        <p class="chart-title">Projected Escalation: U.S. Data Center Water Consumption (2020–2028)</p>
+        <div class="chart-canvas-wrapper" style="height:320px;">
+          <canvas id="chartTimeSeries" aria-label="Line chart showing direct and indirect water consumption growth alongside AI compute share" role="img"></canvas>
+        </div>
+        <p class="chart-caption">Source: LBNL 2024 Report; IEA Projections; Industry Forecasts.<sup><a href="#src-3">[3]</a> <a href="#src-5">[5]</a></sup> AI share of compute workload (right axis, green dashed) is correlated with escalating water consumption. Note: 2028 figures are high-growth-scenario projections.</p>
+      </div>
+
+      <div class="chart-container">
+        <p class="chart-title">Contextualizing Phoenix Water Use: Data Centers vs. Golf Courses</p>
+        <div class="chart-canvas-wrapper">
+          <canvas id="chartPhoenix" aria-label="Horizontal bar chart comparing Phoenix data center and golf course water use" role="img"></canvas>
+        </div>
+        <p class="chart-caption">Source: Ceres "Drained by Data"; Local Municipal Data.<sup><a href="#src-12">[12]</a> <a href="#src-7">[7]</a></sup> Log scale used due to the magnitude difference. While golf courses dominate current use, data center <em>growth velocity</em> is the critical concern — Ceres projects an 870% demand spike.</p>
+      </div>
+
+      <p class="section-subheading">Household Equivalents</p>
+      <div class="table-wrapper">
+        <table aria-label="Resource asymmetry of hyperscale infrastructure in household equivalents">
+          <thead>
+            <tr>
+              <th>Infrastructure Unit</th>
+              <th>Water Equiv. (Households/yr)</th>
+              <th>Electricity Equiv. (Households/yr)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Medium Enterprise Data Center</td>
+              <td>~1,000 households</td>
+              <td>~10,000 households</td>
+            </tr>
+            <tr>
+              <td>Single 100 MW Hyperscale Facility</td>
+              <td>~10,000–50,000 households</td>
+              <td>~100,000 households</td>
+            </tr>
+            <tr>
+              <td><strong>1 GW AI Mega-Campus</strong></td>
+              <td><strong class="text-orange">~100,000+ households</strong></td>
+              <td><strong class="text-red">~1,000,000 households</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:.78rem; color:var(--text-muted); margin-top:.5rem;">Assumptions: Household water ~300 gal/day; Household electricity ~10,000 kWh/yr. Sources: IEA, EESI, HARC.<sup><a href="#src-28">[28]</a></sup></p>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         § 06 — LOCATION DEEP-DIVES
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="report-section" id="location-dives">
+      <p class="section-eyebrow">§ 06</p>
+      <h2 class="section-heading">U.S. Location Deep-Dives: Priority High-Risk Areas</h2>
+
+      <p>The intersection of unprecedented AI infrastructure expansion and geographic water scarcity represents the most critical environmental conflict in the technology sector. Data center development is heavily clustered in specific corridors due to fiber-optic latency, tax incentives, and energy pricing — regardless of underlying hydrological carrying capacity.</p>
+
+      <!-- Northern Virginia -->
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-nova" id="acc-nova-trigger">
+          <span class="accordion-region">NoVA</span>
+          Northern Virginia — Data Center Alley &amp; the Potomac Basin
+          <span class="risk-tag risk-critical">Critical Risk</span>
+          <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="accordion-content" id="acc-nova" aria-hidden="true" aria-labelledby="acc-nova-trigger" role="region">
+          <div class="accordion-inner">
+            <p>Northern Virginia — Loudoun, Fairfax, and Prince William counties — is universally recognized as "Data Center Alley." It is the most concentrated data center market globally, handling an estimated <strong>70% of worldwide internet traffic</strong> across 290+ distinct buildings with aggregate power demand exceeding 5,400 MW.<sup><a href="#src-38">[38]</a> <a href="#src-11">[11]</a></sup></p>
+            <p>In 2023, Loudoun County alone directly consumed approximately <strong>900 million gallons of water</strong>, pushing the broader Northern Virginia footprint to nearly <strong>2 billion gallons</strong> — a 63% increase from 2019 levels. While data centers account for only 1% of total volumetric Washington Metropolitan Area (WMA) withdrawals, their high evaporative loss means they represent <strong>9% of annual consumptive use, rising to 12% during peak summer</strong>.<sup><a href="#src-11">[11]</a> <a href="#src-39">[39]</a></sup></p>
+            <p>ICPRB baseline models project data center water use in the WMA to average <strong>22 MGD by 2050, with peak usage exceeding 80 MGD</strong>. The ICPRB has issued stark warnings that under extreme drought conditions, this unchecked consumptive use could trigger <strong>mandatory municipal water restrictions across D.C., Maryland, and Virginia by 2030</strong>.<sup><a href="#src-40">[40]</a></sup> Facilities in Loudoun Water's jurisdiction already utilize over <strong>700 million gallons of reclaimed water annually</strong> via a dedicated 20-mile "purple pipe" network.<sup><a href="#src-39">[39]</a></sup></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arizona -->
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-az" id="acc-az-trigger">
+          <span class="accordion-region">AZ</span>
+          Arizona — The Colorado River Basin Crisis
+          <span class="risk-tag risk-critical">Critical Risk</span>
+          <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="accordion-content" id="acc-az" aria-hidden="true" aria-labelledby="acc-az-trigger" role="region">
+          <div class="accordion-inner">
+            <p>The Phoenix metropolitan area has become a primary hyperscale destination despite severe, ongoing hydrological deficits and the over-allocation of the Colorado River system.</p>
+            <p>According to the 2024 Ceres report "Drained by Data," data centers in the Phoenix region consumed approximately <strong>385 million gallons of water directly for cooling</strong>, while indirectly consuming <strong>2.9 billion gallons</strong> through electricity generation.<sup><a href="#src-12">[12]</a></sup> Peak WUE metrics exceeding <strong>9 L/kWh</strong> have been recorded during summer heat waves, as hybrid cooling systems shift entirely to evaporative mode to prevent hardware thermal throttling.<sup><a href="#src-44">[44]</a></sup></p>
+            <p>Ceres projects that regional data center cooling water demand could spike by <strong>870% to over 3.7 billion gallons annually</strong>, severely straining a water table already operating under federal Tier 1 shortage declarations. Because the Colorado River basin is a strict zero-sum equation, this growth will invariably force municipalities to acquire agricultural water rights, accelerating the retirement of arable land.<sup><a href="#src-45">[45]</a> <a href="#src-12">[12]</a></sup></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Texas -->
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-tx" id="acc-tx-trigger">
+          <span class="accordion-region">TX</span>
+          Texas — ERCOT Grid &amp; Regional Aquifer Strain
+          <span class="risk-tag risk-high">High Risk</span>
+          <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="accordion-content" id="acc-tx" aria-hidden="true" aria-labelledby="acc-tx-trigger" role="region">
+          <div class="accordion-inner">
+            <p>Texas is experiencing an unprecedented AI infrastructure build-out, highlighted by the planned 1.2 GW "Stargate One" facility spanning 940 acres. As of late 2025, Texas hosted <strong>over 400 data centers</strong>.</p>
+            <p>The Houston Advanced Research Center (HARC) estimates existing facilities consumed approximately <strong>25 billion gallons of water</strong> (direct + indirect) in 2025, accounting for 0.4% of total state use. ERCOT load forecasts project Texas data center water consumption will reach <strong>29–161 billion gallons annually by 2030</strong> — up to 2.7% of total state water supply.<sup><a href="#src-4">[4]</a> <a href="#src-47">[47]</a></sup></p>
+            <p class="callout callout-risk" style="margin-top:.75rem;">HARC emphasizes that this massive industrial growth is occurring outside the current Texas State Water Plan, creating a systemic planning blind spot for regional authorities already grappling with a <strong>4.8 million acre-foot structural deficit</strong>. Deep groundwater aquifers (Ogallala, Trinity) in targeted rural areas like Abilene lack rapid recharge rates, making reliance on them for constant baseload industrial cooling inherently unsustainable.<sup><a href="#src-47">[47]</a></sup></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Iowa / Oregon -->
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-ia" id="acc-ia-trigger">
+          <span class="accordion-region">IA / OR</span>
+          Iowa (Council Bluffs) &amp; Oregon (The Dalles)
+          <span class="risk-tag risk-medium">Medium Risk</span>
+          <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="accordion-content" id="acc-ia" aria-hidden="true" aria-labelledby="acc-ia-trigger" role="region">
+          <div class="accordion-inner">
+            <p><strong>Iowa (Council Bluffs):</strong> Google's Council Bluffs campus relies heavily on local groundwater and the Missouri River aquifer. In 2024, the site consumed <strong>1 billion gallons of potable water</strong>, functioning as Google's most water-intensive location globally and drawing criticism from local geological surveys.<sup><a href="#src-54">[54]</a></sup></p>
+            <p><strong>Oregon (The Dalles):</strong> Google facilities consume approximately <strong>one-third of the city's total water supply</strong> — over 300 million gallons annually — driving conflicts over the city's pursuit of additional groundwater rights in the Mount Hood National Forest.<sup><a href="#src-56">[56]</a></sup></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Georgia / California / Nevada -->
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false" aria-controls="acc-other" id="acc-other-trigger">
+          <span class="accordion-region">GA / CA / NV</span>
+          Georgia, California &amp; Nevada
+          <span class="risk-tag risk-high">High Risk</span>
+          <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="accordion-content" id="acc-other" aria-hidden="true" aria-labelledby="acc-other-trigger" role="region">
+          <div class="accordion-inner">
+            <p><strong>Georgia (Atlanta):</strong> Metro Atlanta hosts over 50 facilities with 40 more proposed. The region relies almost entirely on small surface watersheds — geographic granite bedrock severely limits groundwater access. Conservationists warn unchecked evaporative cooling will limit critical return flows to the Chattahoochee River system.<sup><a href="#src-49">[49]</a></sup></p>
+            <p><strong>California:</strong> Data centers consumed an estimated <strong>50 billion liters of water in 2023</strong>, projected to reach <strong>116 billion liters by 2028</strong>.<sup><a href="#src-51">[51]</a></sup> A UC Riverside study warns that meeting the peak summer water demands of AI data centers will require <strong>billions of dollars in new municipal water infrastructure</strong>.<sup><a href="#src-52">[52]</a></sup></p>
+            <p><strong>Nevada:</strong> High desert environments force operators to rely heavily on dry cooling, though hybrid systems still extract millions of gallons locally, sparking community pushback. The Desert Research Institute (DRI) has published detailed regional impact assessments.<sup><a href="#src-53">[53]</a></sup></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         § 07 — GLOBAL PERSPECTIVE
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="report-section" id="global">
+      <p class="section-eyebrow">§ 07</p>
+      <h2 class="section-heading">Global Perspective</h2>
+
+      <p>The IEA estimates global data center electricity demand will more than double from ~415 TWh in 2024 to <strong>945 TWh by 2030</strong>.<sup><a href="#src-5">[5]</a></sup> MSCI geospatial analysis found that approximately <strong>45% of ~9,000 global data center assets</strong> are situated in regions projected to experience high-to-extreme water scarcity by 2050.<sup><a href="#src-9">[9]</a></sup></p>
+
+      <div class="table-wrapper">
+        <table aria-label="International regulatory responses to data center water use">
+          <thead>
+            <tr>
+              <th>Jurisdiction</th>
+              <th>Policy Response</th>
+              <th>Key Impact</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Ireland</strong></td>
+              <td>Grid connection moratoriums in Dublin region</td>
+              <td>Data centers consuming 22% of national electricity grid<sup><a href="#src-67">[67]</a></sup></td>
+            </tr>
+            <tr>
+              <td><strong>Netherlands</strong></td>
+              <td>Strict limitations; rigorous power &amp; water efficiency standards</td>
+              <td>Banned new data centers from using potable water without offsets</td>
+            </tr>
+            <tr>
+              <td><strong>Singapore</strong></td>
+              <td>Effective ban on new data centers using potable water for cooling</td>
+              <td>Massive offsetting measures required; hyperscalers forced to innovate<sup><a href="#src-69">[69]</a></sup></td>
+            </tr>
+            <tr>
+              <td><strong>Chile</strong></td>
+              <td>Community pushback forced abandonment of evaporative cooling</td>
+              <td>Google accepted severe electrical efficiency penalty to secure community approval<sup><a href="#src-7">[7]</a></sup></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         § 08 — MITIGATION & POLICY
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="report-section" id="policy">
+      <p class="section-eyebrow">§ 08</p>
+      <h2 class="section-heading">Mitigation, Innovation &amp; the 2026 Policy Landscape</h2>
+
+      <p>In 2025–2026, U.S. legislative posture transitioned from passive observation to active intervention. Three distinct policy trajectories have emerged:</p>
+
+      <div class="policy-grid">
+        <div class="policy-card">
+          <p class="policy-type">Reporting Mandates</p>
+          <p class="policy-title">Transparency First</p>
+          <p class="policy-body">California AB 1577, SB 57; Iowa HF 2447; Michigan SB 762 — mandate data center operators report PUE, WUE, and total volumetric water consumption to state energy commissions. Goal: lift the veil of NDAs shielding operations from public scrutiny.<sup><a href="#src-13">[13]</a></sup></p>
+        </div>
+        <div class="policy-card">
+          <p class="policy-type">Engineering Mandates</p>
+          <p class="policy-title">Closed-Loop Requirements</p>
+          <p class="policy-body">South Carolina S.902 / H.4583 "Data Center Responsibility Act" and Kansas SB 400 would legally mandate closed-loop liquid cooling systems — zero net water withdrawal, zero wastewater discharge. Explicitly prohibit municipal water/groundwater extraction for cooling.<sup><a href="#src-13">[13]</a> <a href="#src-14">[14]</a></sup></p>
+        </div>
+        <div class="policy-card">
+          <p class="policy-type">Incentive Programs</p>
+          <p class="policy-title">Reclaimed Water Credits</p>
+          <p class="policy-body">Virginia SB 30 would condition lucrative data center tax credits on the utilization of reclaimed wastewater or advanced environmental management practices — creating financial incentives aligned with ecological priorities.<sup><a href="#src-13">[13]</a></sup></p>
+        </div>
+      </div>
+
+      <div class="callout callout-warn">
+        <strong>The Economic-Environmental Tradeoff:</strong> The transition to closed-loop or air-cooled chillers completely eliminates potable water evaporation but imposes a massive energy penalty. Operating chillers in high-ambient environments like Phoenix or Austin requires more electricity — often generated by fossil fuels. This increases Scope 2 carbon emissions and expands the indirect water footprint at the power plant level. Regulators and hyperscalers must navigate this delicate balance: preserving local water security at the potential expense of regional grid stability and global carbon decarbonization goals.
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         § 09 — BALANCED DEBATE
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="report-section" id="debate">
+      <p class="section-eyebrow">§ 09</p>
+      <h2 class="section-heading">Balanced Debate: Siting AI Infrastructure in Stressed Basins</h2>
+
+      <div class="debate-grid">
+        <div class="debate-card pro">
+          <p class="debate-label">Pro-Expansion Perspective</p>
+          <ul>
+            <li>Data centers represent less than 1% of national water withdrawals — a fraction of agriculture or thermoelectric generation.<sup><a href="#src-3">[3]</a></sup></li>
+            <li>Hyperscaler WUE metrics have dropped 30–50% over five years. AWS operates at 0.15 L/kWh globally; Microsoft at 0.27 L/kWh.<sup><a href="#src-31">[31]</a></sup></li>
+            <li>Aggressive transition to recycled wastewater and zero-evaporation designs effectively decouples growth from municipal drinking supplies.<sup><a href="#src-18">[18]</a></sup></li>
+            <li>Massive capital investments in data centers catalyze grid modernization, accelerating retirement of water-intensive coal plants in favor of wind, solar, and nuclear — which possess virtually zero indirect water footprints.<sup><a href="#src-27">[27]</a></sup></li>
+          </ul>
+        </div>
+        <div class="debate-card con">
+          <p class="debate-label">Critical Perspective</p>
+          <ul>
+            <li>Macro-level percentages obscure devastating local impacts. Geographic clustering concentrates immense peak demands in specific vulnerable watersheds.<sup><a href="#src-76">[76]</a></sup></li>
+            <li>Tech companies frequently use NDAs to hide resource consumption from the public, preventing accurate municipal planning.<sup><a href="#src-77">[77]</a></sup></li>
+            <li>Corporate "water positive" replenishment pledges — funding distant agricultural leak repairs — do not offset the immediate physical loss of millions of gallons from local municipal pipes.<sup><a href="#src-79">[79]</a></sup></li>
+            <li>Staggering energy demands are keeping legacy fossil-fuel power plants online longer than anticipated, worsening the indirect water footprint and delaying climate goals.<sup><a href="#src-76">[76]</a></sup></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         § 10 — CONCLUSION
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="report-section" id="conclusion">
+      <p class="section-eyebrow">§ 10</p>
+      <h2 class="section-heading">Conclusion</h2>
+
+      <p>The expansion of AI infrastructure represents a profound paradigm shift in industrial resource consumption. The thermodynamic realities of high-density computing dictate that heat rejection will command vast quantities of either water or electricity — there is no costless option. The verification of FWPCOA claims and the synthesis of 2024–2026 data from LBNL, HARC, and the IEA confirm this unavoidable energy-water tradeoff at every level of analysis.</p>
+
+      <p>To ensure sustainable deployment in water-constrained regions, policymakers and industry leaders must adopt a holistic, systemic approach:</p>
+      <p><strong>First,</strong> state and federal regulators must standardize and mandate reporting of site-level PUE and WUE metrics alongside indirect energy-water calculations. You cannot manage a resource hidden behind corporate NDAs.</p>
+      <p><strong>Second,</strong> municipalities should condition zoning approvals and tax incentives on the utilization of non-potable, reclaimed wastewater for cooling.</p>
+      <p><strong>Third,</strong> rather than instituting blanket mandates, policies should reflect local realities. In hydrologically stressed basins like Arizona and Texas, zero-evaporation liquid cooling should be required despite the energy penalty. In regions with constrained electrical grids but abundant water, highly efficient evaporative cooling using reclaimed water may remain the optimal systemic choice.</p>
+
+      <p>Ultimately, future infrastructure planning must view data centers not as isolated buildings, but as massive, interdependent nodes within the broader water-energy nexus.</p>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         § 11 — APPENDIX
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="report-section" id="appendix">
+      <p class="section-eyebrow">§ 11</p>
+      <h2 class="section-heading">Appendix</h2>
+
+      <p class="section-subheading">Version History &amp; Change Log</p>
+      <div class="table-wrapper">
+        <table aria-label="Version history">
+          <thead>
+            <tr><th>Version</th><th>Date</th><th>Changes</th><th>New Refs</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono">v1.0</td>
+              <td>March 2026</td>
+              <td>Initial release — full verification of 5 FWPCOA claims; 4 interactive charts; 6 location deep-dives; 2026 policy landscape.</td>
+              <td>80 sources</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="section-subheading">Key Assumptions Check Table</p>
+      <div class="table-wrapper">
+        <table class="asmpt-table" aria-label="Key assumptions and evidence challenges">
+          <thead>
+            <tr><th>Key Assumption (Implicit Premise)</th><th>Evidence Challenge (Fresh Data Stress Test)</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Closed-loop cooling universally reduces total water impact.</td>
+              <td>False at the system level — it merely shifts consumption from direct evaporation to indirect grid water use at thermoelectric plants. Net effect depends on the regional grid mix.<sup><a href="#src-6">[6]</a></sup></td>
+            </tr>
+            <tr>
+              <td>Corporate "water positive" pledges offset local consumption.</td>
+              <td>Contested — replenishment projects (e.g., distant agricultural efficiency upgrades) occur in different watersheds than the water consumed, providing no relief to the affected local aquifer.<sup><a href="#src-79">[79]</a></sup></td>
+            </tr>
+            <tr>
+              <td>AI efficiency gains will flatten long-term water demand.</td>
+              <td>Insufficient — LBNL projects water consumption to double or quadruple by 2028 even accounting for efficiency improvements, driven by the absolute scale of new hyperscale AI hardware deployments.<sup><a href="#src-3">[3]</a></sup></td>
+            </tr>
+            <tr>
+              <td>1% national water share means data centers are environmentally minor.</td>
+              <td>Misleading — geographic concentration means that 1% national share translates to 9–12% consumptive use in the Potomac Basin and projected 870% spikes in Arizona. Local impact is the relevant metric.<sup><a href="#src-11">[11]</a> <a href="#src-12">[12]</a></sup></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="section-subheading">Glossary</p>
+      <div class="glossary-grid">
+        <div class="glossary-item">
+          <p class="glossary-term">WUE (Water Usage Effectiveness)</p>
+          <p class="glossary-def">Liters of water consumed per kilowatt-hour of IT equipment energy. The primary metric for evaluating direct on-site water efficiency. Lower is better. Does not capture indirect grid water footprint.</p>
+        </div>
+        <div class="glossary-item">
+          <p class="glossary-term">PUE (Power Usage Effectiveness)</p>
+          <p class="glossary-def">Total facility energy divided by IT equipment energy. A PUE of 1.0 means all power goes to computing; higher values indicate overhead from cooling and other systems.</p>
+        </div>
+        <div class="glossary-item">
+          <p class="glossary-term">Open-Loop Evaporative Cooling</p>
+          <p class="glossary-def">Cooling system that continuously withdraws fresh water, evaporating 70–80% to reject heat. Highly energy-efficient but severely consumptive of local water resources.</p>
+        </div>
+        <div class="glossary-item">
+          <p class="glossary-term">Closed-Loop Liquid Cooling</p>
+          <p class="glossary-def">Cooling architecture using a sealed, recirculating liquid circuit (water, dielectric fluid) with no net water evaporation. Higher electrical cost; may increase indirect water footprint.</p>
+        </div>
+        <div class="glossary-item">
+          <p class="glossary-term">Indirect Water Footprint</p>
+          <p class="glossary-def">Water consumed by thermoelectric power plants supplying a facility's electricity. Can be 4–12× greater than direct on-site evaporation, depending on regional grid mix.</p>
+        </div>
+        <div class="glossary-item">
+          <p class="glossary-term">Blowdown</p>
+          <p class="glossary-def">Wastewater discharged from evaporative cooling towers to remove concentrated dissolved solids. Represents ~20–30% of water withdrawal in open-loop systems.</p>
+        </div>
+        <div class="glossary-item">
+          <p class="glossary-term">Hyperscale Facility</p>
+          <p class="glossary-def">A data center operating at massive scale (typically 100 MW+ capacity), owned by large cloud providers (AWS, Google, Microsoft, Meta). Dominates industry water and energy consumption at 84% of the U.S. total.</p>
+        </div>
+        <div class="glossary-item">
+          <p class="glossary-term">LBNL</p>
+          <p class="glossary-def">Lawrence Berkeley National Laboratory — a U.S. Department of Energy research facility that publishes the definitive U.S. Data Center Energy Usage Reports, the primary empirical baseline for this analysis.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         § 12 — WORKS CITED
+    ═════════════════════════════════════════════════════════════ -->
+    <section class="report-section" id="works-cited">
+      <p class="section-eyebrow">§ 12</p>
+      <h2 class="section-heading">Works Cited</h2>
+      <ol class="works-cited-list">
+        <li id="src-1"><span class="cite-num">[1]</span> Myths vs. Reality: Data Centers And Water Usage. <em>Florida Water Pollution Control Operators Association (FWPCOA)</em>. January 23, 2026. <a href="https://www.fwpcoa.org/content.aspx?page_id=5&club_id=859275&item_id=130961" target="_blank" rel="noopener">fwpcoa.org</a></li>
+        <li id="src-3"><span class="cite-num">[3]</span> Data Center Water Consumption in the US: Challenges, Trends, and Market Opportunities for 2025–2030. <em>Apstech Advisors</em>. Citing LBNL 2024 United States Data Center Energy Usage Report. <a href="https://apstechadvisors.com/data-center-water-consumption-in-the-us-challenges-trends-and-market-opportunities-for-2025-2030/" target="_blank" rel="noopener">apstechadvisors.com</a></li>
+        <li id="src-4"><span class="cite-num">[4]</span> Texas Data Center Boom Could Consume Up to 161 Billion Gallons of Water Annually by 2030. <em>Houston Advanced Research Center (HARC)</em>. <a href="https://harcresearch.org/news/texas-data-center-boom-could-consume-up-to-161-billion-gallons-of-water-annually-by-2030/" target="_blank" rel="noopener">harcresearch.org</a></li>
+        <li id="src-5"><span class="cite-num">[5]</span> How AI, Data Centers and Water Will Impact Energy Transition in 2026–2030. <em>Business 2.0 Channel</em>. January 2026. <a href="https://business20channel.tv/how-ai-data-centers-and-water-will-impact-energy-transition-in-2026-2030-25-01-2026" target="_blank" rel="noopener">business20channel.tv</a></li>
+        <li id="src-6"><span class="cite-num">[6]</span> Regulating Data Center Water Use in California. <em>UC Berkeley School of Law, Center for Law, Energy &amp; the Environment</em>. <a href="https://www.law.berkeley.edu/research/clee/research/wheeler/water-innovation/data-center-water-use/" target="_blank" rel="noopener">law.berkeley.edu</a></li>
+        <li id="src-7"><span class="cite-num">[7]</span> How Much Water Do AI Data Centers Really Use? <em>Undark Magazine</em>. December 2025. <a href="https://undark.org/2025/12/16/ai-data-centers-water/" target="_blank" rel="noopener">undark.org</a></li>
+        <li id="src-8"><span class="cite-num">[8]</span> Thirsty Servers: The Water Crisis Sparked by Data Center Cooling. <em>Data Centre Digest</em>. <a href="https://datacentredigest.com/thirsty-servers-the-water-crisis-sparked-by-data-center-cooling/" target="_blank" rel="noopener">datacentredigest.com</a></li>
+        <li id="src-9"><span class="cite-num">[9]</span> Beneath the surface: Water stress in data centers. <em>S&amp;P Global / MSCI</em>. 2025. <a href="https://www.spglobal.com/sustainable1/en/insights/special-editorial/beneath-the-surface-water-stress-in-data-centers" target="_blank" rel="noopener">spglobal.com</a></li>
+        <li id="src-10"><span class="cite-num">[10]</span> How AI Growth Is Intensifying Data Center Water Consumption. <em>Net Zero Insights</em>. <a href="https://netzeroinsights.com/resources/how-ai-intensifying-data-center-water-consumption/" target="_blank" rel="noopener">netzeroinsights.com</a></li>
+        <li id="src-11"><span class="cite-num">[11]</span> Data Centers and Water Use in the Potomac River Basin. <em>Interstate Commission on the Potomac River Basin (ICPRB)</em>. 2025. <a href="https://www.potomacriver.org/focus-areas/water-resources-and-drinking-water/water-resources/planning/data-centers-and-water-use-in-the-potomac-river-basin/" target="_blank" rel="noopener">potomacriver.org</a></li>
+        <li id="src-12"><span class="cite-num">[12]</span> Drained by Data: The Cumulative Impact of Data Centers on Regional Water Stress. <em>Ceres</em>. 2024. <a href="https://www.ceres.org/resources/reports/drained-by-data-the-cumulative-impact-of-data-centers-on-regional-water-stress" target="_blank" rel="noopener">ceres.org</a></li>
+        <li id="src-13"><span class="cite-num">[13]</span> State Data Center Water Usage Legislation Gains Momentum. <em>MultiState Associates</em>. March 2026. <a href="https://www.multistate.us/insider/2026/3/3/state-data-center-water-usage-legislation-gains-momentum-in-2025" target="_blank" rel="noopener">multistate.us</a></li>
+        <li id="src-14"><span class="cite-num">[14]</span> 2025–2026 Bill 902: Data Centers. <em>South Carolina Legislature Online</em>. <a href="https://www.scstatehouse.gov/sess126_2025-2026/bills/902.htm" target="_blank" rel="noopener">scstatehouse.gov</a></li>
+        <li id="src-17"><span class="cite-num">[17]</span> Water stewardship. <em>Amazon Sustainability</em>. 2024. <a href="https://sustainability.aboutamazon.com/natural-resources/water" target="_blank" rel="noopener">sustainability.aboutamazon.com</a></li>
+        <li id="src-18"><span class="cite-num">[18]</span> Sustainable by design: Next-generation datacenters consume zero water for cooling. <em>Microsoft Cloud Blog</em>. December 2024. <a href="https://www.microsoft.com/en-us/microsoft-cloud/blog/2024/12/09/sustainable-by-design-next-generation-datacenters-consume-zero-water-for-cooling/" target="_blank" rel="noopener">microsoft.com</a></li>
+        <li id="src-20"><span class="cite-num">[20]</span> Amazon to expand water recycling to more than 120 data centre locations across the U.S. by 2030. <em>Smart Water Magazine</em>. <a href="https://smartwatermagazine.com/news/smart-water-magazine/amazon-expand-water-recycling-more-120-data-centre-locations-across-us" target="_blank" rel="noopener">smartwatermagazine.com</a></li>
+        <li id="src-23"><span class="cite-num">[23]</span> Advancing responsible water use at our data centers. <em>Google Data Centers</em>. <a href="https://datacenters.google/water/" target="_blank" rel="noopener">datacenters.google</a></li>
+        <li id="src-24"><span class="cite-num">[24]</span> Google's data centers use as much water as 41 golf courses. <em>Quartz</em>. 2024. <a href="https://qz.com/google-data-center-consume-water-energy-climate-change-1851760734" target="_blank" rel="noopener">qz.com</a></li>
+        <li id="src-25"><span class="cite-num">[25]</span> Google's 2026 Water Stewardship Portfolio. <em>Google Blog</em>. 2026. <a href="https://blog.google/company-news/outreach-and-initiatives/sustainability/2026-water-stewardship-portfolio/" target="_blank" rel="noopener">blog.google</a></li>
+        <li id="src-27"><span class="cite-num">[27]</span> Data Center Impacts on the Environment, Public Health, and Energy Costs Memo. <em>Colorado General Assembly Research</em>. 2026. <a href="https://content.leg.colorado.gov/sites/default/files/r26-49-data-center-impacts-on-economy-and-the-environment-accessible.pdf" target="_blank" rel="noopener">leg.colorado.gov (PDF)</a></li>
+        <li id="src-28"><span class="cite-num">[28]</span> Data Centers and Water Consumption. <em>Environmental and Energy Study Institute (EESI)</em>. <a href="https://www.eesi.org/articles/view/data-centers-and-water-consumption" target="_blank" rel="noopener">eesi.org</a></li>
+        <li id="src-31"><span class="cite-num">[31]</span> Measuring energy and water efficiency for Microsoft datacenters. <em>Microsoft Datacenter Sustainability</em>. <a href="https://datacenters.microsoft.com/sustainability/efficiency/" target="_blank" rel="noopener">datacenters.microsoft.com</a></li>
+        <li id="src-32"><span class="cite-num">[32]</span> Data centres &amp; networks. <em>International Energy Agency (IEA)</em>. <a href="https://www.iea.org/energy-system/buildings/data-centres-and-data-transmission-networks" target="_blank" rel="noopener">iea.org</a></li>
+        <li id="src-33"><span class="cite-num">[33]</span> 2024 United States Data Center Energy Usage Report. <em>Lawrence Berkeley National Laboratory (LBNL)</em>. December 2024. <a href="https://eta-publications.lbl.gov/sites/default/files/2024-12/lbnl-2024-united-states-data-center-energy-usage-report_1.pdf" target="_blank" rel="noopener">eta-publications.lbl.gov (PDF)</a></li>
+        <li id="src-34"><span class="cite-num">[34]</span> DOE Releases New Report Evaluating Increase in Electricity Demand from Data Centers. <em>U.S. Department of Energy</em>. <a href="https://www.energy.gov/articles/doe-releases-new-report-evaluating-increase-electricity-demand-data-centers" target="_blank" rel="noopener">energy.gov</a></li>
+        <li id="src-35"><span class="cite-num">[35]</span> AI Energy Consumption Analysis 2025–2030. <em>Medium / Asrar</em>. <a href="https://medium.com/@asrar7787/ai-energy-consumption-executive-analysis-2025-2030-e911613c6834" target="_blank" rel="noopener">medium.com</a></li>
+        <li id="src-38"><span class="cite-num">[38]</span> Northern Virginia's Data Center Alley Processes 70% of Global Internet Traffic. <em>Homeland Security Today (HSToday)</em>. <a href="https://www.hstoday.us/subject-matter-areas/infrastructure-security/northern-virginias-data-center-alley-equates-to-70-of-global-internet-traffic/" target="_blank" rel="noopener">hstoday.us</a></li>
+        <li id="src-39"><span class="cite-num">[39]</span> Dateline Ashburn: The Thirst for AI Raises Alarms in Virginia. <em>Broadband Breakfast</em>. <a href="https://broadbandbreakfast.com/dateline-ashburn-the-thirst-for-ai-raises-alarms-in-virginia/" target="_blank" rel="noopener">broadbandbreakfast.com</a></li>
+        <li id="src-40"><span class="cite-num">[40]</span> DC's Water Supply Could Run Dry by 2030. <em>Fox Homes Team</em>. <a href="https://www.foxessellfaster.com/blog/dcs-water-supply-could-run-dry-by-2030new-report-reveals-a-crisis-no-one-is-prepared-for/" target="_blank" rel="noopener">foxessellfaster.com</a></li>
+        <li id="src-44"><span class="cite-num">[44]</span> 1 Introduction — AI Water Consumption Study. <em>arXiv</em>. 2025. <a href="https://arxiv.org/html/2603.02705v2" target="_blank" rel="noopener">arxiv.org/html/2603.02705v2</a></li>
+        <li id="src-45"><span class="cite-num">[45]</span> Colorado River Operations. <em>Central Arizona Project</em>. <a href="https://www.cap-az.com/water/water-supply/colorado-river-operations-2/" target="_blank" rel="noopener">cap-az.com</a></li>
+        <li id="src-47"><span class="cite-num">[47]</span> The Texas AI Boom Is Outpacing Water Regulations. <em>Texas Observer</em>. <a href="https://www.texasobserver.org/texas-ai-data-centers-water-usage-regulation/" target="_blank" rel="noopener">texasobserver.org</a></li>
+        <li id="src-48"><span class="cite-num">[48]</span> Thirsty Data and the Lone Star State: The Impact of Data Center Growth on Texas' Water Supply. <em>HARC</em>. January 2026. <a href="https://harcresearch.org/wp-content/uploads/2026/01/Thirsty-Data-Water-Use-and-The-Projected-Data-Center-Boom-in-Texas.pdf" target="_blank" rel="noopener">harcresearch.org (PDF)</a></li>
+        <li id="src-49"><span class="cite-num">[49]</span> Data Centers and Water Resources in Our Region. <em>Metropolitan North Georgia Water Planning District</em>. <a href="https://northgeorgiawater.org/residents-schools-businesses/conserve-our-water/data-centers-and-water-resources-in-our-region/" target="_blank" rel="noopener">northgeorgiawater.org</a></li>
+        <li id="src-51"><span class="cite-num">[51]</span> Data centers and water conservation in California. <em>Mustang News</em>. <a href="https://mustangnews.net/data-centers-water-usage-california/" target="_blank" rel="noopener">mustangnews.net</a></li>
+        <li id="src-52"><span class="cite-num">[52]</span> Data center water spikes could cost billions. <em>UC Riverside News</em>. March 2026. <a href="https://news.ucr.edu/articles/2026/03/09/data-center-water-spikes-could-cost-billions" target="_blank" rel="noopener">news.ucr.edu</a></li>
+        <li id="src-53"><span class="cite-num">[53]</span> Data Center Water and Electricity Consumption in Nevada. <em>Desert Research Institute (DRI)</em>. <a href="https://www.dri.edu/datacenters/" target="_blank" rel="noopener">dri.edu</a></li>
+        <li id="src-54"><span class="cite-num">[54]</span> Data Centers and Water Use. <em>National Association of State Utility Consumer Advocates (NASUCA)</em>. February 2025. <a href="https://www.nasuca.org/wp-content/uploads/2025/02/2025-06-10-NASUCA-Data-Centers-Final-Schneider.pdf" target="_blank" rel="noopener">nasuca.org (PDF)</a></li>
+        <li id="src-56"><span class="cite-num">[56]</span> As Google's water demands grow, The Dalles aims to pull more from Mount Hood forest. <em>OPB</em>. January 2026. <a href="https://www.opb.org/article/2026/01/15/as-googles-water-demands-grow-the-dalles-aims-to-pull-more-from-mount-hood-forest/" target="_blank" rel="noopener">opb.org</a></li>
+        <li id="src-64"><span class="cite-num">[64]</span> 2025 Washington Metropolitan Area Water Supply Study. <em>ICPRB</em>. December 2025. <a href="https://www.potomacriver.org/wp-content/uploads/2025/12/2025_WMA_Water_Supply_Study_ICPRB_Dec-2025.pdf" target="_blank" rel="noopener">potomacriver.org (PDF)</a></li>
+        <li id="src-67"><span class="cite-num">[67]</span> Sustainable Data Centers Roadmap. <em>Innovation for Cool Earth Forum (ICEF)</em>. October 2025. <a href="https://icef.go.jp/wp-content/themes/icef_new/pdf/roadmap/icef2025_roadmap%20Oct%209.pdf" target="_blank" rel="noopener">icef.go.jp (PDF)</a></li>
+        <li id="src-69"><span class="cite-num">[69]</span> Data Centre Energy Use: Critical Review of Models and Results. <em>IEA 4E</em>. 2025. <a href="https://www.iea-4e.org/wp-content/uploads/2025/05/Data-Centre-Energy-Use-Critical-Review-of-Models-and-Results.pdf" target="_blank" rel="noopener">iea-4e.org (PDF)</a></li>
+        <li id="src-76"><span class="cite-num">[76]</span> Data Center Energy Demand Is Putting Pressure on U.S. Water Supplies. <em>Circle of Blue</em>. 2025. <a href="https://www.circleofblue.org/2025/water-energy/data-center-energy-demand-is-putting-pressure-on-u-s-water-supplies/" target="_blank" rel="noopener">circleofblue.org</a></li>
+        <li id="src-77"><span class="cite-num">[77]</span> Data center set to use 6 water towers worth of water per day in Georgia. <em>WSB-TV</em>. <a href="https://www.wsbtv.com/news/local/data-centers-water-secrets-companies-using-ndas-hide-water-usage-georgia/ESYQS4GRDVAM7A6EJUQKGXTPWY/" target="_blank" rel="noopener">wsbtv.com</a></li>
+        <li id="src-79"><span class="cite-num">[79]</span> Can you build data centers in a desert without draining the water supply? Utah is finding out. <em>Grist</em>. <a href="https://grist.org/technology/utah-data-center-water-supply-meta-novva/" target="_blank" rel="noopener">grist.org</a></li>
+        <li id="src-80"><span class="cite-num">[80]</span> Artificial Intelligence: Big Tech's Big Threat to Our Water and Climate. <em>Food &amp; Water Watch</em>. April 2025. <a href="https://www.foodandwaterwatch.org/2025/04/09/artificial-intelligence-water-climate/" target="_blank" rel="noopener">foodandwaterwatch.org</a></li>
+      </ol>
+      <p style="font-size:.77rem; color:var(--text-label); margin-top:1.25rem;">Full bibliography includes 80 primary sources. Sources not linked above correspond to bill text, legislative databases, and supplementary analyses cited in-line throughout the report body.</p>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         FOOTER
+    ═════════════════════════════════════════════════════════════ -->
+    <footer class="report-footer">
+      Generated via OSINT Research Protocol v2.0 &nbsp;·&nbsp; March 2026 &nbsp;·&nbsp; v1.0 Initial Release
+      <br>
+      <span style="margin-top:.5rem; display:block;">
+        <a href="{{ site.baseurl }}/">← bra-khet.github.io</a>
+      </span>
+    </footer>
+
+  </main>
+</div><!-- /.page-wrapper -->
+
+<!-- Chart.js CDN (used by existing site pages) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Report logic: progress bar, TOC, accordions, charts -->
+<script src="{{ site.baseurl }}/js/ai-water-use-report-1.js" defer></script>
+
+</body>
+</html>

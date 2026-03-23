@@ -187,6 +187,40 @@ title: "|0⟩"
 
 </div>
 
+<!-- ── AI Infrastructure & Water ─────────────────────────────────── -->
+<h4 style="color: #00b4d8; font-family: Monaco, monospace; font-size: 0.9rem;
+           margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
+  AI Infrastructure &amp; Environment
+</h4>
+
+<div style="margin-top: 0.5rem; padding: 1rem 1.25rem;
+            border: 1px solid #0c2a3a;
+            border-left: 3px solid #00b4d8;
+            border-radius: 12px; background: #030a14;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+
+  <p style="color: #3d6a7a; font-size: 0.85rem; margin: 0.3rem 0 0.5rem; font-family: Monaco, monospace;">
+    March 2026 &middot; Research Report v1.0
+  </p>
+  <p style="color: #2d5a6a; font-size: 0.8rem; margin: 0 0 0.75rem; font-family: Monaco, monospace; line-height: 1.55;">
+    Expert OSINT analysis of direct &amp; indirect water consumption by U.S. AI data centers.
+    Verifies FWPCOA claims against 2024&ndash;2026 LBNL, IEA, and HARC data. Covers the thermodynamic
+    energy-water tradeoff, watershed risk zones in Northern Virginia, Phoenix, and Texas,
+    and emerging state-level closed-loop cooling mandates.
+  </p>
+  <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+    <a href="/ai-water-use-report-1/"
+       style="padding: 0.55rem 1.1rem; background: transparent; color: #00b4d8;
+              border: 1px solid #00b4d8; border-radius: 6px; text-decoration: none;
+              font-weight: bold; font-size: 0.85rem; font-family: Monaco, monospace;"
+       onmouseover="this.style.background='#00b4d8';this.style.color='#000';"
+       onmouseout="this.style.background='transparent';this.style.color='#00b4d8';">
+      &#127760; Interactive Report
+    </a>
+  </div>
+
+</div>
+
 <!-- ── Anti-AI Ideology Series ──────────────────────────────────── -->
 <h4 style="color: #06b6d4; font-family: Monaco, monospace; font-size: 0.9rem;
            margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">

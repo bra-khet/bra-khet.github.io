@@ -1,0 +1,154 @@
+---
+layout: null
+title: "[PAGE TITLE]"
+permalink: /[page-slug]/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="[PAGE DESCRIPTION]">
+<title>[PAGE TITLE] | bra-khet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ site.baseurl }}/css/[page-slug].css">
+</head>
+<body>
+
+[PAGE CONTENT]
+
+<!-- Chart.js (include only if charts are used) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ site.baseurl }}/js/[page-slug].js" defer></script>
+
+</body>
+</html>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     BOILERPLATE: TOP NAVBAR + SCROLLING PROGRESS BAR
+     Copy the CSS block into css/[page-slug].css,
+     the HTML block into <body> (before page content),
+     and the JS block into js/[page-slug].js.
+     Adjust [ACCENT], [ACCENT_DIM], and [TITLE] for each page.
+     The progress-bar gradient and banner border should match the
+     page's primary accent colour.
+═══════════════════════════════════════════════════════════════════ -->
+
+<!-- ── CSS (add to :root and paste the rule blocks) ─────────────── -->
+<!--
+:root {
+  --nav-h: 37px;
+  --progress-h: 3px;
+  /* Replace with page accent colour: */
+  --accent: #00b4d8;
+  --accent-glow: rgba(0,180,216,.5);
+}
+
+body {
+  /* Reserve space so content doesn't hide under fixed bars */
+  padding-top: calc(var(--nav-h) + var(--progress-h));
+}
+
+/* ── Hacker nav banner ────────────────────────────────────────── */
+#hacker-nav-banner {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  height: var(--nav-h);
+  background: #010a12;
+  border-bottom: 1px dashed rgba(0,180,216,.35); /* adjust alpha/colour */
+  font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+  font-size: 13px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #eaeaea;
+}
+#hacker-nav-banner a {
+  color: #63c0f5;
+  text-decoration: none;
+  text-shadow: 0 0 5px rgba(104,182,255,.4);
+}
+#hacker-nav-banner a:hover { text-decoration: underline; }
+#hacker-nav-banner .banner-title {
+  color: var(--accent);
+  text-shadow: 0 0 6px var(--accent-glow), 0 0 14px rgba(0,180,216,.2);
+  letter-spacing: -0.03em;
+}
+#hacker-nav-banner .banner-tag { color: #1a3a50; font-size: 11px; }
+#hacker-nav-banner .banner-v   { color: #0077b6; font-size: 11px; }
+
+/* ── Reading progress bar ─────────────────────────────────────── */
+#reading-progress {
+  position: fixed;
+  top: var(--nav-h); left: 0;
+  width: 0%;
+  height: var(--progress-h);
+  /* Gradient: accent → a lighter/complementary tone */
+  background: linear-gradient(90deg, var(--accent), #00d4ff);
+  z-index: 9998;
+  transition: width .1s linear;
+  pointer-events: none;
+}
+-->
+
+<!-- ── HTML (paste immediately after <body>) ─────────────────── -->
+<!--
+<div id="reading-progress"
+     role="progressbar"
+     aria-label="Reading progress"
+     aria-valuenow="0"
+     aria-valuemin="0"
+     aria-valuemax="100">
+</div>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<div id="hacker-nav-banner" aria-label="Site navigation">
+  <span>
+    <a href="{{ site.baseurl }}/">← bra-khet.github.io</a>
+    <span class="banner-tag"> / research</span>
+  </span>
+  <span class="banner-title">[REPORT SHORT TITLE]</span>
+  <span class="banner-v">v1.0 · [Month Year]</span>
+</div>
+-->
+
+<!-- ── JS (paste into js/[page-slug].js) ─────────────────────── -->
+<!--
+'use strict';
+
+// Reading progress bar
+(function () {
+  const bar = document.getElementById('reading-progress');
+  if (!bar) return;
+  window.addEventListener('scroll', function () {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = h > 0 ? Math.min(window.scrollY / h * 100, 100) : 0;
+    bar.style.width = pct.toFixed(1) + '%';
+    bar.setAttribute('aria-valuenow', Math.round(pct));
+  }, { passive: true });
+}());
+
+// TOC active-section tracking (optional — remove if no sidebar TOC)
+(function () {
+  const tocLinks = Array.from(document.querySelectorAll('.toc-list a'));
+  const sections = Array.from(document.querySelectorAll('.report-section[id]'));
+  function updateTOC() {
+    const threshold = window.scrollY + window.innerHeight * 0.35;
+    let current = sections[0]?.id ?? '';
+    for (const sec of sections) {
+      if (sec.offsetTop <= threshold) current = sec.id;
+    }
+    for (const link of tocLinks) {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    }
+  }
+  window.addEventListener('scroll', updateTOC, { passive: true });
+  updateTOC();
+}());
+-->
