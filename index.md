@@ -339,7 +339,7 @@ title: "|0⟩"
   </div>-->
   
  <!-- <div class="gallery-item">
-    <img src="/assets/img/ai-unity-ram-altman.png" alt="(✿◡‿◡)">
+    <img src="/assets/img/opiumbird1-draft1.png" alt="(✿◡‿◡)">
   </div>
 </div>-->
 
