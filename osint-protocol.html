@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<!--
+  osint-protocol.html — OSINT Research Protocol v2.0 Explainer
+  Rules applied: 1 (Separation of Concerns), 2 (Folder Structure), 3 (ES modules / defer),
+    4 (Interactivity), Modern CSS 2026 (tokens, clamp, container queries, prefers-*),
+    WCAG 2.2 AA (skip link, focus-visible, aria-expanded, aria-live, aria-label, role).
+
+  Core Web Vitals estimates: LCP ≤ 1.8s, INP ≤ 50ms, CLS ≤ 0.02
+  WCAG checkpoints addressed: 1.4.3, 1.4.11, 2.1.1, 2.4.1, 2.4.3, 2.4.11, 2.4.13,
+    2.5.8, 3.1.1, 4.1.2
+
+  v2.0 — Last Refreshed: March 2026 — Initial public release
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A plain-English explainer of the OSINT Research Protocol v2.0 used for every report on bra-khet.github.io — methodology, verification steps, and an open invitation to scrutinize every claim.">
+  <title>OSINT Protocol v2.0 Explainer | bra-khet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/osint-protocol.css">
+</head>
+<body>
+
+<div id="reading-progress" role="progressbar" aria-label="Reading progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<div class="page-wrapper">
+
+  <!-- ── Sidebar TOC ─────────────────────────────────────────── -->
+  <nav class="sidebar" aria-label="Table of contents">
+    <p class="toc-label">Contents</p>
+    <ul class="toc-list" role="list">
+      <li><a href="#why-this-protocol">Why This Protocol</a></li>
+      <li><a href="#core-principles">Core Principles</a></li>
+      <li><a href="#in-practice">How I Apply It</a></li>
+      <li><a href="#version-history">Version History</a></li>
+      <li><a href="#scrutiny">Invitation to Scrutiny</a></li>
+      <li><a href="#appendix">Glossary</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Main ──────────────────────────────────────────────── -->
+  <main id="main-content" tabindex="-1">
+
+    <!-- Back nav -->
+    <nav class="back-nav" aria-label="Site navigation">
+      <a class="back-link" href="/">&#8592; Back to all reports</a>
+    </nav>
+
+    <!-- ── Hero ──────────────────────────────────────────────── -->
+    <header class="report-hero">
+      <div class="report-meta">
+        <span class="badge badge-cyan">OSINT Protocol</span>
+        <span class="badge badge-purple">v2.0</span>
+        <span class="badge badge-muted">March 2026</span>
+        <span class="badge badge-green">Methodology</span>
+      </div>
+
+      <h1 class="report-title">
+        <span class="title-accent">&#128373;&#65039;&#8205;&#9794;&#65039; "Trust Me Bro"</span><br>
+        …Here's Why You Actually Should
+      </h1>
+
+      <p class="report-subtitle">
+        A plain-English breakdown of the standardized, reproducible verification protocol behind every report on this site — written for skeptics, critics, and anyone who wants to audit the work.
+      </p>
+
+      <div class="version-banner" aria-label="Document version status">
+        <span class="version-dot" aria-hidden="true"></span>
+        v2.0 &mdash; Last Refreshed: March 2026 &mdash; Initial public release
+      </div>
+    </header>
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 1: WHY THIS PROTOCOL
+    ══════════════════════════════════════════════════════ -->
+    <section class="report-section" id="why-this-protocol" aria-labelledby="h-why">
+      <p class="section-eyebrow cyan">Section 01</p>
+      <h2 class="section-heading" id="h-why">Why This Protocol — The Trust Explanation</h2>
+
+      <p>
+        Let's acknowledge the obvious tension upfront. Every researcher who publishes
+        analytical work on the internet could theoretically just say "trust me." The phrase
+        is a joke here, but the underlying concern it points at is legitimate: <strong style="color: var(--text-primary);">how do you know this analysis isn't made up?</strong>
+      </p>
+
+      <div class="trust-callout" role="note" aria-label="Core trust argument">
+        <p>
+          This is <em>"trust me bro"</em> — but here's why you <strong>should</strong> trust me:
+          every claim in every report I publish follows a documented, step-by-step verification
+          framework used by professional journalists, open-source investigators, and intelligence
+          analysts worldwide. The methodology is not proprietary. It is not hidden. Every source
+          is listed, every step is reproducible, and the entire process is open to challenge.
+        </p>
+      </div>
+
+      <h3 class="sub-heading">The Four Concrete Reasons</h3>
+
+      <ul class="principle-list" role="list">
+        <li>
+          <span></span>
+          <span>
+            <strong>Standardized, documented methodology.</strong> I follow OSINT Research
+            Protocol v2.0 — a formal framework with named phases (Planning, Investigation,
+            Synthesis, Presentation, Maintenance), defined credibility rubrics (the CRAAP test),
+            and explicit provenance-validation standards (C2PA). These aren't invented by me;
+            they map to widely accepted verification norms in investigative journalism and
+            academic library science. The full protocol document is available on request.
+          </span>
+        </li>
+        <li>
+          <span></span>
+          <span>
+            <strong>I did the work, and it shows.</strong> Each report cites primary sources —
+            original repositories, published papers, video artifacts, institutional records —
+            not second-hand summaries of summaries. Source freshness is tracked per citation.
+            If a source isn't verifiable, I say so explicitly.
+          </span>
+        </li>
+        <li>
+          <span></span>
+          <span>
+            <strong>Every step is reproducible.</strong> You don't have to take my word for
+            any conclusion. The sources list every primary artifact I used. You can retrieve
+            them yourself, run the same CRAAP credibility rubric against them, and arrive at
+            your own assessment. If I'm wrong, this is exactly how you'd catch it.
+          </span>
+        </li>
+        <li>
+          <span></span>
+          <span>
+            <strong>Industry-aligned best practices.</strong> The spiral maintenance cycle,
+            archival baselining, and citation-network monitoring I use align with practices
+            at organizations like Bellingcat, the Stanford Internet Observatory, and academic
+            open-source intelligence research groups. This isn't a personal quirk; it's the
+            established approach for producing defensible, living analytical documents.
+          </span>
+        </li>
+      </ul>
+
+      <h3 class="sub-heading">Why "Acceptably Representative of the Truth"</h3>
+
+      <p>
+        I deliberately avoid saying my reports are <em>the definitive truth</em>. They
+        can't be — this is a human-curated process, drawing from publicly available data,
+        interpreted by one researcher. What I can honestly claim is that they are
+        <strong style="color: var(--text-primary);">acceptably representative of the best available evidence at the time of writing</strong>,
+        produced using a transparent, auditable methodology.
+      </p>
+
+      <p>
+        That's not false modesty. It's the honest ceiling for any open-source analytical
+        work. What separates this from an opinion piece or an AI summary is the trail of
+        primary sources, the explicit credibility scoring, the documented verification steps,
+        and the commitment to updating conclusions when new evidence demands it.
+      </p>
+
+      <div class="callout purple" role="note">
+        <p class="callout-label" style="color: var(--purple);">Plain English Version</p>
+        <p>
+          A report produced under this protocol is to a casual blog post what a structured
+          police report is to a social media thread. Same human limitations apply — but the
+          discipline, the documentation, and the openness to correction are categorically
+          different.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 2: CORE PRINCIPLES
+    ══════════════════════════════════════════════════════ -->
+    <section class="report-section" id="core-principles" aria-labelledby="h-principles">
+      <p class="section-eyebrow purple">Section 02</p>
+      <h2 class="section-heading" id="h-principles">Core Principles</h2>
+
+      <p>
+        These are the non-negotiable steps applied to every report. They're standardized,
+        meaning I don't skip them when inconvenient and I don't invent new ones mid-project.
+      </p>
+
+      <h3 class="sub-heading">Phase 0 — Proactive Planning</h3>
+      <ul class="principle-list" role="list">
+        <li>
+          <span></span>
+          <span>
+            <strong>Volatility profiling.</strong> Before any research begins, I assess how fast
+            the subject domain changes — high (AI models, viral events: 30–90 day refresh), medium
+            (cultural phenomena, legislation: 90–180 days), or low (historical hardware, finalized
+            standards: annual or archival). This determines the update cadence upfront, not retroactively.
+          </span>
+        </li>
+        <li>
+          <span></span>
+          <span>
+            <strong>Archival baselining.</strong> Every source is captured as an offline snapshot
+            at the moment of collection using Zotero's web snapshot feature. This protects against
+            link rot, stealth edits, and retracted content invalidating the record.
+          </span>
+        </li>
+      </ul>
+
+      <h3 class="sub-heading">Phase 1 — Investigation & Synthesis</h3>
+      <ul class="principle-list" role="list">
+        <li>
+          <span></span>
+          <span>
+            <strong>Primary fact-finding.</strong> Ground-zero primary sources only: original
+            publications, repositories, conference records, or first-hand artifacts. Not summaries,
+            paraphrases, or derivative journalism unless explicitly cross-referenced.
+          </span>
+        </li>
+        <li>
+          <span></span>
+          <span>
+            <strong>Technical forensics.</strong> Operational mechanics are deconstructed — the
+            end-to-end pipeline, the specific parameters, the version numbers. Vague technical
+            hand-waving is not acceptable as an analytical foundation.
+          </span>
+        </li>
+        <li>
+          <span></span>
+          <span>
+            <strong>CRAAP credibility scoring.</strong> Every primary source is evaluated on five
+            criteria — Currency, Relevance, Authority, Accuracy, Purpose — each scored 1–5 with
+            a verification timestamp. The full Source Freshness Matrix is available in the appendix
+            of every report.
+          </span>
+        </li>
+        <li>
+          <span></span>
+          <span>
+            <strong>C2PA provenance validation for media.</strong> Any video artifact, image, or
+            synthetic media used as evidence is checked against the Coalition for Content Provenance
+            and Authenticity standard. Assets with broken or missing cryptographic signatures are
+            explicitly challenged rather than silently accepted.
+          </span>
+        </li>
+        <li>
+          <span></span>
+          <span>
+            <strong>Core tension identification.</strong> The central dialectic of the topic —
+            the genuine competing interests or interpretations — is explicitly named and not
+            smoothed over with false neutrality.
+          </span>
+        </li>
+      </ul>
+
+      <h3 class="sub-heading">Phase 2 — Structured Report Architecture</h3>
+      <ul class="principle-list" role="list">
+        <li>
+          <span></span>
+          <span>
+            <strong>Seven mandatory sections.</strong> Every report follows the same structural
+            blueprint: Executive Summary, Chronology, Technical Architecture, Critical Analysis
+            (including a Key Assumptions Check Table and a Competing-Hypotheses Matrix),
+            Editorial Conclusion (where applicable), Appendix, and Sources.
+          </span>
+        </li>
+        <li>
+          <span></span>
+          <span>
+            <strong>Bias disclosure.</strong> When subjective or editorial conclusions are
+            included, a bias-disclosure statement is prepended. Meta-commentary on methodology
+            is confined to footers; the analytical narrative is not contaminated with it.
+          </span>
+        </li>
+      </ul>
+
+      <h3 class="sub-heading">Phase 4 — Spiral Maintenance</h3>
+      <ul class="principle-list" role="list">
+        <li>
+          <span></span>
+          <span>
+            <strong>Trigger-based updates only.</strong> Reports aren't randomly refreshed on a
+            schedule — updates are triggered by specific events: a new SDK release, a significant
+            judicial ruling, a Retraction Watch alert on a cited paper. This targets labor
+            precisely where it's needed.
+          </span>
+        </li>
+        <li>
+          <span></span>
+          <span>
+            <strong>Full version logging.</strong> Every update increments the version number,
+            records what changed and why, and is logged in the report's changelog. No stealth edits.
+          </span>
+        </li>
+        <li>
+          <span></span>
+          <span>
+            <strong>Under-four-hour update target.</strong> Each incremental refresh cycle is
+            designed to be completable in under four hours of focused work, using the automated
+            monitoring tools (Zotero RSS, Litmaps citation alerts) built into the workflow.
+          </span>
+        </li>
+      </ul>
+
+      <!-- CRAAP table -->
+      <h3 class="sub-heading">The CRAAP Credibility Rubric — How Sources Are Scored</h3>
+      <p>
+        Every primary source used in a report receives a CRAAP score before it can be cited.
+        Here's what each criterion means in practice:
+      </p>
+
+      <div class="table-wrap" role="region" aria-label="CRAAP credibility rubric">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th scope="col">Criterion</th>
+              <th scope="col">What I'm Asking</th>
+              <th scope="col">Why It Matters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="accent-cyan">Currency</td>
+              <td>Is the source recent enough to be valid? Has the code or paper been updated?</td>
+              <td>Outdated documentation completely invalidates technical forensics in high-volatility domains.</td>
+            </tr>
+            <tr>
+              <td class="accent-purple">Relevance</td>
+              <td>Does this source directly inform the core question, or is it peripheral noise?</td>
+              <td>Padding a report with tangentially related citations inflates apparent rigor without adding evidentiary weight.</td>
+            </tr>
+            <tr>
+              <td class="accent-green">Authority</td>
+              <td>Who published this? Are they credentialed, verifiable, and institutionally grounded?</td>
+              <td>Unverifiable authors or anonymous sources require additional corroboration from independent primary material.</td>
+            </tr>
+            <tr>
+              <td class="accent-amber">Accuracy</td>
+              <td>Is the content cross-referenced? Are there logical errors, grammatical tells of automation, or uncited claims?</td>
+              <td>AI-generated content can fail this criterion by hallucinating references — this is explicitly flagged when detected.</td>
+            </tr>
+            <tr>
+              <td class="accent-pink">Purpose</td>
+              <td>Why was this published? To inform, persuade, or sell something? Is there a detectable ideological or commercial bias?</td>
+              <td>Motive shapes framing. A vendor white paper on their own product is not the same evidence class as a peer-reviewed audit.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 3: HOW I APPLY IT IN PRACTICE
+    ══════════════════════════════════════════════════════ -->
+    <section class="report-section" id="in-practice" aria-labelledby="h-practice">
+      <p class="section-eyebrow green">Section 03</p>
+      <h2 class="section-heading" id="h-practice">How I Apply It in Practice</h2>
+
+      <p>
+        Protocols on paper are worthless if the actual workflow is sloppy. Here's what the
+        process concretely looks like, without referencing specific reports by name.
+      </p>
+
+      <h3 class="sub-heading">Starting a New Report</h3>
+      <p>
+        Before I write a single word of analysis, I define the volatility profile. Is this
+        subject going to change significantly in 30 days, 90 days, or not for years? That
+        answer determines whether I'm building a living document that needs a quarterly
+        refresh schedule or a near-archival snapshot.
+      </p>
+      <p>
+        I then configure a reference database entry for the topic in Zotero, subscribe to
+        the relevant RSS feeds and journal alerts, and begin collecting primary sources —
+        capturing offline snapshots of every web page at the moment of collection.
+        By the time I write anything, the archival baseline exists as a fixed, immutable
+        record of what the sources said on a specific date.
+      </p>
+
+      <h3 class="sub-heading">During Research</h3>
+      <p>
+        I apply the CRAAP rubric to each source as I collect it, not retroactively at the
+        end. This catches weak sources early and prevents them from becoming load-bearing
+        parts of the argument. Sources scoring poorly on Authority or Accuracy are either
+        dropped or held to a higher corroboration standard.
+      </p>
+      <p>
+        For any report involving media artifacts — viral videos, AI-generated images, clips
+        used as evidence of events — I run C2PA provenance checks where the format supports
+        it. Where cryptographic provenance data is absent or broken, I note this explicitly
+        in the Technical Architecture section rather than treating the artifact as ground truth.
+      </p>
+      <p>
+        The Core Tension section gets written <em>before</em> the Critical Analysis section.
+        Identifying the genuine competing interests upfront disciplines the analysis against
+        premature closure — locking onto one narrative before the evidence is fully assessed.
+      </p>
+
+      <h3 class="sub-heading">Writing the Report</h3>
+      <p>
+        I follow the seven-section structural blueprint consistently. The Key Assumptions
+        Check Table forces me to list the premises my conclusions rest on, then stress-test
+        each one against the evidence. The Competing-Hypotheses Matrix requires at least
+        two alternative explanations for the observed phenomena before I can publish.
+      </p>
+      <p>
+        Where I write an editorial or subjective conclusion — which I do when the topic has
+        a genuine cultural or human dimension — I prepend a bias-disclosure statement. If
+        I have a stake in the conclusion, that's disclosed. If I find the subject amusing,
+        that's disclosed. The analytical sections do not carry that tone.
+      </p>
+
+      <h3 class="sub-heading">After Publication</h3>
+      <p>
+        Zotero's Retraction Watch integration continuously monitors cited DOIs. If a paper
+        I cited is retracted or corrected, I receive an alert and the report gets an update
+        cycle triggered. The Litmaps citation-network monitor flags newly published work
+        that heavily cites the same foundational sources my report relied on — that's the
+        signal that the domain has new primary evidence worth integrating.
+      </p>
+      <p>
+        When an update occurs, I increment the version number, document what changed in
+        the changelog, and update the Source Freshness Matrix. The Version Status Banner
+        at the top of the report reflects the new date and the number of references
+        incorporated. Nothing is quietly altered.
+      </p>
+
+      <div class="callout green" role="note">
+        <p class="callout-label" style="color: var(--green);">You're welcome to verify every step yourself</p>
+        <p>
+          The sources section of every report includes "Last Verified" dates and archive
+          links. Pull any citation, run the CRAAP rubric against it yourself, and check
+          whether my scoring holds up. That's the entire point of publishing the methodology
+          alongside the reports.
+        </p>
+      </div>
+
+      <h3 class="sub-heading">Critics Often Ask…</h3>
+
+      <div class="callout amber" role="note" style="margin-bottom: 0.85rem;">
+        <p class="callout-label" style="color: var(--amber);">Q: "You're just one person. How is this peer-reviewed?"</p>
+        <p>
+          It isn't peer-reviewed in the academic sense, and I don't claim it is. What it
+          <em>is</em>: single-researcher work conducted under a documented, standardized
+          protocol that produces auditable outputs. The sources are public. The methodology
+          is published. The conclusions can be challenged. That's the accessible equivalent
+          of peer-reviewability for solo open-source analytical work.
+        </p>
+      </div>
+
+      <div class="callout amber" role="note" style="margin-bottom: 0.85rem;">
+        <p class="callout-label" style="color: var(--amber);">Q: "You used AI tools in this research. Doesn't that invalidate it?"</p>
+        <p>
+          AI tools are used for structured synthesis assistance, not as primary sources.
+          Any AI-generated content that becomes part of the analysis is subject to the same
+          CRAAP credibility scoring as any other source — and AI outputs fail the Accuracy
+          criterion by default when they cannot provide traceable citations. The primary
+          sources remain human-authored, institutionally grounded, and individually verified.
+        </p>
+      </div>
+
+      <div class="callout amber" role="note">
+        <p class="callout-label" style="color: var(--amber);">Q: "What if your sources were wrong or were retroactively changed?"</p>
+        <p>
+          The archival baseline specifically addresses this. Every source was snapshotted
+          at the time of collection. If the live version of a source is later edited or
+          retracted, the snapshot preserves what the source said when I cited it, and the
+          Retraction Watch integration triggers a review cycle. Stealth edits to my research
+          record are not possible under this protocol.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 4: VERSION HISTORY
+    ══════════════════════════════════════════════════════ -->
+    <section class="report-section" id="version-history" aria-labelledby="h-versions">
+      <p class="section-eyebrow amber">Section 04</p>
+      <h2 class="section-heading" id="h-versions">Version History &amp; Updates</h2>
+
+      <p>
+        This page always reflects the latest version of the protocol I'm actively using.
+        Structural changes to the framework — new rubrics, updated tooling, revised update
+        cadences — are logged here as they occur. Nothing is backdated silently.
+      </p>
+
+      <div class="accordion" role="list">
+
+        <!-- v2.0 -->
+        <div class="accordion-item" role="listitem">
+          <button class="accordion-trigger"
+                  aria-expanded="true"
+                  aria-controls="panel-v20"
+                  id="trigger-v20">
+            <span>v2.0 — March 2026 — Current Version</span>
+            <svg class="accordion-icon" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="4 6 8 10 12 6"></polyline>
+            </svg>
+          </button>
+          <div class="accordion-panel open" id="panel-v20" role="region" aria-labelledby="trigger-v20">
+            <p>
+              <strong style="color: var(--cyan);">What changed from v1.1:</strong> v2.0 restructures the workflow from a
+              traditional linear research lifecycle into a recursive <em>spiral maintenance cycle</em>.
+              The primary deliverable is now a living document rather than a static snapshot.
+            </p>
+            <p><strong style="color: var(--text-primary);">New in v2.0:</strong></p>
+            <ul class="principle-list" role="list" style="margin-top: 0.5rem;">
+              <li><span></span><span>Phase 0 — Volatility Profiling and Archival Baselining added as mandatory pre-research gate.</span></li>
+              <li><span></span><span>CRAAP credibility rubric (5-criterion, 1–5 scale, timestamped) applied to every primary source.</span></li>
+              <li><span></span><span>C2PA digital provenance validation integrated for media artifacts.</span></li>
+              <li><span></span><span>Key Assumptions Check Table and Competing-Hypotheses Matrix added to the Critical Analysis section.</span></li>
+              <li><span></span><span>Appendix expanded with mandatory Source Freshness Matrix and Civilian Toolkit Index.</span></li>
+              <li><span></span><span>Zotero Retraction Watch integration and Litmaps citation-network monitoring formalized into Phase 4.</span></li>
+              <li><span></span><span>UI: Refresh History accordion and side-by-side diff summaries mandated for interactive HTML reports.</span></li>
+              <li><span></span><span>Version Status Banner required on all report headers.</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- v1.1 -->
+        <div class="accordion-item" role="listitem">
+          <button class="accordion-trigger"
+                  aria-expanded="false"
+                  aria-controls="panel-v11"
+                  id="trigger-v11">
+            <span>v1.1 — February 2026 — Foundational Framework</span>
+            <svg class="accordion-icon" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="4 6 8 10 12 6"></polyline>
+            </svg>
+          </button>
+          <div class="accordion-panel" id="panel-v11" role="region" aria-labelledby="trigger-v11">
+            <p>
+              v1.1 established the foundational seven-section structural blueprint: Executive Summary,
+              Chronology, Technical Architecture, Critical Analysis, Editorial Conclusion, Appendix,
+              and Sources. It introduced the linear research lifecycle (Planning → Investigation →
+              Synthesis → Presentation) and the lexical discipline rule restricting OSINT meta-references
+              to footer sections only.
+            </p>
+            <p>
+              Credibility evaluation in v1.1 was informal — no standardized rubric was applied
+              systematically. Archival practices depended on the analyst's discretion. These gaps
+              were identified and resolved in v2.0.
+            </p>
+          </div>
+        </div>
+
+      </div><!-- /accordion -->
+
+      <div class="callout purple" role="note" style="margin-top: 1.5rem;">
+        <p class="callout-label" style="color: var(--purple);">Nothing is hidden</p>
+        <p>
+          If the protocol changes in a way that affects how any published report should be
+          interpreted, the affected reports will be updated and their version numbers incremented.
+          Retired versions of the protocol remain archived and documented here. The current
+          version always supersedes previous versions; this page reflects what I'm actively doing,
+          not historical aspirations.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 5: INVITATION TO SCRUTINY
+    ══════════════════════════════════════════════════════ -->
+    <section class="report-section" id="scrutiny" aria-labelledby="h-scrutiny">
+      <p class="section-eyebrow green">Section 05</p>
+      <h2 class="section-heading" id="h-scrutiny">Invitation to Scrutiny</h2>
+
+      <p>
+        I wrote this page specifically for people who are skeptical. If you've read this far
+        and you still have doubts, that's the correct posture — and I mean that without irony.
+        Healthy skepticism is precisely what the protocol is designed to withstand.
+      </p>
+
+      <p>
+        Here's what you can actually do if you want to audit a report:
+      </p>
+
+      <ul class="principle-list" role="list">
+        <li>
+          <span></span>
+          <span>
+            <strong>Check any source in the bibliography.</strong> Every citation includes a
+            "Last Verified" date and an archive link. If the archive is missing or broken,
+            that's a legitimate finding to raise.
+          </span>
+        </li>
+        <li>
+          <span></span>
+          <span>
+            <strong>Run the CRAAP rubric yourself.</strong> Apply the five criteria to any
+            source I cited. If you score it significantly lower than I did, I want to know
+            why — that's a real discrepancy worth resolving.
+          </span>
+        </li>
+        <li>
+          <span></span>
+          <span>
+            <strong>Challenge a Key Assumption.</strong> Each report's Critical Analysis section
+            lists the premises the conclusions rest on. If you have evidence that undermines a
+            stated assumption, that's exactly where an audit should begin.
+          </span>
+        </li>
+        <li>
+          <span></span>
+          <span>
+            <strong>Propose an alternative hypothesis.</strong> The Competing-Hypotheses Matrix
+            in each report lists at least two alternative explanations for the phenomena
+            described. If you think a third explanation is more defensible, make the case.
+          </span>
+        </li>
+        <li>
+          <span></span>
+          <span>
+            <strong>Flag a retracted or updated source.</strong> If a paper I cited has since
+            been retracted, corrected, or substantially revised, tell me. That triggers an
+            immediate update cycle.
+          </span>
+        </li>
+      </ul>
+
+      <div class="cta-box" aria-labelledby="cta-heading">
+        <h3 id="cta-heading">&#128270; Open for Questions and Audits</h3>
+        <p>
+          Every source, every methodology step, every scoring decision — all of it is available
+          for examination. This isn't a closed system. The point of publishing the protocol
+          is that the work can be interrogated by anyone who's willing to do the reading.
+        </p>
+        <div class="cta-links">
+          <a class="cta-btn primary" href="/">&#8592; Read the Reports</a>
+          <a class="cta-btn secondary" href="https://bra-khet.github.io/about" rel="noopener">About &amp; Contact &#8599;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 6: APPENDIX / GLOSSARY
+    ══════════════════════════════════════════════════════ -->
+    <section class="report-section" id="appendix" aria-labelledby="h-appendix">
+      <p class="section-eyebrow muted">Appendix</p>
+      <h2 class="section-heading" id="h-appendix">Glossary of Key Terms</h2>
+
+      <p>Definitions for the specialized terminology used throughout this explainer and across all reports on this site.</p>
+
+      <div class="table-wrap" role="region" aria-label="Glossary">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th scope="col">Term</th>
+              <th scope="col">Definition</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="accent-cyan">OSINT</td>
+              <td>Open-Source Intelligence — the disciplined extraction of insights exclusively from non-classified, publicly accessible data streams.</td>
+            </tr>
+            <tr>
+              <td class="accent-purple">Spiral Maintenance Cycle</td>
+              <td>A recursive post-publication workflow replacing the traditional linear research endpoint. The cycle runs: plan → collect → synthesize → publish → monitor → trigger → update → repeat.</td>
+            </tr>
+            <tr>
+              <td class="accent-green">Volatility Profile</td>
+              <td>An assessment of how quickly a subject domain's primary sources change, used to determine the appropriate update cadence (30–90 days for high, 90–180 for medium, annual for low).</td>
+            </tr>
+            <tr>
+              <td class="accent-amber">Archival Baseline</td>
+              <td>An immutable offline snapshot of all sources at the moment of initial collection, against which all subsequent analytical shifts are measured.</td>
+            </tr>
+            <tr>
+              <td class="accent-pink">CRAAP Test</td>
+              <td>Five-criterion source credibility rubric: Currency, Relevance, Authority, Accuracy, Purpose. Each criterion is scored 1–5 with a verification timestamp.</td>
+            </tr>
+            <tr>
+              <td class="accent-cyan">C2PA</td>
+              <td>Coalition for Content Provenance and Authenticity — an open technical standard providing tamper-evident cryptographic provenance records for digital media files.</td>
+            </tr>
+            <tr>
+              <td class="accent-purple">C2PA Manifest</td>
+              <td>A structured JSON object embedded in a media file containing assertions, ingredient hashes, hard bindings (byte-range cryptographic locks), and digital signatures attesting to the asset's origin and edit history.</td>
+            </tr>
+            <tr>
+              <td class="accent-green">Link Rot</td>
+              <td>The degradation of hyperlinks over time as external resources are moved, edited, or deleted. Mitigated by archival baselining.</td>
+            </tr>
+            <tr>
+              <td class="accent-amber">Stealth Edits</td>
+              <td>Undisclosed modifications to published online content that alter the evidentiary record without notification. The archival baseline preserves the original version against this risk.</td>
+            </tr>
+            <tr>
+              <td class="accent-pink">Retraction Watch</td>
+              <td>A database tracking retracted or corrected scientific papers. Integrated natively into Zotero for automated monitoring of cited materials.</td>
+            </tr>
+            <tr>
+              <td class="accent-cyan">Litmaps</td>
+              <td>A visual citation-mapping tool that generates network graphs of interconnected research papers and monitors for newly published work citing the same foundational sources.</td>
+            </tr>
+            <tr>
+              <td class="accent-purple">Source Freshness Matrix</td>
+              <td>A table cataloging every citation in a report with its CRAAP score (1–5), last-verified date, and permanent archive link.</td>
+            </tr>
+            <tr>
+              <td class="accent-green">Key Assumptions Check Table</td>
+              <td>A two-column matrix listing the implicit premises underlying a report's conclusions, alongside fresh evidence that stress-tests each premise.</td>
+            </tr>
+            <tr>
+              <td class="accent-amber">Competing-Hypotheses Matrix</td>
+              <td>A structured comparison of alternative explanations for observed phenomena, limited to three rows to prevent false complexity while guarding against single-narrative lock-in.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Civilian toolkit -->
+      <h3 class="sub-heading">Civilian Toolkit Index</h3>
+      <p>
+        The full toolchain is zero-cost and locally operated — no proprietary enterprise
+        subscriptions required. Full disclosure of every tool used to produce and maintain reports:
+      </p>
+
+      <div class="card-grid" role="list">
+        <div class="info-card" role="listitem">
+          <p class="info-card-label cyan">Reference Management</p>
+          <p class="info-card-value">Zotero</p>
+          <p class="info-card-desc">Web snapshot archiving, RSS feed monitoring, Retraction Watch integration, bibliography export.</p>
+        </div>
+        <div class="info-card" role="listitem">
+          <p class="info-card-label purple">Citation Mapping</p>
+          <p class="info-card-value">Litmaps</p>
+          <p class="info-card-desc">Visual citation-network graphs, automated alerts for new papers citing seed articles.</p>
+        </div>
+        <div class="info-card" role="listitem">
+          <p class="info-card-label green">Provenance Validation</p>
+          <p class="info-card-value">c2patool CLI</p>
+          <p class="info-card-desc">C2PA manifest extraction and cryptographic signature verification for media artifacts.</p>
+        </div>
+        <div class="info-card" role="listitem">
+          <p class="info-card-label amber">Web Archiving</p>
+          <p class="info-card-value">Wayback Machine</p>
+          <p class="info-card-desc">Supplemental permanent archive links for sources where local snapshots are insufficient.</p>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- /main -->
+</div><!-- /page-wrapper -->
+
+<!-- ── Footer ──────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <p>
+    <a href="/">&#8592; bra-khet.github.io</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/anti-ai-guilt-report-1">AI Use &amp; Anti-AI Ideology Report</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/dlss-5-report-1-1/">DLSS 5 Neural Rendering Report</a>
+    &nbsp;&middot;&nbsp;
+    <a href="/evo2-report-1/">Evo 2 Genomics Report</a>
+  </p>
+  <p style="margin-top: 0.4rem;">
+    Generated via OSINT Research Protocol v2.0 | March 2026 | Initial Release
+  </p>
+</footer>
+
+<script src="js/osint-protocol.js" defer></script>
+</body>
+</html>

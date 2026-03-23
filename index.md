@@ -17,6 +17,41 @@ title: "|0⟩"
 <hr style="border-color: #333; margin: 2rem 0;" />
 
 <!-- ════════════════════════════════════════════════════════════════
+     OSINT PROTOCOL FEATURE CTA
+════════════════════════════════════════════════════════════════ -->
+<div style="margin: 2rem 0 0.5rem; text-align: center;">
+  <a href="/osint-protocol"
+     style="display: inline-block; padding: 1.1rem 2.2rem;
+            background: linear-gradient(135deg, #00d4ff 0%, #7a3fff 100%);
+            color: #000; font-family: Monaco, monospace; font-weight: bold;
+            font-size: 1.05rem; border-radius: 10px; text-decoration: none;
+            letter-spacing: -0.01em; box-shadow: 0 4px 24px rgba(0,212,255,0.25);
+            transition: box-shadow 0.2s, transform 0.15s;"
+     onmouseover="this.style.boxShadow='0 6px 32px rgba(122,63,255,0.45)';this.style.transform='translateY(-2px)';"
+     onmouseout="this.style.boxShadow='0 4px 24px rgba(0,212,255,0.25)';this.style.transform='translateY(0)';">
+    &#128373;&#65039;&#8205;&#9794;&#65039; OSINT Protocol v2.0 Explainer &nbsp;&nbsp;<span style="font-weight: normal; font-size: 0.88rem; opacity: 0.8;">"trust me bro"</span> &nbsp;&#128373;&#65039;&#8205;&#9794;&#65039;
+  </a>
+</div>
+
+<!-- ── Featured methodology teaser ──────────────────────────────── -->
+<div style="margin: 1.25rem 0 2.5rem; padding: 1.1rem 1.4rem;
+            border: 1px solid #1e2a3a; border-left: 3px solid #00d4ff;
+            border-radius: 10px; background: #080d14;">
+  <p style="color: #7a9ab8; font-size: 0.72rem; font-family: Monaco, monospace;
+            text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 0.5rem;">
+    Featured &mdash; Understanding My OSINT Methodology
+  </p>
+  <p style="color: #9ab8d0; font-size: 0.88rem; font-family: Monaco, monospace;
+            line-height: 1.65; margin: 0;">
+    Before diving into the reports, learn exactly how I verify information using a
+    standardized, transparent OSINT protocol. This is the &ldquo;trust me bro&hellip;
+    on steroids&rdquo; framework that makes every claim verifiable &mdash; reproducible steps,
+    scored sources, and a living-document update cycle that keeps the analysis current.
+    Every report on this site was produced under this protocol.
+  </p>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
      LATEST REPORTS
 ════════════════════════════════════════════════════════════════ -->
 <h3 style="color: #00ff5d; margin-top: 3rem; font-family: Monaco, monospace; letter-spacing: -0.02em;">
