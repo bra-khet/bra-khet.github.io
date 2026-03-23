@@ -374,7 +374,7 @@ title: "|0⟩"
   </div>-->
   
   <div class="gallery-item">
-    <img src="/assets/img/opiumbird1-draft1.png" alt="(✿◡‿◡)">
+    <img src="/assets/img/opiumbird2-border.png" alt="(✿◡‿◡)">
   </div>
 </div>
 
