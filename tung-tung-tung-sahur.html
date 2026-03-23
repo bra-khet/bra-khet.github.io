@@ -1,0 +1,1200 @@
+---
+layout: null
+title: "Tung Tung Tung Sahur: From Ramadan Drum to AI Copyright Battleground"
+permalink: /tung-tung-tung-sahur/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tung Tung Tung Sahur — Narrative Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ── Base ──────────────────────────────────────────────────── */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0907;
+            background-image: radial-gradient(circle at 50% 0%, #2a0808 0%, #0d0907 70%);
+            color: #e5e5e5;
+            padding-top: 40px;
+            line-height: 1.8;
+        }
+        #reading-progress {
+            position: fixed; top: 37px; left: 0;
+            width: 0%; height: 3px;
+            background: linear-gradient(90deg, #ff2a2a, #00f0ff);
+            z-index: 9998; transition: width .1s linear; pointer-events: none;
+        }
+        h1, h2, h3, h4, .mono { font-family: 'Roboto Mono', monospace; }
+
+        /* ── Colour tokens ─────────────────────────────────────────── */
+        .text-eerie-red    { color: #ff2a2a; }
+        .text-vibrant-teal { color: #00f0ff; }
+        .text-vibrant-yellow { color: #ffe600; }
+        .border-eerie-red  { border-color: #ff2a2a; }
+
+        /* ── Nav banner ─────────────────────────────────────────────── */
+        #hacker-nav-banner {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 9999;
+            background: #0f0505;
+            border-bottom: 1px dashed #ff2a2a55;
+            font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+            font-size: 13px;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #eaeaea;
+        }
+        #hacker-nav-banner a {
+            color: #63c0f5;
+            text-decoration: none;
+            text-shadow: 0 0 5px rgba(104,182,255,0.4);
+        }
+        #hacker-nav-banner a:hover { text-decoration: underline; }
+        #hacker-nav-banner .banner-title {
+            color: #ff2a2a;
+            text-shadow: 0 0 6px rgba(255,42,42,0.5), 0 0 12px rgba(255,42,42,0.2);
+            letter-spacing: -0.03em;
+        }
+        #hacker-nav-banner .banner-tag { color: #553333; font-size: 11px; }
+        #hacker-nav-banner .banner-v   { color: #ff6644; font-size: 11px; }
+
+        /* ── Waveform ──────────────────────────────────────────────── */
+        .waveform { display: flex; align-items: center; justify-content: center; gap: 4px; height: 60px; }
+        .bar { width: 6px; background-color: #ff2a2a; height: 10px; animation: wave 1s ease-in-out infinite; }
+        .bar:nth-child(1) { animation-delay: 0.0s; }
+        .bar:nth-child(2) { animation-delay: 0.1s; }
+        .bar:nth-child(3) { animation-delay: 0.2s; }
+        .bar:nth-child(4) { animation-delay: 0.3s; }
+        .bar:nth-child(5) { animation-delay: 0.4s; }
+        .bar:nth-child(6) { animation-delay: 0.5s; }
+        .bar:nth-child(7) { animation-delay: 0.6s; }
+        @keyframes wave { 0%, 100% { height: 10px; } 50% { height: 50px; } }
+
+        /* ── Glitch ────────────────────────────────────────────────── */
+        .glitch-hover:hover { animation: text-glitch 0.2s infinite; color: #ff2a2a; }
+        @keyframes text-glitch {
+            0%   { transform: translate(0) }
+            20%  { transform: translate(-2px,  2px) }
+            40%  { transform: translate(-2px, -2px) }
+            60%  { transform: translate( 2px,  2px) }
+            80%  { transform: translate( 2px, -2px) }
+            100% { transform: translate(0) }
+        }
+
+        /* ── Glass card ────────────────────────────────────────────── */
+        .glass-card {
+            background: rgba(30, 20, 18, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid #4a2e2a;
+        }
+
+        /* ── Version badge ─────────────────────────────────────────── */
+        .version-badge {
+            display: inline-block;
+            background: #1a0505;
+            color: #ff2a2a;
+            border: 1px solid #ff2a2a44;
+            border-radius: 4px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            padding: 0.15rem 0.5rem;
+            vertical-align: middle;
+        }
+
+        /* ── Pull quote ────────────────────────────────────────────── */
+        .pull-quote {
+            border-left: 3px solid #ff2a2a;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: rgba(255, 42, 42, 0.05);
+            font-style: italic;
+            color: #d4a0a0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        .pull-quote cite {
+            display: block;
+            margin-top: 0.5rem;
+            font-style: normal;
+            font-size: 0.82rem;
+            color: #ff6644;
+            font-family: 'Roboto Mono', monospace;
+        }
+        .pull-quote sup a { color: #ff9977; font-size: 0.7rem; text-decoration: none; }
+
+        /* ── Data tables ───────────────────────────────────────────── */
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1.5rem 0; }
+        .data-table thead th {
+            background: rgba(255, 42, 42, 0.12);
+            color: #ff6644;
+            font-family: 'Roboto Mono', monospace;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            padding: 0.75rem 1rem;
+            border: 1px solid #4a2e2a;
+            text-align: left;
+        }
+        .data-table tbody td {
+            padding: 0.75rem 1rem;
+            border: 1px solid #2a1a18;
+            color: #b8a0a0;
+            vertical-align: top;
+            line-height: 1.6;
+        }
+        .data-table tbody tr:hover td { background: rgba(255, 42, 42, 0.04); }
+        .data-table tbody td strong { color: #e5e5e5; }
+        .data-table tbody td:first-child {
+            color: #ff7755;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.78rem;
+            white-space: nowrap;
+        }
+        .data-table sup a { color: #ff9977; font-size: 0.68rem; text-decoration: none; }
+        .data-table sup a:hover { color: #00f0ff; text-decoration: underline; }
+
+        /* ── Prose footnotes ───────────────────────────────────────── */
+        sup a {
+            color: #ff7755;
+            font-size: 0.7rem;
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        sup a:hover { color: #00f0ff; text-decoration: underline; }
+
+        /* ── Sources list ──────────────────────────────────────────── */
+        .sources-list { list-style: none; counter-reset: sources; padding: 0; }
+        .sources-list li {
+            counter-increment: sources;
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 0.55rem;
+            font-size: 0.78rem;
+            color: #6a5555;
+            font-family: 'Roboto Mono', monospace;
+            line-height: 1.65;
+        }
+        .sources-list li::before {
+            content: "[" counter(sources) "]";
+            position: absolute;
+            left: 0;
+            color: #ff6644;
+            min-width: 2.5rem;
+        }
+        .sources-list li a { color: #5aacdf; text-decoration: none; word-break: break-all; }
+        .sources-list li a:hover { text-decoration: underline; color: #00f0ff; }
+
+        /* ── Quick-nav pills ───────────────────────────────────────── */
+        .qnav-pill {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.72rem;
+            padding: 0.3rem 0.75rem;
+            border: 1px solid #ff2a2a55;
+            border-radius: 20px;
+            color: #cc4444;
+            text-decoration: none;
+            transition: background 0.15s, color 0.15s, border-color 0.15s;
+        }
+        .qnav-pill:hover { background: #ff2a2a; color: #000; border-color: #ff2a2a; }
+
+        /* ── Section divider ───────────────────────────────────────── */
+        .section-divider { border: none; border-top: 1px solid #2a1a18; margin: 3rem 0; }
+
+        /* ── Inline code ───────────────────────────────────────────── */
+        code {
+            background: rgba(255,42,42,0.1);
+            color: #ff9988;
+            padding: 0.1em 0.35em;
+            border-radius: 3px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.85em;
+        }
+
+        /* ── Keyword highlight ─────────────────────────────────────── */
+        .kw { color: #ffe600; font-weight: 600; }
+
+        /* ── Scroll target offset ──────────────────────────────────── */
+        :target { scroll-margin-top: 56px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .bar, .glitch-hover:hover { animation: none; }
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden selection:bg-red-900 selection:text-white">
+<div id="reading-progress" role="progressbar" aria-label="Reading progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
+<!-- ── Nav banner ─────────────────────────────────────────────────── -->
+<div id="hacker-nav-banner">
+    <span>
+        <a href="{{ site.baseurl }}/">&#8592; bra-khet.github.io</a>
+        <span class="banner-tag"> / meme-history</span>
+    </span>
+    <span class="banner-title">Tung Tung Tung Sahur &mdash; Narrative Report</span>
+    <span class="banner-v">v1.0 &middot; March 2026</span>
+</div>
+
+<!-- ── Hero ───────────────────────────────────────────────────────── -->
+<header class="min-h-screen flex flex-col justify-center items-center text-center p-6 relative">
+    <div class="z-10 max-w-4xl w-full">
+        <div class="text-eerie-red font-bold tracking-widest uppercase text-sm mb-3 mono">
+            Meme History &nbsp;&middot;&nbsp; Narrative Report
+            <span class="version-badge ml-2">v1.0</span>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-black mb-4 uppercase tracking-tighter leading-none glitch-hover">
+            Tung Tung Tung Sahur
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-300 font-light mb-2">
+            From Ramadan Drum to AI Copyright Battleground.
+        </p>
+        <p class="mono text-sm text-gray-600 max-w-2xl mx-auto mb-8">
+            A forensic deep-dive into the anthropology, AI generation pipelines,
+            cultural impact, and legal jurisprudence of a wooden log holding a baseball bat.
+            Because someone had to.
+        </p>
+
+        <div class="waveform mb-8" aria-label="Audio waveform visualizer">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
+        <p class="mono text-sm text-gray-500 max-w-2xl mx-auto border-t border-b border-gray-800 py-4 mb-8">
+            &ldquo;A terrifying anomaly enforcing Sahur after three ignored calls.&rdquo;
+            &mdash; <em>Original Lore, @noxaasht</em>
+        </p>
+
+        <!-- Quick navigation -->
+        <div class="flex flex-wrap gap-2 justify-center mb-6" role="navigation" aria-label="Section navigation">
+            <a href="#anthropology" class="qnav-pill">Anthropology</a>
+            <a href="#chronology" class="qnav-pill">Chronology</a>
+            <a href="#forensics" class="qnav-pill">AI Forensics</a>
+            <a href="#roblox" class="qnav-pill">IP Strike</a>
+            <a href="#legal" class="qnav-pill">Legal</a>
+            <a href="#debate" class="qnav-pill">The Debate</a>
+            <a href="#culture" class="qnav-pill">Culture</a>
+            <a href="#editorial" class="qnav-pill">Editorial</a>
+            <a href="#sources" class="qnav-pill" style="border-color:#33333388; color:#555;">Sources</a>
+        </div>
+
+        <a href="{{ site.baseurl }}/ttt-info-report-1/"
+           style="font-family:'Roboto Mono',monospace; font-size:0.75rem; padding:0.35rem 0.9rem;
+                  border:1px solid #33333388; border-radius:20px; color:#666; text-decoration:none;
+                  transition:color 0.15s, border-color 0.15s;"
+           onmouseover="this.style.color='#ff2a2a';this.style.borderColor='#ff2a2a55';"
+           onmouseout="this.style.color='#666';this.style.borderColor='#33333388';">
+            &#128249; View Infographic v1.0
+        </a>
+    </div>
+    <div class="absolute bottom-10 animate-bounce text-eerie-red text-2xl select-none" aria-hidden="true">&#9660;</div>
+</header>
+
+<!-- ── Main ───────────────────────────────────────────────────────── -->
+<main class="container mx-auto px-4 md:px-8 py-16 max-w-4xl">
+
+    <!-- Introduction ─────────────────────────────────────────────── -->
+    <section class="mb-20">
+        <p class="text-lg text-gray-300 leading-relaxed mb-5">
+            The visual artifact that forms the epicenter of one of the 2020s' most bizarre intellectual property
+            disputes is, at first glance, an absurdity. The image depicts an anthropomorphic, cylindrical wooden log
+            standing upright on two spindly, human-like legs. Its face, carved directly into the upper half of the wood,
+            features an uncanny, wide-eyed stare and an unsettling, placid smile that borders on the malicious. In its
+            right, branch-like arm, the entity clutches a standard wooden baseball bat. Behind it lies a dimly lit
+            atmospheric setting — a traditional Indonesian <em>pos ronda</em> (a neighborhood watch guardhouse)
+            illuminated by the warm, sepia glow of a solitary streetlamp.
+        </p>
+        <p class="text-gray-400 leading-relaxed mb-5">
+            This digital apparition is known to millions as <strong class="text-white">"Tung Tung Tung Sahur."</strong>
+            It is the undisputed apex predator of a viral internet ecosystem — a cultural phenomenon that has transcended
+            its origins as a ten-second video clip to become a flashpoint for international legal
+            warfare.<sup><a href="#src-1">[1]</a></sup>
+        </p>
+        <p class="text-gray-400 leading-relaxed mb-5">
+            In an era characterized by hyper-accelerated media consumption, Tung Tung Tung Sahur represents the vanguard
+            of <span class="kw">"Italian Brainrot"</span> — a term crowned the Oxford Word of the Year in 2024, denoting
+            the cognitive deterioration allegedly associated with the excessive consumption of trivial, low-effort, and
+            highly addictive online content.<sup><a href="#src-3">[3]</a></sup> The "Italian" subgenre that exploded
+            across TikTok and Instagram in early 2025 is characterized by AI-generated hybrid creatures bearing
+            pseudo-Italian onomatopoeic names, narrated by synthesized text-to-speech voices, and situated within deeply
+            convoluted, utterly nonsensical lore.<sup><a href="#src-3">[3]</a></sup>
+        </p>
+        <p class="text-gray-400 leading-relaxed">
+            Yet the surface-level absurdity of Tung Tung Tung Sahur masks a profound digital crisis. The character,
+            deeply rooted in Indonesian Islamic tradition, was catapulted into the global memetic consciousness, rapidly
+            monetized within multi-million-dollar video games, and subsequently weaponized in a transnational copyright
+            dispute.<sup><a href="#src-1">[1]</a></sup> This report treats the seemingly trivial subject with rigorous
+            investigative standards. It had to be done. The wooden log insisted.
+        </p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── Section 1: Anthropology ─────────────────────────────────── -->
+    <section id="anthropology" class="mb-20">
+        <p class="text-xs text-gray-700 mono uppercase tracking-widest mb-2">Section 01</p>
+        <h2 class="text-3xl font-bold mb-8 text-vibrant-teal uppercase border-b border-gray-800 pb-4">
+            The Cultural Anthropology of a Wooden Anomaly
+        </h2>
+
+        <p class="text-gray-300 leading-relaxed mb-5">
+            To untangle the complex legal web surrounding Tung Tung Tung Sahur, one must first deconstruct the cultural
+            artifact that was appropriated, flattened, and commodified by the algorithm. The phenomenon did not originate
+            in a Silicon Valley server farm or a French intellectual property firm; it was forged in the pre-dawn streets
+            of Indonesian neighborhoods during the holy month of Ramadan.<sup><a href="#src-1">[1]</a></sup>
+        </p>
+
+        <h3 class="text-xl font-bold text-white mt-8 mb-3">Etymology and the Traditional Acoustic Landscape</h3>
+
+        <p class="text-gray-400 leading-relaxed mb-5">
+            In the Islamic faith, <em>sahur</em> (anglicized as <em>suhoor</em>) is the vital pre-dawn meal consumed by
+            Muslims before the commencement of the daily fasting period.<sup><a href="#src-1">[1]</a></sup> Ensuring that
+            the community wakes up in time for this essential meal is viewed as a communal responsibility. Across the
+            Indonesian archipelago, this practice evolved into a rich, deeply ingrained folkloric tradition where groups
+            of young men and community volunteers patrol local neighborhoods in the darkest hours of the
+            morning.<sup><a href="#src-9">[9]</a></sup>
+        </p>
+        <p class="text-gray-400 leading-relaxed mb-5">
+            These patrols rely on a specific acoustic landscape to rouse sleeping residents. The primary instruments are
+            the <span class="kw"><em>kentongan</em></span> — a traditional Javanese slit drum made from hollowed-out
+            bamboo or solid wood — and the <em>bedug</em>, a much larger, resonant drum typically suspended outside
+            mosques.<sup><a href="#src-3">[3]</a></sup>
+        </p>
+
+        <div class="pull-quote">
+            <p>"Tung tung tung" is an exact linguistic onomatopoeia designed to mimic the resonant, hollow beat of
+            the <em>kentongan</em>. In the Sundanese language, "tung" translates directly to "rumbling."</p>
+            <cite>— Linguistic &amp; Cultural Analysis, The Impact Lawyers<sup><a href="#src-1">[1]</a></sup></cite>
+        </div>
+
+        <p class="text-gray-400 leading-relaxed mb-5">
+            The communal chant of "Tung tung tung, sahur!" has been a staple of the Indonesian Ramadan experience for
+            decades, with digital attestations of the phrase existing on Twitter/X as early as
+            2013.<sup><a href="#src-9">[9]</a></sup> To put it plainly: nobody invented this phrase. It belongs to the
+            street.
+        </p>
+
+        <h3 class="text-xl font-bold text-white mt-8 mb-3">Algorithmic Metonymy and Cultural Flattening</h3>
+
+        <p class="text-gray-400 leading-relaxed mb-5">
+            The journey of this deeply localized, religious tradition into the secular, globalized realm of "Italian
+            Brainrot" is a masterclass in algorithmic cultural flattening. Italian Brainrot is not inherently "Italian."
+            The trend, initiated by an AI-generated, sneaker-wearing shark named <em>Tralalero Tralala</em>, utilizes a
+            commodified, stereotypical aesthetic — which cultural critics term <span class="kw">"Italiancity"</span> —
+            as a surrogate signifier for chaos and absurdity.<sup><a href="#src-3">[3]</a></sup>
+        </p>
+
+        <div class="glass-card rounded-lg p-6 mb-6">
+            <h4 class="mono text-xs text-eerie-red uppercase tracking-widest mb-4">The Transformation</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="border border-gray-800 rounded-lg p-4">
+                    <p class="text-xs text-vibrant-teal mono uppercase mb-2">Original Function</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">Community alarm. Religious tradition.
+                    Pre-dawn Ramadan wake-up call. Symbol of neighborhood solidarity and collective care.</p>
+                </div>
+                <div class="border rounded-lg p-4" style="border-color:#ff2a2a33;">
+                    <p class="text-xs text-eerie-red mono uppercase mb-2">AI Brainrot Incarnation</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">Internet bogeyman. Digital Krampus.
+                    Punishes those who ignore three Sahur calls with a baseball bat. Terrorizes Generation Alpha
+                    for engagement metrics.</p>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-gray-400 leading-relaxed mb-5">
+            The character's internet lore represents a dark, post-ironic twisting of the original tradition. Instead of
+            a helpful community alarm serving a religious function, the AI-generated Tung Tung Tung Sahur was explicitly
+            narrativized as a <em>"terrifying anomaly."</em><sup><a href="#src-10">[10]</a></sup> The viral voiceover
+            established a sinister rule: if an individual is called for Sahur three times and fails to answer, the wooden
+            creature will appear at their home to administer consequences. With a bat.
+        </p>
+        <p class="text-gray-400 leading-relaxed">
+            Cultural observers note the inherent friction in stripping an Islamic tradition of its context and
+            repackaging it under a pseudo-Italian, AI-generated banner for mass digital
+            consumption.<sup><a href="#src-14">[14]</a></sup> Western audiences see a funny haunted log. Indonesians
+            see their neighborhood watch. Both are correct, and neither is fully right.
+        </p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── Section 2: Chronology ────────────────────────────────────── -->
+    <section id="chronology" class="mb-20">
+        <p class="text-xs text-gray-700 mono uppercase tracking-widest mb-2">Section 02</p>
+        <h2 class="text-3xl font-bold mb-8 text-vibrant-teal uppercase border-b border-gray-800 pb-4">
+            Chronology of a Viral Infection
+        </h2>
+
+        <p class="text-gray-400 leading-relaxed mb-8">
+            The explosive trajectory of Tung Tung Tung Sahur highlights the unprecedented velocity of AI-driven meme
+            cycles. In a matter of months, an obscure digital inside joke became a heavily monetized asset sparking
+            international legal threats. The following timeline reconstructs this escalation.
+        </p>
+
+        <div class="overflow-x-auto">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Phase</th>
+                        <th>Event &amp; Significance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Pre-2025</strong></td>
+                        <td><strong>The Cultural Precursor</strong></td>
+                        <td>The phrase "tung tung tung sahur" exists entirely as an Indonesian cultural practice. Digital attestations on Twitter/X as early as 2013 prove the underlying concept belongs firmly to the public domain — not to any single internet creator.<sup><a href="#src-9">[9]</a></sup></td>
+                    </tr>
+                    <tr>
+                        <td><strong>January 2025</strong></td>
+                        <td><strong>The Aesthetic Precedent</strong></td>
+                        <td>TikToker <code>@eZburger401</code> uploads "Tralalero Tralala" — an AI-generated three-legged sneaker shark that single-handedly establishes the stylistic, auditory, and narrative parameters of the Italian Brainrot genre, priming the algorithm for what follows.<sup><a href="#src-3">[3]</a></sup></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Feb 28, 2025</strong></td>
+                        <td><strong>The Fixation Event</strong></td>
+                        <td>Indonesian TikToker <code>@noxaasht</code> uploads the original ten-second video. Sinister Indonesian TTS narrates the lore. The video scales to over <strong class="text-vibrant-yellow">42.5 million views</strong>. This is the definitive origin point of the character's digital IP.<sup><a href="#src-10">[10]</a></sup></td>
+                    </tr>
+                    <tr>
+                        <td><strong>March 2025</strong></td>
+                        <td><strong>The Memetic Radiation</strong></td>
+                        <td>The meme escapes its creator's control. <code>@redbluzx_tiktoq</code> posts the explosion variant (5.3M views). Drawing tutorials accumulate 3.7M views. The character integrates into the Italian Brainrot canon across the U.S., Europe, and the Middle East.<sup><a href="#src-2">[2]</a></sup></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Late March 2025</strong></td>
+                        <td><strong>The Seasonal Farewell</strong></td>
+                        <td>As Ramadan concludes, a wave of nostalgic "farewell" videos emerges — the character departing on a rocket ship, or retiring. This demonstrates a deep, parasocial attachment to a machine-generated image that no human fully authored.<sup><a href="#src-22">[22]</a></sup></td>
+                    </tr>
+                    <tr>
+                        <td><strong>May 12, 2025</strong></td>
+                        <td><strong>The Traditional Media Crossover</strong></td>
+                        <td>Indonesian horror studio Dee Company posts images of a formal meeting with <code>@noxaasht</code>. CEO Dheeraj Kalwani asks his social following: <em>"Are you ready if Tung Tung Tung Sahur is made into a movie?"</em> The IP transitions from digital novelty to viable traditional media asset.<sup><a href="#src-23">[23]</a></sup></td>
+                    </tr>
+                    <tr>
+                        <td><strong>May 16, 2025</strong></td>
+                        <td><strong>The Virtual Monetization</strong></td>
+                        <td>Roblox experience <em>Steal a Brainrot</em> officially launches. Tung Tung Tung Sahur is integrated as a <strong class="text-vibrant-yellow">Rare asset at $3,000 in-game currency</strong>, generating $25/sec passive income for the owner. The game eventually peaks at a record-breaking <strong class="text-vibrant-yellow">25.8 million concurrent users</strong>.<sup><a href="#src-25">[25]</a></sup></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sep 13, 2025</strong></td>
+                        <td><strong style="color:#ff2a2a;">The Legal Rupture</strong></td>
+                        <td>Tung Tung Tung Sahur is abruptly and entirely eradicated from <em>Steal a Brainrot</em>. All 3D models wiped. Players who owned the expensive asset find it force-replaced by a generic substitute named "Gangster Footera." The internet loses its mind.<sup><a href="#src-7">[7]</a></sup></td>
+                    </tr>
+                    <tr>
+                        <td><strong>October 2025</strong></td>
+                        <td><strong>The Corporate Co-optation</strong></td>
+                        <td>Dunkin' Donuts launches an Italian Brainrot-themed donut line in Peru. Physical unlicensed action figures of Tung Tung Tung Sahur flood eBay and TikTok Shop.<sup><a href="#src-3">[3]</a></sup> The digital anomaly begins moving atoms.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>February 2026</strong></td>
+                        <td><strong>The Apex Integration Leaks</strong></td>
+                        <td>Prominent gaming dataminers Blortzen and HypeX leak credible evidence of an official Tung Tung Tung Sahur cosmetic skin in active development for <em>Fortnite</em>.<sup><a href="#src-28">[28]</a></sup> If realized, this is the character's ultimate corporate canonization.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── Section 3: Generation Forensics ─────────────────────────── -->
+    <section id="forensics" class="mb-20">
+        <p class="text-xs text-gray-700 mono uppercase tracking-widest mb-2">Section 03</p>
+        <h2 class="text-3xl font-bold mb-8 text-vibrant-teal uppercase border-b border-gray-800 pb-4">
+            Generation Forensics: The Illusion of Authorship
+        </h2>
+
+        <p class="text-gray-300 leading-relaxed mb-5">
+            To adjudicate the intellectual property claims surrounding Tung Tung Tung Sahur, one must conduct a forensic
+            reconstruction of the methodology used to create it. The core legal tension hinges on the "human authorship"
+            doctrine: did the human creator exercise sufficient creative control, or was the machine acting as the sole
+            deterministic author?
+        </p>
+
+        <h3 class="text-xl font-bold text-white mt-8 mb-4">Deconstructing the AI Generation Pipeline</h3>
+
+        <p class="text-gray-400 leading-relaxed mb-6">
+            The production of an Italian Brainrot video is a highly systematized workflow requiring virtually no
+            traditional artistic skill — illustrating the profound democratization, and corresponding devaluation, of
+            digital art creation.<sup><a href="#src-29">[29]</a></sup>
+        </p>
+
+        <div class="glass-card rounded-lg p-6 mb-8">
+            <h4 class="mono text-xs text-eerie-red uppercase tracking-widest mb-6">The Standard Production Pipeline</h4>
+            <div class="space-y-5">
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mono text-sm font-bold text-eerie-red"
+                         style="background:rgba(255,42,42,0.15); border:1px solid #ff2a2a44;">1</div>
+                    <div>
+                        <p class="text-white font-semibold mb-1 text-sm">Narrative Scripting</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">LLMs (ChatGPT, Claude) generate the absurd lore. The human acts as a director, providing high-level conceptual prompts: <span class="text-vibrant-yellow text-xs mono italic">"Write a dramatic backstory in Indonesian about a wooden drum that attacks people who don't wake up for Sahur."</span><sup><a href="#src-30">[30]</a></sup></p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mono text-sm font-bold text-eerie-red"
+                         style="background:rgba(255,42,42,0.15); border:1px solid #ff2a2a44;">2</div>
+                    <div>
+                        <p class="text-white font-semibold mb-1 text-sm">Image Generation</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">Diffusion model platforms (Midjourney, OpenArt, Canva AI) synthesize the visual asset. Standard genre prompt architecture: <span class="text-vibrant-yellow text-xs mono italic">"absurd hybrid creature... exaggerated features, large expressive eyes, dynamic pose, slightly unsettling..."</span><sup><a href="#src-15">[15]</a></sup></p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mono text-sm font-bold text-eerie-red"
+                         style="background:rgba(255,42,42,0.15); border:1px solid #ff2a2a44;">3</div>
+                    <div>
+                        <p class="text-white font-semibold mb-1 text-sm">Animation &amp; Motion</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">The static image is imported into AI video generation tools (Dreamina, Kling AI, Runway Gen-2), which interpret the pixels and predict motion, creating the disjointed, uncanny movements characteristic of the genre.<sup><a href="#src-30">[30]</a></sup></p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mono text-sm font-bold text-vibrant-teal"
+                         style="background:rgba(0,240,255,0.08); border:2px solid #00f0ff55;">4</div>
+                    <div>
+                        <p class="font-semibold mb-1 text-sm text-vibrant-teal">Audio &amp; TTS Synthesis</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">The voiceover is generated via advanced TTS platforms like ElevenLabs. The creator selects an emotive vocal model — such as the ubiquitous "Adam" voice — and applies it to the AI-generated script.<sup><a href="#src-30">[30]</a></sup></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="text-xl font-bold text-white mt-8 mb-3">The <code>PENTUNGAN POS RONDA</code> Artifact</h3>
+
+        <p class="text-gray-400 leading-relaxed mb-5">
+            Mementum Labs claims that the creation of Tung Tung Tung Sahur involved <em>"several days of prompting,
+            remixing, iterating,"</em> blending visual elements of the traditional <em>kentongan</em> drum to carefully
+            <em>"shape the character's identity."</em><sup><a href="#src-8">[8]</a></sup> This is where forensic
+            examination becomes inconvenient for their case.
+        </p>
+
+        <div class="bg-black border border-gray-800 rounded-lg p-5 relative overflow-hidden mb-6">
+            <div class="absolute top-0 left-0 w-1 h-full bg-eerie-red"></div>
+            <p class="mono text-xs text-gray-600 mb-3 pl-2">FORENSIC_ARTIFACT_01.txt — BACKGROUND TEXT ANALYSIS</p>
+            <p class="text-gray-300 leading-relaxed pl-2">
+                In the background of the original image, affixed to the wooden structure, is a sign reading:<br>
+                <span class="text-vibrant-yellow font-bold mono text-xl">"PENTUNGAN POS RONDA"</span>
+            </p>
+            <p class="text-gray-600 text-xs mono mt-2 pl-2">
+                Translation: "neighborhood watch patrol club/drum" — Indonesian
+            </p>
+        </div>
+
+        <p class="text-gray-400 leading-relaxed mb-5">
+            In the realm of generative forensics, the spontaneous appearance of coherent, highly context-specific text in
+            an AI image is a significant red flag. Generative diffusion models are notoriously poor at rendering legible
+            typography unless heavily weighted by specific training data or explicitly forced via text-rendering modules.
+            The presence of this phrase strongly suggests that the AI simply scraped photographic datasets related to
+            Indonesian neighborhood watches and <em>kentongan</em> usage — then hallucinated the text directly from its
+            training data, fusing it into the background without any explicit instruction.<sup><a href="#src-16">[16]</a></sup>
+        </p>
+        <p class="text-gray-400 leading-relaxed mb-5">
+            This artifact proves that the machine was doing the heavy conceptual lifting, synthesizing cultural context
+            <em>autonomously</em> rather than following human editorial control. The AI doesn't need directions to
+            Indonesian neighborhood watch signage. It already knows.
+        </p>
+
+        <h3 class="text-xl font-bold text-white mt-8 mb-3">The Evidentiary Gap</h3>
+
+        <p class="text-gray-400 leading-relaxed mb-4">
+            Compounding this forensic weakness is a glaring evidentiary gap: <code>@noxaasht</code> has
+            <strong class="text-white">never publicly disclosed the original text prompt</strong> used to generate Tung
+            Tung Tung Sahur.<sup><a href="#src-15">[15]</a></sup> In emerging AI copyright law, the text prompt is the
+            equivalent of a painter's preliminary sketch — the sole evidence of human intent.
+        </p>
+
+        <div class="pull-quote">
+            <p>Did @noxaasht provide highly specific, determinative instructions regarding the placement of the limbs,
+            the curvature of the smile, the lighting of the streetlamp, and the inclusion of "PENTUNGAN POS RONDA"? Or
+            did they type "scary Indonesian sahur wooden drum monster holding a bat" and accept the first aesthetically
+            pleasing output?</p>
+            <cite>— In the absence of the prompt, the default legal assumption leans heavily toward the latter.</cite>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── Section 4: The IP Strike ─────────────────────────────────── -->
+    <section id="roblox" class="mb-20">
+        <p class="text-xs text-gray-700 mono uppercase tracking-widest mb-2">Section 04</p>
+        <h2 class="text-3xl font-bold mb-8 text-vibrant-teal uppercase border-b border-gray-800 pb-4">
+            The IP Crucible: The <em>Steal a Brainrot</em> Strike
+        </h2>
+
+        <p class="text-gray-300 leading-relaxed mb-5">
+            The theoretical debates over generative forensics and AI authorship violently collided with economic reality
+            in September 2025. The battlefield was Roblox, a multi-billion-dollar platform where users generate, publish,
+            and monetize their own digital experiences.
+        </p>
+        <p class="text-gray-400 leading-relaxed mb-5">
+            In May 2025, a Brazilian developer operating under the handle SpyderSammy (representing DoBig Studios)
+            released a game titled <em>Steal a Brainrot</em>.<sup><a href="#src-25">[25]</a></sup> The premise was
+            brutally simple, reflecting the attention-economy mechanics of the memes it parodied: players accumulated
+            virtual wealth by purchasing, defending, and aggressively stealing voxel-based recreations of popular Italian
+            Brainrot characters.<sup><a href="#src-25">[25]</a></sup>
+        </p>
+
+        <!-- Stats callout grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-8">
+            <div class="glass-card rounded-lg p-4 text-center">
+                <div class="text-2xl font-black text-vibrant-yellow mono">25.8M</div>
+                <div class="text-xs text-gray-500 mono mt-1">Peak Concurrent Users</div>
+            </div>
+            <div class="glass-card rounded-lg p-4 text-center">
+                <div class="text-2xl font-black text-vibrant-teal mono">1M</div>
+                <div class="text-xs text-gray-500 mono mt-1">Daily CCU Average</div>
+            </div>
+            <div class="glass-card rounded-lg p-4 text-center">
+                <div class="text-2xl font-black text-eerie-red mono">$3,000</div>
+                <div class="text-xs text-gray-500 mono mt-1">TTT In-Game Price</div>
+            </div>
+            <div class="glass-card rounded-lg p-4 text-center">
+                <div class="text-2xl font-black text-white mono">$25/s</div>
+                <div class="text-xs text-gray-500 mono mt-1">Passive Income Rate</div>
+            </div>
+        </div>
+
+        <p class="text-gray-400 leading-relaxed mb-5">
+            Driven by the algorithmic momentum of the trend, the game achieved astronomical, unprecedented success.
+            By August 2025, it was averaging one million concurrent users daily, and following a highly publicized
+            "Admin War" event with a rival developer, it peaked at a staggering 25.8 million CCU — temporarily
+            surpassing the all-time concurrent player records of industry titans like
+            <em>Fortnite</em>.<sup><a href="#src-25">[25]</a></sup>
+        </p>
+
+        <h3 class="text-xl font-bold text-white mt-8 mb-3">The September 13th Eradication</h3>
+
+        <p class="text-gray-400 leading-relaxed mb-5">
+            On September 13, 2025, without warning or patch note explanation, Tung Tung Tung Sahur was entirely
+            eradicated from the <em>Steal a Brainrot</em> codebase.<sup><a href="#src-7">[7]</a></sup> The character's
+            3D models were wiped, its index entry deleted, and players who previously owned the expensive asset found it
+            forcibly replaced in their inventories by a generic substitute named
+            <span class="text-vibrant-yellow mono">"Gangster Footera."</span><sup><a href="#src-7">[7]</a></sup>
+        </p>
+        <p class="text-gray-400 leading-relaxed mb-5">
+            Prominent gaming content creators, such as 14-million-subscriber YouTuber Kreekcraft, immediately noticed
+            the absence, sparking conspiratorial panic across Discord and
+            TikTok.<sup><a href="#src-8">[8]</a></sup> The mystery was solved two days later when France-based brand
+            agency <span class="kw">Mementum Labs</span> issued a public statement: they had contacted SpyderSammy's
+            legal representatives regarding copyright infringement, alleging the developer was unjustly enriching himself
+            by exploiting creator <code>@noxaasht</code>'s original intellectual property without permission or
+            compensation.<sup><a href="#src-8">[8]</a></sup>
+        </p>
+        <p class="text-gray-400 leading-relaxed mb-5">
+            While Mementum publicly adopted a diplomatic posture — claiming they merely wished to
+            <em>"initiate a conversation"</em> to negotiate a licensing royalty — the legal threat was unambiguous.
+            Fearing catastrophic liability that could jeopardize his massive revenue stream, Sammy preemptively and
+            unilaterally deleted the character.<sup><a href="#src-7">[7]</a></sup>
+        </p>
+
+        <div class="pull-quote">
+            <p><em>How can a single individual claim legal monopoly over a machine-generated shitpost?</em></p>
+            <cite>— The prevailing sentiment in comment sections, September 2025<sup><a href="#src-8">[8]</a></sup></cite>
+        </div>
+
+        <p class="text-gray-400 leading-relaxed">
+            The internet backlash was swift and vitriolic. The controversy deepened when Mementum proudly revealed they
+            had already successfully licensed Tung Tung to well-funded corporate entities, including the NFT-based
+            <em>Pudgy Party</em> and a dedicated mobile game — effectively enclosing the character behind commercial
+            paywalls.<sup><a href="#src-35">[35]</a></sup>
+        </p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── Section 5: Legal ──────────────────────────────────────────── -->
+    <section id="legal" class="mb-20">
+        <p class="text-xs text-gray-700 mono uppercase tracking-widest mb-2">Section 05</p>
+        <h2 class="text-3xl font-bold mb-8 text-vibrant-teal uppercase border-b border-gray-800 pb-4">
+            Jurisdictional Labyrinths
+        </h2>
+
+        <p class="text-gray-400 leading-relaxed mb-8">
+            The <em>Steal a Brainrot</em> strike forced the murky, theoretical legal status of AI-generated art into an
+            immediate, practical spotlight. Because the internet is borderless, the Tung Tung controversy operates at
+            the volatile intersection of three distinct, often contradictory legal paradigms.
+        </p>
+
+        <div class="space-y-6">
+
+            <!-- U.S. Law -->
+            <div class="glass-card rounded-lg p-6" style="border-left:4px solid #00f0ff;">
+                <h3 class="text-lg font-bold text-white mb-1">&#127482;&#127480; U.S. Copyright Office &mdash; The Baseline</h3>
+                <p class="text-xs text-gray-600 mono uppercase tracking-wider mb-4">Primary battleground — Roblox is a U.S. corporation &middot; Report published January 29, 2025</p>
+                <p class="text-gray-400 text-sm leading-relaxed mb-3">
+                    The USCO released "Part 2" of its exhaustive report on AI and copyrightability after reviewing over
+                    10,000 public comments. The verdict was categorical: <strong class="text-white">human authorship is
+                    the absolute bedrock of copyrightability.</strong><sup><a href="#src-37">[37]</a></sup>
+                </p>
+                <p class="text-gray-400 text-sm leading-relaxed mb-3">
+                    Crucially, the USCO directly addressed "prompt engineering" and concluded unequivocally that
+                    <em>"the mere selection of prompts, even if those prompts are detailed and are the product of some
+                    human effort, does not itself yield a copyrightable work."</em><sup><a href="#src-38">[38]</a></sup>
+                </p>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    The reasoning: prompts function as <em>instructions</em> given to a commissioned artist (the
+                    algorithm), not as controlled expressions of human creativity. The machine, drawing upon its vast
+                    latent space, makes the final visual decisions in ways not fully controllable by the
+                    user.<sup><a href="#src-39">[39]</a></sup> Under this strict framework, Tung Tung Tung Sahur in its
+                    raw form is unambiguously <strong class="text-white">public domain</strong>.
+                </p>
+            </div>
+
+            <!-- Indonesian Law -->
+            <div class="glass-card rounded-lg p-6" style="border-left:4px solid #ffe600;">
+                <h3 class="text-lg font-bold text-white mb-1">&#127470;&#127465; Indonesian Law No. 28 of 2014 &mdash; The Creator's Home Turf</h3>
+                <p class="text-xs text-gray-600 mono uppercase tracking-wider mb-4">@noxaasht is an Indonesian citizen operating in Southeast Asia</p>
+                <p class="text-gray-400 text-sm leading-relaxed mb-3">
+                    Indonesian copyright law is fundamentally anthropocentric. Article 1 defines an "Author" strictly
+                    as a person whose "inspiration, ability, thought, imagination, dexterity, skill, or expertise"
+                    directly results in a tangible work.<sup><a href="#src-42">[42]</a></sup>
+                </p>
+                <p class="text-gray-400 text-sm leading-relaxed mb-3">
+                    The law is conceptually bound to human mortality — Articles 58 and 59 predicate copyright duration
+                    on the "death of the creator." This creates an insurmountable legal ambiguity: an algorithmic model
+                    lacks human cognitive abilities, cannot die, and therefore cannot meet the criteria for copyright
+                    vesting.<sup><a href="#src-45">[45]</a></sup> Legal scholars note a severe regulatory vacuum when
+                    applying the statute to generative AI.<sup><a href="#src-40">[40]</a></sup>
+                </p>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Even within the creator's home jurisdiction, the character almost certainly remains legally
+                    unprotected. The wooden log belongs to everyone.
+                </p>
+            </div>
+
+            <!-- French Law -->
+            <div class="glass-card rounded-lg p-6" style="border-left:4px solid #ff2a2a;">
+                <h3 class="text-lg font-bold text-white mb-1">&#127467;&#127479; French <em>Droit d&rsquo;auteur</em> &mdash; The Mementum Strategy</h3>
+                <p class="text-xs text-gray-600 mono uppercase tracking-wider mb-4">Jurisdictional arbitrage — Mementum Labs is based in France</p>
+                <p class="text-gray-400 text-sm leading-relaxed mb-3">
+                    If the character is uncopyrightable in both the U.S. and Indonesia, how did Mementum Labs
+                    successfully intimidate a major developer? The answer is sophisticated
+                    <span class="kw">jurisdictional arbitrage</span>.
+                </p>
+                <p class="text-gray-400 text-sm leading-relaxed mb-3">
+                    The French legal tradition of <em>droit d&rsquo;auteur</em> places immense emphasis on the initial
+                    "conception" of a work by a natural person, viewing the resulting art as an inalienable extension of
+                    the creator's personality and intellect.<sup><a href="#src-8">[8]</a></sup> This potentially offers a
+                    lower threshold for recognizing the conceptual labor of prompt engineering — @noxaasht's multi-day
+                    iterative process, combined with the specific cultural synthesis, might constitute a protectable
+                    "conception."<sup><a href="#src-8">[8]</a></sup>
+                </p>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    By establishing this claim under French moral rights traditions, Mementum can leverage the
+                    <strong class="text-white">1886 Berne Convention</strong> — ensuring reciprocal copyright
+                    recognition among 181 member states — to project authority globally.<sup><a href="#src-8">[8]</a></sup>
+                    They weaponize European legal uncertainty against developers who lack the financial resources to
+                    challenge them in international court. It is a legal judo throw, executed with considerable precision.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── Section 6: Debate ─────────────────────────────────────────── -->
+    <section id="debate" class="mb-20">
+        <p class="text-xs text-gray-700 mono uppercase tracking-widest mb-2">Section 06</p>
+        <h2 class="text-3xl font-bold mb-8 text-vibrant-teal uppercase border-b border-gray-800 pb-4">
+            The Enclosure of the Digital Commons
+        </h2>
+
+        <p class="text-gray-400 leading-relaxed mb-8">
+            The legal ambiguity and aggressive monetization surrounding Tung Tung Tung Sahur have ignited a fierce
+            ideological debate. This conflict can be distilled into two diametrically opposed perspectives, balancing
+            the rights of the curator against the preservation of the digital commons.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+            <!-- Pro-Protection -->
+            <div class="glass-card rounded-lg p-6" style="border-top:4px solid #00f0ff;">
+                <h3 class="text-xl font-bold text-white mb-2">Pro-Protection</h3>
+                <p class="text-xs text-vibrant-teal mono uppercase tracking-wider mb-5">Mementum Labs / Creator Advocacy</p>
+                <ul class="space-y-5 text-sm text-gray-400">
+                    <li>
+                        <strong class="text-white block mb-1">Curation as Creation.</strong>
+                        The value lies not in the raw pixels but in the human curation. @noxaasht sifted through
+                        potentially hundreds of algorithmic failures to identify the single image that captured the
+                        uncanny aesthetic required for virality. This deliberate editorial selection is an original
+                        creative act.<sup><a href="#src-8">[8]</a></sup>
+                    </li>
+                    <li>
+                        <strong class="text-white block mb-1">Intentional Hybridization.</strong>
+                        Blending an obscure Indonesian religious artifact with a globalized brainrot format requires
+                        human cultural intuition that a machine fundamentally lacks. The intellectual leap constitutes
+                        protectable labor.<sup><a href="#src-47">[47]</a></sup>
+                    </li>
+                    <li>
+                        <strong class="text-white block mb-1">Protection from Corporate Exploitation.</strong>
+                        If AI outputs are forced entirely into the public domain, the primary beneficiaries will not be
+                        everyday users, but massive corporations. Entities like Epic Games can freely mine independent
+                        creators' AI designs while the original prompt engineers receive
+                        nothing.<sup><a href="#src-47">[47]</a></sup>
+                    </li>
+                    <li>
+                        <strong class="text-white block mb-1">Incentivizing Innovation.</strong>
+                        Without the promise of economic reward, creators will cease dedicating days of labor to
+                        engineering complex, high-quality characters, stifling the evolution of digital entertainment.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Anti-Protection -->
+            <div class="glass-card rounded-lg p-6" style="border-top:4px solid #ff2a2a;">
+                <h3 class="text-xl font-bold text-white mb-2">Anti-Protection</h3>
+                <p class="text-xs text-eerie-red mono uppercase tracking-wider mb-5">USCO Baseline / Public Domain Advocates</p>
+                <ul class="space-y-5 text-sm text-gray-400">
+                    <li>
+                        <strong class="text-white block mb-1">Lack of Human Execution.</strong>
+                        Having an "expensive idea" is legally meaningless if the human does not execute the expression
+                        of that idea. Typing instructions into a text box outsources the actual artistic rendering —
+                        lighting, shadow, geometry, texture — entirely to a
+                        machine.<sup><a href="#src-39">[39]</a></sup>
+                    </li>
+                    <li>
+                        <strong class="text-white block mb-1">Algorithmic Regurgitation.</strong>
+                        The synthesis was handled by the AI's training data. The "PENTUNGAN POS RONDA" text artifact
+                        proves the machine simply scraped and recombined existing internet imagery. The human merely
+                        triggered a database query.<sup><a href="#src-16">[16]</a></sup>
+                    </li>
+                    <li>
+                        <strong class="text-white block mb-1">The Hypocrisy of the Training Data.</strong>
+                        The AI models used were trained on millions of copyrighted images taken from traditional artists
+                        without permission or compensation.<sup><a href="#src-47">[47]</a></sup> Demanding strict
+                        copyright protection for the output of a machine built on mass infringement is ethically
+                        dubious.
+                    </li>
+                    <li>
+                        <strong class="text-white block mb-1">The Chilling Effect on Folklore.</strong>
+                        Memes function as modern folklore; they survive entirely through unauthorized remixing and
+                        communal sharing.<sup><a href="#src-49">[49]</a></sup> Claiming corporate monopoly over a meme
+                        threatens the participatory, open-source nature of internet
+                        culture.<sup><a href="#src-47">[47]</a></sup>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Detailed comparison table -->
+        <div class="overflow-x-auto">
+            <table class="data-table" style="font-size:0.78rem;">
+                <thead>
+                    <tr>
+                        <th style="width:20%;">Battleground</th>
+                        <th style="width:40%;">Pro-Protection</th>
+                        <th style="width:40%;">Anti-Protection</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Nature of Authorship</strong></td>
+                        <td>Curation = Creation. Editorial selection of the "right" AI output is an original act.<sup><a href="#src-8">[8]</a></sup></td>
+                        <td>Having an expensive idea doesn't equal authorship. The machine renders; the human merely selects.<sup><a href="#src-39">[39]</a></sup></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cultural Synthesis</strong></td>
+                        <td>Deliberately blending Indonesian tradition with Italian Brainrot requires human cultural intuition.<sup><a href="#src-47">[47]</a></sup></td>
+                        <td>The PENTUNGAN text artifact proves the AI synthesized the cultural context autonomously from its training data.<sup><a href="#src-16">[16]</a></sup></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Economic Realities</strong></td>
+                        <td>Without IP protection, corporations — not fans — benefit most from independent creators' AI designs.<sup><a href="#src-47">[47]</a></sup></td>
+                        <td>The AI was built on stolen data from real artists. Demanding protection for its output is hypocritical.<sup><a href="#src-47">[47]</a></sup></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Meme Culture</strong></td>
+                        <td>IP control incentivizes more high-quality brainrot content creation over time.</td>
+                        <td>Memes are modern folklore. Enclosing them chills remixing and communal internet culture.<sup><a href="#src-49">[49]</a></sup></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── Section 7: Cultural Impact ───────────────────────────────── -->
+    <section id="culture" class="mb-20">
+        <p class="text-xs text-gray-700 mono uppercase tracking-widest mb-2">Section 07</p>
+        <h2 class="text-3xl font-bold mb-8 text-vibrant-teal uppercase border-b border-gray-800 pb-4">
+            Cultural Impact and the Folklore of Powerscaling
+        </h2>
+
+        <p class="text-gray-300 leading-relaxed mb-5">
+            Despite — or perhaps directly because of — the legal turbulence and corporate jockeying, Tung Tung Tung
+            Sahur has transcended its status as a mere static image, evolving into a foundational pillar of 2020s
+            internet mythology. The character's cultural footprint is meticulously documented on the
+            <em>Italian Brainrot Miraheze Wiki</em>, a massive, fan-driven encyclopedia that treats the absurd,
+            AI-generated subject matter with the rigorous, obsessive detail typically reserved for vast fantasy
+            epics.<sup><a href="#src-16">[16]</a></sup>
+        </p>
+
+        <h3 class="text-xl font-bold text-white mt-8 mb-4">The Powerscaling Mythos</h3>
+
+        <p class="text-gray-400 leading-relaxed mb-5">
+            Within the "powerscaling" community — an intense internet subculture dedicated to mathematically analyzing
+            the hypothetical combat strength of fictional characters — Tung Tung is revered as an
+            <span class="kw">apex entity</span>.<sup><a href="#src-50">[50]</a></sup> According to deeply established
+            wiki lore, the wooden anomaly possesses the following documented abilities:
+        </p>
+
+        <div class="glass-card rounded-lg p-6 mb-6">
+            <h4 class="mono text-xs text-eerie-red uppercase tracking-widest mb-4">Documented Abilities (Canon Wiki Lore)<sup><a href="#src-16">[16]</a></sup></h4>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <div class="bg-black border border-gray-800 rounded-lg p-3 text-center">
+                    <span class="text-vibrant-yellow text-xl block mb-1">&#9789;</span>
+                    <span class="text-white text-xs mono block">Low-Godly</span>
+                    <span class="text-gray-500 text-xs">Resurrection</span>
+                </div>
+                <div class="bg-black border border-gray-800 rounded-lg p-3 text-center">
+                    <span class="text-vibrant-teal text-xl block mb-1">&#9889;</span>
+                    <span class="text-white text-xs mono block">Instantaneous</span>
+                    <span class="text-gray-500 text-xs">Teleportation</span>
+                </div>
+                <div class="bg-black border border-gray-800 rounded-lg p-3 text-center">
+                    <span class="text-eerie-red text-xl block mb-1">&#9670;</span>
+                    <span class="text-white text-xs mono block">Telekinesis</span>
+                    <span class="text-gray-500 text-xs">Confirmed</span>
+                </div>
+                <div class="bg-black border border-gray-800 rounded-lg p-3 text-center">
+                    <span class="text-vibrant-yellow text-xl block mb-1">&#129426;</span>
+                    <span class="text-white text-xs mono block">Giant Gorilla</span>
+                    <span class="text-gray-500 text-xs">Transformation</span>
+                </div>
+                <div class="bg-black border border-gray-800 rounded-lg p-3 text-center">
+                    <span class="text-vibrant-teal text-xl block mb-1">&#129302;</span>
+                    <span class="text-white text-xs mono block">Armed Mech</span>
+                    <span class="text-gray-500 text-xs">Alternate Canon</span>
+                </div>
+                <div class="bg-black border border-gray-800 rounded-lg p-3 text-center">
+                    <span class="text-eerie-red text-xl block mb-1">&#9918;</span>
+                    <span class="text-white text-xs mono block">Aura-Infused</span>
+                    <span class="text-gray-500 text-xs">Baseball Bat</span>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-gray-400 leading-relaxed mb-5">
+            The fanon highlights a legendary, much-analyzed confrontation with rival anomaly
+            <em>Brr Brr Patapim</em> (a bizarre monkey-forest hybrid).<sup><a href="#src-16">[16]</a></sup> When Patapim
+            attempted to trap the wooden log in a massive chasm, Tung Tung teleported to safety, subsequently
+            transforming into a giant wooden gorilla to beat Patapim into submission with its aura-infused baseball bat.
+            This encounter has since been cited in serious Reddit powerscaling threads comparing the entity against
+            anime-grade reality manipulators.<sup><a href="#src-50">[50]</a></sup> The discourse is conducted with
+            complete sincerity.
+        </p>
+
+        <h3 class="text-xl font-bold text-white mt-8 mb-4">The Extended Family</h3>
+
+        <div class="overflow-x-auto mb-6">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Character</th>
+                        <th>Relationship</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Tung Tung Tung Sahur</strong></td>
+                        <td><span class="text-eerie-red">The Original</span></td>
+                        <td>The anomaly. Wooden log. Baseball bat. Eyes that imply consequences.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ballerina Cappuccina</strong></td>
+                        <td>Sister</td>
+                        <td>An elegant ballerina-cup hybrid. The comparatively refined member of the family.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ta Ta Ta Sahur</strong></td>
+                        <td>Brother</td>
+                        <td>The inferior sibling anomaly. Still a wooden log, but clearly the understudy.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tung Tung Tung Sahurita</strong></td>
+                        <td>Canonically-recognized Wife</td>
+                        <td>Acknowledged by the wiki with a seriousness that defies contemplation.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="text-gray-400 leading-relaxed mb-5">
+            This dense, collaborative storytelling mirrors the early days of the SCP Foundation — proving unequivocally
+            that even algorithmic "slop" can serve as raw material to forge compelling, communal
+            art.<sup><a href="#src-53">[53]</a></sup>
+        </p>
+
+        <h3 class="text-xl font-bold text-white mt-8 mb-3">Commercial Apex: Films, Donuts, and Fortnite</h3>
+
+        <p class="text-gray-400 leading-relaxed mb-5">
+            In May 2025, Indonesian horror studio Dee Company — known for domestic hits like <em>Vina</em> and
+            <em>Dosen Ghaib</em> — officially signaled intent to adapt the character into a feature-length
+            film.<sup><a href="#src-23">[23]</a></sup> A vocal contingent of netizens mocked the concept, arguing that
+            the transient, absurdist nature of an AI brainrot meme could not sustain a coherent narrative
+            arc.<sup><a href="#src-24">[24]</a></sup> These people have clearly never watched a Minions movie.
+        </p>
+        <p class="text-gray-400 leading-relaxed mb-5">
+            By October 2025, Dunkin' Donuts launched an exclusive Italian Brainrot-themed pastry line in
+            Peru.<sup><a href="#src-3">[3]</a></sup> Physical, unlicensed plastic action figures of Tung Tung Tung Sahur
+            flooded online marketplaces.<sup><a href="#src-54">[54]</a></sup> The digital anomaly was moving atoms.
+        </p>
+        <p class="text-gray-400 leading-relaxed">
+            The ultimate culmination lies in the February 2026 dataminer leaks: credible evidence of an official Tung
+            Tung Tung Sahur cosmetic skin in active development for
+            <em>Fortnite</em>.<sup><a href="#src-28">[28]</a></sup> If realized, this integration would permanently
+            solidify the character's transition from an Indonesian Ramadan practice to a globally monetized corporate
+            asset — the final, inevitable endpoint of internet culture under late-stage platform capitalism.
+        </p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── Editorial Conclusion ──────────────────────────────────────── -->
+    <section id="editorial" class="mb-20">
+        <p class="text-xs text-gray-700 mono uppercase tracking-widest mb-2">Editorial</p>
+        <h2 class="text-3xl font-bold mb-8 text-vibrant-teal uppercase border-b border-gray-800 pb-4">
+            The Farce and Future of the Digital Commons
+        </h2>
+
+        <div class="glass-card rounded-lg p-8">
+            <p class="text-gray-300 leading-relaxed mb-5 text-lg">
+                In an era where the velocity of internet meme cycles vastly outpaces the glacial speed of copyright
+                legislation, the saga of Tung Tung Tung Sahur serves as a perfect, polished mirror reflecting the
+                inherent, glaring contradictions of the modern digital economy.
+            </p>
+            <p class="text-gray-400 leading-relaxed mb-5">
+                When <code>@noxaasht</code> typed a prompt into a text box in February 2025, they did not merely
+                generate an arrangement of pixels; they initiated an algorithmic chain reaction that stripped an earnest
+                Indonesian religious tradition of its context, dressed it in the surrealist skin of pseudo-Italian
+                absurdity, and unleashed it upon a global generation of children starved for chaotic stimuli. The
+                subsequent, aggressive rush by entities like Mementum Labs to copyright this algorithmic hallucination —
+                weaponizing international treaties to intimidate independent Roblox developers while cutting licensing
+                deals with film studios and mobile games — is emblematic of late-stage platform capitalism. It represents
+                a cynical attempt to privatize the communal, open-source joy of internet folklore.
+            </p>
+            <p class="text-gray-400 leading-relaxed mb-5">
+                Yet, to entirely dismiss the prompt engineer's role in this process is to willfully ignore the reality
+                of how digital art is evolving. The editorial curation, the conceptual blending of the traditional
+                <em>kentongan</em> drum with post-ironic internet humor, and the subsequent cultivation of the
+                character's mythos required a distinct, albeit highly unconventional, human ingenuity. The rigid mandate
+                of the U.S. Copyright Office's 2025 report — that the act of prompting is legally worthless, akin merely
+                to giving instructions to a hired hand — feels increasingly out of touch with a reality where "prompt
+                engineers" are routinely generating cultural phenomena that rival traditional media empires in both
+                global reach and financial revenue.
+            </p>
+            <div class="pull-quote mt-2" style="margin-left:0; margin-right:0;">
+                <p>Tung Tung Tung Sahur is no longer merely a wooden log holding a baseball bat. It stands as a
+                monolithic monument to the 2020s internet: a bizarre, culturally flattened, machine-generated, fiercely
+                litigated, and endlessly entertaining piece of digital driftwood — floating upon the turbulent waters
+                of a global legal system that remains entirely unprepared for the future it has already inherited.</p>
+            </div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- ── Sources ───────────────────────────────────────────────────── -->
+    <section id="sources">
+        <h3 class="text-xl font-bold text-white mb-1 mono">Works Cited</h3>
+        <p class="text-xs text-gray-700 mono uppercase tracking-widest mb-6">54 sources &middot; Accessed March 18, 2026</p>
+
+        <ol class="sources-list">
+            <li id="src-1">Why the "tung tung tung sahur" Meme Went Viral: The Rules of 'Brainrot'. <em>The Impact Lawyers</em>. <a href="https://theimpactlawyers.com/articles/why-the-tung-tung-tung-sahur-meme-went-viral-the-rules-of-brainrot" target="_blank" rel="noopener">theimpactlawyers.com</a></li>
+            <li id="src-2">Top TikTok Memes 2025: 'Tung Tung Tung Sahur' &amp; Viral Trends. <em>insMind</em>. <a href="https://www.insmind.com/blog/top-tiktok-memes-tung-tung-tung-sahur" target="_blank" rel="noopener">insmind.com</a></li>
+            <li id="src-3">Italian brainrot. <em>Wikipedia</em>. <a href="https://en.wikipedia.org/wiki/Italian_brainrot" target="_blank" rel="noopener">en.wikipedia.org/wiki/Italian_brainrot</a></li>
+            <li id="src-4">What Is Italian Brainrot? The Bizarre Gen Alpha Trend, Explained. <em>PureWow</em>.</li>
+            <li id="src-5">Italian Brainrot Explained: Why It's All On Our FYP. <em>ZALORA Malaysia</em>.</li>
+            <li id="src-6">Tralalero Tralala: The Ultimate Guide to TikTok's Most Bizarre Meme. <em>StoryChat</em>.</li>
+            <li id="src-7">Roblox Hit Steal A Brainrot Loses Its Iconic Mascot Tung Tung Tung Sahur After Copyright Clash. <em>Shane the Gamer</em>. <a href="https://www.shanethegamer.com/esports-news/roblox-steal-a-brainrot-tung-tung-sahur-removed/" target="_blank" rel="noopener">shanethegamer.com</a></li>
+            <li id="src-8">Can You Copyright AI Slop? Inside the Roblox Steal a Brainrot Controversy. <em>PCMag</em>. <a href="https://www.pcmag.com/news/can-you-copyright-ai-slop-inside-the-roblox-steal-a-brainrot-controversy" target="_blank" rel="noopener">pcmag.com</a></li>
+            <li id="src-9">New Tung Tung Tung Sahur Face Mask / early online attestations. <em>eBay item listing</em>. <a href="https://www.ebay.com/itm/136905746186" target="_blank" rel="noopener">ebay.com</a></li>
+            <li id="src-10">Tung Tung Tung Sahur: What is the new TikTok meme and why is it trending? <em>Hindustan Times</em>. <a href="https://www.hindustantimes.com/world-news/us-news/tung-tung-tung-sahur-what-is-the-new-tiktok-meme-and-why-is-it-trending-101745345341732.html" target="_blank" rel="noopener">hindustantimes.com</a></li>
+            <li id="src-11">What is Tung Tung Sahur. <em>HitPaw / Edimakor</em>.</li>
+            <li id="src-12">Phenomenon Analysis of the Anomalous AI Tung Tung Sahur Meme. <em>EJESET</em>. <a href="https://ejeset.saintispub.com/ejeset/article/download/1017/267" target="_blank" rel="noopener">ejeset.saintispub.com</a></li>
+            <li id="src-13">Phenomenon Analysis of the Anomalous AI Tung Tung Sahur Meme. <em>ResearchGate</em>. <a href="https://www.researchgate.net/publication/395508920_Phenomenon_Analysis_of_the_Anomalous_AI_Tung_Tung_Sahur_Meme" target="_blank" rel="noopener">researchgate.net</a></li>
+            <li id="src-14">The Story of Italian Brainrot. <em>Network Cultures / Geert</em>. <a href="https://networkcultures.org/geert/2025/09/30/italian-brainrot/" target="_blank" rel="noopener">networkcultures.org</a></li>
+            <li id="src-15">[TUTORIAL] How to Create Viral TikTok Videos in the Style of "Tung Tung Tung Sahur" and "Italian Brainrot" Using AI. <em>Reddit r/FacelessEmpire</em>.</li>
+            <li id="src-16">Tung Tung Tung Sahur. <em>Italian Brainrot Fanon Wiki / Miraheze</em>. <a href="https://italianbrainrotfanon.miraheze.org/wiki/Tung_Tung_Tung_Sahur" target="_blank" rel="noopener">italianbrainrotfanon.miraheze.org</a></li>
+            <li id="src-17">Reddit r/tragedeigh discussion thread.</li>
+            <li id="src-18">This Italian Brainrot thing is getting out of hand. <em>Reddit r/Italia</em>.</li>
+            <li id="src-19">What is Br Br Patapim? All About the Italian Brainrot Character. <em>wikiHow</em>.</li>
+            <li id="src-20">What can the Origins of 25 Memes tell us about Culture and the Language of the Internet? <em>Medium / Elise Chee</em>.</li>
+            <li id="src-21">Discover how the Tung Tung Tung Sahur meme took TikTok by storm. <em>Mixvale</em>.</li>
+            <li id="src-22">Tung Tung Tung Sahur: Italian Brainrot Character Explained. <em>wikiHow</em>. <a href="https://www.wikihow.com/Tung-Tung-Tung-Sahur" target="_blank" rel="noopener">wikihow.com</a></li>
+            <li id="src-23">Viral di Medsos, Meme Tung Tung Tung Sahur Dikabarkan Akan Dibuatkan Film. <em>Kompas</em>. <a href="https://www.kompas.com/hype/read/2025/05/12/104147466/viral-di-medsos-meme-tung-tung-tung-sahur-dikabarkan-akan-dibuatkan-film" target="_blank" rel="noopener">kompas.com</a></li>
+            <li id="src-24">Meme "Tung Tung Tung Sahur" Direncanakan Jadi Film, Netizen Meragukan. <em>Radar Bangkalan / Jawa Pos</em>.</li>
+            <li id="src-25">Steal a Brainrot. <em>Wikipedia</em>. <a href="https://en.wikipedia.org/wiki/Steal_a_Brainrot" target="_blank" rel="noopener">en.wikipedia.org/wiki/Steal_a_Brainrot</a></li>
+            <li id="src-26">Tung Tung Tung Sahur. <em>Steal a Brainrot Wiki / Fandom</em>. <a href="https://stealabrainrot.fandom.com/wiki/Tung_Tung_Tung_Sahur" target="_blank" rel="noopener">stealabrainrot.fandom.com</a></li>
+            <li id="src-27">Steal a Brainrot. <em>Roblox Wiki / Fandom</em>.</li>
+            <li id="src-28">Fortnite Tung Tung Sahur Collab Leaked — Is the Viral Brainrot Crossover Actually Real? <em>Vice</em>. <a href="https://www.vice.com/en/article/fortnite-tung-tung-sahur-collab-leaked-is-the-viral-brainrot-crossover-actually-real/" target="_blank" rel="noopener">vice.com</a></li>
+            <li id="src-29">How to Make Italian Brainrot Memes (Tung Tung Tung Sahur &amp; More). <em>YouTube</em>.</li>
+            <li id="src-30">How to Create Italian Brainrot Videos (Tung Tung Tung Sahur Style) – Viral AI Method! <em>YouTube</em>.</li>
+            <li id="src-31">AI Tung Tung Tung Sahur Video Generator: Create Brainrot Memes. <em>Media.io</em>.</li>
+            <li id="src-32">How To Make Italian Brainrot Memes – Tralalero Tralala AI Animation. <em>YouTube</em>.</li>
+            <li id="src-33">YMMV / A.I. Brainrot Animals. <em>TV Tropes</em>.</li>
+            <li id="src-34">Steal a Brainrot. <em>Wikitubia / Fandom</em>.</li>
+            <li id="src-35">Where's Tung Tung? Why This AI Wooden Log Man Was Yanked From a Popular Roblox Game. <em>PCMag Australia</em>. <a href="https://au.pcmag.com/games/113259/wheres-tung-tung-why-this-ai-wooden-log-man-was-yanked-from-a-popular-roblox-game" target="_blank" rel="noopener">au.pcmag.com</a></li>
+            <li id="src-36">Roblox removes AI character after copyright dispute raises ownership questions. <em>CO/AI</em>.</li>
+            <li id="src-37">Copyright Office Releases Part 2 of Artificial Intelligence Report. <em>U.S. Copyright Office</em>. <a href="https://www.copyright.gov/newsnet/2025/1060.html" target="_blank" rel="noopener">copyright.gov</a></li>
+            <li id="src-38">Copyright Office Publishes Report on Copyrightability of AI-Generated Materials. <em>Skadden Insights</em>. <a href="https://www.skadden.com/insights/publications/2025/02/copyright-office-publishes-report" target="_blank" rel="noopener">skadden.com</a></li>
+            <li id="src-39">Copyright Office Releases New Report on Copyrightability of AI Works. <em>Manatt</em>. <a href="https://www.manatt.com/insights/newsletters/copyright-office-releases-new-report-on-copyrightability-of-ai-works" target="_blank" rel="noopener">manatt.com</a></li>
+            <li id="src-40">Legality of Copyright Protection on Artificial Intelligence Works. <em>APPIHI ejournal</em>.</li>
+            <li id="src-41">Ensuring Legal Certainty of Copyright for AI-Generated Works in Indonesia. <em>MIMBAR YUSTITIA</em>.</li>
+            <li id="src-42">Copyright and Generative AI: Does Indonesian Copyright Law Protect AI-Generated Works? <em>KK Advocates</em>. <a href="https://www.kk-advocates.com/news/read/copyright-and-generative-ai-does-indonesian-copyright-law-protect-ai-generated-works" target="_blank" rel="noopener">kk-advocates.com</a></li>
+            <li id="src-43">Law No. 28 of 2014 on Copyright, Indonesia. <em>WIPO Lex</em>. <a href="https://www.wipo.int/wipolex/en/legislation/details/15600" target="_blank" rel="noopener">wipo.int</a></li>
+            <li id="src-44">Legal Analysis of AI-Generated Creations: Copyright Law Perspectives. <em>E3S Web of Conferences</em>.</li>
+            <li id="src-45">The Urgency of AI Regulation from a Joint Authorship Perspective on Copyright Infringement. <em>Indonesia Private Law Review</em>.</li>
+            <li id="src-46">Intellectual Property Rights Violations in Data Generated by Artificial Intelligence: A Comparative Analysis. <em>Kosmik Hukum</em>.</li>
+            <li id="src-47">Tung tung tung sahur drama. <em>Reddit r/aiwars</em>. <a href="https://www.reddit.com/r/aiwars/comments/1lf9qtv/tung_tung_tung_sahur_drama/" target="_blank" rel="noopener">reddit.com/r/aiwars</a></li>
+            <li id="src-48">Generative AI in The Context of Intellectual Property Law. <em>Dinasti Research</em>.</li>
+            <li id="src-49">Brainrot Memes Decoded: Your Toolkit For Discovery And Creation. <em>AFFiNE</em>. <a href="https://affine.pro/blog/brainrot-memes" target="_blank" rel="noopener">affine.pro</a></li>
+            <li id="src-50">Light Novel Tung Tung Tung Sahur Vs Featherine Augustus Aurora? <em>Reddit r/PowerScaling</em>.</li>
+            <li id="src-51">Tung Tung Tung Sahur (Canon, Italian Brainrot). <em>Character Stats and Profiles Wiki</em>.</li>
+            <li id="src-52">Brr Brr Patapim 3D Animation. <em>PixelBoom</em>.</li>
+            <li id="src-53">Tralalerito and the GROWING Beans. <em>YouTube</em>.</li>
+            <li id="src-54">Physical Tung Tung Tung Sahur merchandise listings. <em>TikTok Shop / eBay</em>.</li>
+        </ol>
+    </section>
+
+</main>
+
+<footer class="text-center py-8 border-t border-gray-900 mt-12 text-gray-600 text-xs mono">
+    Generated via OSINT Research Protocol &middot; March 2026 &middot;
+    Nobody involved in the creation of this report was harmed, copyrighted, or beaten with a bat.
+    <br>
+    <span class="mt-2 block">
+        <a href="{{ site.baseurl }}/ttt-info-report-1/"
+           style="color:#664444; text-decoration:none; transition:color 0.15s;"
+           onmouseover="this.style.color='#ff2a2a';" onmouseout="this.style.color='#664444';">
+            &#128249; Infographic v1.0
+        </a>
+        &nbsp;&middot;&nbsp;
+        <a href="{{ site.baseurl }}/"
+           style="color:#444466; text-decoration:none; transition:color 0.15s;"
+           onmouseover="this.style.color='#00f0ff';" onmouseout="this.style.color='#444466';">
+            &#8592; Home
+        </a>
+    </span>
+</footer>
+
+<script>
+(function(){
+    var b=document.getElementById('reading-progress');
+    if(!b)return;
+    window.addEventListener('scroll',function(){
+        var h=document.documentElement.scrollHeight-window.innerHeight;
+        b.style.width=(h>0?Math.min(window.scrollY/h*100,100):0)+'%';
+        b.setAttribute('aria-valuenow',Math.round(h>0?Math.min(window.scrollY/h*100,100):0));
+    },{passive:true});
+})();
+</script>
+</body>
+</html>

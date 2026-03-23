@@ -274,12 +274,12 @@ title: "|0⟩"
         &#128249; Infographic v1.0
       </a>
       <a href="/tung-tung-tung-sahur/"
-         style="padding: 0.5rem 1rem; background: transparent; color: #884444;
-                border: 1px solid #441515; border-radius: 5px; text-decoration: none;
+         style="padding: 0.5rem 1rem; background: transparent; color: #00f0ff;
+                border: 1px solid #00f0ff; border-radius: 5px; text-decoration: none;
                 font-weight: bold; font-size: 0.82rem; font-family: Monaco, monospace;
                 transition: background 0.15s, color 0.15s;"
-         onmouseover="this.style.background='#1a0505';this.style.color='#cc4444';"
-         onmouseout="this.style.background='transparent';this.style.color='#884444';">
+         onmouseover="this.style.background='#00f0ff';this.style.color='#000';"
+         onmouseout="this.style.background='transparent';this.style.color='#00f0ff';">
         &#128209; Narrative Report
       </a>
     </div>
