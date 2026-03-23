@@ -338,9 +338,9 @@ title: "|0⟩"
     <img src="/assets/img/filename.ext" alt="desc">
   </div>-->
   
- <!-- <div class="gallery-item">
+  <div class="gallery-item">
     <img src="/assets/img/opiumbird1-draft1.png" alt="(✿◡‿◡)">
   </div>
-</div>-->
+</div>
 
 <hr class="divider" />
