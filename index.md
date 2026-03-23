@@ -153,23 +153,63 @@ title: "|0⟩"
 
 </div>
 
-<!-- ════════════════════════════════════════════════════════════════
-     MEME HISTORY
-════════════════════════════════════════════════════════════════ -->
+<!-- ── Anti-AI Ideology Series ──────────────────────────────────── -->
+<h4 style="color: #06b6d4; font-family: Monaco, monospace; font-size: 0.9rem;
+           margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
+  AI Use &amp; Anti-AI Ideology
+</h4>
 
-<h3 style="color: #00ff5d; margin-top: 3rem; font-family: Monaco, monospace; letter-spacing: -0.02em;">
+<div style="margin-top: 0.5rem; padding: 1rem 1.25rem;
+            border: 1px solid #0c3044;
+            border-left: 3px solid #06b6d4;
+            border-radius: 12px; background: #060e18;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+
+  <p style="color: #4a8299; font-size: 0.85rem; margin: 0.3rem 0 0.5rem; font-family: Monaco, monospace;">
+    March 2026 &middot; Research Report v2.0
+  </p>
+  <p style="color: #3d6a7a; font-size: 0.8rem; margin: 0 0 0.75rem; font-family: Monaco, monospace; line-height: 1.55;">
+    An OSINT investigation into cognitive dissonance within the r/antiai community &mdash; users who
+    publicly condemn AI while privately suffering from character-simulation chatbot addiction.
+    Covers platform escalation typology, the Isolation Paradox, clinical pathologies, and
+    exact binomial significance testing (p&nbsp;=&nbsp;2.61&times;10&#x207B;&#x2075;).
+  </p>
+  <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+    <a href="/anti-ai-guilt-info-1"
+       style="padding: 0.55rem 1.1rem; background: transparent; color: #ec4899;
+              border: 1px solid #ec4899; border-radius: 6px; text-decoration: none;
+              font-weight: bold; font-size: 0.85rem; font-family: Monaco, monospace;"
+       onmouseover="this.style.background='#ec4899';this.style.color='#000';"
+       onmouseout="this.style.background='transparent';this.style.color='#ec4899';">
+      &#128249; Quick Infographic
+    </a>
+    <a href="/anti-ai-guilt-report-1"
+       style="padding: 0.55rem 1.1rem; background: transparent; color: #06b6d4;
+              border: 1px solid #06b6d4; border-radius: 6px; text-decoration: none;
+              font-weight: bold; font-size: 0.85rem; font-family: Monaco, monospace;"
+       onmouseover="this.style.background='#06b6d4';this.style.color='#000';"
+       onmouseout="this.style.background='transparent';this.style.color='#06b6d4';">
+      &#128209; Full Report
+    </a>
+  </div>
+
+</div>
+
+<!-- ── Meme Review ───────────────────────────────────────────────── -->
+<h4 style="color: #ff4040; font-family: Monaco, monospace; font-size: 0.9rem;
+           margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
   Meme Review
-</h3>
-<p style="color: #ad6666; font-size: 0.8rem; font-family: Monaco, monospace; margin: 0.2rem 0 1rem;">
-  Investigative reports on the lifecycle, IP law, and cultural anatomy of memes.
-</p>
+</h4>
 
-<div style="margin-top: 0.75rem; padding: 1.25rem 1.35rem;
+<div style="margin-top: 0.5rem; padding: 1.25rem 1.35rem;
             border: 1px solid #2a1010;
-            border-top: 3px solid #ff2a2a;
-            border-radius: 0 0 12px 12px;
-            background: #080808;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.8), inset 0 1px 0 #1a0505;">
+            border-left: 3px solid #ff2a2a;
+            border-radius: 12px; background: #080808;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+
+  <p style="color: #7a4444; font-size: 0.8rem; margin: 0 0 1rem; font-family: Monaco, monospace; line-height: 1.55;">
+    Investigative reports on the lifecycle, IP law, and cultural anatomy of memes.
+  </p>
 
   <!-- ── Entry: Tung Tung Tung Sahur ──────────────────────────── -->
   <div>
