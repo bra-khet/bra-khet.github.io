@@ -187,7 +187,7 @@ title: "|0⟩"
 
 </div>
 
-<!-- ── AI Infrastructure & Water [Claude, Uncomment this section when I update it with the water-report-2.md, I've disabled it until we re-draft it] ─────────────────────────────────── 
+<!-- ── AI Infrastructure & Water ─────────────────────────────────── -->
 <h4 style="color: #00b4d8; font-family: Monaco, monospace; font-size: 0.9rem;
            margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
   AI Water Use - Infrastructure &amp; Environment
@@ -220,7 +220,7 @@ title: "|0⟩"
   </div>
 
 </div>
--->
+
 
 <!-- ── Anti-AI Ideology Series ──────────────────────────────────── -->
 <h4 style="color: #06b6d4; font-family: Monaco, monospace; font-size: 0.9rem;
