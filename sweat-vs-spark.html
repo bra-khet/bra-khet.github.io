@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="css/threshold-demos.css">
 </head>
 <body>
-
+<div id="reading-progress" role="progressbar" aria-label="Reading progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
   <a href="#main-content" class="skip-link">Skip to demo</a>
   <div id="sr-live" aria-live="polite" aria-atomic="true" class="sr-only"></div>
 
@@ -200,5 +200,8 @@ threshold = 40%  →  thin copyright in curated compilation</code>
     /* Extra layout toggle for reset btn visibility */
     #apply-btn.applied + #reset-btn { display: inline-flex; }
   </style>
+  <script>
+  (function(){var b=document.getElementById('reading-progress');if(!b)return;window.addEventListener('scroll',function(){var h=document.documentElement.scrollHeight-window.innerHeight;b.style.width=(h>0?Math.min(window.scrollY/h*100,100):0)+'%';},{passive:true});})();
+  </script>
 </body>
 </html>

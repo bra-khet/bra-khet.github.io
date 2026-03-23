@@ -67,11 +67,18 @@ permalink: /3d-light-shading-1/
         #hacker-nav-banner .banner-tag { color: #334155; font-size: 11px; }
         #hacker-nav-banner .banner-v   { color: #0891b2; font-size: 11px; }
 
-        body { padding-top: 37px; }
+        body { padding-top: 40px; } /* 37px banner + 3px progress */
+        #reading-progress {
+            position: fixed; top: 37px; left: 0;
+            width: 0%; height: 3px;
+            background: linear-gradient(90deg, #22d3ee, #2dd4bf);
+            z-index: 9998; transition: width .1s linear; pointer-events: none;
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-300 font-sans leading-relaxed selection:bg-cyan-500 selection:text-white antialiased">
 
+<div id="reading-progress" role="progressbar" aria-label="Reading progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 <!-- ── Nav banner ─────────────────────────────────────────────────── -->
 <div id="hacker-nav-banner">
     <span>
@@ -462,6 +469,9 @@ permalink: /3d-light-shading-1/
         },
         options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'right' } } }
     });
+</script>
+<script>
+(function(){var b=document.getElementById('reading-progress');if(!b)return;window.addEventListener('scroll',function(){var h=document.documentElement.scrollHeight-window.innerHeight;b.style.width=(h>0?Math.min(window.scrollY/h*100,100):0)+'%';},{passive:true});})();
 </script>
 </body>
 </html>

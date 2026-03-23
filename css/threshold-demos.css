@@ -60,6 +60,25 @@
   }
 }
 
+/* ── Reading progress bar (shared across all threshold demos) ──── */
+#reading-progress {
+  position: fixed;
+  top: 0; left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--clr-accent), var(--clr-protected));
+  z-index: 9999;
+  transition: width .1s linear;
+  pointer-events: none;
+}
+
+/* ai-human-collab-demo has a nav banner → push bar below it */
+.has-nav-banner #reading-progress { top: 37px; z-index: 9998; }
+
+@media (prefers-reduced-motion: reduce) {
+  #reading-progress { transition: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration:  0.01ms !important;

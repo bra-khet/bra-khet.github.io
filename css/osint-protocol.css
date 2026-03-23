@@ -41,6 +41,7 @@
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Monaco', 'Consolas', monospace;
 
+  --banner-h:    37px;
   --sidebar-w:   220px;
   --content-max: 740px;
   --progress-h:  3px;
@@ -49,6 +50,37 @@
   --radius-md: 8px;
   --radius-lg: 12px;
 }
+
+/* ── Hacker nav banner ──────────────────────────────────────────── */
+#hacker-nav-banner {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  height: var(--banner-h);
+  background: #04080e;
+  border-bottom: 1px dashed rgba(0, 200, 232, 0.22);
+  font-family: Monaco, 'Bitstream Vera Sans Mono', 'Lucida Console', Terminal, monospace;
+  font-size: 13px;
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #eaeaea;
+}
+#hacker-nav-banner a {
+  color: #63c0f5;
+  text-decoration: none;
+  text-shadow: 0 0 5px rgba(104, 182, 255, 0.45);
+}
+#hacker-nav-banner a:hover { text-decoration: underline; }
+#hacker-nav-banner .banner-title {
+  color: var(--cyan);
+  text-shadow: 0 0 5px rgba(0, 200, 232, 0.35), 0 0 14px rgba(0, 200, 232, 0.12);
+  letter-spacing: -0.02em;
+  font-size: 12px;
+}
+#hacker-nav-banner .banner-tag { color: var(--text-label); font-size: 11px; }
+#hacker-nav-banner .banner-v   { color: var(--purple); font-size: 11px; }
 
 /* ── Reset ──────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -73,23 +105,25 @@ body {
   color: var(--text-body);
   line-height: 1.78;
   min-height: 100vh;
+  padding-top: calc(var(--banner-h) + var(--progress-h));
 }
 
-/* ── Reading progress bar ───────────────────────────────────────── */
+/* ── Reading progress bar — sits at bottom edge of nav banner ───── */
 #reading-progress {
   position: fixed;
-  top: 0; left: 0;
+  top: var(--banner-h); left: 0;
   width: 0%;
   height: var(--progress-h);
   background: linear-gradient(90deg, var(--cyan), var(--purple));
-  z-index: 1000;
+  z-index: 9998;
   transition: width .1s linear;
+  pointer-events: none;
 }
 
 /* ── Skip link ──────────────────────────────────────────────────── */
 .skip-link {
   position: absolute;
-  top: calc(-1 * var(--progress-h) - 3rem);
+  top: calc(-1 * var(--banner-h) - 3rem);
   left: 1rem;
   background: var(--cyan);
   color: #000;
@@ -97,11 +131,11 @@ body {
   border-radius: 0 0 6px 6px;
   font-weight: 700;
   font-size: .875rem;
-  z-index: 9999;
+  z-index: 10000;
   text-decoration: none;
   transition: top .15s;
 }
-.skip-link:focus { top: var(--progress-h); }
+.skip-link:focus { top: var(--banner-h); }
 
 /* ── Page layout ────────────────────────────────────────────────── */
 .page-wrapper {
@@ -127,8 +161,8 @@ body {
 .sidebar {
   grid-area: sidebar;
   position: sticky;
-  top: calc(var(--progress-h) + 1rem);
-  height: calc(100vh - var(--progress-h) - 2rem);
+  top: calc(var(--banner-h) + var(--progress-h) + 1rem);
+  height: calc(100vh - var(--banner-h) - var(--progress-h) - 2rem);
   overflow-y: auto;
   overflow-x: hidden;
   padding-block: 2.5rem .5rem;
