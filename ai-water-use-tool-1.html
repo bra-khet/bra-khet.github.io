@@ -1,0 +1,703 @@
+---
+layout: null
+title: "AI Water-Energy Nexus: Interactive Explorer"
+permalink: /ai-water-use-tool-1/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Interactive AI water-energy calculator. Real-time per-query, facility-scale, and national projection demos. Based on bra-khet AI Water Report v1.2.">
+<title>AI Water-Energy Nexus: Interactive Explorer | bra-khet</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*{box-sizing:border-box}
+body{background:#030a14;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#e2e8f0}
+:root{--cw:#00b4d8;--cg:#00ff9f;--cp:#7a3fff;--co:#f97316;--cc:#08131f;--cb:rgba(0,180,216,.15)}
+
+@keyframes glow-pulse{0%,100%{box-shadow:0 0 10px rgba(0,180,216,.2),0 0 25px rgba(0,180,216,.06)}50%{box-shadow:0 0 20px rgba(0,180,216,.45),0 0 50px rgba(0,180,216,.14)}}
+.gp{animation:glow-pulse 3.5s ease-in-out infinite}
+@keyframes glow-green{0%,100%{box-shadow:0 0 10px rgba(0,255,159,.2)}50%{box-shadow:0 0 22px rgba(0,255,159,.45)}}
+.gg{animation:glow-green 3.5s ease-in-out infinite}
+
+.noise-bg::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.025;pointer-events:none}
+
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;outline:none;cursor:pointer;background:linear-gradient(to right,var(--cw) var(--pct,25%),#0f2035 var(--pct,25%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--cw);border:2px solid #030a14;box-shadow:0 0 8px rgba(0,180,216,.5);transition:transform .15s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--cw);border:2px solid #030a14;cursor:pointer}
+input[type=range]:focus-visible{outline:2px solid var(--cw);outline-offset:4px;border-radius:4px}
+
+.card{background:var(--cc);border:1px solid var(--cb);border-radius:10px;padding:1rem}
+.card-hi{border-color:rgba(0,180,216,.38)}
+
+.tab-btn{padding:.42rem 1rem;border-radius:6px;font-size:.8rem;font-weight:600;cursor:pointer;border:1px solid transparent;transition:all .2s;color:#64748b;background:transparent;white-space:nowrap}
+.tab-btn.active{background:rgba(0,180,216,.1);border-color:rgba(0,180,216,.4);color:#00b4d8}
+.tab-btn:hover:not(.active){border-color:rgba(0,180,216,.2);color:#94a3b8}
+
+.pill{padding:.27rem .62rem;border-radius:20px;font-size:.7rem;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);color:#475569;transition:all .15s;white-space:nowrap}
+.pill.active{background:var(--cw);border-color:var(--cw);color:#030a14}
+.pill:hover:not(.active){border-color:rgba(0,180,216,.35);color:#00b4d8}
+.pill.ga.active{background:var(--cg);border-color:var(--cg)}
+.pill.oa.active{background:var(--co);border-color:var(--co)}
+
+.rnum{font-size:2.6rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;color:var(--cw);font-family:'JetBrains Mono','Courier New',monospace}
+.runit{font-size:.82rem;color:#475569;margin-top:.2rem}
+
+.bar-t{height:5px;border-radius:3px;background:rgba(255,255,255,.05);overflow:hidden;margin:.2rem 0}
+.bar-f{height:100%;border-radius:3px;transition:width .4s ease;min-width:2px}
+
+.acc-btn{width:100%;text-align:left;background:var(--cc);border:1px solid var(--cb);border-radius:8px;padding:.72rem 1rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-size:.83rem;font-weight:600;color:#94a3b8;transition:border-color .2s,color .2s}
+.acc-btn:hover{border-color:rgba(0,180,216,.3);color:#00b4d8}
+.acc-body{display:none;background:rgba(6,16,28,.8);border:1px solid var(--cb);border-top:none;border-radius:0 0 8px 8px;padding:.9rem 1rem;font-size:.81rem;color:#94a3b8;line-height:1.78}
+.acc-body li{margin:.28rem 0}
+
+[data-tip]{position:relative;cursor:help}
+[data-tip]::after{content:attr(data-tip);position:absolute;bottom:130%;left:50%;transform:translateX(-50%);background:#0f2035;border:1px solid var(--cb);color:#94a3b8;font-size:.68rem;white-space:nowrap;padding:.3rem .55rem;border-radius:5px;pointer-events:none;opacity:0;transition:opacity .2s;z-index:50}
+[data-tip]:hover::after{opacity:1}
+
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#030a14}::-webkit-scrollbar-thumb{background:#0f2035;border-radius:3px}
+</style>
+</head>
+<body>
+
+<nav style="background:rgba(3,10,20,.93);border-bottom:1px solid rgba(0,180,216,.12);backdrop-filter:blur(12px)" class="sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-between flex-wrap gap-2">
+    <a href="{{ site.baseurl }}/" class="text-xs font-mono text-slate-600 hover:text-sky-500 transition-colors">← bra-khet.github.io</a>
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="text-xs font-mono px-2 py-0.5 rounded" style="background:rgba(0,180,216,.08);border:1px solid rgba(0,180,216,.2);color:rgba(0,180,216,.7)">Tool 1 / 2</span>
+      <a href="{{ site.baseurl }}/ai-water-use-report-1/" class="text-xs font-mono px-3 py-1 rounded border border-slate-800 text-slate-500 hover:border-sky-800 hover:text-sky-500 transition-all">📄 Full Report v1.2</a>
+      <a href="{{ site.baseurl }}/ai-water-use-tool-2/" class="text-xs font-mono px-3 py-1 rounded" style="border:1px solid rgba(122,63,255,.3);color:#7a3fff" onmouseover="this.style.borderColor='#7a3fff';this.style.color='#a78bfa'" onmouseout="this.style.borderColor='rgba(122,63,255,.3)';this.style.color='#7a3fff'">🎨 Tool 2: Image &amp; Video →</a>
+    </div>
+  </div>
+</nav>
+
+<header class="noise-bg relative overflow-hidden" style="background:linear-gradient(160deg,#030a14 0%,#061422 55%,#030c1e 100%);border-bottom:1px solid rgba(0,180,216,.1);padding:2.5rem 1rem 2rem">
+  <div class="max-w-4xl mx-auto text-center relative">
+    <p class="text-xs font-mono uppercase tracking-widest mb-2.5" style="color:rgba(0,180,216,.5)">AI Water-Energy Nexus · Interactive Explorer · Report v1.2</p>
+    <h1 class="font-extrabold mb-3 leading-tight" style="font-size:clamp(1.7rem,5vw,2.9rem)">AI Water Use: <span style="color:#00b4d8">Visualized</span></h1>
+    <p class="mb-6 max-w-2xl mx-auto leading-relaxed" style="font-size:clamp(.88rem,2vw,1rem);color:#64748b">Real-time calculations. Interactive scale comparisons. The full hydrological context behind the headlines — from a single query to national infrastructure.</p>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto mb-5">
+      <div class="card gg text-center"><div class="text-xl font-bold font-mono" style="color:#00ff9f">0.26 mL</div><div class="text-xs mt-1 text-slate-600">Gemini / query (2026)</div></div>
+      <div class="card text-center"><div class="text-xl font-bold font-mono" style="color:#f97316">519 mL</div><div class="text-xs mt-1 text-slate-600">Legacy estimate (2023)</div></div>
+      <div class="card gp text-center"><div class="text-xl font-bold font-mono" style="color:#00b4d8">877 yrs</div><div class="text-xs mt-1 text-slate-600">1 burger = daily AI use</div></div>
+      <div class="card text-center"><div class="text-xl font-bold font-mono text-slate-300">~1%</div><div class="text-xs mt-1 text-slate-600">U.S. water: all data centers</div></div>
+    </div>
+    <p class="text-xs font-mono" style="color:#1e3a4a">Mekonnen &amp; Hoekstra 2012 · Google Ironwood 2026 · LBNL 2024 · Jegham et al. 2025</p>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 py-8">
+
+  <div class="flex gap-2 mb-6 flex-wrap">
+    <button class="tab-btn active" onclick="switchTab('pq',this)">⚡ Per-Query Calculator</button>
+    <button class="tab-btn" onclick="switchTab('fac',this)">🏢 Facility Scale</button>
+    <button class="tab-btn" onclick="switchTab('nat',this)">📈 National Projection</button>
+  </div>
+
+  <!-- TAB 1: Per-Query -->
+  <div id="tab-pq">
+    <div id="grid-pq" style="display:grid;gap:1.4rem">
+      <div style="display:flex;flex-direction:column;gap:1rem">
+
+        <div class="card">
+          <div class="flex items-baseline justify-between mb-2">
+            <label class="text-sm font-semibold text-slate-300" for="pq-q">Daily AI Queries</label>
+            <span class="font-mono font-bold text-sky-400" id="pq-q-d">30</span>
+          </div>
+          <input type="range" id="pq-q" min="0" max="7" step="0.01" value="1.477" oninput="updatePQ()" aria-label="Daily AI queries (log scale 1–10M)">
+          <div class="flex justify-between text-xs font-mono mt-1.5 mb-3" style="color:#1e3a4a"><span>1</span><span>30</span><span>300</span><span>10k</span><span>10M</span></div>
+          <div class="flex flex-wrap gap-1.5">
+            <button class="pill active" onclick="setPQQ(30,this)">Casual · 30</button>
+            <button class="pill" onclick="setPQQ(100,this)">Power · 100</button>
+            <button class="pill" onclick="setPQQ(1000,this)">Dev · 1k</button>
+            <button class="pill oa" onclick="setPQQ(1e6,this)">Platform · 1M</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex items-baseline justify-between mb-1">
+            <label class="text-sm font-semibold text-slate-300" for="pq-e">Energy per Query</label>
+            <span class="font-mono font-bold text-sky-400" id="pq-e-d">2.0 Wh</span>
+          </div>
+          <p class="text-xs mb-2.5" style="color:#1e3a4a">Wh of electricity consumed per 100-word inference prompt</p>
+          <input type="range" id="pq-e" min="0.03" max="40" step="0.01" value="2.0" oninput="updatePQ()" aria-label="Energy per query in Wh">
+          <div class="flex flex-wrap gap-1.5 mt-3">
+            <button class="pill" onclick="setPQE(0.3,this)">Search · 0.3</button>
+            <button class="pill ga" onclick="setPQE(0.24,this)">Gemini · 0.24</button>
+            <button class="pill active" onclick="setPQE(2.0,this)">2026 AI · 2.0</button>
+            <button class="pill" onclick="setPQE(14,this)">Legacy · 14</button>
+            <button class="pill oa" onclick="setPQE(35,this)">Reasoning · 35</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex items-baseline justify-between mb-1">
+            <label class="text-sm font-semibold text-slate-300" for="pq-wue">Site WUE <span class="text-xs font-normal" style="color:#1e3a4a" data-tip="Water Usage Effectiveness: liters evaporated per kWh of IT load">[?]</span></label>
+            <span class="font-mono font-bold text-sky-400" id="pq-wue-d">0.25 L/kWh</span>
+          </div>
+          <input type="range" id="pq-wue" min="0.02" max="9.0" step="0.01" value="0.25" oninput="updatePQ()" aria-label="Site WUE litres per kWh">
+          <div class="flex flex-wrap gap-1.5 mt-3">
+            <button class="pill" onclick="setPQWUE(0.15,this)">AWS Best · 0.15</button>
+            <button class="pill active" onclick="setPQWUE(0.25,this)">US 2026 · 0.25</button>
+            <button class="pill" onclick="setPQWUE(0.55,this)">Legacy · 0.55</button>
+            <button class="pill" onclick="setPQWUE(1.8,this)">Poor · 1.8</button>
+            <button class="pill oa" onclick="setPQWUE(9.0,this)">AZ Peak &gt;9</button>
+          </div>
+          <label class="flex items-center gap-2 mt-3 cursor-pointer">
+            <input type="checkbox" id="pq-scope" checked onchange="updatePQ()" class="accent-sky-400" aria-label="Include Scope 2 grid indirect water">
+            <span class="text-xs" style="color:#334155">Include grid indirect water (Scope 1+2 · 4.52 L/kWh US avg)</span>
+          </label>
+        </div>
+
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:.85rem">
+
+        <div class="card card-hi">
+          <p class="text-xs font-mono uppercase tracking-wider mb-2" style="color:#334155">Daily Water Footprint</p>
+          <div class="rnum" id="pq-r">---</div>
+          <div class="runit" id="pq-ru">per day</div>
+          <div class="text-xs font-mono mt-2.5 px-3 py-2 rounded" style="background:rgba(0,180,216,.05);border:1px solid rgba(0,180,216,.1);color:#475569" id="pq-tag">---</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem">
+          <div class="card text-center"><div class="text-xs mb-1" style="color:#475569">Direct cooling</div><div class="font-mono font-bold text-sky-400 text-sm" id="pq-dir">---</div><div class="text-xs" style="color:#1e3a4a" id="pq-dpct">---</div></div>
+          <div class="card text-center"><div class="text-xs mb-1" style="color:#475569">Grid indirect</div><div class="font-mono font-bold text-slate-400 text-sm" id="pq-ind">---</div><div class="text-xs" style="color:#1e3a4a" id="pq-ipct">---</div></div>
+          <div class="card text-center"><div class="text-xs mb-1" style="color:#475569">Daily energy</div><div class="font-mono font-bold text-green-400 text-sm" id="pq-kwh">---</div><div class="text-xs" style="color:#1e3a4a">kWh / day</div></div>
+          <div class="card text-center"><div class="text-xs mb-1" style="color:#475569">Annual total</div><div class="font-mono font-bold text-orange-400 text-sm" id="pq-ann">---</div><div class="text-xs" style="color:#1e3a4a">per year</div></div>
+        </div>
+
+        <div class="card">
+          <p class="text-xs font-mono uppercase tracking-wider mb-3" style="color:#334155">Scale Equivalences — Daily Water</p>
+          <div style="display:flex;flex-direction:column;gap:.5rem">
+            <div class="flex items-center justify-between text-sm"><span style="color:#475569">🍔 1 burger (2,498 L) equals years of AI</span><span class="font-mono font-bold text-sky-400" id="eq-byr">---</span></div>
+            <div class="bar-t"><div class="bar-f" id="eq-byr-bar" style="width:0%;background:rgba(0,180,216,.45)"></div></div>
+            <div class="flex items-center justify-between text-sm"><span style="color:#475569">🌱 1 kg beef (15,415 L) in years of AI</span><span class="font-mono font-bold text-green-400 text-xs" id="eq-beef-yr">---</span></div>
+            <div class="flex items-center justify-between text-sm"><span style="color:#475569">🚿 10-min shower (65 L) share</span><span class="font-mono text-slate-300 text-xs" id="eq-shower">---</span></div>
+            <div class="flex items-center justify-between text-sm"><span style="color:#475569">🏠 Household daily (341 L) share</span><span class="font-mono text-slate-300 text-xs" id="eq-house">---</span></div>
+            <div class="flex items-center justify-between text-sm"><span style="color:#475569">💧 500 mL bottles/day</span><span class="font-mono text-slate-300 text-xs" id="eq-btl">---</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: Facility -->
+  <div id="tab-fac" class="hidden">
+    <div id="grid-fac" style="display:grid;gap:1.4rem">
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div class="card">
+          <div class="flex items-baseline justify-between mb-2"><label class="text-sm font-semibold text-slate-300" for="fac-mw">Facility IT Load</label><span class="font-mono font-bold text-sky-400" id="fac-mw-d">100 MW</span></div>
+          <input type="range" id="fac-mw" min="1" max="1000" value="100" oninput="updateFAC()" aria-label="Facility IT load in MW">
+          <div class="flex flex-wrap gap-1.5 mt-3">
+            <button class="pill" onclick="setFACMW(5,this)">Small · 5 MW</button>
+            <button class="pill active" onclick="setFACMW(100,this)">Hyperscale · 100 MW</button>
+            <button class="pill" onclick="setFACMW(500,this)">Mega · 500 MW</button>
+            <button class="pill oa" onclick="setFACMW(1000,this)">Colossus-2 · 1 GW</button>
+          </div>
+        </div>
+        <div class="card">
+          <p class="text-sm font-semibold text-slate-300 mb-2.5">Cooling Technology</p>
+          <div class="flex flex-wrap gap-1.5">
+            <button class="pill active" onclick="setFACCool('evap',this)">Open-loop Evaporative</button>
+            <button class="pill" onclick="setFACCool('hybrid',this)">Hybrid</button>
+            <button class="pill ga" onclick="setFACCool('dry',this)">Dry / Zero-Water</button>
+          </div>
+          <p class="text-xs mt-2.5" style="color:#1e3a4a" id="fac-cdesc">Standard evaporative cooling: WUE ~0.45 L/kWh. Most prevalent in U.S. hyperscale data centers.</p>
+        </div>
+        <div class="card">
+          <p class="text-sm font-semibold text-slate-300 mb-2.5">Location <span class="text-xs font-normal" style="color:#1e3a4a" data-tip="Grid Water Intensity Factor: L evaporated upstream per kWh generated">(GWIF L/kWh)</span></p>
+          <div class="flex flex-wrap gap-1.5">
+            <button class="pill active" onclick="setFACLoc('us',this)">US Avg · 4.52</button>
+            <button class="pill oa" onclick="setFACLoc('az',this)">Arizona · 4.80</button>
+            <button class="pill" onclick="setFACLoc('tx',this)">Texas · 3.20</button>
+            <button class="pill ga" onclick="setFACLoc('nv',this)">Nevada · 2.80</button>
+          </div>
+        </div>
+        <div class="card" style="background:rgba(249,115,22,.04);border-color:rgba(249,115,22,.18)">
+          <p class="text-xs font-mono mb-1" style="color:#c2400e">AZ Context</p>
+          <p class="text-xs" style="color:#64748b">Ceres projects AZ data center demand could spike <strong style="color:#94a3b8">+870%</strong>. Even at that projection (3.7B gal/yr), all AZ data centers would represent just <strong style="color:#94a3b8">0.63%</strong> of Arizona's 586B gal/yr alfalfa irrigation.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.85rem">
+        <div class="card card-hi"><p class="text-xs font-mono uppercase tracking-wider mb-2" style="color:#334155">Annual Direct Water</p><div class="rnum text-3xl" id="fac-dir">---</div><div class="runit">million liters / year (Scope 1 cooling)</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem">
+          <div class="card text-center"><div class="text-xs mb-1" style="color:#475569">Total Scope 1+2</div><div class="font-mono font-bold text-orange-400 text-sm" id="fac-tot">---</div></div>
+          <div class="card text-center"><div class="text-xs mb-1" style="color:#475569">Annual Energy</div><div class="font-mono font-bold text-green-400 text-sm" id="fac-kwh">---</div><div class="text-xs" style="color:#1e3a4a">GWh / yr</div></div>
+        </div>
+        <div class="card">
+          <p class="text-xs font-mono uppercase tracking-wider mb-3" style="color:#334155">Equivalences (direct water)</p>
+          <div style="display:flex;flex-direction:column;gap:.55rem;font-size:.82rem">
+            <div class="flex justify-between"><span style="color:#475569">🏠 U.S. households annually</span><span class="font-mono text-sky-400" id="fac-hh">---</span></div>
+            <div class="flex justify-between"><span style="color:#475569">⛳ AZ golf courses (500k gal/day)</span><span class="font-mono text-slate-300" id="fac-golf">---</span></div>
+            <div class="flex justify-between"><span style="color:#475569">🌾 AZ alfalfa acres irrigated</span><span class="font-mono text-slate-300" id="fac-alf">---</span></div>
+            <div class="flex justify-between"><span style="color:#475569">🍔 Fast-food restaurants (Scope 1+2, supply chain)</span><span class="font-mono text-green-400" id="fac-rest">---</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: National Projection -->
+  <div id="tab-nat" class="hidden">
+    <div id="grid-nat" style="display:grid;gap:1.25rem;margin-bottom:1.25rem">
+      <div class="card"><p class="text-sm font-semibold text-slate-300 mb-2.5">Project Through Year</p><div class="flex justify-between mb-1.5"><span class="text-xs" style="color:#1e3a4a">2023</span><span class="font-mono font-bold text-sky-400" id="nat-yr-d">2028</span></div><input type="range" id="nat-yr" min="2023" max="2028" step="1" value="2028" oninput="updateNAT()" aria-label="Projection year"></div>
+      <div class="card"><p class="text-sm font-semibold text-slate-300 mb-2.5">Growth Scenario</p><div class="flex flex-col gap-1.5"><button class="pill" onclick="setNATScen('conservative',this)">Conservative</button><button class="pill active" onclick="setNATScen('baseline',this)">Baseline (LBNL)</button><button class="pill oa" onclick="setNATScen('aggressive',this)">Aggressive</button></div></div>
+      <div class="card card-hi"><p class="text-xs font-mono uppercase tracking-wider mb-1.5" style="color:#334155">Projected Totals</p><div class="font-mono font-bold text-sky-400 text-lg" id="nat-dir">---</div><div class="text-xs mb-2" style="color:#1e3a4a">B liters/yr · direct cooling</div><div class="font-mono font-bold text-orange-400" id="nat-ind">---</div><div class="text-xs" style="color:#1e3a4a">B liters/yr · grid indirect</div></div>
+    </div>
+    <div class="card" style="height:300px"><canvas id="nat-chart" aria-label="National AI water projection 2023–2028"></canvas></div>
+    <p class="text-xs font-mono mt-2" style="color:#1e3a4a">Direct = data center cooling evaporation (Scope 1). Indirect = upstream thermoelectric generation water (Scope 2). Source: LBNL 2024; IEA 4E 2025; UC Riverside 2026.</p>
+  </div>
+
+  <!-- Visualizations -->
+  <section class="mt-10">
+    <h2 class="text-lg font-bold text-slate-200 mb-1">Scale Visualization</h2>
+    <p class="text-xs font-mono mb-5" style="color:#334155">Per-query calculator values vs. real-world baselines — logarithmic scale — updates live</p>
+    <div id="grid-viz" style="display:grid;gap:1.4rem">
+      <div class="card" style="height:310px"><canvas id="bar-chart" aria-label="Logarithmic water use comparison: AI vs baselines"></canvas></div>
+      <div class="card" style="height:310px"><canvas id="pie-chart" aria-label="Direct vs indirect water breakdown"></canvas></div>
+    </div>
+  </section>
+
+  <!-- Report Highlights -->
+  <section class="mt-10">
+    <h2 class="text-lg font-bold text-slate-200 mb-1">Report Highlights</h2>
+    <p class="text-xs font-mono mb-5" style="color:#334155">Key findings from bra-khet AI Water-Energy Nexus Report v1.2</p>
+    <div style="display:flex;flex-direction:column;gap:.5rem">
+
+      <div><button class="acc-btn" onclick="toggleAcc(this)"><span>📊 The Agricultural Baseline — Numbers That Actually Matter</span><span style="transition:transform .25s">▼</span></button>
+      <div class="acc-body">Agriculture accounts for <strong>70% of global freshwater withdrawals</strong> and <strong>37% of U.S. national withdrawals</strong>. All U.S. data centers combined: <strong>~1%</strong>. Arizona alfalfa: ~586 billion gallons/yr — all AZ data centers use less than <strong>0.16%</strong> of that. A single 1 MW data center uses 0.34% of the water needed to irrigate one 300-acre alfalfa field. A proposed 2,000-acre AZ data center complex would use <em>significantly less water</em> than the 9,700-home residential subdivision originally zoned for the same parcel.</div></div>
+
+      <div><button class="acc-btn" onclick="toggleAcc(this)"><span>🍔 Peer-Reviewed Burger vs. AI — Mekonnen &amp; Hoekstra (2012), <em>Ecosystems</em></span><span style="transition:transform .25s">▼</span></button>
+      <div class="acc-body">A complete hamburger carries ~<strong>2,498 L (660 gallons)</strong> total water footprint. <strong>93.5%</strong> is green water — rainfall captured by soil, never drawn from aquifers. Only <strong>3.6% (550 L/kg)</strong> is blue water competing with municipal supply. USGS confirms 460 gallons per ¼-lb patty; National Geographic cites 1,799 gal/lb (all traced to Water Footprint Network).
+        <ul class="mt-2"><li>• 2026 standard (2.0 mL/query): 1 burger = <strong>114 years</strong> of 30 daily AI queries</li><li>• Gemini efficiency (0.26 mL/query): 1 burger = <strong>877 years</strong> of 30 daily AI queries</li><li>• Blue water only (62 L/patty): still ≈ <strong>2.8 years</strong> of daily AI at 2026 standard</li><li>• 1 kg beef (15,415 L): <strong>703 years</strong> of daily AI at 2026 standard</li></ul>
+      </div></div>
+
+      <div><button class="acc-btn" onclick="toggleAcc(this)"><span>📉 The 519 mL Headline — A 2023 Snapshot, Not a Physical Constant</span><span style="transition:transform .25s">▼</span></button>
+      <div class="acc-body">Ren et al. (2023, arXiv:2304.03271): accurate for GPT-4 on A100 at 0.55 L/kWh WUE. The 2026 landscape:
+        <ul class="mt-2"><li>• H100/H200 + MoE architecture: <strong>1.5–2.5 mL</strong> — 207–346× lower</li><li>• Google Gemini on Ironwood TPU: <strong>0.26 mL (~5 drops)</strong> — ~2,000× lower</li><li>• OpenAI median (internal disclosure): <strong>~1.7 mL</strong> — ~300× lower</li><li>• Reasoning models (o3, DeepSeek-R1): <strong>140–200 mL</strong> — still 2.6–3.7× below 2023 headline</li></ul>
+        MoE activates only 37B of 671B parameters per forward pass — 5–10× energy reduction. Anthropic Claude 3.7 Sonnet DEA score: 0.886 (top-tier). The 519 mL figure was accurate; it is a snapshot of obsolete infrastructure.
+      </div></div>
+
+      <div><button class="acc-btn" onclick="toggleAcc(this)"><span>🔧 The Semiconductor Paradox — Manufacturing Dwarfs Operation</span><span style="transition:transform .25s">▼</span></button>
+      <div class="acc-body">A single state-of-the-art fab consumes <strong>20–38 million liters per day</strong>. TSMC Phoenix: <strong>17 million gallons/day</strong> — dwarfing the entire Phoenix data center fleet. Intel Ocotillo (AZ): 10.5 billion gallons in 2023, but achieved <strong>net positive 106% water status</strong> by returning more than it withdrew via a 12-acre on-site reclamation facility (9.1 M gal/day treated). The true hydrological heavyweights in AI's supply chain are the foundries, not the cloud.</div></div>
+
+      <div><button class="acc-btn" onclick="toggleAcc(this)"><span>⚖️ The Balanced Debate — Legitimate Concerns vs. Structural Misrepresentations</span><span style="transition:transform .25s">▼</span></button>
+      <div class="acc-body"><strong>Legitimate concerns:</strong> Municipal distribution bottlenecks in NoVA (12% of local utility use in peak summer), Phoenix, and Texas; political economy of agricultural water right buyouts accelerated by data center growth; opacity via NDAs; disproportionate impact on drought-stressed basins.<br><br><strong>Structural misrepresentations:</strong> Conflating municipal-level strain with basin-level depletion; using 2023 hardware efficiency for 2026 projections; ignoring agriculture's 37× larger share; presenting Scope 1+2 totals without distinguishing which competes with drinking water.<br><br>Data centers are not the primary threat to water security — but they are a real, growing secondary pressure that deserves honest monitoring, not hyperbole.</div></div>
+
+      <div><button class="acc-btn" onclick="toggleAcc(this)"><span>🌱 Mitigation Trajectories — What the Hyperscalers Are Actually Deploying</span><span style="transition:transform .25s">▼</span></button>
+      <div class="acc-body"><ul><li>• <strong>Microsoft:</strong> Zero-water cooling in next-gen facilities (dry adiabatic evaporative)</li><li>• <strong>Amazon:</strong> Expanding water recycling to 120+ locations by 2030</li><li>• <strong>Google:</strong> 2026 Water Stewardship Portfolio committed to water-positive status</li><li>• <strong>Loudoun County, VA:</strong> 700M gal/yr reclaimed "purple pipe" water delivered to data centers via dedicated 20-mile network</li><li>• <strong>Intel Ocotillo:</strong> Net-positive water in 2023 via 12-acre reclamation facility</li><li>• <strong>Legislative:</strong> SB 1160 (WA) mandates closed-loop cooling; 40+ states have 2025–2026 data center water bills</li></ul></div></div>
+
+    </div>
+  </section>
+
+  <!-- Sources -->
+  <section class="mt-10">
+    <h2 class="text-lg font-bold text-slate-200 mb-4">Sources</h2>
+    <div class="card">
+      <ol class="text-xs font-mono space-y-1 leading-relaxed" style="color:#334155;list-style:none;padding:0">
+        <li>[1] Mekonnen, M.M. &amp; Hoekstra, A.Y. (2012). A global assessment of the water footprint of farm animal products. <em>Ecosystems</em> 15(3):401–415.</li>
+        <li>[2] Ren, S. et al. (2023). On the Energy and Water Consumption of Generative AI. arXiv:2304.03271.</li>
+        <li>[3] Jegham, I. et al. (2025). Empirical energy benchmarking of 30 LLMs. arXiv preprint.</li>
+        <li>[4] Google (2026). Ironwood TPU benchmarks. Google Environmental Reports (0.24 Wh/query, 0.26 mL total).</li>
+        <li>[5] Lawrence Berkeley National Laboratory (2024). US Data Center Energy Use Report.</li>
+        <li>[6] Ceres (2024). Drained by Data: Water Consumption in the AI Era (AZ 870% projection).</li>
+        <li>[7] HARC (Jan 2026). Thirsty Data: Water Use and the Projected Data Center Boom in Texas.</li>
+        <li>[8] ICPRB (Dec 2025). 2025 Washington Metropolitan Area Water Supply Study.</li>
+        <li>[9] Grist (2024). Arizona's water is drying up. That's not stopping the data center rush.</li>
+        <li>[10] IEA 4E (2025). Data Centre Energy Use: Critical Review of Models and Results.</li>
+        <li>[11] Water Footprint Network (2024). Product water footprints — beef (15,400 L/kg). waterfootprint.org</li>
+        <li>[12] USGS. How much water does it take to grow a hamburger? water.usgs.gov (460 gal / ¼-lb patty).</li>
+        <li>[13] UC Riverside News (Mar 2026). Data center water spikes could cost billions.</li>
+        <li>[14] INRAE (2023). The water footprint within the cattle industry. Via Nutrinews (~50 L/kg blue water).</li>
+        <li>[15] OpenAI (2025). Energy and water efficiency disclosure (median ~0.34 Wh/query).</li>
+        <li>[16] AWWA (2022). US daily household indoor use baseline: 341 L/day.</li>
+        <li>[17] National Geographic (2014). Eating Water Up: The Water Footprint of Food (1,799 gal/lb beef).</li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer style="border-top:1px solid rgba(0,180,216,.08);margin-top:4rem;padding:2rem 1rem;background:rgba(3,10,20,.9)">
+  <div class="max-w-6xl mx-auto text-center">
+    <p class="text-xs font-mono mb-2" style="color:#1e3a4a">Built from bra-khet AI Water Report v1.2 · March 2026 &nbsp;·&nbsp; Data: LBNL 2024, Mekonnen &amp; Hoekstra 2012, IEA 4E, HARC, USGS &nbsp;·&nbsp; Tool 1 of 2 — <a href="{{ site.baseurl }}/ai-water-use-tool-2/" style="color:#7a3fff">see Tool 2: Image &amp; Video Gen →</a></p>
+    <p class="text-xs font-mono" style="color:#0f2035">Direct water (Scope 1) = site WUE × kWh. Indirect (Scope 2) = grid EWIF × kWh. Educational purposes; cite primary sources for professional use.</p>
+    <div class="flex justify-center gap-3 mt-4 flex-wrap">
+      <a href="{{ site.baseurl }}/ai-water-use-report-1/" class="text-xs font-mono px-3 py-1 rounded border border-slate-800 text-slate-600 hover:border-sky-800 hover:text-sky-500 transition-all">📄 Full Report</a>
+      <a href="{{ site.baseurl }}/ai-water-use-tool-2/" class="text-xs font-mono px-3 py-1 rounded" style="border:1px solid rgba(122,63,255,.3);color:#7a3fff">🎨 Tool 2: Image &amp; Video Gen</a>
+      <a href="{{ site.baseurl }}/" class="text-xs font-mono px-3 py-1 rounded border border-slate-800 text-slate-700 hover:border-slate-600 hover:text-slate-400 transition-all">← Home</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   AI Water-Energy Nexus Tool 1 v1.0 — Calculator Engine
+   bra-khet.github.io · Based on Report v1.2
+   ─────────────────────────────────────────────────────────────
+   Core equations:
+     Energy (kWh) = queries × Wh_per_query / 1000
+     Direct water (L)   = kWh × WUE (site Water Usage Effectiveness)
+     Indirect water (L) = kWh × GWIF (Grid Water Intensity Factor)
+   Sources: LBNL 2024, Mekonnen & Hoekstra 2012, Jegham et al. 2025
+═══════════════════════════════════════════════════════════════ */
+
+/* ── Constants ─────────────────────────────────────────────── */
+const GWIF        = 4.52;   // L/kWh US national avg thermoelectric (LBNL 2024)
+const BURGER_L    = 2498;   // Full hamburger L (Mekonnen & Hoekstra 2012 + WFN)
+const BEEF_KG_L   = 15415;  // L/kg beef (Mekonnen & Hoekstra 2012)
+const SHOWER_L    = 65;     // 10-min shower L
+const HOUSEHOLD_L = 341;    // US daily household indoor L (AWWA 2022)
+
+/* ── State ─────────────────────────────────────────────────── */
+let pqQ=30,pqE=2.0,pqWUE=0.25,pqScope=true;
+let facMW=100,facCool='evap',facLoc='us';
+let natYear=2028,natScen='baseline';
+let barChart=null,pieChart=null,natChart=null;
+
+/* ── Responsive helpers ─────────────────────────────────────── */
+function applyGrid() {
+  const w = window.innerWidth;
+  const cols2 = w < 768 ? '1fr' : '1fr 1fr';
+  const cols3 = w < 640 ? '1fr' : w < 900 ? '1fr 1fr' : '1fr 1fr 1fr';
+  ['grid-pq','grid-fac','grid-viz'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.gridTemplateColumns = cols2;
+  });
+  const ng = document.getElementById('grid-nat');
+  if (ng) ng.style.gridTemplateColumns = cols3;
+}
+window.addEventListener('resize', applyGrid);
+
+/* ── Tab switch ─────────────────────────────────────────────── */
+function switchTab(id, btn) {
+  ['pq','fac','nat'].forEach(t => {
+    const el = document.getElementById('tab-'+t);
+    if (el) el.classList.toggle('hidden', t !== id);
+  });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  if (id === 'nat') requestAnimationFrame(updateNAT);
+}
+
+/* ── Utilities ──────────────────────────────────────────────── */
+function fmtL(l) {
+  if (!isFinite(l)||l<0) return {n:'---',u:''};
+  if (l<1e-6) return {n:(l*1e9).toFixed(1),u:'nL'};
+  if (l<0.001) return {n:(l*1000).toFixed(2),u:'mL'};
+  if (l<1) return {n:(l*1000).toFixed(l<0.01?1:0),u:'mL'};
+  if (l<10) return {n:l.toFixed(2),u:'L'};
+  if (l<100) return {n:l.toFixed(1),u:'L'};
+  if (l<1000) return {n:l.toFixed(0),u:'L'};
+  if (l<1e6) return {n:(l/1000).toFixed(1),u:'kL'};
+  if (l<1e9) return {n:(l/1e6).toFixed(2),u:'ML'};
+  return {n:(l/1e9).toFixed(2),u:'GL'};
+}
+function fs(l){const f=fmtL(l);return f.n+(f.u?' '+f.u:'');}
+
+function pctFmt(v,ref){
+  const p=(v/ref)*100;
+  if(p<0.0001)return '<0.0001%';
+  if(p<0.001)return p.toFixed(4)+'%';
+  if(p<0.01)return p.toFixed(3)+'%';
+  if(p<0.1)return p.toFixed(2)+'%';
+  if(p<1)return p.toFixed(1)+'%';
+  return p.toFixed(0)+'%';
+}
+
+function setEl(id,txt){const e=document.getElementById(id);if(e)e.textContent=txt;}
+
+function sldBg(el){
+  const mn=+el.min,mx=+el.max,v=+el.value;
+  el.style.setProperty('--pct',((v-mn)/(mx-mn)*100)+'%');
+}
+
+function logVal(sl){return Math.round(Math.pow(10,+sl.value));}
+
+/* ── Per-Query Calculator ──────────────────────────────────────
+   Energy   = q × (Wh/1000)           [kWh]
+   Direct   = kWh × WUE               [L]
+   Indirect = kWh × GWIF (if Scope2)  [L]
+──────────────────────────────────────────────────────────────── */
+function tagStr(daily, annual) {
+  const bYrs = annual>0 ? Math.round(BURGER_L/annual) : 9999;
+  const sfx  = bYrs>=2 ? ' — 1 burger ≈ '+bYrs.toLocaleString()+' yrs daily AI' : '';
+  if (daily<1e-5) return '≈ a microscopic trace'+sfx;
+  if (daily<0.001) return '≈ a few drops'+sfx;
+  if (daily<0.01) return '≈ a small splash'+sfx;
+  if (daily<0.1) return '≈ a few sips of water'+sfx;
+  if (daily<0.5) return '≈ a small coffee cup'+sfx;
+  if (daily<1) return '≈ one 500 mL water bottle'+sfx;
+  if (daily<5) return 'a couple of large glasses'+sfx;
+  if (daily<15) return 'less than one dishwasher run'+sfx;
+  if (daily<70) return 'less than a 10-minute shower'+sfx;
+  if (daily<350) return 'within daily household use range'+sfx;
+  return 'significant household-scale use';
+}
+
+function updatePQ() {
+  const qSl=document.getElementById('pq-q');
+  const eSl=document.getElementById('pq-e');
+  const wSl=document.getElementById('pq-wue');
+  const scEl=document.getElementById('pq-scope');
+
+  if(qSl){pqQ=logVal(qSl);sldBg(qSl);setEl('pq-q-d',pqQ.toLocaleString());}
+  if(eSl){pqE=+eSl.value;sldBg(eSl);setEl('pq-e-d',(pqE<1?pqE.toFixed(2):pqE.toFixed(1))+' Wh');}
+  if(wSl){pqWUE=+wSl.value;sldBg(wSl);setEl('pq-wue-d',pqWUE.toFixed(2)+' L/kWh');}
+  if(scEl)pqScope=scEl.checked;
+
+  /* Core calculations */
+  const kwh_q  = pqE/1000;
+  const day_kwh= pqQ*kwh_q;
+  const dir_L  = day_kwh*pqWUE;
+  const ind_L  = pqScope ? day_kwh*GWIF : 0;
+  const tot_L  = dir_L+ind_L;
+  const ann_L  = tot_L*365;
+
+  const f=fmtL(tot_L);
+  setEl('pq-r',f.n);
+  setEl('pq-ru',f.u+' per day');
+  setEl('pq-tag',tagStr(tot_L,ann_L));
+
+  const df=fmtL(dir_L),iF=fmtL(ind_L),af=fmtL(ann_L);
+  setEl('pq-dir',df.n+' '+df.u);
+  setEl('pq-ind',iF.n+' '+iF.u);
+  const dp=tot_L>0?Math.round((dir_L/tot_L)*100):0;
+  setEl('pq-dpct',dp+'% of total');
+  setEl('pq-ipct',(100-dp)+'% of total');
+  setEl('pq-kwh',day_kwh<0.0001?day_kwh.toExponential(2):day_kwh.toFixed(4));
+  setEl('pq-ann',af.n+' '+af.u);
+
+  /* Equivalences */
+  const bYrs  = ann_L>0 ? Math.round(BURGER_L/ann_L) : 9999;
+  const bfYrs = ann_L>0 ? Math.round(BEEF_KG_L/ann_L) : 9999;
+  setEl('eq-byr',   bYrs>=1 ? bYrs.toLocaleString()+' yrs' : '<1 yr');
+  setEl('eq-beef-yr',bfYrs>=1 ? bfYrs.toLocaleString()+' yrs' : '<1 yr');
+  setEl('eq-shower', pctFmt(tot_L,SHOWER_L));
+  setEl('eq-house',  pctFmt(tot_L,HOUSEHOLD_L));
+  setEl('eq-btl',    (tot_L/0.5).toFixed(tot_L<0.5?3:1)+' btls');
+
+  const bBarEl=document.getElementById('eq-byr-bar');
+  if(bBarEl)bBarEl.style.width=Math.min(100,(ann_L/BURGER_L)*100).toFixed(3)+'%';
+
+  updateBarChart(tot_L);
+  updatePieChart(dir_L,ind_L);
+}
+
+function setPQQ(v,btn){
+  const sl=document.getElementById('pq-q');
+  if(sl){sl.value=Math.log10(Math.max(1,v));sldBg(sl);}
+  document.querySelectorAll('[onclick^="setPQQ"]').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  updatePQ();
+}
+function setPQE(v,btn){
+  const sl=document.getElementById('pq-e');
+  if(sl){sl.value=v;sldBg(sl);}
+  document.querySelectorAll('[onclick^="setPQE"]').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  updatePQ();
+}
+function setPQWUE(v,btn){
+  const sl=document.getElementById('pq-wue');
+  if(sl){sl.value=v;sldBg(sl);}
+  document.querySelectorAll('[onclick^="setPQWUE"]').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  updatePQ();
+}
+
+/* ── Facility Calculator ───────────────────────────────────────
+   annual_MWh = MW × 8760 hr/yr × 0.70 utilization
+   direct_ML  = annual_kWh × WUE / 1e6
+   indirect_ML= annual_kWh × GWIF_loc / 1e6
+──────────────────────────────────────────────────────────────── */
+const COOL={
+  evap:  {wue:0.45,desc:'Standard evaporative cooling: WUE ~0.45 L/kWh. Most prevalent in U.S. hyperscale data centers.'},
+  hybrid:{wue:0.18,desc:'Hybrid cooling: WUE ~0.18 L/kWh. Air-side + water-side economization for partial savings.'},
+  dry:   {wue:0.01,desc:'Dry/zero-water cooling: WUE ~0.01 L/kWh. Eliminates direct water use at higher PUE.'},
+};
+const LOC={
+  us:{gwif:4.52,name:'US National Average'},
+  az:{gwif:4.80,name:'Arizona (Colorado River Basin)'},
+  tx:{gwif:3.20,name:'Texas ERCOT (~35% wind)'},
+  nv:{gwif:2.80,name:'Nevada WECC'},
+};
+
+function updateFAC(){
+  const sl=document.getElementById('fac-mw');
+  if(sl){facMW=+sl.value;sldBg(sl);setEl('fac-mw-d',facMW+' MW');}
+  const cool=COOL[facCool],loc=LOC[facLoc];
+  const ann_MWh=facMW*8760*0.70;
+  const ann_kWh=ann_MWh*1000;
+  const dir_ML =(ann_kWh*cool.wue)/1e6;
+  const ind_ML =(ann_kWh*loc.gwif)/1e6;
+  const tot_ML =dir_ML+ind_ML;
+  const dir_L  =dir_ML*1e6;
+
+  setEl('fac-dir',dir_ML.toFixed(1)+' ML');
+  setEl('fac-tot',tot_ML.toFixed(1)+' ML');
+  setEl('fac-kwh',(ann_MWh/1000).toFixed(1));
+
+  const HH =HOUSEHOLD_L*365;
+  const GOLF=1892706*365;
+  const ALF =20276*365;
+  const REST=147e6*3.785;
+
+  setEl('fac-hh',   Math.round(dir_L/HH).toLocaleString()+' households');
+  setEl('fac-golf', (dir_L/GOLF).toFixed(2)+' golf courses');
+  setEl('fac-alf',  Math.round(dir_L/ALF).toLocaleString()+' acres');
+  setEl('fac-rest', (tot_ML*1e6/REST).toFixed(2)+' restaurants');
+}
+function setFACMW(v,btn){
+  const sl=document.getElementById('fac-mw');
+  if(sl){sl.value=v;sldBg(sl);}
+  document.querySelectorAll('[onclick^="setFACMW"]').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  updateFAC();
+}
+function setFACCool(v,btn){
+  facCool=v;
+  document.querySelectorAll('[onclick^="setFACCool"]').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  setEl('fac-cdesc',COOL[v].desc);
+  updateFAC();
+}
+function setFACLoc(v,btn){
+  facLoc=v;
+  document.querySelectorAll('[onclick^="setFACLoc"]').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  updateFAC();
+}
+
+/* ── National Projection ───────────────────────────────────────
+   Data in billion liters/yr, derived from LBNL 2024, IEA 4E 2025,
+   UC Riverside 2026. Direct = Scope 1. Indirect = Scope 2 grid.
+──────────────────────────────────────────────────────────────── */
+const NAT={
+  years:[2023,2024,2025,2026,2027,2028],
+  conservative:{d:[66,74,85,97,108,120], i:[500,610,750,880,990,1100]},
+  baseline:    {d:[66,80,98,115,138,160],i:[500,680,900,1100,1350,1580]},
+  aggressive:  {d:[66,91,118,150,188,225],i:[500,790,1120,1480,1870,2200]},
+};
+
+function updateNAT(){
+  const sl=document.getElementById('nat-yr');
+  if(sl){natYear=+sl.value;sldBg(sl);setEl('nat-yr-d',natYear);}
+  const idx =NAT.years.indexOf(natYear);
+  const end =idx>=0?idx+1:NAT.years.length;
+  const sc  =NAT[natScen];
+  const labs=NAT.years.slice(0,end);
+  const dD  =sc.d.slice(0,end);
+  const iD  =sc.i.slice(0,end);
+
+  setEl('nat-dir', dD[dD.length-1]+' B L');
+  setEl('nat-ind', iD[iD.length-1]+' B L');
+
+  const ctx=document.getElementById('nat-chart');
+  if(!ctx)return;
+  if(!natChart){
+    natChart=new Chart(ctx,{
+      type:'line',
+      data:{labels:labs,datasets:[
+        {label:'Direct (Scope 1 cooling)',data:dD,borderColor:'rgba(0,180,216,.85)',backgroundColor:'rgba(0,180,216,.08)',tension:0.4,fill:true,pointRadius:4,pointBackgroundColor:'rgba(0,180,216,.8)'},
+        {label:'Indirect (Scope 2 grid)', data:iD,borderColor:'rgba(249,115,22,.7)', backgroundColor:'rgba(249,115,22,.06)',tension:0.4,fill:true,pointRadius:4,pointBackgroundColor:'rgba(249,115,22,.7)'},
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,animation:{duration:350},
+        plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{callbacks:{label:c=>'  '+c.dataset.label+': '+c.raw+' B L/yr'}}},
+        scales:{x:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#475569'}},y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'#475569'},title:{display:true,text:'Billion Liters / Year',color:'#475569',font:{size:10}}}},
+      },
+    });
+  } else {
+    natChart.data.labels=labs;
+    natChart.data.datasets[0].data=dD;
+    natChart.data.datasets[1].data=iD;
+    natChart.update('none');
+  }
+}
+function setNATScen(v,btn){
+  natScen=v;
+  document.querySelectorAll('[onclick^="setNATScen"]').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  updateNAT();
+}
+
+/* ── Bar chart (logarithmic comparison) ─────────────────────── */
+const BAR_REFS=[
+  /* idx 0 = "Your AI" — dynamic */
+  {label:'Gemini 2026 · 30q/day (S1+S2)', l:30*0.00024*(0.20+GWIF)},  // ~0.034 L
+  {label:'Tooth brushing · 2 min',  l:8},
+  {label:'Dishwasher · 1 run',       l:13},
+  {label:'Shower · 10 min',          l:65},
+  {label:'Household indoor · day',   l:341},
+  {label:'1 kg beef produced',       l:15415},
+  {label:'AZ golf course · day',     l:1892706},
+  {label:'GPT-3 training (total)',   l:700000},
+];
+const BC=['rgba(0,180,216,.85)','rgba(0,255,159,.5)','rgba(100,220,220,.4)','rgba(100,200,220,.4)','rgba(80,180,210,.4)','rgba(100,170,195,.35)','rgba(255,180,50,.45)','rgba(50,200,80,.4)','rgba(249,115,22,.45)'];
+
+function updateBarChart(dailyL){
+  const ctx=document.getElementById('bar-chart');
+  if(!ctx)return;
+  const aiL=Math.max(dailyL,1e-5);
+  const data=[aiL,...BAR_REFS.map(r=>r.l)];
+  if(!barChart){
+    barChart=new Chart(ctx,{
+      type:'bar',
+      data:{labels:['Your AI (daily)',...BAR_REFS.map(r=>r.label)],datasets:[{data,backgroundColor:BC,borderColor:BC.map(c=>c.replace(/[\d.]+\)$/,'1)')),borderWidth:1,borderRadius:3}]},
+      options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,animation:{duration:280},
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'  '+fs(c.raw)}}},
+        scales:{
+          x:{type:'logarithmic',min:1e-5,max:3e6,grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#475569',font:{size:9},callback:v=>{const m={0.001:'1mL',0.01:'10mL',0.1:'100mL',1:'1L',10:'10L',100:'100L',1000:'1kL',10000:'10kL',100000:'100kL',1000000:'1ML'};return m[v]||'';}}},
+          y:{grid:{display:false},ticks:{color:c=>c.index===0?'rgba(0,180,216,.9)':'rgba(100,116,139,.6)',font:{size:9}}},
+        },
+      },
+    });
+  } else {
+    barChart.data.datasets[0].data[0]=aiL;
+    barChart.update('none');
+  }
+}
+
+/* ── Pie chart ──────────────────────────────────────────────── */
+function updatePieChart(dir,ind){
+  const ctx=document.getElementById('pie-chart');
+  if(!ctx)return;
+  const d=Math.max(dir,1e-9),i=Math.max(ind,1e-9),tot=d+i;
+  if(!pieChart){
+    pieChart=new Chart(ctx,{
+      type:'doughnut',
+      data:{labels:['Direct — Scope 1 (cooling)','Indirect — Scope 2 (grid)'],datasets:[{data:[d,i],backgroundColor:['rgba(0,180,216,.65)','rgba(249,115,22,.55)'],borderColor:['rgba(0,180,216,.9)','rgba(249,115,22,.9)'],borderWidth:1}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'65%',
+        plugins:{legend:{position:'bottom',labels:{color:'#94a3b8',font:{size:11},padding:12}},tooltip:{callbacks:{label:c=>'  '+c.label+': '+fs(c.raw)+' ('+Math.round((c.raw/tot)*100)+'%)'}}},
+      },
+    });
+  } else {
+    pieChart.data.datasets[0].data=[d,i];
+    pieChart.update('none');
+  }
+}
+
+/* ── Accordion ──────────────────────────────────────────────── */
+function toggleAcc(btn){
+  const body=btn.nextElementSibling;
+  const open=body.style.display==='block';
+  body.style.display=open?'none':'block';
+  btn.style.borderRadius=open?'8px':'8px 8px 0 0';
+  const arr=btn.querySelector('span:last-child');
+  if(arr)arr.style.transform=open?'rotate(0)':'rotate(180deg)';
+}
+
+/* ── Init ───────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded',function(){
+  applyGrid();
+  document.querySelectorAll('input[type=range]').forEach(sldBg);
+  updatePQ();
+  updateFAC();
+});
+</script>
+</body>
+</html>

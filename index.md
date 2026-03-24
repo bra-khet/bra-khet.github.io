@@ -91,6 +91,22 @@ title: "|0⟩"
        onmouseout="this.style.background='transparent';this.style.color='#00b4d8';">
       &#127760; Interactive Report
     </a>
+    <a href="/ai-water-use-tool-1/"
+       style="padding: 0.55rem 1.1rem; background: transparent; color: #00b4d8;
+              border: 1px solid rgba(0,180,216,0.45); border-radius: 6px; text-decoration: none;
+              font-weight: bold; font-size: 0.85rem; font-family: Monaco, monospace;"
+       onmouseover="this.style.background='rgba(0,180,216,0.1)';this.style.borderColor='#00b4d8';"
+       onmouseout="this.style.background='transparent';this.style.borderColor='rgba(0,180,216,0.45)';">
+      &#9889; Tool 1: Per-Query
+    </a>
+    <a href="/ai-water-use-tool-2/"
+       style="padding: 0.55rem 1.1rem; background: transparent; color: #7a3fff;
+              border: 1px solid rgba(122,63,255,0.45); border-radius: 6px; text-decoration: none;
+              font-weight: bold; font-size: 0.85rem; font-family: Monaco, monospace;"
+       onmouseover="this.style.background='rgba(122,63,255,0.1)';this.style.borderColor='#7a3fff';"
+       onmouseout="this.style.background='transparent';this.style.borderColor='rgba(122,63,255,0.45)';">
+      &#127912; Tool 2: Image &amp; Video
+    </a>
   </div>
 
 </div>

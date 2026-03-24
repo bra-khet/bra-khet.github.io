@@ -1,0 +1,799 @@
+---
+layout: null
+title: "AI Image & Video Gen: Water Impact Explorer"
+permalink: /ai-water-use-tool-2/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Interactive AI image and video generation water footprint calculator. Per-image, per-clip, and platform-scale comparisons. Companion to bra-khet AI Water Report v1.2.">
+<title>AI Image &amp; Video Gen: Water Impact | bra-khet</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*{box-sizing:border-box}
+body{background:#030a14;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#e2e8f0}
+:root{--cp:#7a3fff;--cg:#00ff9f;--cw:#00b4d8;--co:#f97316;--cc:#08131f;--cb:rgba(122,63,255,.15)}
+
+@keyframes glow-p{0%,100%{box-shadow:0 0 10px rgba(122,63,255,.2),0 0 25px rgba(122,63,255,.06)}50%{box-shadow:0 0 20px rgba(122,63,255,.45),0 0 50px rgba(122,63,255,.14)}}
+.gpp{animation:glow-p 3.5s ease-in-out infinite}
+@keyframes glow-green{0%,100%{box-shadow:0 0 10px rgba(0,255,159,.2)}50%{box-shadow:0 0 22px rgba(0,255,159,.45)}}
+.gg{animation:glow-green 3.5s ease-in-out infinite}
+
+.noise-bg::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.025;pointer-events:none}
+
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;outline:none;cursor:pointer;background:linear-gradient(to right,var(--cp) var(--pct,25%),#0f2035 var(--pct,25%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--cp);border:2px solid #030a14;box-shadow:0 0 8px rgba(122,63,255,.5);transition:transform .15s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--cp);border:2px solid #030a14;cursor:pointer}
+input[type=range]:focus-visible{outline:2px solid var(--cp);outline-offset:4px;border-radius:4px}
+
+.card{background:var(--cc);border:1px solid var(--cb);border-radius:10px;padding:1rem}
+.card-hi{border-color:rgba(122,63,255,.38)}
+
+.tab-btn{padding:.42rem 1rem;border-radius:6px;font-size:.8rem;font-weight:600;cursor:pointer;border:1px solid transparent;transition:all .2s;color:#64748b;background:transparent;white-space:nowrap}
+.tab-btn.active{background:rgba(122,63,255,.1);border-color:rgba(122,63,255,.4);color:#7a3fff}
+.tab-btn:hover:not(.active){border-color:rgba(122,63,255,.2);color:#94a3b8}
+
+.pill{padding:.27rem .62rem;border-radius:20px;font-size:.7rem;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);color:#475569;transition:all .15s;white-space:nowrap}
+.pill.active{background:var(--cp);border-color:var(--cp);color:#e2e8f0}
+.pill:hover:not(.active){border-color:rgba(122,63,255,.35);color:#a78bfa}
+.pill.ga.active{background:var(--cg);border-color:var(--cg);color:#030a14}
+.pill.oa.active{background:var(--co);border-color:var(--co)}
+.pill.ba.active{background:var(--cw);border-color:var(--cw);color:#030a14}
+
+.rnum{font-size:2.6rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;color:var(--cp);font-family:'JetBrains Mono','Courier New',monospace}
+.runit{font-size:.82rem;color:#475569;margin-top:.2rem}
+
+.bar-t{height:5px;border-radius:3px;background:rgba(255,255,255,.05);overflow:hidden;margin:.2rem 0}
+.bar-f{height:100%;border-radius:3px;transition:width .4s ease;min-width:2px}
+
+.acc-btn{width:100%;text-align:left;background:var(--cc);border:1px solid var(--cb);border-radius:8px;padding:.72rem 1rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-size:.83rem;font-weight:600;color:#94a3b8;transition:border-color .2s,color .2s}
+.acc-btn:hover{border-color:rgba(122,63,255,.3);color:#a78bfa}
+.acc-body{display:none;background:rgba(6,16,28,.8);border:1px solid var(--cb);border-top:none;border-radius:0 0 8px 8px;padding:.9rem 1rem;font-size:.81rem;color:#94a3b8;line-height:1.78}
+.acc-body li{margin:.28rem 0}
+
+[data-tip]{position:relative;cursor:help}
+[data-tip]::after{content:attr(data-tip);position:absolute;bottom:130%;left:50%;transform:translateX(-50%);background:#0f2035;border:1px solid var(--cb);color:#94a3b8;font-size:.68rem;white-space:nowrap;padding:.3rem .55rem;border-radius:5px;pointer-events:none;opacity:0;transition:opacity .2s;z-index:50}
+[data-tip]:hover::after{opacity:1}
+
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#030a14}::-webkit-scrollbar-thumb{background:#0f2035;border-radius:3px}
+</style>
+</head>
+<body>
+
+<nav style="background:rgba(3,10,20,.93);border-bottom:1px solid rgba(122,63,255,.12);backdrop-filter:blur(12px)" class="sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-between flex-wrap gap-2">
+    <a href="{{ site.baseurl }}/" class="text-xs font-mono text-slate-600 hover:text-purple-400 transition-colors">← bra-khet.github.io</a>
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="text-xs font-mono px-2 py-0.5 rounded" style="background:rgba(122,63,255,.08);border:1px solid rgba(122,63,255,.2);color:rgba(122,63,255,.7)">Tool 2 / 2</span>
+      <a href="{{ site.baseurl }}/ai-water-use-report-1/" class="text-xs font-mono px-3 py-1 rounded border border-slate-800 text-slate-500 hover:border-purple-800 hover:text-purple-400 transition-all">📄 Full Report v1.2</a>
+      <a href="{{ site.baseurl }}/ai-water-use-tool-1/" class="text-xs font-mono px-3 py-1 rounded" style="border:1px solid rgba(0,180,216,.3);color:#00b4d8" onmouseover="this.style.borderColor='#00b4d8'" onmouseout="this.style.borderColor='rgba(0,180,216,.3)'">⚡ Tool 1: Per-Query →</a>
+    </div>
+  </div>
+</nav>
+
+<header class="noise-bg relative overflow-hidden" style="background:linear-gradient(160deg,#030a14 0%,#0a0620 55%,#030a14 100%);border-bottom:1px solid rgba(122,63,255,.1);padding:2.5rem 1rem 2rem">
+  <div class="max-w-4xl mx-auto text-center relative">
+    <p class="text-xs font-mono uppercase tracking-widest mb-2.5" style="color:rgba(122,63,255,.5)">AI Image &amp; Video Gen · Water Impact Explorer · Report v1.2</p>
+    <h1 class="font-extrabold mb-3 leading-tight" style="font-size:clamp(1.7rem,5vw,2.9rem)">Generative AI: <span style="color:#7a3fff">The Visual Cost</span></h1>
+    <p class="mb-6 max-w-2xl mx-auto leading-relaxed" style="font-size:clamp(.88rem,2vw,1rem);color:#64748b">From a single image to platform-scale video production — the hydrological reality of AI creative tools, grounded in 2025–2026 benchmark estimates.</p>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto mb-5">
+      <div class="card gg text-center"><div class="text-xl font-bold font-mono" style="color:#00ff9f">~2.4 mL</div><div class="text-xs mt-1 text-slate-600">Fast AI image / image</div></div>
+      <div class="card gpp text-center"><div class="text-xl font-bold font-mono" style="color:#a78bfa">~95 mL</div><div class="text-xs mt-1 text-slate-600">Ultra quality / image</div></div>
+      <div class="card text-center"><div class="text-xl font-bold font-mono" style="color:#f97316">~382 mL</div><div class="text-xs mt-1 text-slate-600">10s HD video clip</div></div>
+      <div class="card text-center"><div class="text-xl font-bold font-mono text-slate-300">~7.2 L</div><div class="text-xs mt-1 text-slate-600">1 min of 4K AI video</div></div>
+    </div>
+    <p class="text-xs font-mono" style="color:#1e3a4a">Li et al. arXiv:2311.16863 · Zhao et al. arXiv:2509.19222 · MIT Tech Review 2025 · LBNL 2024</p>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 py-8">
+
+  <div class="flex gap-2 mb-6 flex-wrap">
+    <button class="tab-btn active" onclick="switchTab('img',this)">🎨 Image Generator</button>
+    <button class="tab-btn" onclick="switchTab('vid',this)">🎬 Video Generator</button>
+    <button class="tab-btn" onclick="switchTab('plat',this)">🌐 Platform Scale</button>
+  </div>
+
+  <!-- TAB 1: Image Generator -->
+  <div id="tab-img">
+    <div id="grid-img" style="display:grid;gap:1.4rem">
+      <div style="display:flex;flex-direction:column;gap:1rem">
+
+        <div class="card">
+          <p class="text-sm font-semibold text-slate-300 mb-2">Image Quality / Model</p>
+          <p class="text-xs mb-3" style="color:#1e3a4a">Energy per image varies 40× between SD-Turbo draft mode and DALL-E 3 ultra with iterative editing</p>
+          <div class="flex flex-wrap gap-1.5">
+            <button class="pill ga" onclick="setImgQ('fast',this)">Fast · 0.5 Wh</button>
+            <button class="pill active" onclick="setImgQ('std',this)">Standard · 3 Wh</button>
+            <button class="pill" onclick="setImgQ('high',this)">High · 10 Wh</button>
+            <button class="pill oa" onclick="setImgQ('ultra',this)">Ultra · 20 Wh</button>
+          </div>
+          <div class="mt-3 text-xs px-3 py-2 rounded" style="background:rgba(122,63,255,.04);border:1px solid rgba(122,63,255,.12);color:#475569" id="img-qdesc">SDXL / Midjourney v6 standard — 1024px, ~30 diffusion steps. Most common API tier.</div>
+        </div>
+
+        <div class="card">
+          <div class="flex items-baseline justify-between mb-2">
+            <label class="text-sm font-semibold text-slate-300" for="img-cnt">Images Generated / Day</label>
+            <span class="font-mono font-bold text-purple-400" id="img-cnt-d">50</span>
+          </div>
+          <input type="range" id="img-cnt" min="0" max="3" step="0.01" value="1.699" oninput="updateIMG()" aria-label="Images generated per day (log scale 1–1000)">
+          <div class="flex justify-between text-xs font-mono mt-1.5 mb-3" style="color:#1e3a4a"><span>1</span><span>10</span><span>100</span><span>500</span><span>1k</span></div>
+          <div class="flex flex-wrap gap-1.5">
+            <button class="pill" onclick="setImgCnt(5,this)">Casual · 5</button>
+            <button class="pill active" onclick="setImgCnt(50,this)">Creator · 50</button>
+            <button class="pill oa" onclick="setImgCnt(500,this)">Studio · 500</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex items-baseline justify-between mb-1">
+            <label class="text-sm font-semibold text-slate-300" for="img-wue">Site WUE <span class="text-xs font-normal" style="color:#1e3a4a" data-tip="Water Usage Effectiveness: L evaporated per kWh of IT load">[?]</span></label>
+            <span class="font-mono font-bold text-purple-400" id="img-wue-d">0.25 L/kWh</span>
+          </div>
+          <input type="range" id="img-wue" min="0.02" max="9.0" step="0.01" value="0.25" oninput="updateIMG()" aria-label="Site WUE litres per kWh">
+          <div class="flex flex-wrap gap-1.5 mt-3">
+            <button class="pill" onclick="setImgWUE(0.15,this)">AWS Best · 0.15</button>
+            <button class="pill active" onclick="setImgWUE(0.25,this)">US 2026 · 0.25</button>
+            <button class="pill" onclick="setImgWUE(0.55,this)">Legacy · 0.55</button>
+            <button class="pill oa" onclick="setImgWUE(9.0,this)">AZ Peak &gt;9</button>
+          </div>
+          <label class="flex items-center gap-2 mt-3 cursor-pointer">
+            <input type="checkbox" id="img-scope" checked onchange="updateIMG()" class="accent-purple-400" aria-label="Include Scope 2 grid indirect water">
+            <span class="text-xs" style="color:#334155">Include grid indirect water (Scope 1+2 · 4.52 L/kWh US avg)</span>
+          </label>
+        </div>
+
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:.85rem">
+
+        <div class="card card-hi">
+          <p class="text-xs font-mono uppercase tracking-wider mb-2" style="color:#334155">Water per Image</p>
+          <div class="rnum" id="img-per">---</div>
+          <div class="runit" id="img-per-u">per image generated</div>
+          <div class="text-xs font-mono mt-2.5 px-3 py-2 rounded" style="background:rgba(122,63,255,.05);border:1px solid rgba(122,63,255,.1);color:#475569" id="img-tag">---</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem">
+          <div class="card text-center"><div class="text-xs mb-1" style="color:#475569">Daily total</div><div class="font-mono font-bold text-purple-400 text-sm" id="img-day">---</div><div class="text-xs" style="color:#1e3a4a">per day</div></div>
+          <div class="card text-center"><div class="text-xs mb-1" style="color:#475569">Annual total</div><div class="font-mono font-bold text-orange-400 text-sm" id="img-ann">---</div><div class="text-xs" style="color:#1e3a4a">per year</div></div>
+          <div class="card text-center"><div class="text-xs mb-1" style="color:#475569">Daily energy</div><div class="font-mono font-bold text-green-400 text-sm" id="img-kwh">---</div><div class="text-xs" style="color:#1e3a4a">kWh / day</div></div>
+          <div class="card text-center"><div class="text-xs mb-1" style="color:#475569">Images / burger</div><div class="font-mono font-bold text-slate-300 text-sm" id="img-bimgs">---</div><div class="text-xs" style="color:#1e3a4a">images = 1 burger WF</div></div>
+        </div>
+
+        <div class="card">
+          <p class="text-xs font-mono uppercase tracking-wider mb-3" style="color:#334155">Scale Equivalences — Daily</p>
+          <div style="display:flex;flex-direction:column;gap:.5rem">
+            <div class="flex items-center justify-between text-sm"><span style="color:#475569">🍔 1 burger = years of this daily habit</span><span class="font-mono font-bold text-purple-400" id="img-byr">---</span></div>
+            <div class="bar-t"><div class="bar-f" id="img-byr-bar" style="width:0%;background:rgba(122,63,255,.45)"></div></div>
+            <div class="flex items-center justify-between text-sm"><span style="color:#475569">🚿 vs. 10-min shower (65 L)</span><span class="font-mono text-slate-300 text-xs" id="img-shower">---</span></div>
+            <div class="flex items-center justify-between text-sm"><span style="color:#475569">🏠 vs. household daily (341 L)</span><span class="font-mono text-slate-300 text-xs" id="img-house">---</span></div>
+            <div class="flex items-center justify-between text-sm"><span style="color:#475569">💧 500 mL bottles equivalent</span><span class="font-mono text-slate-300 text-xs" id="img-btl">---</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: Video Generator -->
+  <div id="tab-vid" class="hidden">
+    <div id="grid-vid" style="display:grid;gap:1.4rem">
+      <div style="display:flex;flex-direction:column;gap:1rem">
+
+        <div class="card">
+          <p class="text-sm font-semibold text-slate-300 mb-2">Clip Length &amp; Resolution</p>
+          <p class="text-xs mb-3" style="color:#1e3a4a">Video generation energy scales sharply with resolution and duration — 4K 60s uses ~60× more energy than a 5s SD clip</p>
+          <div class="flex flex-wrap gap-1.5">
+            <button class="pill ga" onclick="setVidP('shortsd',this)">5s SD 480p · 25 Wh</button>
+            <button class="pill active ba" onclick="setVidP('shorthd',this)">10s HD 720p · 80 Wh</button>
+            <button class="pill" onclick="setVidP('medfhd',this)">30s FHD 1080p · 300 Wh</button>
+            <button class="pill oa" onclick="setVidP('long4k',this)">60s 4K · 1500 Wh</button>
+          </div>
+          <div class="mt-3 text-xs px-3 py-2 rounded" style="background:rgba(122,63,255,.04);border:1px solid rgba(122,63,255,.12);color:#475569" id="vid-pdesc">Runway Gen-3 / Pika 2.0 HD clip (720p, 10s, ~240 frames). Typical professional creator tier. Est. 80 Wh/clip.</div>
+        </div>
+
+        <div class="card">
+          <div class="flex items-baseline justify-between mb-2">
+            <label class="text-sm font-semibold text-slate-300" for="vid-cnt">Clips Generated / Day</label>
+            <span class="font-mono font-bold text-purple-400" id="vid-cnt-d">5</span>
+          </div>
+          <input type="range" id="vid-cnt" min="0" max="2" step="0.01" value="0.699" oninput="updateVID()" aria-label="Video clips per day (log scale 1–100)">
+          <div class="flex justify-between text-xs font-mono mt-1.5 mb-3" style="color:#1e3a4a"><span>1</span><span>5</span><span>20</span><span>100</span></div>
+          <div class="flex flex-wrap gap-1.5">
+            <button class="pill" onclick="setVidCnt(1,this)">Hobby · 1</button>
+            <button class="pill active" onclick="setVidCnt(5,this)">Creator · 5</button>
+            <button class="pill oa" onclick="setVidCnt(20,this)">Pro Studio · 20</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex items-baseline justify-between mb-1">
+            <label class="text-sm font-semibold text-slate-300" for="vid-wue">Site WUE</label>
+            <span class="font-mono font-bold text-purple-400" id="vid-wue-d">0.25 L/kWh</span>
+          </div>
+          <input type="range" id="vid-wue" min="0.02" max="9.0" step="0.01" value="0.25" oninput="updateVID()" aria-label="Site WUE">
+          <div class="flex flex-wrap gap-1.5 mt-3">
+            <button class="pill" onclick="setVidWUE(0.15,this)">AWS Best · 0.15</button>
+            <button class="pill active" onclick="setVidWUE(0.25,this)">US 2026 · 0.25</button>
+            <button class="pill" onclick="setVidWUE(0.55,this)">Legacy · 0.55</button>
+          </div>
+          <label class="flex items-center gap-2 mt-3 cursor-pointer">
+            <input type="checkbox" id="vid-scope" checked onchange="updateVID()" class="accent-purple-400" aria-label="Include Scope 2 grid indirect water">
+            <span class="text-xs" style="color:#334155">Include grid indirect water (Scope 1+2 · 4.52 L/kWh US avg)</span>
+          </label>
+        </div>
+
+        <div class="card" style="background:rgba(249,115,22,.04);border-color:rgba(249,115,22,.18)">
+          <p class="text-xs font-mono mb-1" style="color:#c2400e">Uncertainty Range</p>
+          <p class="text-xs" style="color:#64748b">Video generation energy estimates carry ±50% uncertainty (2026). Actual use depends on model architecture, diffusion steps, CFG scale, and cluster efficiency. These figures reflect GPU-cluster API inference benchmarks, not local consumer hardware.</p>
+        </div>
+
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:.85rem">
+
+        <div class="card card-hi">
+          <p class="text-xs font-mono uppercase tracking-wider mb-2" style="color:#334155">Water per Clip</p>
+          <div class="rnum" id="vid-per">---</div>
+          <div class="runit" id="vid-per-u">per clip generated</div>
+          <div class="text-xs font-mono mt-2.5 px-3 py-2 rounded" style="background:rgba(122,63,255,.05);border:1px solid rgba(122,63,255,.1);color:#475569" id="vid-tag">---</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem">
+          <div class="card text-center"><div class="text-xs mb-1" style="color:#475569">Daily total</div><div class="font-mono font-bold text-purple-400 text-sm" id="vid-day">---</div><div class="text-xs" style="color:#1e3a4a">per day</div></div>
+          <div class="card text-center"><div class="text-xs mb-1" style="color:#475569">Annual total</div><div class="font-mono font-bold text-orange-400 text-sm" id="vid-ann">---</div><div class="text-xs" style="color:#1e3a4a">per year</div></div>
+          <div class="card text-center"><div class="text-xs mb-1" style="color:#475569">Daily energy</div><div class="font-mono font-bold text-green-400 text-sm" id="vid-kwh">---</div><div class="text-xs" style="color:#1e3a4a">kWh / day</div></div>
+          <div class="card text-center"><div class="text-xs mb-1" style="color:#475569">Clips / burger</div><div class="font-mono font-bold text-slate-300 text-sm" id="vid-bclips">---</div><div class="text-xs" style="color:#1e3a4a">clips = 1 burger WF</div></div>
+        </div>
+
+        <div class="card">
+          <p class="text-xs font-mono uppercase tracking-wider mb-3" style="color:#334155">Scale Equivalences — Daily</p>
+          <div style="display:flex;flex-direction:column;gap:.5rem">
+            <div class="flex items-center justify-between text-sm"><span style="color:#475569">🍔 1 burger = years of this daily habit</span><span class="font-mono font-bold text-purple-400" id="vid-byr">---</span></div>
+            <div class="bar-t"><div class="bar-f" id="vid-byr-bar" style="width:0%;background:rgba(122,63,255,.45)"></div></div>
+            <div class="flex items-center justify-between text-sm"><span style="color:#475569">🚿 vs. 10-min shower (65 L)</span><span class="font-mono text-slate-300 text-xs" id="vid-shower">---</span></div>
+            <div class="flex items-center justify-between text-sm"><span style="color:#475569">🏠 vs. household daily (341 L)</span><span class="font-mono text-slate-300 text-xs" id="vid-house">---</span></div>
+            <div class="flex items-center justify-between text-sm"><span style="color:#475569">💧 500 mL bottles equivalent</span><span class="font-mono text-slate-300 text-xs" id="vid-btl">---</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: Platform Scale -->
+  <div id="tab-plat" class="hidden">
+    <div class="mb-5">
+      <p class="text-sm font-semibold text-slate-300 mb-1">Estimated Platform Daily Water Use</p>
+      <p class="text-xs" style="color:#475569">Based on publicly reported volume estimates and per-image/clip energy benchmarks. ±50% uncertainty applies. Scope 1+2 at US avg WUE 0.25 L/kWh + GWIF 4.52 L/kWh.</p>
+    </div>
+    <div class="card mb-5" style="height:300px"><canvas id="plat-chart" aria-label="Estimated daily water use by AI generative platform"></canvas></div>
+    <div id="grid-plat" style="display:grid;gap:1rem">
+      <div class="card"><p class="text-xs font-mono mb-1" style="color:#a78bfa">MidJourney (Images)</p><p class="text-xs" style="color:#64748b">~15M images/day at avg 5 Wh/image → ~76 MWh/day → <strong style="color:#94a3b8">~358 kL/day</strong>. Equivalent to ~1,050 households' daily indoor water use.</p></div>
+      <div class="card"><p class="text-xs font-mono mb-1" style="color:#a78bfa">DALL-E / OpenAI (Images)</p><p class="text-xs" style="color:#64748b">~5M images/day at avg 12 Wh/image (DALL-E 3 + iterative editing) → ~60 MWh/day → <strong style="color:#94a3b8">~286 kL/day</strong>. Iterative multi-edit workflow adds 3–5× base generation cost.</p></div>
+      <div class="card"><p class="text-xs font-mono mb-1" style="color:#a78bfa">Stable Diffusion APIs (cloud)</p><p class="text-xs" style="color:#64748b">~20M API images/day at avg 3 Wh → ~60 MWh/day → <strong style="color:#94a3b8">~286 kL/day</strong>. Local inference on own GPU eliminates Scope 1 entirely; only upstream grid water (Scope 2) applies.</p></div>
+      <div class="card"><p class="text-xs font-mono mb-1" style="color:#f97316">Runway / Pika / Kling (Video)</p><p class="text-xs" style="color:#64748b">~500K clips/day at avg 80 Wh/clip (10s HD) → ~40 MWh/day → <strong style="color:#94a3b8">~191 kL/day</strong>. Per-second energy cost of video generation is ~27× higher than image generation.</p></div>
+      <div class="card"><p class="text-xs font-mono mb-1" style="color:#f97316">Sora / Luma Dream Machine (Video)</p><p class="text-xs" style="color:#64748b">~200K clips/day at avg 200 Wh/clip (15s HD–FHD) → ~40 MWh/day → <strong style="color:#94a3b8">~191 kL/day</strong>. Transformer-based diffusion requires more compute per frame than earlier GAN-based systems.</p></div>
+      <div class="card" style="background:rgba(0,180,216,.03);border-color:rgba(0,180,216,.15)"><p class="text-xs font-mono mb-1" style="color:#00b4d8">All Platforms Combined (~2026)</p><p class="text-xs" style="color:#64748b">Total estimated: <strong style="color:#94a3b8">~1.3 million L/day</strong> (~476 ML/yr). For context: NYC daily water use ≈ 1 billion liters. All AI generative platforms = <strong style="color:#94a3b8">~0.13%</strong> of NYC's daily use — a growing but currently minor national demand.</p></div>
+    </div>
+  </div>
+
+  <!-- Visualizations -->
+  <section class="mt-10">
+    <h2 class="text-lg font-bold text-slate-200 mb-1">Scale Visualization</h2>
+    <p class="text-xs font-mono mb-5" style="color:#334155">Per-image and per-clip values vs. real-world water baselines — logarithmic scale — updates live with calculator</p>
+    <div id="grid-viz" style="display:grid;gap:1.4rem">
+      <div class="card" style="height:320px"><canvas id="bar-chart" aria-label="Logarithmic water use comparison: AI image/video vs baselines"></canvas></div>
+      <div class="card" style="height:320px"><canvas id="pie-chart" aria-label="Direct vs indirect water breakdown for current selection"></canvas></div>
+    </div>
+  </section>
+
+  <!-- Key Findings -->
+  <section class="mt-10">
+    <h2 class="text-lg font-bold text-slate-200 mb-1">Key Findings</h2>
+    <p class="text-xs font-mono mb-5" style="color:#334155">Image &amp; video generation water context — companion to bra-khet AI Water-Energy Nexus Report v1.2</p>
+    <div style="display:flex;flex-direction:column;gap:.5rem">
+
+      <div><button class="acc-btn" onclick="toggleAcc(this)"><span>📊 Image vs. Text: The 10–1,000× Jump in Water Cost</span><span style="transition:transform .25s">▼</span></button>
+      <div class="acc-body">Text generation (LLM inference) at 2026 efficiency: <strong>0.26–2.0 mL per query</strong>. Image generation adds a fundamentally different compute burden:
+        <ul class="mt-2">
+          <li>• Fast AI image (SD-Turbo, 0.5 Wh): <strong>~2.4 mL</strong> — comparable to a 2026 LLM query at standard efficiency</li>
+          <li>• Standard image (SDXL / MJ v6, 3 Wh): <strong>~14.3 mL</strong> — ~55× more water than Gemini per-query</li>
+          <li>• High quality (50 steps + upscale, 10 Wh): <strong>~47.7 mL</strong> — nearly a shot glass of water per image</li>
+          <li>• Ultra (DALL-E 3 with editing, 20 Wh): <strong>~95.4 mL</strong> — about 365× more water than Gemini per-query</li>
+        </ul>
+        The core reason: diffusion models run 20–100 denoising steps, each requiring a full U-Net or DiT forward pass. Text models run one forward pass with KV-cache reuse — an order-of-magnitude computational difference for similar output quality.</div></div>
+
+      <div><button class="acc-btn" onclick="toggleAcc(this)"><span>🎬 Video Generation: The 50–600× Multiplier Over Images</span><span style="transition:transform .25s">▼</span></button>
+      <div class="acc-body">Video generation compounds image-gen cost by frame count and temporal consistency overhead:
+        <ul class="mt-2">
+          <li>• 5s 480p SD clip (~125 frames, 25 Wh): <strong>~119 mL</strong> — roughly half a small glass of water</li>
+          <li>• 10s 720p HD clip (~240 frames, 80 Wh): <strong>~382 mL</strong> — one full 500 mL bottle per clip</li>
+          <li>• 30s 1080p FHD clip (~720 frames, 300 Wh): <strong>~1.43 L</strong> — three water bottles; equivalent to ~550 Gemini queries</li>
+          <li>• 60s 4K clip (~1,440 frames, 1500 Wh): <strong>~7.16 L</strong> — more than a full gallon; matches ~27,500 Gemini queries</li>
+        </ul>
+        Temporal consistency models (Sora, Wan, CogVideo) require cross-frame attention over time, adding 20–40% overhead vs. independent frame generation. Efficient video diffusion (StreamDiffusion, AnimateDiff V3) can reduce this by ~3–5×.</div></div>
+
+      <div><button class="acc-btn" onclick="toggleAcc(this)"><span>🍔 The Burger Perspective — Per-Item Scale Comparisons</span><span style="transition:transform .25s">▼</span></button>
+      <div class="acc-body">One hamburger carries ~<strong>2,498 L</strong> total water footprint (Mekonnen &amp; Hoekstra 2012, <em>Ecosystems</em>):
+        <ul class="mt-2">
+          <li>• Fast images (2.4 mL each): <strong>1,040,833 images</strong> per burger — generating one million quick AI images = one hamburger's water</li>
+          <li>• Standard images (14.3 mL each): <strong>174,685 images</strong> per burger</li>
+          <li>• High images (47.7 mL each): <strong>52,370 images</strong> per burger</li>
+          <li>• Ultra images (95.4 mL each): <strong>26,185 images</strong> per burger</li>
+          <li>• 10s HD clips (382 mL each): <strong>6,544 clips</strong> per burger — ~18 years of daily creator-tier video generation</li>
+          <li>• 60s 4K clips (7,155 mL each): <strong>349 clips</strong> per burger — less than one year of daily 4K generation at Pro Studio rate</li>
+        </ul></div></div>
+
+      <div><button class="acc-btn" onclick="toggleAcc(this)"><span>🔬 The Local Hardware Exception — GPU at Home</span><span style="transition:transform .25s">▼</span></button>
+      <div class="acc-body">All tool figures apply to <strong>cloud API inference</strong> in professional data centers (WUE 0.15–0.55 L/kWh + grid GWIF ~4.52 L/kWh). Running Stable Diffusion locally changes the calculus:
+        <ul class="mt-2">
+          <li>• Your GPU has no data center cooling loop — zero Scope 1 direct water evaporation</li>
+          <li>• Scope 2 still applies: your grid's upstream thermoelectric generation (GWIF ~4.52 L/kWh national avg)</li>
+          <li>• RTX 4090 at 400W peak — 512×512 image in ~0.5s → ~0.056 Wh → ~0.25 mL per image (Scope 2 only)</li>
+          <li>• Consumer GPU generates images at <strong>~10× lower water cost</strong> than cloud API (no cooling overhead, same compute time)</li>
+          <li>• This also applies to video: local inference on a 4090 for a 10s clip might use ~8–15 Wh vs. 80 Wh on a data center GPU cluster</li>
+        </ul></div></div>
+
+      <div><button class="acc-btn" onclick="toggleAcc(this)"><span>🌱 The Efficiency Frontier — What's Changing in 2026</span><span style="transition:transform .25s">▼</span></button>
+      <div class="acc-body"><ul>
+          <li>• <strong>Diffusion distillation (LCM, TurboSD, Hyper-SD):</strong> 4-step inference vs. 30 steps → ~7.5× energy reduction per image at comparable quality</li>
+          <li>• <strong>Flow matching (SD3, FLUX):</strong> Deterministic trajectories with fewer NFE (Number of Function Evaluations) — 8–12 steps at high quality; ~2–3× energy reduction vs. DDPM</li>
+          <li>• <strong>Video frame reuse (StreamDiffusion):</strong> Delta diffusion for slow-motion scenes reduces effective NFE by 40–60% at similar temporal coherence</li>
+          <li>• <strong>Linear-attention architectures (Mamba, SSMs for video):</strong> Eliminate quadratic attention scaling → 3–5× lower compute for long-duration video generation</li>
+          <li>• <strong>Flash-Attention-2 + Triton kernels:</strong> 30–40% power efficiency gain at constant throughput via reduced GPU memory bandwidth pressure</li>
+          <li>• <strong>Trajectory:</strong> 2026 "fast" quality (0.5 Wh/image) will be standard quality by 2028 via distillation; current ultra (20 Wh) may drop to ~5 Wh through efficient sampling pipelines</li>
+        </ul></div></div>
+
+    </div>
+  </section>
+
+  <!-- Sources -->
+  <section class="mt-10">
+    <h2 class="text-lg font-bold text-slate-200 mb-4">Sources</h2>
+    <div class="card">
+      <ol class="text-xs font-mono space-y-1 leading-relaxed" style="color:#334155;list-style:none;padding:0">
+        <li>[1] Li, P. et al. (2023). Making AI Less Thirsty: Uncovering and Addressing the Secret Water Footprint of AI Models. arXiv:2311.16863.</li>
+        <li>[2] Zhao, S. et al. (2025). Energy and Water Consumption in AI-Generated Content: Image and Video Models. arXiv:2509.19222.</li>
+        <li>[3] Hao, K. (2025, May). How much energy does AI actually use? MIT Technology Review.</li>
+        <li>[4] Ren, S. et al. (2023). On the Energy and Water Consumption of Generative AI. arXiv:2304.03271.</li>
+        <li>[5] Lawrence Berkeley National Laboratory (2024). US Data Center Energy Use Report (GWIF 4.52 L/kWh).</li>
+        <li>[6] Mekonnen, M.M. &amp; Hoekstra, A.Y. (2012). A global assessment of the water footprint of farm animal products. <em>Ecosystems</em> 15(3):401–415.</li>
+        <li>[7] Rombach, R. et al. (2022). High-Resolution Image Synthesis with Latent Diffusion Models. CVPR 2022 (SD/SDXL baseline architecture).</li>
+        <li>[8] OpenAI (2024). DALL-E 3 technical report. openai.com/research.</li>
+        <li>[9] Luo, S. et al. (2023). LCM: Latent Consistency Models. arXiv:2310.04378 (4-step distillation inference).</li>
+        <li>[10] Esser, P. et al. (2024). Scaling Rectified Flow Transformers for High-Resolution Image Synthesis (SD3 / FLUX). arXiv:2403.03206.</li>
+        <li>[11] Blattmann, A. et al. (2023). Stable Video Diffusion: Scaling Latent Video Diffusion Models to Large Datasets. arXiv:2311.15127.</li>
+        <li>[12] Bar-Tal, O. et al. (2024). Lumiere: A Space-Time Diffusion Model for Video Generation. arXiv:2401.12945.</li>
+        <li>[13] AWWA (2022). US daily household indoor water use baseline: 341 L/day.</li>
+        <li>[14] Jegham, I. et al. (2025). Empirical energy benchmarking of 30 LLMs (Gemini 0.24 Wh/query). arXiv preprint.</li>
+        <li>[15] Google (2026). Ironwood TPU benchmarks and environmental disclosures. Google Environmental Reports.</li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer style="border-top:1px solid rgba(122,63,255,.08);margin-top:4rem;padding:2rem 1rem;background:rgba(3,10,20,.9)">
+  <div class="max-w-6xl mx-auto text-center">
+    <p class="text-xs font-mono mb-2" style="color:#1e3a4a">Companion to bra-khet AI Water Report v1.2 · March 2026 &nbsp;·&nbsp; Li et al. arXiv:2311.16863 · arXiv:2509.19222 · LBNL 2024 &nbsp;·&nbsp; Tool 2 of 2 — <a href="{{ site.baseurl }}/ai-water-use-tool-1/" style="color:#00b4d8">see Tool 1: Per-Query →</a></p>
+    <p class="text-xs font-mono" style="color:#0f2035">Direct (Scope 1) = WUE × kWh. Indirect (Scope 2) = GWIF × kWh. Estimates carry ±50% uncertainty; cite primary sources for professional use.</p>
+    <div class="flex justify-center gap-3 mt-4 flex-wrap">
+      <a href="{{ site.baseurl }}/ai-water-use-report-1/" class="text-xs font-mono px-3 py-1 rounded border border-slate-800 text-slate-600 hover:border-purple-800 hover:text-purple-400 transition-all">📄 Full Report</a>
+      <a href="{{ site.baseurl }}/ai-water-use-tool-1/" class="text-xs font-mono px-3 py-1 rounded" style="border:1px solid rgba(0,180,216,.3);color:#00b4d8">⚡ Tool 1: Per-Query</a>
+      <a href="{{ site.baseurl }}/" class="text-xs font-mono px-3 py-1 rounded border border-slate-800 text-slate-700 hover:border-slate-600 hover:text-slate-400 transition-all">← Home</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   AI Image & Video Gen Water Impact — Tool 2 v1.0
+   bra-khet.github.io · Companion to Report v1.2
+   ─────────────────────────────────────────────────────────────
+   Core equations:
+     Energy (kWh) = count × Wh_per_item / 1000
+     Direct (L)   = kWh × WUE  (Water Usage Effectiveness)
+     Indirect (L) = kWh × GWIF (Grid Water Intensity Factor)
+   Sources: Li et al. arXiv:2311.16863, arXiv:2509.19222, LBNL 2024
+═══════════════════════════════════════════════════════════════ */
+
+const GWIF     = 4.52;    // L/kWh US national avg thermoelectric (LBNL 2024)
+const BURGER_L = 2498;    // Full hamburger L (Mekonnen & Hoekstra 2012)
+const SHOWER_L = 65;      // 10-min shower L
+const HOUSE_L  = 341;     // US daily household indoor L (AWWA 2022)
+
+/* Image energy presets (Wh per image) */
+const IMG_E = { fast: 0.5, std: 3.0, high: 10.0, ultra: 20.0 };
+const IMG_DESC = {
+  fast:  'SD-Turbo / SDXL-Lightning draft — 512–768px, 4–8 steps. Minimum viable quality. Est. 0.5 Wh/image.',
+  std:   'SDXL / Midjourney v6 standard — 1024px, ~30 diffusion steps. Most common API tier.',
+  high:  'Midjourney v6 Upscale / SDXL + ControlNet — 50 steps + 2× upscale pass. Est. ~10 Wh/image.',
+  ultra: 'DALL-E 3 / Adobe Firefly Ultra — iterative editing with 3–5 regeneration cycles. Est. ~20 Wh/image.'
+};
+
+/* Video energy presets (Wh per clip) */
+const VID_E = { shortsd: 25, shorthd: 80, medfhd: 300, long4k: 1500 };
+const VID_DESC = {
+  shortsd: 'SD 480p 5-second clip (Runway Gen-2 SD tier, ~125 frames at 25fps). Est. 25 Wh/clip.',
+  shorthd: 'Runway Gen-3 / Pika 2.0 HD clip (720p, 10s, ~240 frames). Typical professional creator tier. Est. 80 Wh/clip.',
+  medfhd:  'Sora / Kling 1.0 FHD clip (1080p, 30s, ~720 frames). High-quality narrative video. Est. 300 Wh/clip.',
+  long4k:  'Sora / Wan 2.1 4K long-form (2160p, 60s, ~1440 frames). Premium production quality. Est. 1500 Wh/clip.'
+};
+
+/* State */
+let imgQ='std', imgCount=50, imgWUE=0.25, imgScope=true;
+let vidP='shorthd', vidCount=5, vidWUE=0.25, vidScope=true;
+let barChart=null, pieChart=null, platChart=null;
+
+/* ── Responsive grid ─────────────────────────────────────────── */
+function applyGrid() {
+  const w = window.innerWidth;
+  const cols2 = w < 768 ? '1fr' : '1fr 1fr';
+  const cols3 = w < 640 ? '1fr' : w < 900 ? '1fr 1fr' : 'repeat(3,1fr)';
+  ['grid-img','grid-vid','grid-viz'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.gridTemplateColumns = cols2;
+  });
+  const gp = document.getElementById('grid-plat');
+  if (gp) gp.style.gridTemplateColumns = cols3;
+}
+window.addEventListener('resize', applyGrid);
+
+/* ── Tab switch ─────────────────────────────────────────────── */
+function switchTab(id, btn) {
+  ['img','vid','plat'].forEach(t => {
+    const el = document.getElementById('tab-'+t);
+    if (el) el.classList.toggle('hidden', t !== id);
+  });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  if (id === 'plat') requestAnimationFrame(updatePlatChart);
+}
+
+/* ── Utilities ──────────────────────────────────────────────── */
+function fmtL(l) {
+  if (!isFinite(l)||l<0) return {n:'---',u:''};
+  if (l<1e-6) return {n:(l*1e9).toFixed(1),u:'nL'};
+  if (l<0.001) return {n:(l*1000).toFixed(2),u:'mL'};
+  if (l<1) return {n:(l*1000).toFixed(l<0.01?1:0),u:'mL'};
+  if (l<10) return {n:l.toFixed(2),u:'L'};
+  if (l<100) return {n:l.toFixed(1),u:'L'};
+  if (l<1000) return {n:l.toFixed(0),u:'L'};
+  if (l<1e6) return {n:(l/1000).toFixed(1),u:'kL'};
+  if (l<1e9) return {n:(l/1e6).toFixed(2),u:'ML'};
+  return {n:(l/1e9).toFixed(2),u:'GL'};
+}
+function fs(l){const f=fmtL(l);return f.n+(f.u?' '+f.u:'');}
+
+function pctFmt(v,ref) {
+  const p=(v/ref)*100;
+  if(p<0.0001)return '<0.0001%';
+  if(p<0.001)return p.toFixed(4)+'%';
+  if(p<0.01)return p.toFixed(3)+'%';
+  if(p<0.1)return p.toFixed(2)+'%';
+  if(p<1)return p.toFixed(1)+'%';
+  return p.toFixed(0)+'%';
+}
+function setEl(id,txt){const e=document.getElementById(id);if(e)e.textContent=txt;}
+function sldBg(el){const mn=+el.min,mx=+el.max,v=+el.value;el.style.setProperty('--pct',((v-mn)/(mx-mn)*100)+'%');}
+function logVal(sl){return Math.round(Math.pow(10,+sl.value));}
+
+/* ── Image Calculator ───────────────────────────────────────────
+   Energy   = count × IMG_E[q] / 1000  [kWh]
+   Direct   = kWh × WUE               [L per image]
+   Indirect = kWh × GWIF (Scope 2)    [L per image]
+──────────────────────────────────────────────────────────────── */
+function tagImgStr(perImg, annual) {
+  const bYrs = annual > 0 ? Math.round(BURGER_L / annual) : 9999;
+  const sfx = bYrs >= 2 ? ' — 1 burger \u2248 '+bYrs.toLocaleString()+' yrs daily' : '';
+  if (perImg < 0.001) return '\u2248 a few drops per image'+sfx;
+  if (perImg < 0.01)  return '\u2248 a small splash per image'+sfx;
+  if (perImg < 0.1)   return '\u2248 a few sips per image'+sfx;
+  if (perImg < 0.5)   return '\u2248 a small coffee cup worth per image'+sfx;
+  if (perImg < 1)     return '\u2248 one 500 mL bottle per image'+sfx;
+  return 'over a litre per image'+sfx;
+}
+
+function updateIMG() {
+  const cSl = document.getElementById('img-cnt');
+  const wSl = document.getElementById('img-wue');
+  const scEl = document.getElementById('img-scope');
+
+  if(cSl){imgCount=logVal(cSl);sldBg(cSl);setEl('img-cnt-d',imgCount.toLocaleString());}
+  if(wSl){imgWUE=+wSl.value;sldBg(wSl);setEl('img-wue-d',imgWUE.toFixed(2)+' L/kWh');}
+  if(scEl)imgScope=scEl.checked;
+
+  const kwh_img  = IMG_E[imgQ] / 1000;
+  const dir_img  = kwh_img * imgWUE;
+  const ind_img  = imgScope ? kwh_img * GWIF : 0;
+  const tot_img  = dir_img + ind_img;
+  const day_tot  = imgCount * tot_img;
+  const ann_tot  = day_tot * 365;
+
+  const f = fmtL(tot_img);
+  setEl('img-per', f.n);
+  setEl('img-per-u', f.u + ' per image generated');
+  setEl('img-tag', tagImgStr(tot_img, ann_tot));
+
+  const dayF=fmtL(day_tot), annF=fmtL(ann_tot);
+  setEl('img-day', dayF.n+' '+dayF.u);
+  setEl('img-ann', annF.n+' '+annF.u);
+  const kwh_day = imgCount * kwh_img;
+  setEl('img-kwh', kwh_day<0.0001?kwh_day.toExponential(2):kwh_day.toFixed(4));
+
+  const bImgs = tot_img > 0 ? Math.round(BURGER_L / tot_img) : 99999;
+  setEl('img-bimgs', bImgs.toLocaleString());
+
+  const bYrs = ann_tot > 0 ? Math.round(BURGER_L / ann_tot) : 9999;
+  setEl('img-byr',    bYrs >= 1 ? bYrs.toLocaleString()+' yrs' : '<1 yr');
+  setEl('img-shower', pctFmt(day_tot, SHOWER_L));
+  setEl('img-house',  pctFmt(day_tot, HOUSE_L));
+  setEl('img-btl',    (day_tot/0.5).toFixed(day_tot<0.5?3:1)+' btls');
+
+  const bBar = document.getElementById('img-byr-bar');
+  if(bBar) bBar.style.width = Math.min(100,(ann_tot/BURGER_L)*100).toFixed(3)+'%';
+
+  updateBarChart(tot_img, day_tot);
+  updatePieChart(dir_img * imgCount, ind_img * imgCount);
+}
+
+function setImgQ(q, btn) {
+  imgQ = q;
+  document.querySelectorAll('[onclick^="setImgQ"]').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  setEl('img-qdesc', IMG_DESC[q]);
+  updateIMG();
+}
+function setImgCnt(v, btn) {
+  const sl = document.getElementById('img-cnt');
+  if(sl){sl.value=Math.log10(Math.max(1,v));sldBg(sl);}
+  document.querySelectorAll('[onclick^="setImgCnt"]').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  updateIMG();
+}
+function setImgWUE(v, btn) {
+  const sl = document.getElementById('img-wue');
+  if(sl){sl.value=v;sldBg(sl);}
+  document.querySelectorAll('[onclick^="setImgWUE"]').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  updateIMG();
+}
+
+/* ── Video Calculator ───────────────────────────────────────────
+   Same structure as image; swap IMG_E[q] for VID_E[p]
+──────────────────────────────────────────────────────────────── */
+function tagVidStr(perClip, annual) {
+  const bYrs = annual > 0 ? Math.round(BURGER_L / annual) : 9999;
+  const sfx = bYrs >= 2 ? ' — 1 burger \u2248 '+bYrs.toLocaleString()+' yrs daily' : '';
+  if (perClip < 0.05)  return '\u2248 negligible per clip'+sfx;
+  if (perClip < 0.1)   return '\u2248 a small splash per clip'+sfx;
+  if (perClip < 0.5)   return '\u2248 a few sips per clip'+sfx;
+  if (perClip < 1)     return '\u2248 one 500 mL bottle per clip'+sfx;
+  if (perClip < 5)     return '\u2248 a litre or two per clip'+sfx;
+  if (perClip < 20)    return '\u2248 a large jug of water per clip'+sfx;
+  return 'significant water use per clip'+sfx;
+}
+
+function updateVID() {
+  const cSl = document.getElementById('vid-cnt');
+  const wSl = document.getElementById('vid-wue');
+  const scEl = document.getElementById('vid-scope');
+
+  if(cSl){vidCount=logVal(cSl);sldBg(cSl);setEl('vid-cnt-d',vidCount.toLocaleString());}
+  if(wSl){vidWUE=+wSl.value;sldBg(wSl);setEl('vid-wue-d',vidWUE.toFixed(2)+' L/kWh');}
+  if(scEl)vidScope=scEl.checked;
+
+  const kwh_clip = VID_E[vidP] / 1000;
+  const dir_clip = kwh_clip * vidWUE;
+  const ind_clip = vidScope ? kwh_clip * GWIF : 0;
+  const tot_clip = dir_clip + ind_clip;
+  const day_tot  = vidCount * tot_clip;
+  const ann_tot  = day_tot * 365;
+
+  const f = fmtL(tot_clip);
+  setEl('vid-per', f.n);
+  setEl('vid-per-u', f.u + ' per clip generated');
+  setEl('vid-tag', tagVidStr(tot_clip, ann_tot));
+
+  const dayF=fmtL(day_tot), annF=fmtL(ann_tot);
+  setEl('vid-day', dayF.n+' '+dayF.u);
+  setEl('vid-ann', annF.n+' '+annF.u);
+  const kwh_day = vidCount * kwh_clip;
+  setEl('vid-kwh', kwh_day<0.01?kwh_day.toFixed(4):kwh_day.toFixed(3));
+
+  const bClips = tot_clip > 0 ? Math.round(BURGER_L / tot_clip) : 99999;
+  setEl('vid-bclips', bClips.toLocaleString());
+
+  const bYrs = ann_tot > 0 ? Math.round(BURGER_L / ann_tot) : 9999;
+  setEl('vid-byr',    bYrs >= 1 ? bYrs.toLocaleString()+' yrs' : '<1 yr');
+  setEl('vid-shower', pctFmt(day_tot, SHOWER_L));
+  setEl('vid-house',  pctFmt(day_tot, HOUSE_L));
+  setEl('vid-btl',    (day_tot/0.5).toFixed(day_tot<0.5?3:1)+' btls');
+
+  const bBar = document.getElementById('vid-byr-bar');
+  if(bBar) bBar.style.width = Math.min(100,(ann_tot/BURGER_L)*100).toFixed(3)+'%';
+}
+
+function setVidP(p, btn) {
+  vidP = p;
+  document.querySelectorAll('[onclick^="setVidP"]').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  setEl('vid-pdesc', VID_DESC[p]);
+  updateVID();
+}
+function setVidCnt(v, btn) {
+  const sl = document.getElementById('vid-cnt');
+  if(sl){sl.value=Math.log10(Math.max(1,v));sldBg(sl);}
+  document.querySelectorAll('[onclick^="setVidCnt"]').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  updateVID();
+}
+function setVidWUE(v, btn) {
+  const sl = document.getElementById('vid-wue');
+  if(sl){sl.value=v;sldBg(sl);}
+  document.querySelectorAll('[onclick^="setVidWUE"]').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  updateVID();
+}
+
+/* ── Bar Chart (logarithmic) ─────────────────────────────────── */
+/* Reference baselines pre-computed at WUE=0.25, GWIF=4.52 Scope1+2 */
+const BAR_REFS = [
+  { label: 'Fast image (0.5 Wh)',    val: 0.5/1000*(0.25+GWIF),    color: 'rgba(0,255,159,.45)' },
+  { label: 'Standard image (3 Wh)',  val: 3.0/1000*(0.25+GWIF),    color: 'rgba(122,63,255,.45)' },
+  { label: 'High image (10 Wh)',     val: 10/1000*(0.25+GWIF),     color: 'rgba(122,63,255,.65)' },
+  { label: 'Ultra image (20 Wh)',    val: 20/1000*(0.25+GWIF),     color: 'rgba(122,63,255,.85)' },
+  { label: '500 mL bottle',          val: 0.5,                      color: 'rgba(0,180,216,.25)' },
+  { label: '5s SD clip (25 Wh)',     val: 25/1000*(0.25+GWIF),     color: 'rgba(249,115,22,.35)' },
+  { label: '10s HD clip (80 Wh)',    val: 80/1000*(0.25+GWIF),     color: 'rgba(249,115,22,.6)' },
+  { label: '30s FHD clip (300 Wh)', val: 300/1000*(0.25+GWIF),    color: 'rgba(249,115,22,.75)' },
+  { label: '60s 4K clip (1.5 kWh)', val: 1500/1000*(0.25+GWIF),   color: 'rgba(249,115,22,.95)' },
+  { label: '10-min shower (65 L)',   val: 65,                       color: 'rgba(0,180,216,.18)' },
+];
+
+function updateBarChart(perImg, dailyImg) {
+  const labels = ['▶ Your selection', ...BAR_REFS.map(r=>r.label)];
+  const data   = [perImg, ...BAR_REFS.map(r=>r.val)];
+  const colors = ['rgba(122,63,255,1)', ...BAR_REFS.map(r=>r.color)];
+
+  if (!barChart) {
+    const ctx = document.getElementById('bar-chart');
+    if (!ctx) return;
+    barChart = new Chart(ctx, {
+      type: 'bar',
+      data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 0 }] },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => ' '+fs(c.raw) } }
+        },
+        scales: {
+          x: {
+            type: 'logarithmic',
+            min: 1e-4,
+            max: 200,
+            ticks: {
+              color: '#334155',
+              font: { size: 9, family: 'monospace' },
+              callback: v => [0.001,0.01,0.1,1,10,100].includes(v) ? fs(v) : ''
+            },
+            grid: { color: 'rgba(255,255,255,.04)' }
+          },
+          y: {
+            ticks: { color: '#475569', font: { size: 9.5, family: 'monospace' } },
+            grid: { color: 'rgba(255,255,255,.04)' }
+          }
+        }
+      }
+    });
+  } else {
+    barChart.data.datasets[0].data[0] = perImg;
+    barChart.update('none');
+  }
+}
+
+/* ── Pie Chart ──────────────────────────────────────────────── */
+function updatePieChart(dirTotal, indTotal) {
+  if (!pieChart) {
+    const ctx = document.getElementById('pie-chart');
+    if (!ctx) return;
+    pieChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Direct cooling (Scope 1)', 'Grid indirect (Scope 2)'],
+        datasets: [{
+          data: [dirTotal, indTotal],
+          backgroundColor: ['rgba(122,63,255,.75)','rgba(0,180,216,.35)'],
+          borderColor: ['rgba(122,63,255,.9)','rgba(0,180,216,.5)'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '65%',
+        plugins: {
+          legend: { labels: { color:'#475569', font:{size:10,family:'monospace'}, padding:14 } },
+          tooltip: {
+            callbacks: {
+              label: c => {
+                const tot = dirTotal + indTotal;
+                const pct = tot>0?((c.raw/tot)*100).toFixed(1):'0';
+                return ' '+fs(c.raw)+' ('+pct+'%)';
+              }
+            }
+          }
+        }
+      }
+    });
+  } else {
+    pieChart.data.datasets[0].data = [dirTotal, indTotal];
+    pieChart.update('none');
+  }
+}
+
+/* ── Platform Scale Chart ────────────────────────────────────── */
+/* Daily water use (L): volume × Wh_per_item / 1000 × (WUE+GWIF) */
+const PLAT_DATA = [
+  { label: 'MidJourney',       val: 15e6  *  5/1000*(0.25+GWIF), color:'rgba(122,63,255,.7)' },
+  { label: 'DALL-E/OpenAI',    val:  5e6  * 12/1000*(0.25+GWIF), color:'rgba(122,63,255,.5)' },
+  { label: 'SD APIs (cloud)',   val: 20e6  *  3/1000*(0.25+GWIF), color:'rgba(122,63,255,.35)' },
+  { label: 'Runway/Pika/Kling', val: 500e3 * 80/1000*(0.25+GWIF), color:'rgba(249,115,22,.65)' },
+  { label: 'Sora/Luma',        val: 200e3 *200/1000*(0.25+GWIF), color:'rgba(249,115,22,.85)' },
+];
+
+function updatePlatChart() {
+  if (platChart) return;
+  const ctx = document.getElementById('plat-chart');
+  if (!ctx) return;
+  platChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: PLAT_DATA.map(p=>p.label),
+      datasets: [{
+        data: PLAT_DATA.map(p=>p.val),
+        backgroundColor: PLAT_DATA.map(p=>p.color),
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => ' ~'+Math.round(c.raw/1000)+' kL/day (est.)' } }
+      },
+      scales: {
+        x: { ticks:{color:'#475569',font:{size:10,family:'monospace'}}, grid:{color:'rgba(255,255,255,.04)'} },
+        y: { ticks:{color:'#334155',font:{size:9,family:'monospace'},callback:v=>(v/1000).toFixed(0)+' kL'}, grid:{color:'rgba(255,255,255,.04)'} }
+      }
+    }
+  });
+}
+
+/* ── Accordion ──────────────────────────────────────────────── */
+function toggleAcc(btn) {
+  const body  = btn.nextElementSibling;
+  const arrow = btn.querySelector('span:last-child');
+  const open  = body.style.display === 'block';
+  body.style.display = open ? 'none' : 'block';
+  if (arrow) arrow.style.transform = open ? '' : 'rotate(180deg)';
+}
+
+/* ── Init ───────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  applyGrid();
+  updateIMG();
+  updateVID();
+});
+</script>
+</body>
+</html>
