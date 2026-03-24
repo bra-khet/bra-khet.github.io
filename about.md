@@ -161,7 +161,7 @@ title: bra-khet
     <a href="/" style="color: inherit; text-decoration: none;">Research Reports &#8599;</a>
   </h2>
   <p style="color: #aaa; font-size: 0.88rem; font-family: Monaco, monospace; margin: 0;">
-    All series, newest first. Click any title to go to the full report.
+    All series. Click any title to go to the report.
   </p>
 </div>
 
