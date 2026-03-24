@@ -374,15 +374,22 @@ function fmtWStr(l) {
     return p.toFixed(0) + '%';
   }
 
-  /* Analogy tag text */
+  /* Analogy tag text — includes persuasive burger-years equivalence */
   function tagText(l) {
-    if (l < 0.06)  return '\u2248 a few sips of water';
-    if (l < 0.25)  return '\u2248 a small coffee cup';
-    if (l < 0.65)  return '\u2248 one standard water bottle';
-    if (l < 2)     return '\u2248 a large glass of water';
-    if (l < 9)     return 'less than one tooth-brushing session';
-    if (l < 15)    return 'less than one dishwasher run';
-    if (l < 70)    return 'still less than a 10-minute shower';
+    /* l may be weekly or annual if dur > 1 — compute burger-years from daily rate */
+    const daily2  = q * E_KWH * (wue + (gridOn ? G_NAT : 0));
+    const annual2 = daily2 * 365;
+    const bYrs    = Math.round(2498 / annual2);          // full burger (Mekonnen & Hoekstra 2012)
+    const suffix  = bYrs >= 5
+      ? ' \u2014 1 burger \u2248 ' + bYrs.toLocaleString() + ' yrs of daily AI'
+      : '';
+    if (l < 0.06)  return '\u2248 a few sips of water' + suffix;
+    if (l < 0.25)  return '\u2248 a small coffee cup' + suffix;
+    if (l < 0.65)  return '\u2248 one standard water bottle' + suffix;
+    if (l < 2)     return '\u2248 a large glass of water' + suffix;
+    if (l < 9)     return 'less than one tooth-brushing session' + suffix;
+    if (l < 15)    return 'less than one dishwasher run' + suffix;
+    if (l < 70)    return 'still less than a 10-minute shower' + suffix;
     if (l < 350)   return 'within the range of daily household use';
     if (l < 1500)  return 'several days of household indoor water';
     return 'approaching agricultural-scale use';
@@ -413,6 +420,16 @@ function fmtWStr(l) {
       const el = document.getElementById(id);
       if (el) el.textContent = pctFmt(daily, ref);
     });
+
+    /* Dramatic burger-years callout */
+    const burgerL   = 2498;                       // full hamburger, Mekonnen & Hoekstra 2012
+    const annual    = daily * 365;
+    const burgerYrs = Math.round(burgerL / annual);
+    const annualFmt = fmtWStr(annual);
+    const yrsEl     = document.getElementById('fp-years');
+    const annualEl  = document.getElementById('fp-annual');
+    if (yrsEl)    yrsEl.textContent    = burgerYrs.toLocaleString();
+    if (annualEl) annualEl.textContent = annualFmt;
 
     /* Update AI bar in chart */
     if (fpChart) {

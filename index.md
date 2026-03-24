@@ -200,13 +200,15 @@ title: "|0⟩"
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
 
   <p style="color: #3d6a7a; font-size: 0.85rem; margin: 0.3rem 0 0.5rem; font-family: Monaco, monospace;">
-    March 2026 &middot; Research Report v1.0
+    March 2026 &middot; Research Report v1.2
   </p>
   <p style="color: #2d5a6a; font-size: 0.8rem; margin: 0 0 0.75rem; font-family: Monaco, monospace; line-height: 1.55;">
     Expert OSINT analysis of direct &amp; indirect water consumption by U.S. AI data centers.
     Verifies FWPCOA claims against 2024&ndash;2026 LBNL, IEA, and HARC data. Covers the thermodynamic
     energy-water tradeoff, watershed risk zones in Northern Virginia, Phoenix, and Texas,
-    and emerging state-level closed-loop cooling mandates.
+    and emerging state-level closed-loop cooling mandates. v1.2: added interactive demos,
+    peer-reviewed beef WF decomposition (Mekonnen &amp; Hoekstra 2012), 2026 AI efficiency
+    benchmarks (1.5&ndash;2.5 mL vs. legacy 519 mL), and persuasive scale comparisons.
   </p>
   <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
     <a href="/ai-water-use-report-1/"
@@ -374,7 +376,7 @@ title: "|0⟩"
   </div>-->
   
   <div class="gallery-item">
-    <img src="/assets/img/opiumbird2-border.png" alt="(✿◡‿◡)">
+    <img src="/assets/img/opiumbird3.png" alt="(✿◡‿◡)">
   </div>
 </div>
 
