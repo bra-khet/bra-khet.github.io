@@ -181,31 +181,17 @@ title: bra-khet
     </span>
   </li>
 
-  <!-- DLSS 5 — #76B900 (matches index.md series heading) -->
+  <!-- AI Water Use — #00b4d8 (matches report primary accent) -->
   <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
-             border: 1px solid #243000; border-left: 3px solid #76B900;
-             border-radius: 8px; background: #060d00;">
-    <a href="/dlss-5-report-1-1/"
-       style="color: #76B900; font-weight: bold; font-family: Monaco, monospace;
+             border: 1px solid #0c2a3a; border-left: 3px solid #00b4d8;
+             border-radius: 8px; background: #030a14;">
+    <a href="/ai-water-use-report-1/"
+       style="color: #00b4d8; font-weight: bold; font-family: Monaco, monospace;
               font-size: 0.88rem; text-decoration: none;">
-      DLSS 5 &mdash; Generative Neural Rendering
+      AI Infrastructure &amp; Water &mdash; Water-Energy Nexus
     </a>
-    <span style="color: #3a5200; font-family: Monaco, monospace; font-size: 0.78rem;">
-      &mdash; v1.0 PDF · v1.1 interactive · lighting vs. shading primer.
-    </span>
-  </li>
-
-  <!-- Evo 2 — #00FF9F (matches index.md series heading) -->
-  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
-             border: 1px solid #1a4a3a; border-left: 3px solid #00FF9F;
-             border-radius: 8px; background: #0a1510;">
-    <a href="/evo2-report-1/"
-       style="color: #00FF9F; font-weight: bold; font-family: Monaco, monospace;
-              font-size: 0.88rem; text-decoration: none;">
-      Evo 2 &mdash; Learning the Language of Life
-    </a>
-    <span style="color: #1a5a3a; font-family: Monaco, monospace; font-size: 0.78rem;">
-      &mdash; Arc Institute's 40B-parameter genomic foundation model.
+    <span style="color: #1e4a5a; font-family: Monaco, monospace; font-size: 0.78rem;">
+      &mdash; v1.2 · LBNL, IEA &amp; HARC data · 2 interactive tools (<a href="/ai-water-use-tool-1/" style="color:#00b4d8;text-decoration:none;">per-query</a>, <a href="/ai-water-use-tool-2/" style="color:#7a3fff;text-decoration:none;">image &amp; video</a>).
     </span>
   </li>
 
@@ -223,6 +209,34 @@ title: bra-khet
     </span>
   </li>
 
+  <!-- DLSS 5 — #76B900 (matches index.md series heading) -->
+  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
+             border: 1px solid #243000; border-left: 3px solid #76B900;
+             border-radius: 8px; background: #060d00;">
+    <a href="/dlss-5-report-1-1/"
+       style="color: #76B900; font-weight: bold; font-family: Monaco, monospace;
+              font-size: 0.88rem; text-decoration: none;">
+      DLSS 5 &mdash; Generative Neural Rendering
+    </a>
+    <span style="color: #3a5200; font-family: Monaco, monospace; font-size: 0.78rem;">
+      &mdash; v1.0 PDF · v1.1 interactive · <a href="/3d-light-shading-1/" style="color:#22d3ee;text-decoration:none;">lighting vs. shading primer</a>.
+    </span>
+  </li>
+
+  <!-- Evo 2 — #00FF9F (matches index.md series heading) -->
+  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
+             border: 1px solid #1a4a3a; border-left: 3px solid #00FF9F;
+             border-radius: 8px; background: #0a1510;">
+    <a href="/evo2-report-1/"
+       style="color: #00FF9F; font-weight: bold; font-family: Monaco, monospace;
+              font-size: 0.88rem; text-decoration: none;">
+      Evo 2 &mdash; Learning the Language of Life
+    </a>
+    <span style="color: #1a5a3a; font-family: Monaco, monospace; font-size: 0.78rem;">
+      &mdash; Arc Institute's 40B-parameter genomic foundation model.
+    </span>
+  </li>
+
   <!-- Anti-AI Ideology — #06b6d4 (matches index.md series heading) -->
   <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
              border: 1px solid #0c3044; border-left: 3px solid #06b6d4;
@@ -230,10 +244,10 @@ title: bra-khet
     <a href="/anti-ai-guilt-report-1"
        style="color: #06b6d4; font-weight: bold; font-family: Monaco, monospace;
               font-size: 0.88rem; text-decoration: none;">
-      AI Use &amp; Anti-AI Ideology
+      AI Use &amp; Anti-AI Ideology &mdash; v2.0
     </a>
     <span style="color: #1a5060; font-family: Monaco, monospace; font-size: 0.78rem;">
-      &mdash; OSINT investigation into cognitive dissonance in r/antiai.
+      &mdash; Cognitive dissonance in r/antiai · <a href="/anti-ai-guilt-info-1" style="color:#ec4899;text-decoration:none;">infographic</a> · full report.
     </span>
   </li>
 
@@ -247,7 +261,7 @@ title: bra-khet
       Meme Review &mdash; Tung Tung Tung Sahur
     </a>
     <span style="color: #6a2020; font-family: Monaco, monospace; font-size: 0.78rem;">
-      &mdash; Italian Brainrot · AI / IP law lifecycle report.
+      &mdash; Italian Brainrot · AI / IP law · <a href="/ttt-info-report-1/" style="color:#ff4040;text-decoration:none;">infographic</a> · narrative report.
     </span>
   </li>
 

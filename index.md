@@ -51,7 +51,7 @@ title: "|0⟩"
 </div>
 
 <!-- ════════════════════════════════════════════════════════════════
-     LATEST REPORTS
+     LATEST REPORTS - Claude, update about.md if you modify/add below
 ════════════════════════════════════════════════════════════════ -->
 <h3 style="color: #00ff5d; margin-top: 3rem; font-family: Monaco, monospace; letter-spacing: -0.02em;">
   Latest Reports
