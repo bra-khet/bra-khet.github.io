@@ -378,6 +378,25 @@ title: "|0⟩"
 
 </div>
 
+<!-- ── Soft Hyphen Utility ──────────────────────────────────────── -->
+<div style="margin: 2.5rem 0; text-align: center;">
+  <button
+     onclick="navigator.clipboard.writeText('\u00AD');var el=this;var orig=el.innerHTML;el.innerHTML='&#10003; Soft hyphen copied to clipboard.';setTimeout(function(){el.innerHTML=orig;},1800);"
+     style="display: inline-block; width: 82%; max-width: 640px; padding: 1rem 2rem;
+            background: linear-gradient(135deg, #0a1a0c 0%, #0a1424 100%);
+            color: #00ff41; font-family: Monaco, monospace; font-weight: bold;
+            font-size: 0.92rem; border-radius: 10px; cursor: pointer;
+            border: 1px solid #1a3322;
+            letter-spacing: 0.03em;
+            text-shadow: 0 0 8px #00ff41, 0 0 18px rgba(0,255,65,0.45);
+            box-shadow: 0 2px 14px rgba(0,255,65,0.07), inset 0 0 24px rgba(0,255,65,0.03);
+            transition: box-shadow 0.2s, text-shadow 0.2s, border-color 0.2s;"
+     onmouseover="this.style.boxShadow='0 4px 28px rgba(0,255,65,0.18), inset 0 0 32px rgba(0,255,65,0.06)';this.style.borderColor='#2a5a38';this.style.textShadow='0 0 12px #00ff41, 0 0 28px rgba(0,255,65,0.85), 0 0 48px rgba(0,255,65,0.3)';"
+     onmouseout="this.style.boxShadow='0 2px 14px rgba(0,255,65,0.07), inset 0 0 24px rgba(0,255,65,0.03)';this.style.borderColor='#1a3322';this.style.textShadow='0 0 8px #00ff41, 0 0 18px rgba(0,255,65,0.45)';">
+    Click here to copy soft&#x2011;hyphen to the clipboard &mdash; you know you want to.
+  </button>
+</div>
+
 <!-- ════════════════════════════════════════════════════════════════
      GALLERY
 ════════════════════════════════════════════════════════════════ -->
