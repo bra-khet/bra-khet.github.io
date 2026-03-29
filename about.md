@@ -25,6 +25,7 @@ title: bra-khet
   ║    #b06cff  Synth-/Tech- etymology                               ║
   ║    #06b6d4  Anti-AI Ideology                                     ║
   ║    #ff4040  Meme Review                                          ║
+  ║    #cc44ff  Anthropic Mythos / AGI neurons                       ║
   ╚═══════════════════════════════════════════════════════════════════╝
 -->
 
@@ -166,6 +167,20 @@ title: bra-khet
 </div>
 
 <ul style="list-style: none; padding: 0; margin: 0 0 1rem;">
+
+  <!-- Anthropic Mythos — #cc44ff (AGI neurons / Capybara tier) -->
+  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
+             border: 1px solid #200a38; border-left: 3px solid #cc44ff;
+             border-radius: 8px; background: #080010;">
+    <a href="/anthropic-mythos/"
+       style="color: #cc44ff; font-weight: bold; font-family: Monaco, monospace;
+              font-size: 0.88rem; text-decoration: none;">
+      &#129504; Anthropic Mythos
+    </a>
+    <span style="color: #5a3a78; font-family: Monaco, monospace; font-size: 0.78rem;">
+      &mdash; v1.0 · March 2026 · CMS leak forensics, Capybara benchmark profile, $14.5B flash crash, alignment risks.
+    </span>
+  </li>
 
   <!-- OSINT Protocol — #00d4ff (matches featured CTA on index.md) -->
   <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;

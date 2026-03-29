@@ -51,13 +51,73 @@ title: "|0⟩"
 </div>
 
 <!-- ════════════════════════════════════════════════════════════════
+     ANTHROPIC MYTHOS CTA — Cyberpunk AGI neurons pulsing
+════════════════════════════════════════════════════════════════ -->
+<style>
+@keyframes neural-pulse {
+  0%   { text-shadow: 0 0 7px #cc44ff, 0 0 18px rgba(204,68,255,0.5), 0 0 32px rgba(122,63,255,0.2); }
+  50%  { text-shadow: 0 0 14px #dd66ff, 0 0 36px rgba(204,68,255,0.75), 0 0 60px rgba(122,63,255,0.4), 0 0 90px rgba(204,68,255,0.15); }
+  100% { text-shadow: 0 0 7px #cc44ff, 0 0 18px rgba(204,68,255,0.5), 0 0 32px rgba(122,63,255,0.2); }
+}
+</style>
+
+<div style="margin: 2rem 0 0.5rem; text-align: center;">
+  <a href="/anthropic-mythos/"
+     style="display: inline-block; padding: 1.15rem 2.6rem;
+            background: linear-gradient(135deg, #06000e 0%, #120024 60%, #0c0018 100%);
+            color: #cc44ff; font-family: Monaco, monospace; font-weight: bold;
+            font-size: 1.08rem; border-radius: 10px; text-decoration: none;
+            border: 1px solid rgba(204,68,255,0.38);
+            letter-spacing: 0.09em;
+            animation: neural-pulse 2.6s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(204,68,255,0.18), 0 0 50px rgba(122,63,255,0.07), inset 0 0 30px rgba(204,68,255,0.04);
+            transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;"
+     onmouseover="this.style.boxShadow='0 0 36px rgba(204,68,255,0.45), 0 0 70px rgba(122,63,255,0.22), inset 0 0 40px rgba(204,68,255,0.08)';this.style.borderColor='rgba(204,68,255,0.7)';this.style.transform='translateY(-2px)';"
+     onmouseout="this.style.boxShadow='0 0 20px rgba(204,68,255,0.18), 0 0 50px rgba(122,63,255,0.07), inset 0 0 30px rgba(204,68,255,0.04)';this.style.borderColor='rgba(204,68,255,0.38)';this.style.transform='translateY(0)';">
+    &#129504;&nbsp; ANTHROPIC MYTHOS &nbsp;&#8725;&#8725;&nbsp;<span style="font-weight: normal; font-size: 0.82rem; opacity: 0.6; letter-spacing: 0.04em;">capybara tier · leaked</span>
+  </a>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
      LATEST REPORTS - Claude, update about.md if you modify/add below
 ════════════════════════════════════════════════════════════════ -->
 <h3 style="color: #00ff5d; margin-top: 3rem; font-family: Monaco, monospace; letter-spacing: -0.02em;">
   Latest Reports
 </h3>
 
+<!-- ── Anthropic Mythos ───────────────────────────────────────────── -->
+<h4 style="color: #cc44ff; font-family: Monaco, monospace; font-size: 0.9rem;
+           margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
+  Anthropic Mythos
+</h4>
 
+<div style="margin-top: 0.5rem; padding: 1rem 1.25rem;
+            border: 1px solid #200a38;
+            border-left: 3px solid #cc44ff;
+            border-radius: 12px; background: #080010;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+
+  <p style="color: #7a4a99; font-size: 0.85rem; margin: 0.3rem 0 0.5rem; font-family: Monaco, monospace;">
+    March 2026 &middot; Research Report v1.0
+  </p>
+  <p style="color: #5a3a78; font-size: 0.8rem; margin: 0 0 0.75rem; font-family: Monaco, monospace; line-height: 1.55;">
+    Breaking news feature on Anthropic's accidental CMS disclosure of Claude Mythos (codenamed Capybara),
+    a fourth-tier model surpassing Opus. Covers the forensic leak timeline, benchmark profile (+20pp MATH,
+    92% HumanEval, Terminal-Bench dominance), $14.5B cybersecurity flash crash, alignment faking risks,
+    and the Defenders-First rollout strategy.
+  </p>
+  <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+    <a href="/anthropic-mythos/"
+       style="padding: 0.55rem 1.1rem; background: transparent; color: #cc44ff;
+              border: 1px solid #cc44ff; border-radius: 6px; text-decoration: none;
+              font-weight: bold; font-size: 0.85rem; font-family: Monaco, monospace;"
+       onmouseover="this.style.background='#cc44ff';this.style.color='#000';"
+       onmouseout="this.style.background='transparent';this.style.color='#cc44ff';">
+      &#127760; Full Report
+    </a>
+  </div>
+
+</div>
 
 <!-- ── AI Infrastructure & Water ─────────────────────────────────── -->
 <h4 style="color: #00b4d8; font-family: Monaco, monospace; font-size: 0.9rem;
