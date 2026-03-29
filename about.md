@@ -169,17 +169,24 @@ title: bra-khet
 <ul style="list-style: none; padding: 0; margin: 0 0 1rem;">
 
   <!-- Anthropic Mythos — #cc44ff (AGI neurons / Capybara tier) -->
-  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
+  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem; padding-right: 72px;
              border: 1px solid #200a38; border-left: 3px solid #cc44ff;
-             border-radius: 8px; background: #080010;">
+             border-radius: 8px; background: #080010; position: relative;">
     <a href="/anthropic-mythos/"
        style="color: #cc44ff; font-weight: bold; font-family: Monaco, monospace;
               font-size: 0.88rem; text-decoration: none;">
       &#129504; Anthropic Mythos
     </a>
     <span style="color: #5a3a78; font-family: Monaco, monospace; font-size: 0.78rem;">
-      &mdash; v1.0 · March 2026 · CMS leak forensics, Capybara benchmark profile, $14.5B flash crash, alignment risks.
+      &mdash; v1.0 · March 2026 · CMS leak forensics, Capybara benchmark profile, $14.5B flash crash, alignment risks. &middot;
+      <a href="/anthropic-mythos-snapshot/" style="color: rgba(204,68,255,0.5); text-decoration: none;"
+         onmouseover="this.style.color='#cc44ff';" onmouseout="this.style.color='rgba(204,68,255,0.5)';">snapshot</a>
     </span>
+    <canvas id="mythos-about-mini" width="48" height="48"
+      style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+             border-radius: 5px; background: #06000e; opacity: 0.7;
+             border: 1px solid rgba(204,68,255,0.15);"
+      aria-hidden="true"></canvas>
   </li>
 
   <!-- OSINT Protocol — #00d4ff (matches featured CTA on index.md) -->
@@ -281,6 +288,18 @@ title: bra-khet
   </li>
 
 </ul>
+
+<script src="/js/mythos-neurons.js"></script>
+<script>
+(function () {
+  var c = document.getElementById('mythos-about-mini');
+  if (c && typeof MythosNeuronRenderer !== 'undefined') {
+    new MythosNeuronRenderer(c, c.getContext('2d'), {
+      mini: true, nodeCount: 4, color: '#cc44ff', pscale: 0.28
+    }).start();
+  }
+}());
+</script>
 
 <!-- Jekyll post loop — picks up any entries in _posts/ -->
 <ul style="list-style: none; padding: 0; margin: 0 0 3rem;">

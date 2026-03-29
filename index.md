@@ -61,7 +61,23 @@ title: "|0⟩"
 }
 </style>
 
-<div style="margin: 2rem 0 0.5rem; text-align: center;">
+<style>
+@media (max-width: 600px) { .mythos-mini-canvas { display: none !important; } }
+</style>
+
+<div style="margin: 2rem 0 0.5rem; text-align: center; position: relative;">
+  <!-- Mini neuron canvases — decorative, hidden on mobile -->
+  <canvas class="mythos-mini-canvas" id="mythos-mini-l" width="80" height="56"
+    style="position: absolute; left: 8%; top: 50%; transform: translateY(-50%);
+           border-radius: 7px; background: #06000e;
+           border: 1px solid rgba(204,68,255,0.18); opacity: 0.8;"
+    aria-hidden="true"></canvas>
+  <canvas class="mythos-mini-canvas" id="mythos-mini-r" width="80" height="56"
+    style="position: absolute; right: 8%; top: 50%; transform: translateY(-50%);
+           border-radius: 7px; background: #06000e;
+           border: 1px solid rgba(204,68,255,0.18); opacity: 0.8;"
+    aria-hidden="true"></canvas>
+
   <a href="/anthropic-mythos/"
      style="display: inline-block; padding: 1.15rem 2.6rem;
             background: linear-gradient(135deg, #06000e 0%, #120024 60%, #0c0018 100%);
@@ -77,6 +93,20 @@ title: "|0⟩"
     &#129504;&nbsp; ANTHROPIC MYTHOS &nbsp;&#8725;&#8725;&nbsp;<span style="font-weight: normal; font-size: 0.82rem; opacity: 0.6; letter-spacing: 0.04em;">capybara tier · leaked</span>
   </a>
 </div>
+
+<script src="/js/mythos-neurons.js"></script>
+<script>
+(function () {
+  ['mythos-mini-l', 'mythos-mini-r'].forEach(function (id) {
+    var c = document.getElementById(id);
+    if (c && typeof MythosNeuronRenderer !== 'undefined') {
+      new MythosNeuronRenderer(c, c.getContext('2d'), {
+        mini: true, nodeCount: 5, color: '#cc44ff', pscale: 0.32
+      }).start();
+    }
+  });
+}());
+</script>
 
 <!-- ════════════════════════════════════════════════════════════════
      LATEST REPORTS - Claude, update about.md if you modify/add below
@@ -106,7 +136,7 @@ title: "|0⟩"
     92% HumanEval, Terminal-Bench dominance), $14.5B cybersecurity flash crash, alignment faking risks,
     and the Defenders-First rollout strategy.
   </p>
-  <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+  <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
     <a href="/anthropic-mythos/"
        style="padding: 0.55rem 1.1rem; background: transparent; color: #cc44ff;
               border: 1px solid #cc44ff; border-radius: 6px; text-decoration: none;
@@ -114,6 +144,14 @@ title: "|0⟩"
        onmouseover="this.style.background='#cc44ff';this.style.color='#000';"
        onmouseout="this.style.background='transparent';this.style.color='#cc44ff';">
       &#127760; Full Report
+    </a>
+    <a href="/anthropic-mythos-snapshot/"
+       style="padding: 0.55rem 1.1rem; background: transparent; color: rgba(204,68,255,0.5);
+              border: 1px solid rgba(204,68,255,0.3); border-radius: 6px; text-decoration: none;
+              font-size: 0.82rem; font-family: Monaco, monospace;"
+       onmouseover="this.style.color='#cc44ff';this.style.borderColor='#cc44ff';"
+       onmouseout="this.style.color='rgba(204,68,255,0.5)';this.style.borderColor='rgba(204,68,255,0.3)';">
+      &#9889; Visual Snapshot
     </a>
   </div>
 

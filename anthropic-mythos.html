@@ -64,6 +64,14 @@ permalink: /anthropic-mythos/
       <h1 class="report-title">The Capybara Leak: Inside Anthropic's Accidental Disclosure of Its Most Powerful — and Most Dangerous — AI Yet</h1>
       <p class="report-subtitle">A rudimentary CMS toggle left unguarded. Nearly 3,000 internal assets exposed. One unreleased model — Claude Mythos — sent $14.5 billion in cybersecurity market value to zero in a single session.</p>
 
+      <!-- Hero strip canvas — neuron visualization accent -->
+      <canvas id="mythos-hero-strip" width="700" height="88"
+        style="display:block; width:100%; max-width:700px; height:88px;
+               margin: 1.4rem auto 0.25rem; border-radius: 8px;
+               background: #0a0a1f; opacity: 0.9;
+               border: 1px solid rgba(204,68,255,0.18);"
+        aria-hidden="true"></canvas>
+
       <div class="hero-stats" role="list" aria-label="Key statistics">
         <div class="hero-stat" role="listitem">
           <span class="stat-val violet">~3,000</span>
@@ -543,5 +551,32 @@ permalink: /anthropic-mythos/
 </div>
 
 <script src="{{ site.baseurl }}/js/anthropic-mythos.js" defer></script>
+<script src="{{ site.baseurl }}/js/mythos-neurons.js" defer></script>
+<script src="{{ site.baseurl }}/js/mythos-dna.js" defer></script>
+<script>
+  // Initialize hero strip once deferred renderer scripts have run
+  document.addEventListener('DOMContentLoaded', function () {
+    var c = document.getElementById('mythos-hero-strip');
+    if (!c) return;
+    var ctx = c.getContext('2d');
+    // Blend neurons + DNA across the wide strip
+    var neurons = typeof MythosNeuronRenderer !== 'undefined'
+      ? new MythosNeuronRenderer(c, ctx, { nodeCount: 22, color: '#cc44ff', connectDist: 140, pscale: 1.4 })
+      : null;
+    var dna = typeof MythosDNARenderer !== 'undefined'
+      ? new MythosDNARenderer(c, ctx, { horizontal: true, color: 'rgba(0,200,120,0.55)', speed: 0.28, pscale: 1.2 })
+      : null;
+    if (!neurons && !dna) return;
+    var t = 0;
+    (function loop() {
+      t += 0.012;
+      ctx.fillStyle = '#0a0a1f';
+      ctx.fillRect(0, 0, c.width, c.height);
+      if (dna)     dna.drawFrame(t);
+      if (neurons) neurons.drawFrame(t);
+      requestAnimationFrame(loop);
+    }());
+  });
+</script>
 </body>
 </html>
