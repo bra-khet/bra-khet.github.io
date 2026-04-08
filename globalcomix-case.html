@@ -1,0 +1,1009 @@
+---
+layout: null
+title: "Global Comix Case Report: The Invisible Ban"
+permalink: /globalcomix-case/
+---
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Invisible Ban — u/DoctorZacharySmith & Happily Ever After</title>
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:    #0d1117;
+    --surface: #161b22;
+    --card:    #1c2330;
+    --border:  #2a3240;
+    --muted:   #8b949e;
+    --text:    #e6edf3;
+    --amber:   #f5a623;
+    --amber-dim: #c4861c;
+    --red:     #e74c3c;
+    --green:   #3fb950;
+    --blue:    #58a6ff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+  }
+
+  .nav-brand {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── Shared Layout ── */
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  section { padding: 5rem 0; }
+  section + section { border-top: 1px solid var(--border); }
+
+  h2 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    line-height: 1.25;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1rem;
+  }
+
+  p { margin-bottom: 1rem; color: var(--text); }
+  p:last-child { margin-bottom: 0; }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  /* ── Hero ── */
+  #hero {
+    padding: 6rem 0 5rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(245,166,35,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    background: rgba(245,166,35,0.12);
+    border: 1px solid rgba(245,166,35,0.3);
+    color: var(--amber);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.9rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+  }
+
+  .hero-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-title em {
+    font-style: normal;
+    color: var(--amber);
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 640px;
+    margin-bottom: 2.5rem;
+    line-height: 1.65;
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .meta-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .meta-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .meta-divider {
+    width: 1px;
+    height: 36px;
+    background: var(--border);
+  }
+
+  /* ── Alert Banner ── */
+  .alert-banner {
+    background: rgba(231,76,60,0.1);
+    border: 1px solid rgba(231,76,60,0.35);
+    border-left: 4px solid var(--red);
+    border-radius: 4px;
+    padding: 1.1rem 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .alert-icon {
+    color: var(--red);
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    font-weight: 700;
+  }
+
+  .alert-text {
+    font-size: 0.92rem;
+    color: var(--text);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .alert-text strong { color: var(--red); }
+
+  /* ── Timeline ── */
+  .timeline {
+    position: relative;
+    padding-left: 2.5rem;
+    margin-top: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 9px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--amber), var(--red));
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+
+  .timeline-item:last-child { margin-bottom: 0; }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.05rem;
+    top: 7px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--amber);
+    border: 2px solid var(--navy);
+    box-shadow: 0 0 0 2px var(--amber);
+  }
+
+  .timeline-item.phase::before {
+    background: var(--red);
+    box-shadow: 0 0 0 2px var(--red);
+  }
+
+  .timeline-date {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline-item.phase .timeline-date { color: var(--red); }
+
+  .timeline-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.35rem;
+  }
+
+  .timeline-body {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── Policy Comparison ── */
+  .policy-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+
+  .policy-col {
+    background: var(--card);
+    padding: 1.5rem;
+  }
+
+  .policy-col-header {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.8rem;
+    border-radius: 3px;
+    margin-bottom: 1.25rem;
+    display: inline-block;
+  }
+
+  .policy-col.before .policy-col-header {
+    background: rgba(88,166,255,0.1);
+    color: var(--blue);
+    border: 1px solid rgba(88,166,255,0.25);
+  }
+
+  .policy-col.after .policy-col-header {
+    background: rgba(231,76,60,0.1);
+    color: var(--red);
+    border: 1px solid rgba(231,76,60,0.25);
+  }
+
+  .policy-row {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .policy-row:last-child { border-bottom: none; }
+
+  .policy-domain {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.2rem;
+  }
+
+  /* ── Workflow Blockquote ── */
+  .workflow-quote {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--amber);
+    border-radius: 0 6px 6px 0;
+    padding: 2rem 2rem 2rem 2.25rem;
+    margin: 2rem 0;
+    position: relative;
+  }
+
+  .workflow-quote::before {
+    content: '\201C';
+    position: absolute;
+    top: -0.5rem;
+    left: 1.5rem;
+    font-family: Georgia, serif;
+    font-size: 5rem;
+    color: var(--amber);
+    opacity: 0.15;
+    line-height: 1;
+  }
+
+  .workflow-quote p {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.75;
+    font-style: italic;
+    margin-bottom: 0.85rem;
+  }
+
+  .workflow-quote p:last-of-type { margin-bottom: 1.25rem; }
+
+  .workflow-steps {
+    list-style: none;
+    margin: 0.75rem 0 1rem;
+    padding: 0;
+  }
+
+  .workflow-steps li {
+    font-size: 0.88rem;
+    font-style: italic;
+    color: var(--text);
+    padding: 0.3rem 0 0.3rem 1.4rem;
+    position: relative;
+  }
+
+  .workflow-steps li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--amber);
+    font-style: normal;
+  }
+
+  .quote-attribution {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--amber);
+    font-style: normal;
+  }
+
+  /* ── Finding Cards ── */
+  .findings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .finding-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .finding-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--amber);
+  }
+
+  .finding-card.danger::before { background: var(--red); }
+
+  .finding-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+    font-family: Georgia, serif;
+  }
+
+  .finding-card.danger .finding-number { color: rgba(231,76,60,0.15); }
+
+  .finding-text {
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── Context Items ── */
+  .context-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.75rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .context-tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    white-space: nowrap;
+    margin-top: 0.15rem;
+  }
+
+  .context-tag.exit {
+    background: rgba(231,76,60,0.1);
+    color: var(--red);
+    border: 1px solid rgba(231,76,60,0.3);
+  }
+
+  .context-tag.collateral {
+    background: rgba(245,166,35,0.1);
+    color: var(--amber);
+    border: 1px solid rgba(245,166,35,0.3);
+  }
+
+  .context-tag.hypocrisy {
+    background: rgba(88,166,255,0.1);
+    color: var(--blue);
+    border: 1px solid rgba(88,166,255,0.3);
+  }
+
+  .context-tag.exodus {
+    background: rgba(63,185,80,0.1);
+    color: var(--green);
+    border: 1px solid rgba(63,185,80,0.3);
+  }
+
+  .context-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.35rem;
+  }
+
+  .context-body {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ── Next Steps ── */
+  .steps-list {
+    counter-reset: steps;
+    list-style: none;
+    margin-top: 2rem;
+  }
+
+  .steps-list li {
+    counter-increment: steps;
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .steps-list li:last-child { border-bottom: none; }
+
+  .steps-list li::before {
+    content: counter(steps);
+    font-family: Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--amber);
+    opacity: 0.5;
+    line-height: 1.2;
+  }
+
+  .step-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+
+  .step-body {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ── Open Questions ── */
+  .question-list {
+    list-style: none;
+    margin-top: 1.5rem;
+  }
+
+  .question-list li {
+    padding: 1rem 0 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+    position: relative;
+  }
+
+  .question-list li:last-child { border-bottom: none; }
+
+  .question-list li::before {
+    content: '?';
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    font-weight: 800;
+    color: var(--amber);
+    opacity: 0.6;
+  }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem 0;
+    text-align: center;
+  }
+
+  .footer-rule {
+    width: 40px;
+    height: 2px;
+    background: var(--amber);
+    margin: 0 auto 1.5rem;
+  }
+
+  footer p {
+    font-size: 0.78rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto 0.5rem;
+  }
+
+  footer strong { color: var(--text); }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .policy-compare { grid-template-columns: 1fr; }
+    .findings-grid { grid-template-columns: 1fr; }
+    .context-item { grid-template-columns: 1fr; }
+    .context-tag { width: fit-content; }
+    .hero-meta { flex-direction: column; gap: 1rem; }
+    .meta-divider { display: none; }
+    h2 { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav>
+  <span class="nav-brand">GlobalComix Case Report</span>
+  <ul class="nav-links">
+    <li><a href="#what-happened">What Happened</a></li>
+    <li><a href="#policy">Policy vs. Reality</a></li>
+    <li><a href="#workflow">Your Workflow</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+    <li><a href="#findings">Findings</a></li>
+    <li><a href="#next">What's Next</a></li>
+  </ul>
+</nav>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <div class="container">
+    <span class="hero-eyebrow">Case Documentation — April 2026</span>
+    <h1 class="hero-title">The <em>Invisible</em> Ban</h1>
+    <p class="hero-subtitle">
+      How GlobalComix's March 2026 AI content enforcement wave shadow-banned a multi-year, human-directed creative project — in direct contradiction of its own written policy.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="meta-label">Creator</span>
+        <span class="meta-value">u/DoctorZacharySmith</span>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="hero-meta-item">
+        <span class="meta-label">Comic</span>
+        <span class="meta-value">Happily Ever After</span>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="hero-meta-item">
+        <span class="meta-label">Platform</span>
+        <span class="meta-value">GlobalComix</span>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="hero-meta-item">
+        <span class="meta-label">Event Window</span>
+        <span class="meta-value">March 24 – April 7, 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── What Happened ── -->
+<section id="what-happened">
+  <div class="container">
+    <span class="section-label">The Situation</span>
+    <h2>What Happened</h2>
+
+    <div class="alert-banner">
+      <span class="alert-icon">!</span>
+      <p class="alert-text">
+        <strong>Shadow Ban:</strong> Shortly after March 24, 2026, <em>Happily Ever After</em> was algorithmically stripped from GlobalComix's search index and all discovery feeds. The files remain hosted and accessible via direct link — but the comic is <strong>completely invisible</strong> to any reader searching the platform.
+      </p>
+    </div>
+
+    <p>
+      Between March 20 and 24, 2026, GlobalComix executed a sweeping policy overhaul in response to industry pressure and a $13 million venture capital infusion. The platform pivoted from a disclosure-based model to an outright prohibition on "fully AI-generated" works. To enforce this, GlobalComix deployed automated moderation algorithms to detect and suppress content it classified as generative.
+    </p>
+    <p>
+      The problem: those algorithms have no ability to see what a human actually did. They can identify visual outputs that <em>look</em> generative. They cannot detect the scripts, the character training sessions, the dozens of rejected iterations, the compositional decisions, or the narrative arc built across years. <em>Happily Ever After</em> tripped the detector. The work behind it was invisible to the machine.
+    </p>
+    <p>
+      No notification was sent. No appeal pathway was offered. The series simply ceased to exist in the platform's discovery ecosystem — a moderation tactic the platform neither acknowledges nor defines, commonly referred to as a <strong>shadow ban</strong>.
+    </p>
+  </div>
+</section>
+
+<!-- ── Policy vs. Reality ── -->
+<section id="policy">
+  <div class="container">
+    <span class="section-label">The Contradiction</span>
+    <h2>What the Policy Says vs. What Enforcement Did</h2>
+    <p>
+      GlobalComix's March 24 policy explicitly addresses custom-trained model workflows. Under the platform's own written rules, the methodology used for <em>Happily Ever After</em> is <strong>not prohibited</strong>. The enforcement that followed did not reflect that text.
+    </p>
+
+    <div class="policy-compare">
+      <div class="policy-col before">
+        <span class="policy-col-header">Written Policy (March 24, 2026)</span>
+
+        <div class="policy-row">
+          <div class="policy-domain">Custom LoRA Workflows</div>
+          Explicitly <strong>permitted</strong> — provided the model is trained on original, owned artwork and the workflow requires human-led character design, world-building, and compositional assembly.
+        </div>
+
+        <div class="policy-row">
+          <div class="policy-domain">What Is Banned</div>
+          Works where visual components are created <em>entirely</em> via text-to-image prompting, with no broader human-led creative workflow.
+        </div>
+
+        <div class="policy-row">
+          <div class="policy-domain">Notification Standard</div>
+          Policy changes and enforcement actions implied to follow standard content governance procedures.
+        </div>
+
+        <div class="policy-row">
+          <div class="policy-domain">Monetization</div>
+          AI-assisted content with "sufficient original artistry" is <strong>eligible</strong> for GlobalComix Gold subscription revenue.
+        </div>
+      </div>
+
+      <div class="policy-col after">
+        <span class="policy-col-header">Applied Enforcement (March 24–April 7)</span>
+
+        <div class="policy-row">
+          <div class="policy-domain">Custom LoRA Workflows</div>
+          <strong>High risk of false-positive shadow ban.</strong> Algorithms cannot distinguish LoRA-based output from prompt-only output. <em>Happily Ever After</em> was suppressed under this failure.
+        </div>
+
+        <div class="policy-row">
+          <div class="policy-domain">What Got Caught</div>
+          Compliant hybrid workflows, traditional creators using purchased AI assets unknowingly, and works localized via the platform's own INKR AI tools.
+        </div>
+
+        <div class="policy-row">
+          <div class="policy-domain">Notification Standard</div>
+          <strong>None.</strong> Shadow banning is covert by design. Creators discovered the suppression only by noticing that their search visibility had disappeared entirely.
+        </div>
+
+        <div class="policy-row">
+          <div class="policy-domain">Monetization</div>
+          <strong>Frequently revoked</strong> pending manual appeal processes that were neither clearly defined nor consistently administered.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Your Workflow ── -->
+<section id="workflow">
+  <div class="container">
+    <span class="section-label">The Record</span>
+    <h2>The Workflow, In Your Own Words</h2>
+    <p>
+      Following the shadow ban, u/DoctorZacharySmith published a detailed public breakdown of the <em>Happily Ever After</em> production methodology. The following is reproduced verbatim from that statement, as documented in the research report.
+    </p>
+
+    <div class="workflow-quote">
+      <p>
+        "There seems to be a misconception that <em>Happily Ever After</em> is simply 'AI generated.' That is not accurate. AI is a tool used in the visual production process, but the creative work itself is entirely human-driven. Characters are trained using custom LoRA models built from curated datasets. Scenes are generated iteratively, often dozens of times, with adjustments to pose, lighting, expression, and consistency. Images are selected, rejected, refined, and aligned to match narrative intent. This is closer to directing and art direction than automation.
+      </p>
+      <p>The process includes:</p>
+      <ul class="workflow-steps">
+        <li>Writing and revising scripts.</li>
+        <li>Designing character arcs and long-term continuity.</li>
+        <li>Training custom character models for consistency.</li>
+        <li>Iterative scene generation and selection.</li>
+        <li>Panel composition.</li>
+      </ul>
+      <p>
+        AI assists with rendering, but it does not create the story, characters, structure, or meaning. Those elements come from deliberate human authorship. This is not 'push button, get comic.' It is a new production method combining writing, art direction, model training, and iterative visual design."
+      </p>
+      <span class="quote-attribution">— u/DoctorZacharySmith, public statement (documented March–April 2026)</span>
+    </div>
+
+    <p>
+      The research report's analysis concludes: this workflow "aligns perfectly with the platform's stated definition of acceptable, human-led AI assistance." The suppression was not a policy judgment — it was an algorithmic failure to see the human work behind the output.
+    </p>
+  </div>
+</section>
+
+<!-- ── Timeline ── -->
+<section id="timeline">
+  <div class="container">
+    <span class="section-label">Chronology</span>
+    <h2>How It Unfolded</h2>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">March 18, 2026</div>
+        <div class="timeline-title">The Corporate Pivot</div>
+        <p class="timeline-body">GlobalComix closes a $13 million Series B funding round and appoints Henrik Rydberg as CEO. Simultaneously announces the acquisition of INKR, an AI-powered manga localization platform. Rydberg frames the vision as building the "Figma for comics."</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Weeks Prior (February–March 2026)</div>
+        <div class="timeline-title">The TENACITY Incident</div>
+        <p class="timeline-body">Independent creator Paige Critchlow discovers that GlobalComix used ChatGPT to rewrite her comic's promotional description without her consent. Her public exit from the platform establishes a community narrative: the platform penalizes creator AI use while embedding it in its own backend.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">March 20, 2026</div>
+        <div class="timeline-title">Industry Pressure Peaks</div>
+        <p class="timeline-body">The White House publishes its National Policy Framework for Artificial Intelligence. San Diego Comic-Con institutes a ban on AI art for its 2026 Art Show. Community pressure on platforms reaches critical mass.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">March 20–24, 2026</div>
+        <div class="timeline-title">The "180-Degree" Policy Overhaul</div>
+        <p class="timeline-body">GlobalComix formalizes its new "human artistry first" framework. Fully AI-generated works are strictly prohibited. AI-assisted workflows — including custom LoRA workflows on original datasets — are explicitly permitted under the written policy text.</p>
+      </div>
+
+      <div class="timeline-item phase">
+        <div class="timeline-date">March 24–26, 2026 — Phase 1</div>
+        <div class="timeline-title">Automated Dragnet</div>
+        <p class="timeline-body">Algorithmic soft-delistings begin. Works tagged as AI under the old permissive policy, or that trip image-detection heuristics, are immediately stripped from search and trending. The sweep is indiscriminate: compliant hybrid workflows are caught alongside low-effort prompt outputs. <em>Happily Ever After</em> disappears from search.</p>
+      </div>
+
+      <div class="timeline-item phase">
+        <div class="timeline-date">March 27 – April 7, 2026 — Phase 2</div>
+        <div class="timeline-title">Vigilante Reporting Wave</div>
+        <p class="timeline-body">Opponents of generative AI weaponize the platform's content reporting channel, manually hunting and flagging suspected hybrid works that survived the initial algorithmic sweep. A secondary wave of manual delistings and monetization freezes follows.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Broader Context ── -->
+<section id="context">
+  <div class="container">
+    <span class="section-label">Not an Isolated Case</span>
+    <h2>What Was Happening Around You</h2>
+    <p>
+      The suppression of <em>Happily Ever After</em> was the most thoroughly documented instance of the enforcement wave, but it was part of a broader pattern of systemic collateral damage.
+    </p>
+
+    <div class="context-item">
+      <span class="context-tag exit">Creator Exit</span>
+      <div>
+        <div class="context-title">Blushinmoon / Shadows After Death</div>
+        <p class="context-body">The creator publicly exited GlobalComix and directed readers to ComicFury and Itch.io, citing the hostile policy environment. Rather than risk arbitrary shadow banning, numerous creators opted for preemptive migration to platforms with more stable governance.</p>
+      </div>
+    </div>
+
+    <div class="context-item">
+      <span class="context-tag collateral">Collateral Damage</span>
+      <div>
+        <div class="context-title">The Commercial Asset Trap</div>
+        <p class="context-body">Creators using commercially purchased digital assets — background templates, overlays, brushes — were flagged when those assets turned out to contain AI-generated elements the creators weren't aware of. Fully human-drawn comics were pulled into the shadow-ban ecosystem through minor workflow contamination.</p>
+      </div>
+    </div>
+
+    <div class="context-item">
+      <span class="context-tag hypocrisy">Platform Hypocrisy</span>
+      <div>
+        <div class="context-title">INKR "Frankenstein Text" — The Double Standard</div>
+        <p class="context-body">While policing creators for generative visual AI, GlobalComix simultaneously promoted INKR's AI translation tools — acquired as part of the same corporate restructuring that triggered the crackdown. Community members began flagging INKR-localized comics as producing "Frankenstein text," exposing a direct contradiction: AI is forbidden for creators, endorsed for the platform's own revenue infrastructure.</p>
+      </div>
+    </div>
+
+    <div class="context-item">
+      <span class="context-tag exodus">Publisher Departures</span>
+      <div>
+        <div class="context-title">BOOM! Studios & Oni Press Exit</div>
+        <p class="context-body">Major publishing partners including BOOM! Studios and Oni Press departed the GlobalComix catalog during the same period. While exact contractual reasons are proprietary, community observers linked the exits to the operational instability created by the sudden policy shifts and algorithmic sweeps.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Key Findings ── -->
+<section id="findings">
+  <div class="container">
+    <span class="section-label">Analysis</span>
+    <h2>What the Research Found</h2>
+    <p>
+      These are the core conclusions of the report, drawn from aggregated platform data, forum telemetry, and creator testimony across Reddit, X/Twitter, and Bluesky.
+    </p>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <div class="finding-number">01</div>
+        <p class="finding-text"><strong>Algorithms cannot see human labor.</strong> Custom LoRA workflows — requiring scripting, dataset curation, multi-pass generation, and compositional editing — produce outputs that are visually indistinguishable from prompt-only content to automated moderation systems. The invisible work is precisely what gets erased.</p>
+      </div>
+
+      <div class="finding-card danger">
+        <div class="finding-number">02</div>
+        <p class="finding-text"><strong>"Sufficient original artistry" is not enforceable.</strong> The policy's central standard empowers moderators and algorithms to arbitrarily penalize aesthetics they suspect are machine-generated, with no defined criteria and no auditable threshold. It creates a subjective trap, not a rule.</p>
+      </div>
+
+      <div class="finding-card danger">
+        <div class="finding-number">03</div>
+        <p class="finding-text"><strong>Shadow banning inflicts real economic harm without due process.</strong> Creators lose search visibility and subscription revenue with no notification, no formal acknowledgment, and no structured appeal path. The platform maintains plausible deniability by never confirming the suppression occurred.</p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-number">04</div>
+        <p class="finding-text"><strong>The platform penalized the same AI use it was commercially investing in.</strong> The INKR acquisition — which introduced AI translation and localization into the platform's backend — and the content crackdown occurred simultaneously. Creators were penalized for what the platform's own venture-backed tools were doing.</p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-number">05</div>
+        <p class="finding-text"><strong>Collateral damage was systemic.</strong> The enforcement wave caught compliant hybrid workflows, traditional artists using unknowingly AI-contaminated purchased assets, and creators localized via platform-endorsed tools. The moderation architecture is structurally incompatible with the complexity of real creative workflows.</p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-number">06</div>
+        <p class="finding-text"><strong>The enforcement contradicted the written policy.</strong> u/DoctorZacharySmith's workflow — custom LoRAs on original character datasets, requiring scripting, design, and directorial iteration — is <em>explicitly listed as acceptable</em> under the March 24 policy text. The shadow ban was not a policy decision. It was an algorithmic failure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── What's Next ── -->
+<section id="next">
+  <div class="container">
+    <span class="section-label">Practical Guidance</span>
+    <h2>What Creators Can Do Now</h2>
+    <p>
+      The report identifies specific protective measures for creators in hybrid AI-assisted workflows navigating this enforcement environment.
+    </p>
+
+    <ol class="steps-list">
+      <li>
+        <div>
+          <div class="step-title">Document Everything — Build a Provenance Portfolio</div>
+          <p class="step-body">Archive original character sketches, curated training datasets, script drafts, and iterative generation logs. The platform places the full burden of proof on the creator. Documented workflow history is your only structured defense in an appeal.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div class="step-title">Use Exhaustive Metadata Disclosure on Upload</div>
+          <p class="step-body">Tag every AI-involved task explicitly in platform metadata and in the comic's opening creator notes. Map each tool to each specific task (e.g., "Custom LoRA for character rendering; scripts are entirely human-written; backgrounds use Photoshop Gen Fill"). Assume the algorithm needs to see it, because a human reviewer may never look.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div class="step-title">Request Pre-Upload Review for Novel Workflows</div>
+          <p class="step-body">Before publishing new work, submit workflow documentation to GlobalComix's content review channel for formal evaluation. Getting a documented clearance before the algorithm flags the work is far simpler than appealing after the fact.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div class="step-title">If Shadow-Banned: Frame Inquiries Carefully</div>
+          <p class="step-body">Because shadow bans are technically unacknowledged, frame support inquiries around "search indexing errors" or "database visibility issues" rather than explicitly naming the suppression. Supplying provenance documentation alongside the inquiry is critical to reinstatement and revenue recovery.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <div class="step-title">Diversify Distribution — Don't Depend on One Platform</div>
+          <p class="step-body">The instability of GlobalComix's governance has accelerated migration across the ecosystem. Namicomi is actively courting creators displaced by sudden policy pivots. ComicFury offers robust independent hosting. A multi-platform strategy eliminates single-point-of-failure risk from opaque algorithmic governance.</p>
+        </div>
+      </li>
+    </ol>
+
+    <h3 style="margin-top: 3rem;">Open Questions</h3>
+    <p>The report identifies three unresolved questions that will shape the future of AI-assisted comics publishing:</p>
+    <ul class="question-list">
+      <li>As generative AI becomes invisible inside standard tools like Photoshop and Clip Studio, how will any platform enforce a meaningful distinction between AI-assisted and fully AI-generated output?</li>
+      <li>Will EU Digital Services Act transparency requirements eventually force platforms to replace shadow banning with formal, appealable moderation notifications — giving creators the due process they currently lack?</li>
+      <li>Can a bifurcated ecosystem survive — one where traditional and AI-assisted creators self-segregate onto entirely different hosting platforms — or will economic pressures eventually force an uneasy integration?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="container">
+    <div class="footer-rule"></div>
+    <p>
+      This page summarizes the findings of <strong><em>GlobalComix AI Content Enforcement (March–April 2026): Prevalence, Patterns, and Publisher Experiences of Delisting, Shadow-Banning, and Visibility Suppression for AI-Generated and AI-Assisted Comics.</em></strong>
+    </p>
+    <p>
+      All content is drawn directly from the source report. No claims are extended beyond the documented evidence. The quoted workflow statement is reproduced verbatim from the creator's public statement as documented in the report.
+    </p>
+    <p style="margin-top: 1rem; font-size: 0.7rem; opacity: 0.5;">
+      Document date: April 7, 2026 &nbsp;·&nbsp; Primary subject: u/DoctorZacharySmith / <em>Happily Ever After</em>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
