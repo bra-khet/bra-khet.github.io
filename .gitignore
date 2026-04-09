@@ -21,6 +21,7 @@ coverage/
 
 # Claude Code local settings
 .claude/settings.local.json
+.ignore/
 
 # Old/archived PDFs
 pdf/old/
