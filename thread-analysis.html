@@ -1,0 +1,1648 @@
+---
+layout: null
+title: "Thread Sentiment Analysis"
+permalink: /thread-analysis/
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE SILICON RECORD — Thread Sentiment Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,800&family=Oswald:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #060606;
+  --ink: #0e0e0e;
+  --dark: #141414;
+  --card: #1a1a1a;
+  --card-alt: #202020;
+  --border: #2c2c2c;
+  --red: #c0392b;
+  --red-bright: #e74c3c;
+  --red-pale: #4a0e09;
+  --amber: #d4830c;
+  --amber-bright: #f39c12;
+  --amber-pale: #4a2d06;
+  --green: #1a7a3f;
+  --green-bright: #27ae60;
+  --green-pale: #0a2e18;
+  --text: #ede8e0;
+  --text-dim: #9a9088;
+  --text-muted: #555050;
+  --cream: #f0ead8;
+  --rule: #2a2a2a;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--black);
+  color: var(--text);
+  font-family: 'Lora', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── NOISE TEXTURE OVERLAY ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* ─── BREAKING TICKER ─── */
+.ticker-wrap {
+  background: var(--red);
+  overflow: hidden;
+  white-space: nowrap;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid #8b1a12;
+}
+
+.ticker-label {
+  background: #8b1a12;
+  color: #fff;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  padding: 0 16px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  border-right: 2px solid rgba(0,0,0,0.3);
+}
+
+.ticker-track {
+  display: inline-flex;
+  gap: 80px;
+  animation: ticker 30s linear infinite;
+  padding-left: 40px;
+}
+
+.ticker-track span {
+  font-family: 'Oswald', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.ticker-track .sep {
+  color: rgba(255,255,255,0.4);
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ─── MASTHEAD ─── */
+.masthead {
+  border-bottom: 4px double var(--rule);
+  padding: 24px 48px 20px;
+  background: var(--ink);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+}
+
+.masthead-meta {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  line-height: 1.8;
+}
+
+.masthead-logo {
+  text-align: center;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  padding: 0 32px;
+}
+
+.masthead-logo .pub-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 38px;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+  line-height: 1;
+  display: block;
+}
+
+.masthead-logo .pub-sub {
+  font-family: 'Oswald', sans-serif;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: 6px;
+  display: block;
+}
+
+.masthead-edition {
+  text-align: right;
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  line-height: 1.8;
+}
+
+.masthead-edition .edition-label {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 8px;
+  letter-spacing: 0.15em;
+  margin-bottom: 6px;
+}
+
+/* ─── SECTION RULE ─── */
+.rule-full {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 0;
+}
+.rule-double {
+  border: none;
+  height: 4px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin: 0;
+}
+
+/* ─── HERO SECTION ─── */
+.hero {
+  background: var(--ink);
+  padding: 56px 48px 48px;
+  border-bottom: 4px double var(--rule);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 20%, rgba(192,57,43,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.badge {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+}
+.badge-red { background: var(--red); color: #fff; }
+.badge-amber { background: var(--amber); color: #fff; }
+.badge-outline { border: 1px solid var(--text-muted); color: var(--text-muted); }
+
+.kicker-line {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(36px, 5vw, 68px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+  max-width: 860px;
+  margin-bottom: 24px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--red-bright);
+}
+
+.hero-deck {
+  font-family: 'Lora', serif;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--text-dim);
+  max-width: 680px;
+  margin-bottom: 32px;
+  border-left: 3px solid var(--red);
+  padding-left: 20px;
+}
+
+.hero-byline {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.hero-byline strong {
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+/* ─── INCIDENT BOX ─── */
+.incident-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--amber);
+  padding: 20px 24px;
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: start;
+  max-width: 800px;
+}
+
+.incident-icon {
+  font-size: 28px;
+  opacity: 0.7;
+}
+
+.incident-box h3 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber-bright);
+  margin-bottom: 8px;
+}
+
+.incident-box p {
+  font-family: 'Lora', serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+
+/* ─── STATS BAND ─── */
+.stats-band {
+  background: var(--dark);
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.stat-cell {
+  padding: 32px 24px;
+  border-right: 1px solid var(--rule);
+  position: relative;
+}
+
+.stat-cell:last-child { border-right: none; }
+
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 64px;
+  line-height: 1;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.stat-num.red { color: var(--red-bright); }
+.stat-num.amber { color: var(--amber-bright); }
+.stat-num.cream { color: var(--cream); }
+.stat-num.muted { color: var(--text-muted); }
+
+.stat-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.stat-context {
+  font-family: 'Lora', serif;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.stat-cell .pill {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 3px 7px;
+  text-transform: uppercase;
+}
+
+/* ─── MAIN CONTENT GRID ─── */
+.content-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.section-header {
+  padding: 40px 0 24px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.section-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 28px;
+  color: var(--cream);
+  letter-spacing: -0.01em;
+}
+
+.section-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  color: var(--rule);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* ─── TWO-COLUMN LAYOUT ─── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 40px 0;
+}
+
+.col-header {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--rule);
+}
+
+.col-header.red { color: var(--red-bright); border-color: var(--red); }
+.col-header.green { color: var(--green-bright); border-color: var(--green); }
+
+/* ─── QUOTE CARDS ─── */
+.quote-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.quote-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 16px 18px;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.quote-card:hover { border-color: var(--text-muted); }
+
+.quote-card.danger { border-left: 3px solid var(--red); }
+.quote-card.warn { border-left: 3px solid var(--amber); }
+.quote-card.safe { border-left: 3px solid var(--green); }
+.quote-card.removed {
+  border-left: 3px solid var(--text-muted);
+  opacity: 0.75;
+}
+
+.quote-text {
+  font-family: 'Lora', serif;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 10px;
+  font-style: italic;
+}
+
+.quote-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quote-user {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.upvote-badge {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.upvote-badge::before {
+  content: '▲';
+  font-size: 10px;
+}
+
+.upvote-badge.red { color: var(--red-bright); }
+.upvote-badge.amber { color: var(--amber-bright); }
+.upvote-badge.green { color: var(--green-bright); }
+.upvote-badge.muted { color: var(--text-muted); }
+
+.removed-tag {
+  font-family: 'Oswald', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: var(--text-muted);
+  color: var(--black);
+  padding: 2px 6px;
+}
+
+/* ─── BAR CHART ─── */
+.chart-wrap {
+  padding: 4px 0;
+}
+
+.chart-row {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.chart-rank {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  color: var(--text-muted);
+  text-align: right;
+  line-height: 1;
+}
+
+.chart-bar-wrap {
+  position: relative;
+}
+
+.chart-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chart-bar {
+  height: 20px;
+  border-radius: 1px;
+  position: relative;
+  min-width: 8px;
+  transition: width 0.8s ease;
+}
+
+.chart-bar::after {
+  content: attr(data-sentiment);
+  position: absolute;
+  right: -56px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Oswald', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.chart-bar.red { background: linear-gradient(90deg, var(--red-pale), var(--red)); }
+.chart-bar.amber { background: linear-gradient(90deg, var(--amber-pale), var(--amber)); }
+.chart-bar.green { background: linear-gradient(90deg, var(--green-pale), var(--green)); }
+.chart-bar.gray { background: linear-gradient(90deg, #2a2a2a, #444); }
+
+.chart-votes {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.chart-votes.red { color: var(--red-bright); }
+.chart-votes.amber { color: var(--amber-bright); }
+.chart-votes.green { color: var(--green-bright); }
+
+.chart-legend {
+  display: flex;
+  gap: 20px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+/* ─── FULL-WIDTH FEATURE ─── */
+.full-feature {
+  background: var(--dark);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 56px 48px;
+  margin: 0;
+}
+
+.full-feature .feature-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--red-bright);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.feature-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+  max-width: 200px;
+}
+
+.full-feature h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(28px, 3.5vw, 48px);
+  color: var(--cream);
+  margin-bottom: 16px;
+  max-width: 780px;
+  line-height: 1.1;
+}
+
+.full-feature .intro {
+  font-family: 'Lora', serif;
+  font-size: 15px;
+  color: var(--text-dim);
+  max-width: 680px;
+  margin-bottom: 36px;
+  line-height: 1.7;
+}
+
+/* ─── BUT CARDS ─── */
+.but-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.but-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 20px 22px;
+}
+
+.but-card .but-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.but-card .disavowal {
+  font-family: 'Lora', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  padding-left: 12px;
+  border-left: 2px solid var(--green);
+}
+
+.but-card .pivot {
+  font-family: 'Lora', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text);
+  padding-left: 12px;
+  border-left: 2px solid var(--red);
+}
+
+.but-card .user-tag {
+  font-family: 'Oswald', sans-serif;
+  font-size: 9px;
+  color: var(--text-muted);
+  margin-top: 10px;
+  letter-spacing: 0.06em;
+}
+
+/* ─── TACTICS GRID ─── */
+.tactics-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+  margin-top: 48px;
+}
+
+.tactic-cell {
+  background: var(--card);
+  padding: 24px 20px;
+  position: relative;
+}
+
+.tactic-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 56px;
+  color: var(--rule);
+  line-height: 1;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.tactic-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red-bright);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.tactic-desc {
+  font-family: 'Lora', serif;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--text-dim);
+}
+
+.tactic-count {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-top: 12px;
+  display: block;
+}
+
+.tactic-example {
+  font-family: 'Lora', serif;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--rule);
+}
+
+/* ─── PULL QUOTE ─── */
+.pull-quote {
+  border-top: 3px solid var(--rule);
+  border-bottom: 3px solid var(--rule);
+  padding: 28px 0;
+  margin: 40px 0;
+  text-align: center;
+}
+
+.pull-quote blockquote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 2.5vw, 30px);
+  font-style: italic;
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.35;
+  max-width: 800px;
+  margin: 0 auto 12px;
+}
+
+.pull-quote cite {
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-style: normal;
+}
+
+/* ─── CONCLUSION / FINDINGS ─── */
+.findings-wrap {
+  padding: 56px 48px;
+  background: var(--ink);
+  border-top: 4px double var(--rule);
+}
+
+.findings-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 48px;
+  margin-top: 32px;
+}
+
+.finding-item {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.finding-item:last-child { border-bottom: none; }
+
+.finding-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.finding-icon.red { background: var(--red-pale); }
+.finding-icon.amber { background: var(--amber-pale); }
+.finding-icon.green { background: var(--green-pale); }
+
+.finding-content h4 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+
+.finding-content p {
+  font-family: 'Lora', serif;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+
+/* ─── SIDEBAR ─── */
+.sidebar {
+  border-left: 1px solid var(--rule);
+  padding-left: 32px;
+}
+
+.sidebar-block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.sidebar-block h3 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber-bright);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-stat {
+  margin-bottom: 14px;
+}
+
+.sidebar-stat .big {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  line-height: 1;
+  display: block;
+}
+
+.sidebar-stat .big.red { color: var(--red-bright); }
+.sidebar-stat .big.amber { color: var(--amber-bright); }
+.sidebar-stat .big.green { color: var(--green-bright); }
+
+.sidebar-stat .label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ─── DISTRIBUTION DONUT (CSS only) ─── */
+.donut-wrap {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 12px;
+}
+
+.donut {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--red) 0% 67%,
+    var(--text-muted) 67% 80%,
+    var(--green) 80% 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.donut::after {
+  content: '';
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--card);
+}
+
+.donut-legend {
+  flex: 1;
+}
+
+.donut-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 5px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.donut-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+/* ─── MANIPULATION ALERT ─── */
+.alert-box {
+  background: var(--red-pale);
+  border: 1px solid var(--red);
+  border-left: 4px solid var(--red-bright);
+  padding: 16px 20px;
+  margin-top: 16px;
+}
+
+.alert-box .alert-head {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--red-bright);
+  margin-bottom: 6px;
+}
+
+.alert-box p {
+  font-family: 'Lora', serif;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #c9a09a;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--ink);
+  border-top: 4px double var(--rule);
+  padding: 32px 48px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: center;
+}
+
+footer p {
+  font-family: 'Lora', serif;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 680px;
+}
+
+.footer-pub {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 22px;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* ─── UTILITIES ─── */
+.mt-8 { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.mt-32 { margin-top: 32px; }
+.text-red { color: var(--red-bright); }
+.text-amber { color: var(--amber-bright); }
+.text-green { color: var(--green-bright); }
+.text-muted { color: var(--text-muted); }
+
+@media (max-width: 900px) {
+  .masthead { grid-template-columns: 1fr; text-align: center; }
+  .masthead-meta, .masthead-edition { text-align: center; }
+  .masthead-logo { border: none; padding: 16px 0; }
+  .stats-band { grid-template-columns: repeat(2, 1fr); }
+  .two-col { grid-template-columns: 1fr; }
+  .tactics-grid { grid-template-columns: repeat(2, 1fr); }
+  .findings-grid { grid-template-columns: 1fr; }
+  .content-wrap, .full-feature, .findings-wrap, footer { padding-left: 24px; padding-right: 24px; }
+  .hero { padding-left: 24px; padding-right: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- BREAKING TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-label">⚡ Live Analysis</div>
+  <div style="overflow:hidden; flex:1;">
+    <div class="ticker-track">
+      <span>950 upvotes on a thread about shooting a city councilor</span>
+      <span class="sep">◆</span>
+      <span>339 upvotes: "Building data centers is terrorism"</span>
+      <span class="sep">◆</span>
+      <span>Pro-violence framing received 3.3× more upvotes than condemnation</span>
+      <span class="sep">◆</span>
+      <span>148-upvote pro-violence comment removed by Reddit moderators</span>
+      <span class="sep">◆</span>
+      <span>"I trust bin Laden over Sam Altman" — 11 upvotes, unremoved</span>
+      <span class="sep">◆</span>
+      <span>8+ documented instances of "I don't support violence BUT..." rhetorical pivot</span>
+      <span class="sep">◆</span>
+      <span>Vote manipulation flagged by thread participants</span>
+      <span class="sep">◆</span>
+      <span>950 upvotes on a thread about shooting a city councilor</span>
+      <span class="sep">◆</span>
+      <span>339 upvotes: "Building data centers is terrorism"</span>
+      <span class="sep">◆</span>
+      <span>Pro-violence framing received 3.3× more upvotes than condemnation</span>
+      <span class="sep">◆</span>
+      <span>148-upvote pro-violence comment removed by Reddit moderators</span>
+      <span class="sep">◆</span>
+      <span>"I trust bin Laden over Sam Altman" — 11 upvotes, unremoved</span>
+      <span class="sep">◆</span>
+      <span>8+ documented instances of "I don't support violence BUT..." rhetorical pivot</span>
+      <span class="sep">◆</span>
+      <span>Vote manipulation flagged by thread participants</span>
+    </div>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-meta">
+    Vol. I, No. 1<br>
+    Digital Extremism Monitor<br>
+    r/antiai Thread Archive
+  </div>
+  <div class="masthead-logo">
+    <span class="pub-name">THE SILICON RECORD</span>
+    <span class="pub-sub">Accountability in the Age of Artificial Intelligence</span>
+  </div>
+  <div class="masthead-edition">
+    <span class="edition-label">Exclusive Analysis</span><br>
+    April 7, 2026<br>
+    Thread ID: stdsort/antiai<br>
+    189 Comments Archived
+  </div>
+</header>
+<hr class="rule-double">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-kicker">
+    <span class="badge badge-red">Breaking Analysis</span>
+    <span class="kicker-line">Indianapolis / r/antiai / April 6–7, 2026</span>
+  </div>
+  <h1>"The Upvotes<br><em>Don't Lie.</em>"</h1>
+  <p class="hero-deck">
+    A politician's home was shot 13 times at midnight. His 8-year-old son was inside.
+    The anti-AI subreddit was asked what it thought. Here is an objective account
+    of what 189 comments — and their upvotes — actually reveal.
+  </p>
+  <div class="hero-byline">
+    Analysis by <strong>The Silicon Record</strong> &nbsp;·&nbsp; Source: r/antiai archived thread, CBS News, WFYI Indianapolis &nbsp;·&nbsp; April 7, 2026
+  </div>
+
+  <div class="incident-box mt-32">
+    <div class="incident-icon">⚡</div>
+    <div>
+      <h3>The Incident</h3>
+      <p>
+        On April 6, 2026, 13 shots were fired at the front door of Indianapolis City-County Councilor
+        <strong>Ron Gibson's</strong> home. A note reading <strong>"NO DATA CENTERS"</strong> was left in
+        a ziplock bag on the doorstep. Gibson had voted days earlier to rezone property for an AI data center
+        despite significant community opposition. His young son was inside. Neither were physically harmed.
+        No suspect has been identified. The FBI is assisting.
+        Reddit's r/antiai forum, with 950 upvotes and 189 replies, immediately opened the question:
+        <em>What do we think about this?</em>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="stat-cell">
+    <span class="badge badge-red pill">Post Total</span>
+    <span class="stat-num cream">950</span>
+    <span class="stat-label">Thread Upvotes</span>
+    <span class="stat-context">On a post about a shooting targeting a local politician over AI policy</span>
+  </div>
+  <div class="stat-cell">
+    <span class="badge badge-red pill">Highest Comment</span>
+    <span class="stat-num red">339</span>
+    <span class="stat-label">Upvotes, Sympathetic Framing</span>
+    <span class="stat-context">"Building AI data centers in our community is terrorism" — the most-liked comment</span>
+  </div>
+  <div class="stat-cell">
+    <span class="badge badge-outline pill">Removed</span>
+    <span class="stat-num muted">148</span>
+    <span class="stat-label">Upvotes, Comment Deleted</span>
+    <span class="stat-context">A removed comment outpolled the top anti-violence comment by a significant margin</span>
+  </div>
+  <div class="stat-cell">
+    <span class="badge badge-amber pill">Ratio</span>
+    <span class="stat-num amber">3.3×</span>
+    <span class="stat-label">More Upvotes for Sympathy</span>
+    <span class="stat-context">~1,100 upvotes in sympathetic comments vs. ~340 in explicit condemnation</span>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="content-wrap">
+
+  <!-- SECTION 1: QUOTES + CHART -->
+  <div class="section-header" style="padding-top: 48px;">
+    <span class="section-num">01</span>
+    <h2>What the Thread Actually Said</h2>
+  </div>
+
+  <div class="two-col">
+
+    <!-- LEFT: Damning Quotes -->
+    <div>
+      <div class="col-header red">⬆ Sympathy & Support — Top Upvoted</div>
+      <div class="quote-stack">
+
+        <div class="quote-card danger">
+          <p class="quote-text">"Building AI data centers in our community is terrorism."</p>
+          <div class="quote-meta">
+            <span class="quote-user">u/Stinky_Disaster_ · Top-level reply</span>
+            <span class="upvote-badge red">339</span>
+          </div>
+        </div>
+
+        <div class="quote-card removed">
+          <p class="quote-text">[Removed by Reddit moderators]</p>
+          <div class="quote-meta">
+            <span class="quote-user">u/[deleted] · Content removed</span>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="removed-tag">Removed</span>
+              <span class="upvote-badge muted">148</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="quote-card warn">
+          <p class="quote-text">"If the things I've heard about the constant noise are true, this is what happens when people can't properly rest and relax."</p>
+          <div class="quote-meta">
+            <span class="quote-user">u/narrowminer11 · Top-level comment</span>
+            <span class="upvote-badge amber">144</span>
+          </div>
+        </div>
+
+        <div class="quote-card danger">
+          <p class="quote-text">"Change has never come from simply believing people in power will listen to you. The CEO shooting has already saved so many lives."</p>
+          <div class="quote-meta">
+            <span class="quote-user">u/kcoolkoda · praising Luigi Mangione as precedent</span>
+            <span class="upvote-badge red">109</span>
+          </div>
+        </div>
+
+        <div class="quote-card warn">
+          <p class="quote-text">"Continuing to ignore your voter base eventually comes with consequences, whether at the polls or otherwise."</p>
+          <div class="quote-meta">
+            <span class="quote-user">u/Logan_Frost · Top-level comment</span>
+            <span class="upvote-badge amber">86</span>
+          </div>
+        </div>
+
+        <div class="quote-card warn">
+          <p class="quote-text">"Only the way to prevent this is to stop creating the circumstances that make it inevitable."</p>
+          <div class="quote-meta">
+            <span class="quote-user">u/Petrichor-33 · sub-reply</span>
+            <span class="upvote-badge amber">41</span>
+          </div>
+        </div>
+
+        <div class="quote-card danger">
+          <p class="quote-text">"Considering how harmful data centers are to those around them, this is a fairly tame response."</p>
+          <div class="quote-meta">
+            <span class="quote-user">u/Winter_Rosa · Top-level comment</span>
+            <span class="upvote-badge red">35</span>
+          </div>
+        </div>
+
+        <div class="quote-card danger">
+          <p class="quote-text">"I'd trust bin Laden over Sam Altman any day of the week."</p>
+          <div class="quote-meta">
+            <span class="quote-user">u/saucy_as_you_like · reply in main thread</span>
+            <span class="upvote-badge red">11</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT: Bar Chart -->
+    <div>
+      <div class="col-header green">⬆ The Upvote Distribution</div>
+      <div class="chart-wrap">
+
+        <div class="chart-row">
+          <span class="chart-rank">1</span>
+          <div class="chart-bar-wrap">
+            <div class="chart-label">"Data centers ARE terrorism" (Stinky_Disaster_)</div>
+            <div class="chart-bar red" style="width:100%;"></div>
+          </div>
+          <span class="chart-votes red">339</span>
+        </div>
+
+        <div class="chart-row">
+          <span class="chart-rank">2</span>
+          <div class="chart-bar-wrap">
+            <div class="chart-label">"Terrorism is bad full stop" (mayonuts443)</div>
+            <div class="chart-bar green" style="width:71%;"></div>
+          </div>
+          <span class="chart-votes green">241</span>
+        </div>
+
+        <div class="chart-row">
+          <span class="chart-rank">3</span>
+          <div class="chart-bar-wrap">
+            <div class="chart-label">[Removed by Reddit] — presumed pro-violence</div>
+            <div class="chart-bar gray" style="width:44%;"></div>
+          </div>
+          <span class="chart-votes muted">148</span>
+        </div>
+
+        <div class="chart-row">
+          <span class="chart-rank">4</span>
+          <div class="chart-bar-wrap">
+            <div class="chart-label">"What happens when people can't rest" (narrowminer11)</div>
+            <div class="chart-bar amber" style="width:42%;"></div>
+          </div>
+          <span class="chart-votes amber">144</span>
+        </div>
+
+        <div class="chart-row">
+          <span class="chart-rank">5</span>
+          <div class="chart-bar-wrap">
+            <div class="chart-label">"CEO shooting already saved so many lives" (kcoolkoda)</div>
+            <div class="chart-bar red" style="width:32%;"></div>
+          </div>
+          <span class="chart-votes red">109</span>
+        </div>
+
+        <div class="chart-row">
+          <span class="chart-rank">6</span>
+          <div class="chart-bar-wrap">
+            <div class="chart-label">"I am, as an American, being asked to ignore…" (Acrobatic-Plant3838)</div>
+            <div class="chart-bar amber" style="width:30%;"></div>
+          </div>
+          <span class="chart-votes amber">103</span>
+        </div>
+
+        <div class="chart-row">
+          <span class="chart-rank">7</span>
+          <div class="chart-bar-wrap">
+            <div class="chart-label">"Consequences at the polls or otherwise" (Logan_Frost)</div>
+            <div class="chart-bar amber" style="width:25%;"></div>
+          </div>
+          <span class="chart-votes amber">86</span>
+        </div>
+
+        <div class="chart-row">
+          <span class="chart-rank">8</span>
+          <div class="chart-bar-wrap">
+            <div class="chart-label">"It was a matter of time" (Loyal_Dragon_69)</div>
+            <div class="chart-bar red" style="width:16%;"></div>
+          </div>
+          <span class="chart-votes red">54</span>
+        </div>
+
+        <div class="chart-legend">
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--red);"></div>
+            Sympathetic / Supportive
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--amber);"></div>
+            Contextualizing / Reframing
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--green);"></div>
+            Explicit Condemnation
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#444;"></div>
+            Removed
+          </div>
+        </div>
+
+        <div class="alert-box mt-16">
+          <div class="alert-head">⚠ Vote Manipulation Flagged</div>
+          <p>User u/Environmental_Top948 observed: <em>"If you see these comments when they're new they usually have about 100 upvotes within 5 minutes so they're probably buying upvotes."</em> The speed of upvote accumulation on pro-violence framing suggests coordinated or brigaded voting behaviour.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content-wrap -->
+
+<!-- PULL QUOTE -->
+<div style="padding: 0 48px; background: var(--ink); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+  <div class="pull-quote">
+    <blockquote>"You'll notice they phrase things as a question, or argue they don't necessarily support violence — they just <em>understand</em> it. They're saying peaceful protests don't work without explicitly saying violence does. It's slippery by design."</blockquote>
+    <cite>u/y2kdebunked — r/antiai thread participant, identifying the rhetorical strategy in real time</cite>
+  </div>
+</div>
+
+<!-- FULL FEATURE: THE "BUT" PATTERN -->
+<section class="full-feature">
+  <div class="feature-label">Pattern Recognition &nbsp; / &nbsp; Documented Instances</div>
+  <h2>The "I Don't Support Violence, <em>But</em>..." Phenomenon</h2>
+  <p class="intro">
+    Across 189 comments, a structured rhetorical pattern emerged repeatedly: a ritual disavowal of violence
+    followed immediately by a substantive endorsement of its logic, inevitability, or moral equivalence.
+    This is not ambivalence — it is coordinated plausible deniability. Eight documented instances follow.
+  </p>
+
+  <div class="but-grid">
+
+    <div class="but-card">
+      <div class="but-label">Instance 01</div>
+      <p class="disavowal">"I don't think violence is necessarily the solution. I'd prefer it's not."</p>
+      <p class="pivot">"But I also think it's incredibly naive to act like 'no one should ever resort to violence, no matter what!'"</p>
+      <div class="user-tag">u/goonmaster11 · ⬆ 68 upvotes (reply)</div>
+    </div>
+
+    <div class="but-card">
+      <div class="but-label">Instance 02</div>
+      <p class="disavowal">"Not to say I endorse this person's actions."</p>
+      <p class="pivot">"Historically, destruction of property and targeting officials have been hugely successful at enacting change."</p>
+      <div class="user-tag">u/LengthMysterious561 · ⬆ 1 upvote</div>
+    </div>
+
+    <div class="but-card">
+      <div class="but-label">Instance 03</div>
+      <p class="disavowal">"Is violence good? No."</p>
+      <p class="pivot">"But it's almost never anyone's first choice. If violence is happening, there's a deeper reason for it. Voting and labour both failed — so violence is literally all that's left."</p>
+      <div class="user-tag">u/Party_Virus · ⬆ 2 upvotes</div>
+    </div>
+
+    <div class="but-card">
+      <div class="but-label">Instance 04</div>
+      <p class="disavowal">"For clarification I don't agree with shooting a house up."</p>
+      <p class="pivot">"But I can follow the logic of why it happened."</p>
+      <div class="user-tag">u/MentalDisintegrat1on · ⬆ 2 upvotes</div>
+    </div>
+
+    <div class="but-card">
+      <div class="but-label">Instance 05</div>
+      <p class="disavowal">"No violence is clearly bad. I am glad no one was hurt."</p>
+      <p class="pivot">"But 'if you make it impossible for people to protest peacefully, violence is only inevitable.'"</p>
+      <div class="user-tag">u/Farther_Dm53 · ⬆ 1 upvote</div>
+    </div>
+
+    <div class="but-card">
+      <div class="but-label">Instance 06</div>
+      <p class="disavowal">"I don't support this."</p>
+      <p class="pivot">"But if it were able to be prevented by showing up to a council meeting, this probably would never have happened."</p>
+      <div class="user-tag">u/PM_ME_SOME_ANY_THING · ⬆ 1 upvote</div>
+    </div>
+
+    <div class="but-card">
+      <div class="but-label">Instance 07</div>
+      <p class="disavowal">"Regardless of whether you think this is a good thing or a bad thing (it's bad)…"</p>
+      <p class="pivot">"You should also recognize it was more or less inevitable. Place the blame on companies and politicians responsible."</p>
+      <div class="user-tag">u/Petrichor-33 · ⬆ 4 upvotes</div>
+    </div>
+
+    <div class="but-card">
+      <div class="but-label">Instance 08</div>
+      <p class="disavowal">"I don't condone it."</p>
+      <p class="pivot">"But you can't destroy communities' electricity and water supply and expect stuff like this to just not happen."</p>
+      <div class="user-tag">u/Hope-n-some-CH4NGE · ⬆ 3 upvotes</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TACTICS SECTION -->
+<div class="content-wrap">
+  <div class="section-header" style="padding-top: 48px;">
+    <span class="section-num">02</span>
+    <h2>Five Documented Rhetorical Tactics</h2>
+  </div>
+
+  <div class="tactics-grid">
+
+    <div class="tactic-cell">
+      <span class="tactic-num">01</span>
+      <span class="tactic-name">Reframing</span>
+      <p class="tactic-desc">The data center itself is labeled "terrorism," redefining the shooting as defensive action rather than initiation of violence. Morality is inverted.</p>
+      <span class="tactic-count">~8 documented instances</span>
+      <p class="tactic-example">"Building AI data centers in our community is terrorism." (⬆ 339)</p>
+    </div>
+
+    <div class="tactic-cell">
+      <span class="tactic-num">02</span>
+      <span class="tactic-name">Historical Inevitability</span>
+      <p class="tactic-desc">Comparisons to the French Revolution, the American Revolution, Killdozer, and Resistance fighters are used to frame violence as historically normal and recurring.</p>
+      <span class="tactic-count">~6 documented instances</span>
+      <p class="tactic-example">"The French revolution wasn't very peaceful either, I'll have you know." (⬆ 28)</p>
+    </div>
+
+    <div class="tactic-cell">
+      <span class="tactic-num">03</span>
+      <span class="tactic-name">Broken Contract</span>
+      <p class="tactic-desc">Claims that democracy has failed and formal channels are exhausted, leaving violence as the only remaining political tool available to ordinary people.</p>
+      <span class="tactic-count">~5 documented instances</span>
+      <p class="tactic-example">"Voting and labour protection are gone. So violence is literally all that's left." (⬆ 2)</p>
+    </div>
+
+    <div class="tactic-cell">
+      <span class="tactic-num">04</span>
+      <span class="tactic-name">Slippery Disavowal</span>
+      <p class="tactic-desc">The "I don't support this, BUT" pattern. Ritual condemnation followed by full endorsement of the underlying logic. Identified and named by participants in the thread itself.</p>
+      <span class="tactic-count">8+ documented instances</span>
+      <p class="tactic-example">"I don't agree with shooting a house up but I can follow the logic." (⬆ 2)</p>
+    </div>
+
+    <div class="tactic-cell">
+      <span class="tactic-num">05</span>
+      <span class="tactic-name">Whataboutism</span>
+      <p class="tactic-desc">Comparison to the Luigi Mangione CEO shooting, climate change, military AI strikes, and oil executives is used to minimize the incident or justify escalation by analogy.</p>
+      <span class="tactic-count">~5 documented instances</span>
+      <p class="tactic-example">"The CEO shooting already saved so many lives." (⬆ 109)</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONCLUSIONS -->
+<section class="findings-wrap">
+  <div style="max-width: 1200px; margin: 0 auto;">
+
+    <div style="margin-bottom: 8px;">
+      <span class="badge badge-red">Section 03</span>
+    </div>
+    <h2 style="font-family: 'Playfair Display', serif; font-size: clamp(28px, 3vw, 44px); font-weight: 900; color: var(--cream); line-height: 1.1; margin-bottom: 12px;">
+      What This Means for the Pro-AI Movement
+    </h2>
+    <p style="font-family: 'Lora', serif; font-size: 15px; color: var(--text-dim); max-width: 680px; line-height: 1.7; border-left: 3px solid var(--amber); padding-left: 20px;">
+      The "isolated lone wolf" framing requires two things to hold: that the act was singular,
+      and that community sympathy was absent. The upvote record contradicts the second claim entirely.
+    </p>
+
+    <div class="findings-grid">
+      <div>
+
+        <div class="finding-item">
+          <div class="finding-icon red">🔴</div>
+          <div class="finding-content">
+            <h4>Sympathy dominates by upvote weight, not comment count</h4>
+            <p>While more individual commenters voiced explicit opposition, sympathetic and contextualizing comments accumulated approximately 3.3× more upvotes (~1,100 vs. ~340). In social media dynamics, upvote concentration reflects genuine community sentiment more accurately than comment volume — because it represents active, considered endorsement by readers who may not comment themselves.</p>
+          </div>
+        </div>
+
+        <div class="finding-item">
+          <div class="finding-icon red">🔴</div>
+          <div class="finding-content">
+            <h4>Removed content implies self-policing above visible tolerance</h4>
+            <p>Multiple comments were deleted by Reddit moderators. The highest-upvoted removed comment had 148 upvotes — outperforming all but one visible comment. This means explicit advocacy was even more present before moderation, and a significant portion of the community endorsed it before removal. The visible thread is already filtered.</p>
+          </div>
+        </div>
+
+        <div class="finding-item">
+          <div class="finding-icon amber">🟡</div>
+          <div class="finding-content">
+            <h4>The subreddit moderator was the least-upvoted voice in the thread</h4>
+            <p>The only moderator intervention — a sticky comment asking users not to advocate violence — received 1 upvote. The community did not validate the moderation request. This is a direct signal of the gap between the subreddit's stated governance position and its members' actual sentiment.</p>
+          </div>
+        </div>
+
+        <div class="finding-item">
+          <div class="finding-icon amber">🟡</div>
+          <div class="finding-content">
+            <h4>Pre-radicalization language is present and concentrated</h4>
+            <p>At least 6–8 comments frame political violence as logically inevitable, structurally necessary, and historically justified — without endorsing the specific act. This is the definitional pre-radicalization linguistic pattern identified by counterterrorism researchers: normalization of the logic of violence before the act, rather than advocacy of the act itself.</p>
+          </div>
+        </div>
+
+        <div class="finding-item">
+          <div class="finding-icon red">🔴</div>
+          <div class="finding-content">
+            <h4>Luigi Mangione is cited as direct precedent</h4>
+            <p>The December 2024 CEO shooting is referenced approvingly in multiple comments, including one with 109 upvotes that claims it "saved lives" through policy reversal. This establishes a documented ideological through-line: this subreddit treats a prior killing as a successful political act and cites it as applicable precedent for the current incident.</p>
+          </div>
+        </div>
+
+        <div class="finding-item">
+          <div class="finding-icon amber">🟡</div>
+          <div class="finding-content">
+            <h4>Vote coordination is internally suspected</h4>
+            <p>Thread participants themselves flagged that pro-violence comments received ~100 upvotes within 5 minutes of posting, suggesting possible coordinated voting. If verified, this means the visible upvote record underrepresents organic community sentiment in unpredictable ways — but the direction of manipulation was consistently toward sympathetic framing, not against it.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+
+        <div class="sidebar-block">
+          <h3>Upvote Distribution</h3>
+          <div class="donut-wrap">
+            <div class="donut"></div>
+            <div class="donut-legend">
+              <div class="donut-item">
+                <div class="donut-dot" style="background:var(--red);"></div>
+                Sympathetic 67%
+              </div>
+              <div class="donut-item">
+                <div class="donut-dot" style="background:var(--text-muted);"></div>
+                Neutral/Removed 13%
+              </div>
+              <div class="donut-item">
+                <div class="donut-dot" style="background:var(--green);"></div>
+                Anti-violence 20%
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-block">
+          <h3>Key Numbers</h3>
+          <div class="sidebar-stat">
+            <span class="big red">8+</span>
+            <span class="label">Documented "I don't support it BUT…" pivots</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="big amber">5</span>
+            <span class="label">Distinct rhetorical radicalization tactics identified</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="big green">1</span>
+            <span class="label">Moderator intervention upvote (of 950 post total)</span>
+          </div>
+          <div class="sidebar-stat">
+            <span class="big red">13</span>
+            <span class="label">Shots fired at occupied home with child inside</span>
+          </div>
+        </div>
+
+        <div class="sidebar-block">
+          <h3>Direct Explicit Support</h3>
+          <p style="font-family:'Lora',serif; font-size:12.5px; color:var(--text-dim); line-height:1.6; margin-bottom:12px;">
+            These users stated unambiguous approval with no rhetorical hedging:
+          </p>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="font-family:'Lora',serif; font-size:12px; font-style:italic; color:var(--text-muted); padding-left:10px; border-left:2px solid var(--red);">"Good" — u/Geaux13Saints</div>
+            <div style="font-family:'Lora',serif; font-size:12px; font-style:italic; color:var(--text-muted); padding-left:10px; border-left:2px solid var(--red);">"Im cool wit it." — u/OkIndustry6159</div>
+            <div style="font-family:'Lora',serif; font-size:12px; font-style:italic; color:var(--text-muted); padding-left:10px; border-left:2px solid var(--red);">"Based" — u/BigTiddyCrow</div>
+            <div style="font-family:'Lora',serif; font-size:12px; font-style:italic; color:var(--text-muted); padding-left:10px; border-left:2px solid var(--red);">"Bout fuckin time." — u/Gmanglh</div>
+            <div style="font-family:'Lora',serif; font-size:12px; font-style:italic; color:var(--text-muted); padding-left:10px; border-left:2px solid var(--red);">"This is the only option" — u/Low-Egg-3806</div>
+            <div style="font-family:'Lora',serif; font-size:12px; font-style:italic; color:var(--text-muted); padding-left:10px; border-left:2px solid var(--red);">"It fully encapsulates my view...I hope they get the message." — u/Jag24_26</div>
+          </div>
+        </div>
+
+        <div class="sidebar-block" style="border-color:var(--red); border-top:2px solid var(--red);">
+          <h3>The Child in the Home</h3>
+          <p style="font-family:'Lora',serif; font-size:12.5px; color:var(--text-dim); line-height:1.6;">
+            Ron Gibson's 8-year-old son was home when 13 rounds were fired at the front door.
+            Only 5–6 commenters raised this as a moral concern. The highest-upvoted commenter
+            calling this "a fairly tame response" received <strong style="color:var(--red-bright);">35 upvotes</strong> after the fact was known.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    This analysis is based on a complete archive of the r/antiai thread posted April 6–7, 2026, in response to the shooting at Indianapolis City-County Councilor Ron Gibson's home. All upvote figures are as-captured and subject to Reddit vote fuzzing. Removed comments are noted; their content is not reproduced.
+    Sources: r/antiai thread archive, CBS News, WFYI Indianapolis, The New York Times (April 6, 2026).
+    This report is produced for informational and analytical purposes. All quoted text is verbatim from the thread as archived.
+  </p>
+  <div class="footer-pub">THE<br>SILICON<br>RECORD</div>
+</footer>
+
+</body>
+</html>
