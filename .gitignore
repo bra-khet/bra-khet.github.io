@@ -1,0 +1,26 @@
+# Environment & secrets
+.env*
+.venv*
+
+# Logs
+*.log
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# Coverage
+coverage/
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Old/archived PDFs
+pdf/old/
