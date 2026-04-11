@@ -211,10 +211,11 @@ body {
 .stat-card.danger-card .stat-val { color: var(--danger); }
 
 .stat-lbl {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--text-mute);
-  letter-spacing: 0.05em;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.71rem;
+  font-weight: 600;
+  color: #7a6898;
+  letter-spacing: 0.01em;
   line-height: 1.4;
 }
 
@@ -241,15 +242,16 @@ body {
 .bench-meta { }
 .bench-name {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 700;
   color: var(--text);
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.2rem;
 }
 .bench-domain {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  color: var(--text-mute);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #6a5888;
 }
 
 .bench-bars { }
@@ -262,9 +264,10 @@ body {
 .bar-row:last-child { margin-bottom: 0; }
 
 .bar-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.58rem;
-  color: var(--text-mute);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.64rem;
+  font-weight: 600;
+  color: #6a5888;
   width: 52px;
   flex-shrink: 0;
   text-align: right;
@@ -341,9 +344,10 @@ body {
 .callout-card.locked .callout-title { color: #8040ff; }
 
 .callout-body {
-  font-size: 0.82rem;
-  color: var(--text-dim);
-  line-height: 1.55;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: #a898c8;
+  line-height: 1.58;
 }
 .callout-stat {
   font-family: 'JetBrains Mono', monospace;

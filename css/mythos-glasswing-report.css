@@ -308,11 +308,12 @@ main {
 .stat-val.green  { color: var(--green); }
 
 .stat-lbl {
-  font-size: .65rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  font-family: var(--font-mono);
+  font-size: .72rem;
+  font-weight: 600;
+  color: #5a8898;
+  font-family: var(--font-sans);
+  letter-spacing: .01em;
+  line-height: 1.4;
 }
 
 /* ── Nut graf box ───────────────────────────────────────────────── */
@@ -554,12 +555,12 @@ thead tr { background: var(--bg-elevated); }
 thead th {
   padding: .7rem 1rem;
   text-align: left;
-  color: var(--text-muted);
+  color: #5a8898;
   font-family: var(--font-mono);
-  font-size: .66rem;
+  font-size: .7rem;
   text-transform: uppercase;
   letter-spacing: .09em;
-  font-weight: 600;
+  font-weight: 700;
   border-bottom: 1px solid var(--border-medium);
   white-space: nowrap;
 }
@@ -590,9 +591,9 @@ td.bench-name {
 }
 
 td.bench-desc {
-  color: var(--text-muted);
-  font-size: .75rem;
-  font-style: italic;
+  color: #5a8898;
+  font-size: .78rem;
+  font-weight: 500;
 }
 
 td.bench-leader {
