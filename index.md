@@ -157,6 +157,42 @@ title: "|0⟩"
 
 </div>
 
+<!-- ════════════════════════════════════════════════════════════════
+     PROJECT GLASSWING CTA — Teal glasswing butterfly shimmer
+     Update about.md if you modify this section.
+════════════════════════════════════════════════════════════════ -->
+<style>
+@keyframes glasswing-pulse {
+  0%, 100% {
+    text-shadow: 0 0 6px #00e0d0, 0 0 16px rgba(0,224,208,0.45);
+    box-shadow: 0 0 18px rgba(0,224,208,0.10), inset 0 0 24px rgba(0,224,208,0.03);
+    border-color: rgba(0,224,208,0.30);
+  }
+  50% {
+    text-shadow: 0 0 12px #00e0d0, 0 0 32px rgba(0,224,208,0.70), 0 0 54px rgba(120,64,255,0.25);
+    box-shadow: 0 0 32px rgba(0,224,208,0.24), inset 0 0 36px rgba(0,224,208,0.06);
+    border-color: rgba(0,224,208,0.55);
+  }
+}
+</style>
+
+<div style="margin: 0.6rem 0 0.5rem; text-align: center;">
+  <a href="/mythos-glasswing-report/"
+     style="display: inline-block; padding: 1rem 2.8rem;
+            background: linear-gradient(135deg, #010c10 0%, #021820 60%, #010e14 100%);
+            color: #00e0d0; font-family: Monaco, monospace; font-weight: bold;
+            font-size: 1rem; border-radius: 10px; text-decoration: none;
+            border: 1px solid rgba(0,224,208,0.30);
+            letter-spacing: 0.14em;
+            animation: glasswing-pulse 3.4s ease-in-out infinite;
+            transition: transform 0.15s;"
+     onmouseover="this.style.transform='translateY(-2px)';"
+     onmouseout="this.style.transform='translateY(0)';">
+    &#9676;&nbsp; PROJECT GLASSWING &nbsp;&#9676;
+  </a>
+</div>
+<p style="color: #0e3a38; font-family: Monaco, monospace; font-size: 0.68rem; text-align: center; margin: 0.3rem 0 2rem; letter-spacing: 0.1em; text-transform: uppercase;">Classified Deployment &middot; April 2026</p>
+
 <!-- ── AI Infrastructure & Water ─────────────────────────────────── -->
 <h4 style="color: #00b4d8; font-family: Monaco, monospace; font-size: 0.9rem;
            margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">

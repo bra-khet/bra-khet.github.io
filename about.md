@@ -26,6 +26,7 @@ title: bra-khet
   ║    #06b6d4  Anti-AI Ideology                                     ║
   ║    #ff4040  Meme Review                                          ║
   ║    #cc44ff  Anthropic Mythos / AGI neurons                       ║
+  ║    #00e0d0  Project Glasswing (glasswing butterfly teal)         ║
   ╚═══════════════════════════════════════════════════════════════════╝
 -->
 
@@ -187,6 +188,20 @@ title: bra-khet
              border-radius: 5px; background: #06000e; opacity: 0.7;
              border: 1px solid rgba(204,68,255,0.15);"
       aria-hidden="true"></canvas>
+  </li>
+
+  <!-- Project Glasswing — #00e0d0 (glasswing teal) -->
+  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem; padding-right: 72px;
+             border: 1px solid #052020; border-left: 3px solid #00e0d0;
+             border-radius: 8px; background: #020c10; position: relative;">
+    <a href="/mythos-glasswing-report/"
+       style="color: #00e0d0; font-weight: bold; font-family: Monaco, monospace;
+              font-size: 0.88rem; text-decoration: none;">
+      &#9676; Project Glasswing — Claude Mythos Preview
+    </a>
+    <span style="color: #1a5050; font-family: Monaco, monospace; font-size: 0.78rem;">
+      &mdash; v1.0 · April 2026 · 10T parameters, autonomous zero-days, $2T market crash, RSP v3.1, model welfare.
+    </span>
   </li>
 
   <!-- OSINT Protocol — #00d4ff (matches featured CTA on index.md) -->
