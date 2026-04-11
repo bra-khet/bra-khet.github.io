@@ -242,7 +242,7 @@ body {
   position: relative;
 }
 .fire-holder-card::before {
-  content: '&#128293;';
+  content: '🔥';
   /* decorative fire icon rendered via HTML */
 }
 .fire-label {
