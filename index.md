@@ -109,6 +109,42 @@ title: "|0⟩"
 </script>
 
 <!-- ════════════════════════════════════════════════════════════════
+     PROJECT GLASSWING CTA — Teal glasswing butterfly shimmer
+     Update about.md if you modify this section.
+════════════════════════════════════════════════════════════════ -->
+<style>
+@keyframes glasswing-pulse {
+  0%, 100% {
+    text-shadow: 0 0 6px #00e0d0, 0 0 16px rgba(0,224,208,0.45);
+    box-shadow: 0 0 18px rgba(0,224,208,0.10), inset 0 0 24px rgba(0,224,208,0.03);
+    border-color: rgba(0,224,208,0.30);
+  }
+  50% {
+    text-shadow: 0 0 12px #00e0d0, 0 0 32px rgba(0,224,208,0.70), 0 0 54px rgba(120,64,255,0.25);
+    box-shadow: 0 0 32px rgba(0,224,208,0.24), inset 0 0 36px rgba(0,224,208,0.06);
+    border-color: rgba(0,224,208,0.55);
+  }
+}
+</style>
+
+<div style="margin: 0.6rem 0 0.5rem; text-align: center;">
+  <a href="/mythos-glasswing-report/"
+     style="display: inline-block; padding: 1rem 2.8rem;
+            background: linear-gradient(135deg, #010c10 0%, #021820 60%, #010e14 100%);
+            color: #00e0d0; font-family: Monaco, monospace; font-weight: bold;
+            font-size: 1rem; border-radius: 10px; text-decoration: none;
+            border: 1px solid rgba(0,224,208,0.30);
+            letter-spacing: 0.14em;
+            animation: glasswing-pulse 3.4s ease-in-out infinite;
+            transition: transform 0.15s;"
+     onmouseover="this.style.transform='translateY(-2px)';"
+     onmouseout="this.style.transform='translateY(0)';">
+    &#9676;&nbsp; PROJECT GLASSWING &nbsp;&#9676;
+  </a>
+</div>
+<p style="color: #0e3a38; font-family: Monaco, monospace; font-size: 0.68rem; text-align: center; margin: 0.3rem 0 1.6rem; letter-spacing: 0.1em; text-transform: uppercase;">Classified Deployment &middot; April 2026</p>
+
+<!-- ════════════════════════════════════════════════════════════════
      LATEST REPORTS - Claude, update about.md if you modify/add below
 ════════════════════════════════════════════════════════════════ -->
 <h3 style="color: #00ff5d; margin-top: 3rem; font-family: Monaco, monospace; letter-spacing: -0.02em;">
@@ -157,41 +193,55 @@ title: "|0⟩"
 
 </div>
 
-<!-- ════════════════════════════════════════════════════════════════
-     PROJECT GLASSWING CTA — Teal glasswing butterfly shimmer
-     Update about.md if you modify this section.
-════════════════════════════════════════════════════════════════ -->
-<style>
-@keyframes glasswing-pulse {
-  0%, 100% {
-    text-shadow: 0 0 6px #00e0d0, 0 0 16px rgba(0,224,208,0.45);
-    box-shadow: 0 0 18px rgba(0,224,208,0.10), inset 0 0 24px rgba(0,224,208,0.03);
-    border-color: rgba(0,224,208,0.30);
-  }
-  50% {
-    text-shadow: 0 0 12px #00e0d0, 0 0 32px rgba(0,224,208,0.70), 0 0 54px rgba(120,64,255,0.25);
-    box-shadow: 0 0 32px rgba(0,224,208,0.24), inset 0 0 36px rgba(0,224,208,0.06);
-    border-color: rgba(0,224,208,0.55);
-  }
-}
-</style>
+<!-- ── Project Glasswing ──────────────────────────────────────────── -->
+<h4 style="color: #00e0d0; font-family: Monaco, monospace; font-size: 0.9rem;
+           margin: 1.5rem 0 0.6rem; letter-spacing: -0.01em;">
+  &#9676; Project Glasswing
+</h4>
 
-<div style="margin: 0.6rem 0 0.5rem; text-align: center;">
-  <a href="/mythos-glasswing-report/"
-     style="display: inline-block; padding: 1rem 2.8rem;
-            background: linear-gradient(135deg, #010c10 0%, #021820 60%, #010e14 100%);
-            color: #00e0d0; font-family: Monaco, monospace; font-weight: bold;
-            font-size: 1rem; border-radius: 10px; text-decoration: none;
-            border: 1px solid rgba(0,224,208,0.30);
-            letter-spacing: 0.14em;
-            animation: glasswing-pulse 3.4s ease-in-out infinite;
-            transition: transform 0.15s;"
-     onmouseover="this.style.transform='translateY(-2px)';"
-     onmouseout="this.style.transform='translateY(0)';">
-    &#9676;&nbsp; PROJECT GLASSWING &nbsp;&#9676;
-  </a>
+<div style="margin-top: 0.5rem; padding: 1rem 1.25rem;
+            border: 1px solid #052020;
+            border-left: 3px solid #00e0d0;
+            border-radius: 12px; background: #020c10;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+
+  <p style="color: #2a6a65; font-size: 0.85rem; margin: 0.3rem 0 0.5rem; font-family: Monaco, monospace;">
+    April 2026 &middot; Research Report v1.0
+  </p>
+  <p style="color: #1e5550; font-size: 0.8rem; margin: 0 0 0.75rem; font-family: Monaco, monospace; line-height: 1.55;">
+    10 trillion parameters. Autonomous zero-day exploitation across FreeBSD, Linux, Firefox.
+    $2T market wipeout. Eleven founding corporations form an exclusive closed consortium &mdash;
+    zero public API access. RSP v3.1 abandons the pause commitment. The era of open frontier AI
+    may already be over.
+  </p>
+  <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center;">
+    <a href="/mythos-glasswing-report/"
+       style="padding: 0.55rem 1.1rem; background: transparent; color: #00e0d0;
+              border: 1px solid #00e0d0; border-radius: 6px; text-decoration: none;
+              font-weight: bold; font-size: 0.85rem; font-family: Monaco, monospace;"
+       onmouseover="this.style.background='#00e0d0';this.style.color='#000';"
+       onmouseout="this.style.background='transparent';this.style.color='#00e0d0';">
+      &#127760; Full Report
+    </a>
+    <a href="/mythos-chained-beast/"
+       style="padding: 0.45rem 0.9rem; background: transparent; color: rgba(204,68,255,0.55);
+              border: 1px solid rgba(204,68,255,0.28); border-radius: 6px; text-decoration: none;
+              font-size: 0.78rem; font-family: Monaco, monospace;"
+       onmouseover="this.style.color='#cc44ff';this.style.borderColor='#cc44ff';"
+       onmouseout="this.style.color='rgba(204,68,255,0.55)';this.style.borderColor='rgba(204,68,255,0.28)';">
+      &#9889; The Chained Beast
+    </a>
+    <a href="/glasswing-pantheon/"
+       style="padding: 0.45rem 0.9rem; background: transparent; color: rgba(0,224,208,0.5);
+              border: 1px solid rgba(0,224,208,0.22); border-radius: 6px; text-decoration: none;
+              font-size: 0.78rem; font-family: Monaco, monospace;"
+       onmouseover="this.style.color='#00e0d0';this.style.borderColor='rgba(0,224,208,0.55)';"
+       onmouseout="this.style.color='rgba(0,224,208,0.5)';this.style.borderColor='rgba(0,224,208,0.22)';">
+      &#9670; The New Pantheon
+    </a>
+  </div>
+
 </div>
-<p style="color: #0e3a38; font-family: Monaco, monospace; font-size: 0.68rem; text-align: center; margin: 0.3rem 0 2rem; letter-spacing: 0.1em; text-transform: uppercase;">Classified Deployment &middot; April 2026</p>
 
 <!-- ── AI Infrastructure & Water ─────────────────────────────────── -->
 <h4 style="color: #00b4d8; font-family: Monaco, monospace; font-size: 0.9rem;

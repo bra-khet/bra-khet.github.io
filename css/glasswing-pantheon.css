@@ -1,0 +1,420 @@
+/* ═══════════════════════════════════════════════════════════════════
+   glasswing-pantheon.css
+   "THE NEW PANTHEON" — Project Glasswing Consortium Snapshot
+   Palette: #020b10 void · #00e0d0 glasswing-teal · #ff4d20 fire-orange
+   Mythological framing: exclusion, power, the divine council.
+═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --teal:       #00e0d0;
+  --teal-dim:   rgba(0,224,208,0.42);
+  --teal-glow:  rgba(0,224,208,0.15);
+  --fire:       #ff6030;
+  --fire-dim:   rgba(255,96,48,0.18);
+  --gold:       #e8c84a;
+  --gold-dim:   rgba(232,200,74,0.22);
+  --bg:         #020b10;
+  --bg-card:    #030f16;
+  --bg-card2:   #021018;
+  --border:     rgba(0,224,208,0.14);
+  --text:       #b4d8d4;
+  --text-dim:   #5a8a84;
+  --text-mute:  #1e4440;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Skip link ──────────────────────────────────────────────────── */
+.skip-link {
+  position: absolute; top: -40px; left: 1rem;
+  background: var(--teal); color: #000;
+  padding: 0.4rem 0.8rem; border-radius: 4px; z-index: 1000;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 0.5rem; }
+
+/* ── Nav ────────────────────────────────────────────────────────── */
+#pantheon-nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.6rem 1.6rem;
+  background: rgba(2,11,16,0.92);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem; color: var(--text-dim);
+  gap: 1rem;
+}
+#pantheon-nav a { color: var(--teal); text-decoration: none; transition: opacity 0.15s; }
+#pantheon-nav a:hover { opacity: 0.75; }
+.nav-sep { opacity: 0.35; }
+.nav-title { color: var(--teal); font-weight: 600; letter-spacing: 0.04em; }
+.nav-tag { color: var(--text-mute); }
+
+/* ── Wrapper ────────────────────────────────────────────────────── */
+.pantheon-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.4rem 4rem;
+}
+
+/* ── Hero ───────────────────────────────────────────────────────── */
+.pantheon-hero {
+  position: relative;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 1.4rem 3rem;
+  overflow: hidden;
+}
+
+.hero-canvas-wrap {
+  position: absolute; inset: 0; z-index: 0;
+  overflow: hidden;
+}
+#pantheon-canvas { width: 100%; height: 100%; display: block; }
+
+.hero-content { position: relative; z-index: 1; }
+
+.pantheon-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem; letter-spacing: 0.28em;
+  color: var(--teal-dim);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.pantheon-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(2.8rem, 9vw, 5.8rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 0.92;
+  color: #fff;
+  text-shadow:
+    0 0 18px var(--teal),
+    0 0 55px rgba(0,224,208,0.42),
+    0 0 110px rgba(0,224,208,0.15);
+  margin-bottom: 0.8rem;
+}
+
+.pantheon-subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  color: var(--teal-dim);
+  text-transform: uppercase;
+  margin-bottom: 1.4rem;
+}
+
+/* ── The tagline / myth quote ─────────────────────────────────── */
+.prometheus-line {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem 1.4rem;
+  background: rgba(0,224,208,0.04);
+  border: 1px solid rgba(0,224,208,0.15);
+  border-radius: 8px;
+  font-size: 0.92rem;
+  color: var(--text);
+  line-height: 1.7;
+  font-style: italic;
+}
+
+/* ── Divider ────────────────────────────────────────────────────── */
+.pantheon-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.2rem 0;
+}
+
+/* ── Section label ──────────────────────────────────────────────── */
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.22em;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Fire access denied banner ──────────────────────────────────── */
+.access-denied {
+  background: rgba(255,96,48,0.06);
+  border: 1px solid rgba(255,96,48,0.25);
+  border-radius: 12px;
+  padding: 1.4rem 1.6rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.access-denied-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.25em;
+  color: rgba(255,96,48,0.55);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.access-denied-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(2.4rem, 7vw, 4rem);
+  font-weight: 800;
+  color: var(--fire);
+  text-shadow: 0 0 20px rgba(255,96,48,0.4);
+  line-height: 1.1;
+}
+.access-denied-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: rgba(255,96,48,0.45);
+  margin-top: 0.3rem;
+}
+
+/* ── Council grid ───────────────────────────────────────────────── */
+.council-intro {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  line-height: 1.65;
+  margin-bottom: 1.6rem;
+  max-width: 700px;
+}
+
+/* Anthropic: the fire-holder — centred above the council */
+.fire-holder {
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+.fire-holder-card {
+  display: inline-block;
+  padding: 0.8rem 2.4rem;
+  background: rgba(0,224,208,0.06);
+  border: 1px solid var(--teal);
+  border-radius: 10px;
+  position: relative;
+}
+.fire-holder-card::before {
+  content: '&#128293;';
+  /* decorative fire icon rendered via HTML */
+}
+.fire-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  color: var(--teal-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.fire-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--teal);
+  text-shadow: 0 0 12px var(--teal-dim);
+  letter-spacing: 0.06em;
+}
+
+/* The 11 council members */
+.council-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.7rem;
+  margin-bottom: 2rem;
+}
+
+.council-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.council-card:hover {
+  border-color: var(--teal-dim);
+  box-shadow: 0 0 14px var(--teal-glow);
+}
+.council-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.council-sector {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--text-mute);
+  letter-spacing: 0.06em;
+}
+
+/* ── Key facts ──────────────────────────────────────────────────── */
+.fact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 2rem;
+}
+
+.fact-card {
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+}
+.fact-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(1.4rem, 4vw, 1.9rem);
+  font-weight: 800;
+  color: var(--teal);
+  line-height: 1.1;
+  margin-bottom: 0.35rem;
+  display: block;
+}
+.fact-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--text-mute);
+  line-height: 1.4;
+}
+.fact-card.fire-fact .fact-val { color: var(--fire); }
+.fact-card.gold-fact .fact-val { color: var(--gold); }
+
+/* ── The doctrine box ───────────────────────────────────────────── */
+.doctrine-box {
+  background: rgba(0,224,208,0.03);
+  border: 1px solid rgba(0,224,208,0.14);
+  border-left: 3px solid var(--teal-dim);
+  border-radius: 0 12px 12px 0;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 2rem;
+}
+.doctrine-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--teal-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.doctrine-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.doctrine-list li {
+  font-size: 0.84rem;
+  color: var(--text-dim);
+  display: flex;
+  gap: 0.7rem;
+  line-height: 1.55;
+}
+.doctrine-list li::before {
+  content: '◈';
+  color: var(--teal-dim);
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  margin-top: 0.2rem;
+}
+
+/* ── Myth quote ─────────────────────────────────────────────────── */
+.myth-quote {
+  text-align: center;
+  margin: 2rem 0;
+  padding: 2rem 1.4rem;
+  background: rgba(0,224,208,0.02);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.myth-quote-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  color: var(--teal-dim);
+  font-style: italic;
+  line-height: 1.7;
+  max-width: 640px;
+  margin: 0 auto 0.7rem;
+}
+.myth-quote-attr {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--text-mute);
+  letter-spacing: 0.1em;
+}
+
+/* ── CTA row ────────────────────────────────────────────────────── */
+.cta-row {
+  display: flex; gap: 0.9rem; flex-wrap: wrap;
+  justify-content: center;
+  margin: 2.5rem 0 1.5rem;
+}
+.btn-primary {
+  padding: 0.75rem 1.8rem;
+  background: transparent; color: var(--teal);
+  border: 1px solid var(--teal);
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700; font-size: 0.9rem;
+  text-decoration: none; letter-spacing: 0.04em;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-primary:hover { background: var(--teal); color: #000; }
+
+.btn-secondary {
+  padding: 0.75rem 1.4rem;
+  background: transparent; color: var(--text-dim);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.84rem;
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn-secondary:hover { border-color: var(--teal-dim); color: var(--teal); }
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+.pantheon-footer {
+  text-align: center;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--border);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text-mute);
+  line-height: 2;
+}
+.pantheon-footer a { color: var(--teal-dim); text-decoration: none; }
+.pantheon-footer a:hover { color: var(--teal); }
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  #pantheon-nav { font-size: 0.7rem; padding: 0.5rem 1rem; }
+  .nav-tag { display: none; }
+  .pantheon-hero { min-height: 280px; padding: 3rem 1rem 2.5rem; }
+  .council-grid { grid-template-columns: repeat(2, 1fr); }
+}
