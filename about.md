@@ -27,6 +27,7 @@ title: bra-khet
   ║    #ff4040  Meme Review                                          ║
   ║    #cc44ff  Anthropic Mythos / AGI neurons                       ║
   ║    #00e0d0  Project Glasswing (glasswing butterfly teal)         ║
+  ║    #00f0ff  Valve SteamGPT                                       ║
   ╚═══════════════════════════════════════════════════════════════════╝
 -->
 
@@ -299,6 +300,20 @@ title: bra-khet
     </a>
     <span style="color: #6a2020; font-family: Monaco, monospace; font-size: 0.78rem;">
       &mdash; Italian Brainrot · AI / IP law · <a href="/ttt-info-report-1/" style="color:#ff4040;text-decoration:none;">infographic</a> · narrative report.
+    </span>
+  </li>
+
+  <!-- Valve SteamGPT — #00f0ff (neon-blue, matches report) -->
+  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
+             border: 1px solid #052028; border-left: 3px solid #00f0ff;
+             border-radius: 8px; background: #06080f;">
+    <a href="/steamgpt-report-1/"
+       style="color: #00f0ff; font-weight: bold; font-family: Monaco, monospace;
+              font-size: 0.88rem; text-decoration: none;">
+      Valve SteamGPT &mdash; The Invisible AI
+    </a>
+    <span style="color: #1a4a58; font-family: Monaco, monospace; font-size: 0.78rem;">
+      &mdash; April 2026 · Datamine exclusive · hero infographic · sovereign AI layer, player dossiers, CS2 shadowbanning.
     </span>
   </li>
 

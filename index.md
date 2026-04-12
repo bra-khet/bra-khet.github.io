@@ -145,6 +145,42 @@ title: "|0⟩"
 <p style="color: #0e3a38; font-family: Monaco, monospace; font-size: 0.68rem; text-align: center; margin: 0.3rem 0 1.6rem; letter-spacing: 0.1em; text-transform: uppercase;">Classified Deployment &middot; April 2026</p>
 
 <!-- ════════════════════════════════════════════════════════════════
+     STEAMGPT CARD — Steam neon-blue/red
+     Update about.md if you modify this section.
+════════════════════════════════════════════════════════════════ -->
+<style>
+@keyframes steam-pulse {
+  0%, 100% { box-shadow: 0 0 14px rgba(0,240,255,0.12), inset 0 0 20px rgba(0,240,255,0.03); border-color: rgba(0,240,255,0.28); }
+  50%       { box-shadow: 0 0 28px rgba(0,240,255,0.28), inset 0 0 32px rgba(0,240,255,0.07); border-color: rgba(0,240,255,0.55); }
+}
+</style>
+
+<div style="margin: 0 0 1.2rem; padding: 1rem 1.25rem;
+            border: 1px solid rgba(0,240,255,0.28);
+            border-left: 3px solid #00f0ff;
+            border-radius: 10px; background: #06080f;
+            animation: steam-pulse 3.2s ease-in-out infinite;">
+  <p style="color: rgba(0,240,255,0.35); font-size: 0.68rem; font-family: Monaco, monospace;
+            text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 0.35rem;">
+    Datamine Exclusive &mdash; April 2026
+  </p>
+  <p style="color: #a0c8d8; font-size: 0.86rem; font-family: Monaco, monospace;
+            line-height: 1.6; margin: 0 0 0.8rem;">
+    Hidden inside a routine Steam update: a custom AI engine processing 69&thinsp;M daily users' hardware, purchase history, and CS2 reaction times &mdash; routing support, shadowbanning cheaters, and compiling player dossiers, entirely off third-party networks.
+  </p>
+  <a href="/steamgpt-report-1/"
+     style="display: inline-block; padding: 0.5rem 1rem;
+            background: transparent; color: #00f0ff;
+            border: 1px solid #00f0ff; border-radius: 6px;
+            text-decoration: none; font-weight: bold;
+            font-size: 0.82rem; font-family: Monaco, monospace;"
+     onmouseover="this.style.background='#00f0ff';this.style.color='#000';"
+     onmouseout="this.style.background='transparent';this.style.color='#00f0ff';">
+    &#9671; SteamGPT Infographic
+  </a>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
      LATEST REPORTS - Claude, update about.md if you modify/add below
 ════════════════════════════════════════════════════════════════ -->
 <h3 style="color: #00ff5d; margin-top: 3rem; font-family: Monaco, monospace; letter-spacing: -0.02em;">

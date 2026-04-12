@@ -105,15 +105,49 @@ permalink: /steamgpt-report-1/
                 #000 20px
             );
         }
+
+        /* Standard site nav banner */
+        #hacker-nav-banner {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 9999;
+            height: 44px;
+            background: #06080f;
+            border-bottom: 1px dashed rgba(0, 240, 255, 0.3);
+            font-family: Monaco, 'JetBrains Mono', monospace;
+            font-size: 13px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #eaeaea;
+        }
+        #hacker-nav-banner a {
+            color: var(--neon-blue);
+            text-decoration: none;
+            text-shadow: 0 0 5px rgba(0, 240, 255, 0.4);
+        }
+        #hacker-nav-banner a:hover { text-decoration: underline; }
+        #hacker-nav-banner .banner-title {
+            color: var(--neon-blue);
+            text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
+            letter-spacing: -0.03em;
+        }
+        #hacker-nav-banner .banner-tag { color: rgba(0, 240, 255, 0.3); font-size: 11px; }
+        #hacker-nav-banner .banner-v   { color: rgba(0, 240, 255, 0.25); font-size: 11px; }
     </style>
 </head>
-<body class="antialiased selection:bg-[#ff003c] selection:text-white">
+<body class="antialiased selection:bg-[#ff003c] selection:text-white" style="padding-top: 44px;">
 
-    <!-- Top Navigation Bar -->
-    <nav class="w-full bg-black border-b border-[#333] p-3 flex justify-between items-center z-50 relative">
-        <div class="text-[var(--neon-blue)] orbitron font-bold text-xl tracking-widest">G4MER_LEAKS<span class="text-white">_2026</span></div>
-        <div class="text-xs text-red-500 animate-pulse font-mono font-bold border border-red-500 px-2 py-1">DATAMINE EXCLUSIVE</div>
-    </nav>
+    <!-- Standard Site Nav Banner -->
+    <div id="hacker-nav-banner" aria-label="Site navigation">
+        <span>
+            <a href="{{ site.baseurl }}/">← bra-khet.github.io</a>
+            <span class="banner-tag"> / research</span>
+        </span>
+        <span class="banner-title">Valve SteamGPT Report</span>
+        <span class="banner-v">April 2026</span>
+    </div>
 
     <!-- Tabloid Caution Tape -->
     <div class="w-full h-2 tabloid-tape"></div>
