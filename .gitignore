@@ -23,6 +23,7 @@ coverage/
 .claude/settings.local.json
 .ignore/
 
-# Old/archived PDFs
+# Misc directories
 pdf/old/
 md/
+json/
