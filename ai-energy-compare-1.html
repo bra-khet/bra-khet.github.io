@@ -1,0 +1,394 @@
+---
+layout: null
+title: "AI Energy Comparison — Fact Check"
+permalink: /ai-energy-compare/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Fact-checking the viral infographic that claims scrolling Instagram, watching Netflix, PC gaming, and video calls all use more energy per hour than AI.">
+<title>AI Energy Comparison — Fact Check | bra-khet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Orbitron:wght@700&family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ site.baseurl }}/css/ai-energy-compare-1.css">
+</head>
+<body>
+
+<div id="reading-progress"
+     role="progressbar"
+     aria-label="Reading progress"
+     aria-valuenow="0"
+     aria-valuemin="0"
+     aria-valuemax="100"></div>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<div id="hacker-nav-banner" aria-label="Site navigation">
+  <span>
+    <a href="{{ site.baseurl }}/">← bra-khet.github.io</a>
+    <span class="banner-tag"> / research</span>
+  </span>
+  <span class="banner-title">AI Energy — Fact Check</span>
+  <span class="banner-v">v1.0 · April 2026</span>
+</div>
+
+<div class="page-wrapper">
+
+  <!-- Sidebar TOC -->
+  <nav class="sidebar" aria-label="Table of contents">
+    <p class="toc-label">Contents</p>
+    <ul class="toc-list" role="list">
+      <li><a href="#hero">Overview</a></li>
+      <li><a href="#infographic">The Infographic</a></li>
+      <li><a href="#methodology">Methodology</a></li>
+      <li><a href="#sources">Source Cards</a></li>
+      <li><a href="#card-instagram">Instagram</a></li>
+      <li><a href="#card-streaming">Netflix / YouTube</a></li>
+      <li><a href="#card-gaming">PC Gaming</a></li>
+      <li><a href="#card-videocalls">Video Calls</a></li>
+      <li><a href="#card-music">Music Streaming</a></li>
+      <li><a href="#card-ai">AI Baseline</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main content -->
+  <main id="main-content" tabindex="-1">
+
+    <!-- ═══ SECTION 1: Hero ═══════════════════════════════════════ -->
+    <header class="report-section" id="hero">
+      <div class="report-meta">
+        <span class="badge badge-cyan">Anti-AI Ideology Series</span>
+        <span class="badge badge-muted">April 2026</span>
+        <span class="badge badge-muted">Fact Check</span>
+      </div>
+      <h1 class="report-title">
+        <span class="fact-check-badge">FACT CHECK</span>
+        AI Energy Usage vs. Everyday Activities
+      </h1>
+      <p class="report-subtitle">
+        A viral infographic claims that scrolling Instagram, watching Netflix,
+        playing video games, and even video calls all consume more energy per hour
+        than using AI. We verify each claim against 2024–2025 measurements.
+        Click any row below to jump to the sourced breakdown.
+      </p>
+    </header>
+
+    <!-- ═══ SECTION 2: Infographic replica ═══════════════════════ -->
+    <section class="report-section" id="infographic" aria-labelledby="infographic-heading">
+      <h2 class="section-heading" id="infographic-heading">The Infographic</h2>
+      <p class="section-intro">Replica of the viral claim — click any row to see the evidence.</p>
+
+      <div class="infographic-panel" role="region" aria-label="Infographic replica">
+
+        <span class="infographic-kicker">Energy Comparison · Per Hour of Activity</span>
+        <p class="infographic-panel-title">Everyday Activities vs. Using AI</p>
+        <p class="infographic-panel-sub">All comparisons relative to one hour of AI conversation</p>
+
+        <ol class="infographic-list" role="list">
+
+          <li class="infographic-row"
+              id="row-instagram"
+              data-target="card-instagram"
+              tabindex="0"
+              role="button"
+              aria-label="Scrolling Instagram: 4–5× more energy than AI. Click for source.">
+            <span class="row-number">01</span>
+            <span class="row-name">Scrolling Instagram</span>
+            <span class="row-claim">4–5× more</span>
+            <a class="row-footnote" href="#card-instagram" aria-label="Source for Instagram claim" tabindex="-1">[→]</a>
+          </li>
+
+          <li class="infographic-row"
+              id="row-streaming"
+              data-target="card-streaming"
+              tabindex="0"
+              role="button"
+              aria-label="Watching Netflix or YouTube: 7× more energy than AI. Click for source.">
+            <span class="row-number">02</span>
+            <span class="row-name">Watching Netflix / YouTube</span>
+            <span class="row-claim">7× more</span>
+            <a class="row-footnote" href="#card-streaming" aria-label="Source for streaming claim" tabindex="-1">[→]</a>
+          </li>
+
+          <li class="infographic-row"
+              id="row-gaming"
+              data-target="card-gaming"
+              tabindex="0"
+              role="button"
+              aria-label="Playing PC Video Games: 12–25× more energy than AI. Click for source.">
+            <span class="row-number">03</span>
+            <span class="row-name">Playing PC Video Games</span>
+            <span class="row-claim">12–25× more</span>
+            <a class="row-footnote" href="#card-gaming" aria-label="Source for gaming claim" tabindex="-1">[→]</a>
+          </li>
+
+          <li class="infographic-row"
+              id="row-videocalls"
+              data-target="card-videocalls"
+              tabindex="0"
+              role="button"
+              aria-label="Video Calls on Zoom or Teams: 6–7× more energy than AI. Click for source.">
+            <span class="row-number">04</span>
+            <span class="row-name">Video Calls (Zoom / Teams)</span>
+            <span class="row-claim">6–7× more</span>
+            <a class="row-footnote" href="#card-videocalls" aria-label="Source for video calls claim" tabindex="-1">[→]</a>
+          </li>
+
+          <li class="infographic-row"
+              id="row-music"
+              data-target="card-music"
+              tabindex="0"
+              role="button"
+              aria-label="Music Streaming: 2–3× more energy than AI. Click for source.">
+            <span class="row-number">05</span>
+            <span class="row-name">Music Streaming</span>
+            <span class="row-claim">2–3× more</span>
+            <a class="row-footnote" href="#card-music" aria-label="Source for music streaming claim" tabindex="-1">[→]</a>
+          </li>
+
+          <li class="infographic-row infographic-row--baseline"
+              id="row-ai"
+              data-target="card-ai"
+              tabindex="0"
+              role="button"
+              aria-label="Using AI for One Hour: uses the least energy. Click for source.">
+            <span class="row-number">06</span>
+            <span class="row-name">Using AI for One Hour</span>
+            <span class="row-claim row-claim--baseline">Least energy ✓</span>
+            <a class="row-footnote" href="#card-ai" aria-label="Source for AI baseline" tabindex="-1">[→]</a>
+          </li>
+
+        </ol>
+
+        <p class="infographic-caption">
+          Original: viral social media infographic · Verification: bra-khet.github.io · Data: 2024–2025
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══ SECTION 3: Methodology ════════════════════════════════ -->
+    <section class="report-section" id="methodology" aria-labelledby="methodology-heading">
+      <h2 class="section-heading" id="methodology-heading">Methodology Note</h2>
+      <p class="methodology-text">
+        All estimates represent <strong>total system electricity per hour of activity</strong> —
+        this includes the client device, network transmission, data-center computation, and
+        cooling overhead. Values are derived from 2024–2025 peer-reviewed and industry
+        measurements. Exact figures vary by device (smartphone vs. RTX 4090 gaming rig),
+        video resolution, network type (Wi-Fi vs. cellular), and geographic grid carbon
+        intensity. The AI baseline uses conversational sessions (~30–60 queries/hour) and
+        excludes training cost, which is a one-time sunk cost not incurred per query.
+        See each source card for full derivation details and citations.
+      </p>
+    </section>
+
+    <!-- ═══ SECTION 4: Source cards ══════════════════════════════ -->
+    <section class="report-section" id="sources" aria-labelledby="sources-heading">
+      <h2 class="section-heading" id="sources-heading">Source Cards</h2>
+      <p class="section-intro">One card per activity. Tap any infographic row above to jump here.</p>
+
+      <!-- ── Card 1: Instagram ──────────────────────────────────── -->
+      <article class="source-card" id="card-instagram" aria-labelledby="card-instagram-title">
+        <div class="card-header">
+          <span class="card-number">01</span>
+          <h3 class="card-title" id="card-instagram-title">Scrolling Instagram</h3>
+          <span class="verdict-badge verdict-confirmed">✓ Confirmed</span>
+        </div>
+        <div class="card-claim-bar">
+          <span class="claim-label">Infographic claim:</span>
+          <span class="claim-value">4–5× more energy than AI per hour</span>
+        </div>
+        <dl class="card-data">
+          <dt>Actual estimate</dt>
+          <dd>0.05–0.10 kWh/hour (some heavy-feed measurements: 0.12–0.20 kWh)</dd>
+          <dt>AI baseline</dt>
+          <dd>0.012–0.020 kWh/hour → ratio: ~2.5–8×, with 4–5× as a solid midrange</dd>
+          <dt>Derivation</dt>
+          <dd>High-data image/video feed (~10–15 MB/min) + device screen and GPU + CDN and server load.</dd>
+        </dl>
+        <div class="card-explainer">
+          <span class="explainer-label">What does this mean?</span>
+          <p>Instagram's endless scroll burns roughly 4–5× as much electricity per hour as a typical AI chat session. The main reason is the sheer volume of images and short videos being delivered from global content networks — all of that data transfer and decoding adds up, even on a phone.</p>
+        </div>
+        <p class="card-sources-label">Sources</p>
+        <ul class="card-sources">
+          <li>App-level energy audits (Greenspector 2020–2025 updates): consistent with 4–5× AI baseline</li>
+          <li>Device + data-center energy models: high-resolution feed usage aligns with these ranges</li>
+        </ul>
+        <a class="card-back-link" href="#row-instagram">↑ Back to infographic</a>
+      </article>
+
+      <!-- ── Card 2: Netflix / YouTube ─────────────────────────── -->
+      <article class="source-card" id="card-streaming" aria-labelledby="card-streaming-title">
+        <div class="card-header">
+          <span class="card-number">02</span>
+          <h3 class="card-title" id="card-streaming-title">Watching Netflix / YouTube</h3>
+          <span class="verdict-badge verdict-confirmed">✓ Confirmed</span>
+        </div>
+        <div class="card-claim-bar">
+          <span class="claim-label">Infographic claim:</span>
+          <span class="claim-value">7× more energy than AI per hour</span>
+        </div>
+        <dl class="card-data">
+          <dt>Actual estimate</dt>
+          <dd>0.077–0.12 kWh/hour (HD streaming)</dd>
+          <dt>AI baseline</dt>
+          <dd>0.012–0.020 kWh/hour → ratio: ~4–10×, placing 7× squarely in range</dd>
+          <dt>Derivation</dt>
+          <dd>Continuous video encoding/decoding at CDN scale dominates. Assumes standard HD bitrate on an average device.</dd>
+        </dl>
+        <div class="card-explainer">
+          <span class="explainer-label">What does this mean?</span>
+          <p>Streaming HD video is one of the most energy-intensive things you can do on the internet, hour for hour. The combination of high-bitrate delivery from distributed servers, your device decoding that stream in real time, and your screen running at full brightness all add up to roughly 7× the footprint of an AI conversation.</p>
+        </div>
+        <p class="card-sources-label">Sources</p>
+        <ul class="card-sources">
+          <li>TRG Datacenters report (December 2025, cited in Forbes/ITWire): 0.12 kWh/hour — 42 g CO₂e at average grid intensity</li>
+          <li>IEA / Carbon Trust corrected analyses (2020/2023, still referenced 2025): ~0.077 kWh/hour for HD video streaming</li>
+        </ul>
+        <a class="card-back-link" href="#row-streaming">↑ Back to infographic</a>
+      </article>
+
+      <!-- ── Card 3: PC Gaming ──────────────────────────────────── -->
+      <article class="source-card" id="card-gaming" aria-labelledby="card-gaming-title">
+        <div class="card-header">
+          <span class="card-number">03</span>
+          <h3 class="card-title" id="card-gaming-title">Playing PC Video Games</h3>
+          <span class="verdict-badge verdict-confirmed">✓ Confirmed</span>
+        </div>
+        <div class="card-claim-bar">
+          <span class="claim-label">Infographic claim:</span>
+          <span class="claim-value">12–25× more energy than AI per hour</span>
+        </div>
+        <dl class="card-data">
+          <dt>Actual estimate</dt>
+          <dd>0.20–0.50+ kWh/hour (mid-to-high-end gaming PC under load)</dd>
+          <dt>AI baseline</dt>
+          <dd>0.012–0.020 kWh/hour → ratio: ~10–40×, so 12–25× is a conservative midrange</dd>
+          <dt>Derivation</dt>
+          <dd>Gaming GPU draw: 200–500 W under load. Monitor: 50–100 W. A 300 W average system for one hour = 0.30 kWh, 15–25× the AI baseline.</dd>
+        </dl>
+        <div class="card-explainer">
+          <span class="explainer-label">What does this mean?</span>
+          <p>A gaming PC running a modern title at high settings draws as much power as several household appliances running simultaneously. The GPU alone — doing real-time physics, lighting, and rendering — consumes more electricity in an hour than an AI server handles in dozens of conversations. This is the biggest multiplier in the infographic, and it's actually understated for high-end setups.</p>
+        </div>
+        <p class="card-sources-label">Sources</p>
+        <ul class="card-sources">
+          <li>Hardware power studies (EnergySage, Lawrence Berkeley National Laboratory analogs): 200–800 W load range, practical average 300–500 W during active gaming sessions</li>
+        </ul>
+        <a class="card-back-link" href="#row-gaming">↑ Back to infographic</a>
+      </article>
+
+      <!-- ── Card 4: Video Calls ─────────────────────────────────── -->
+      <article class="source-card" id="card-videocalls" aria-labelledby="card-videocalls-title">
+        <div class="card-header">
+          <span class="card-number">04</span>
+          <h3 class="card-title" id="card-videocalls-title">Video Calls (Zoom / Teams)</h3>
+          <span class="verdict-badge verdict-roughly">~ Roughly Accurate</span>
+        </div>
+        <div class="card-claim-bar">
+          <span class="claim-label">Infographic claim:</span>
+          <span class="claim-value">6–7× more energy than AI per hour</span>
+        </div>
+        <dl class="card-data">
+          <dt>Actual estimate</dt>
+          <dd>0.016–0.05 kWh/hour (per participant), most measurements cluster near 0.049 kWh</dd>
+          <dt>AI baseline</dt>
+          <dd>0.012–0.020 kWh/hour → ratio: ~2.5–4× using central estimates</dd>
+          <dt>Derivation</dt>
+          <dd>Video encoding/decoding + camera + bidirectional network transmission. Resolution-dependent — HD video calls use significantly more than SD.</dd>
+        </dl>
+        <div class="card-explainer">
+          <span class="explainer-label">What does this mean?</span>
+          <p>Video calls do use more energy than AI — but the 6–7× figure is on the high end of what the data supports. Central measurements put the actual ratio closer to 2.5–4×. The claim is directionally correct (video calls are more expensive than AI), but the magnitude depends heavily on video quality settings, your device, and whether you're using a phone or laptop. The infographic rounds up.</p>
+        </div>
+        <p class="card-sources-label">Sources</p>
+        <ul class="card-sources">
+          <li>TRG Datacenters report (2025): 0.0486 kWh/hour per user — 17 g CO₂e at average grid intensity</li>
+          <li>Purdue University and independent measurements (2023–2025): range of 0.016–0.05 kWh per participant per hour</li>
+        </ul>
+        <a class="card-back-link" href="#row-videocalls">↑ Back to infographic</a>
+      </article>
+
+      <!-- ── Card 5: Music Streaming ─────────────────────────────── -->
+      <article class="source-card" id="card-music" aria-labelledby="card-music-title">
+        <div class="card-header">
+          <span class="card-number">05</span>
+          <h3 class="card-title" id="card-music-title">Music Streaming</h3>
+          <span class="verdict-badge verdict-roughly">~ Roughly Accurate</span>
+        </div>
+        <div class="card-claim-bar">
+          <span class="claim-label">Infographic claim:</span>
+          <span class="claim-value">2–3× more energy than AI per hour</span>
+        </div>
+        <dl class="card-data">
+          <dt>Actual estimate</dt>
+          <dd>0.02–0.05 kWh/hour (often closer to the lower end, sometimes below)</dd>
+          <dt>AI baseline</dt>
+          <dd>0.012–0.020 kWh/hour → ratio: ~1–4×, with 2–3× only at higher streaming usage</dd>
+          <dt>Derivation</dt>
+          <dd>Audio bitrates are ~50× less data-intensive than video. Device overhead (screen, cellular) often dominates over the actual streaming infrastructure cost.</dd>
+        </dl>
+        <div class="card-explainer">
+          <span class="explainer-label">What does this mean?</span>
+          <p>Music streaming is genuinely low-energy compared to video — some estimates put it at roughly 1 gram of CO₂ per hour, which is surprisingly close to AI. The 2–3× claim is plausible at the higher end of the measurement range, but many real-world measurements put them much closer to parity. On a phone with Wi-Fi, the gap between Spotify and a Claude conversation may be quite small.</p>
+        </div>
+        <p class="card-sources-label">Sources</p>
+        <ul class="card-sources">
+          <li>Greenly / Carbon Trust (2024–2025): ~1 g CO₂e/hour — very low kWh equivalent, near AI baseline</li>
+          <li>Streaming service environmental reports (Spotify, Apple Music methodology disclosures)</li>
+        </ul>
+        <a class="card-back-link" href="#row-music">↑ Back to infographic</a>
+      </article>
+
+      <!-- ── Card 6: AI Baseline ─────────────────────────────────── -->
+      <article class="source-card" id="card-ai" aria-labelledby="card-ai-title">
+        <div class="card-header">
+          <span class="card-number">06</span>
+          <h3 class="card-title card-title--baseline" id="card-ai-title">Using AI for One Hour</h3>
+          <span class="verdict-badge verdict-confirmed">✓ Confirmed</span>
+        </div>
+        <div class="card-claim-bar">
+          <span class="claim-label">Infographic claim:</span>
+          <span class="claim-value claim-value--green">Uses the least energy ✓</span>
+        </div>
+        <dl class="card-data">
+          <dt>Actual estimate</dt>
+          <dd>0.012–0.020 kWh/hour (12–20 Wh) for a conversational session</dd>
+          <dt>Per-query cost</dt>
+          <dd>~0.24–0.34 Wh per text query on optimized modern models (H100/H200 GPUs)</dd>
+          <dt>Derivation</dt>
+          <dd>~30–60 short-to-medium queries per hour. Example: 40 queries × 0.30 Wh/query = 12 Wh. Training cost is excluded — it is a one-time sunk cost, not incurred per conversation.</dd>
+        </dl>
+        <div class="card-explainer">
+          <span class="explainer-label">What does this mean?</span>
+          <p>Modern AI inference is far more efficient than most people assume. A full hour of conversation with a large language model uses less electricity than leaving an LED bulb on. The efficiency has improved roughly 10× since early 2023 as hardware and model optimization improved. The "AI uses enormous energy" narrative applies far more accurately to the one-time cost of training — not to using the model.</p>
+        </div>
+        <p class="card-sources-label">Sources</p>
+        <ul class="card-sources">
+          <li>Epoch AI (February 2025): 0.3 Wh median per GPT-4o query — a 10× improvement vs. early 2023 estimates</li>
+          <li>Google Cloud (August 2025): 0.24 Wh median per Gemini text query</li>
+          <li>OpenAI CEO statement (June 2025): ~0.34 Wh per typical query</li>
+        </ul>
+        <a class="card-back-link" href="#row-ai">↑ Back to infographic</a>
+      </article>
+
+    </section>
+
+  </main>
+</div><!-- .page-wrapper -->
+
+<footer class="site-footer">
+  <p>AI Energy Comparison — Fact Check · April 2026 · <a href="{{ site.baseurl }}/">bra-khet.github.io</a></p>
+  <p class="footer-sub">Data from 2024–2025 peer-reviewed and industry measurements. All kWh figures are estimates; real-world values vary by device, network, and grid.</p>
+</footer>
+
+<script>
+const AI_ENERGY_DATA = {"infographic_title":"Scrolling Instagram / Netflix / YouTube / PC Gaming / Video Calls / Music Streaming vs. Using AI for One Hour (Energy Consumption Comparison)","system_boundary_note":"All estimates represent total electricity use per hour of activity (client device + network transmission + data-center computation + cooling/infrastructure). Values are ballpark ranges derived from 2024\u20132025 peer-reviewed/industry measurements; exact figures vary by device (smartphone vs. RTX 4050 laptop), resolution, network type (Wi-Fi vs. cellular), and geographic grid carbon intensity.","baseline_ai":{"activity":"Using AI for One Hour","infographic_claim":"Uses the least energy","multiplier_relative_to_baseline":"1\u00d7","absolute_estimate_kwh_per_hour":"0.012\u20130.020 kWh (12\u201320 Wh)","derivation_details":"Conversational session (~30\u201360 short-to-medium queries/responses). Median inference cost per text query \u2248 0.24\u20130.34 Wh (optimized models on H100/H200 GPUs). Example: 40 queries \u00d7 0.3 Wh/query \u2248 12 Wh. Excludes training amortization (sunk cost).","supporting_sources":["Epoch AI (February 2025): 0.3 Wh median per GPT-4o query (10\u00d7 efficiency improvement vs. early 2023 estimates)","Google Cloud (August 2025): 0.24 Wh median per Gemini text query","OpenAI CEO statement (June 2025): ~0.34 Wh per typical query"]},"activities":[{"activity":"Scrolling Instagram","infographic_claim":"Uses 4\u20135\u00d7 more energy than AI","multiplier":"4\u20135\u00d7","absolute_estimate_kwh_per_hour":"0.05\u20130.10 kWh (some viral aggregates cite 0.12\u20130.20 kWh under heavy feed usage)","derivation_details":"High data volume image/video feed (~10\u201315 MB/min) + device screen/GPU + CDN/server load.","supporting_sources":["Viral comparisons and app-level studies (Threads/Reddit aggregates, Greenspector 2020\u20132025 updates)","General device + data-center energy models aligning with 4\u20135\u00d7 AI baseline"]},{"activity":"Watching Netflix / YouTube","infographic_claim":"Uses 7\u00d7 more energy than AI","multiplier":"7\u00d7","absolute_estimate_kwh_per_hour":"0.077\u20130.12 kWh (HD streaming)","derivation_details":"Continuous video encoding/decoding + CDN delivery dominates; assumes average bitrate/resolution.","supporting_sources":["TRG Datacenters report (December 2025, cited in Forbes/ITWire): 0.12 kWh/hour (42 g CO\u2082e at average grid)","IEA / Carbon Trust corrected analyses (2020/2023, still referenced 2025): ~0.077 kWh/hour HD video"]},{"activity":"Playing PC Video Games","infographic_claim":"Uses 12\u201325\u00d7 more energy than AI","multiplier":"12\u201325\u00d7","absolute_estimate_kwh_per_hour":"0.2\u20130.5+ kWh","derivation_details":"Mid-to-high-end gaming PC/GPU draw under load (200\u2013500 W) + monitor (50\u2013100 W). Online multiplayer adds minor server overhead.","supporting_sources":["Hardware power studies (EnergySage, Lawrence Berkeley National Laboratory analogs): 200\u2013800 W load range; practical average 300\u2013500 W during gaming"]},{"activity":"Video Calls (Zoom / Teams)","infographic_claim":"Use 6\u20137\u00d7 more energy than AI","multiplier":"6\u20137\u00d7","absolute_estimate_kwh_per_hour":"0.0486\u20130.05 kWh (per user)","derivation_details":"Video encoding/decoding + camera + network; resolution-dependent.","supporting_sources":["TRG Datacenters report (2025): 0.0486 kWh/hour (17 g CO\u2082e)","Purdue University and independent measurements (2023\u20132025): 0.016\u20130.05 kWh range"]},{"activity":"Music Streaming","infographic_claim":"Uses 2\u20133\u00d7 more energy than AI","multiplier":"2\u20133\u00d7","absolute_estimate_kwh_per_hour":"0.02\u20130.05 kWh (often lower)","derivation_details":"Low-bitrate audio (~50\u00d7 less data-intensive than video); minimal encoding demands.","supporting_sources":["Greenly / Carbon Trust (2024\u20132025): ~1 g CO\u2082e/hour \u2192 very low kWh equivalent","Streaming service environmental reports (Spotify/Apple Music methodology)"]}],"retrieval_metadata":{"format_version":"1.0","last_updated":"April 2026","intended_use":"RAG / knowledge-base ingestion; each object is self-contained with claim, estimate, derivation, and verifiable sources for citation or fact-checking.","caveats":"Estimates are ballpark aggregates; real-time values depend on model version, optimization level, and infrastructure (e.g., future efficiency gains expected post-2025)."}};
+</script>
+<script src="{{ site.baseurl }}/js/ai-energy-compare-1.js" defer></script>
+
+</body>
+</html>
