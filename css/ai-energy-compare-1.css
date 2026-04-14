@@ -641,6 +641,15 @@ main {
   content: '↳ ';
   color: var(--accent);
 }
+.card-sources a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.card-sources a:hover {
+  color: var(--neon-cyan);
+  text-decoration: underline;
+  text-shadow: 0 0 6px rgba(0,229,255,.3);
+}
 
 /* Back link */
 .card-back-link {
