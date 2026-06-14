@@ -43,11 +43,6 @@ title: "Archive | bra-khet"
   </li>
 
   <li style="margin-bottom: 0.55rem; padding: 0.6rem 0.9rem; border: 1px solid #2a1010; border-left: 3px solid #ff2a2a; border-radius: 8px; background: #080808;">
-    <a href="/globalcomix-case/" style="color: #f5a623; font-weight: bold; font-family: Monaco, monospace; font-size: 0.86rem; text-decoration: none;">GlobalComix Case (The Invisible Ban)</a> + <a href="/globalcomix-appeal/" style="color: #f5a623; font-family: Monaco, monospace; font-size: 0.8rem; text-decoration: none;">Appeal</a>
-    <span style="color: #8a6640; font-family: Monaco, monospace; font-size: 0.75rem;"> &mdash; April 2026 platform enforcement + formal petition. Archived: specific creator/platform current event + legal snapshot.</span>
-  </li>
-
-  <li style="margin-bottom: 0.55rem; padding: 0.6rem 0.9rem; border: 1px solid #2a1010; border-left: 3px solid #ff2a2a; border-radius: 8px; background: #080808;">
     <a href="/anti-ai-guilt-report-1" style="color: #06b6d4; font-weight: bold; font-family: Monaco, monospace; font-size: 0.86rem; text-decoration: none;">AI Use &amp; Anti-AI Ideology (v2.0 + infographic)</a> + <a href="/thread-analysis/" style="color:#06b6d4; font-family: Monaco, monospace; font-size: 0.78rem; text-decoration: none;">thread analysis</a> + <a href="/methodology-defense/" style="color:#06b6d4; font-family: Monaco, monospace; font-size: 0.78rem; text-decoration: none;">methodology defense</a>
     <span style="color: #1a5060; font-family: Monaco, monospace; font-size: 0.75rem;"> &mdash; March 2026 r/antiai cognitive dissonance study + statistical validity brief. Archived: social snapshot of a community at a point in time.</span>
   </li>
@@ -60,16 +55,6 @@ title: "Archive | bra-khet"
   <li style="margin-bottom: 0.55rem; padding: 0.6rem 0.9rem; border: 1px solid #2a1010; border-left: 3px solid #ff2a2a; border-radius: 8px; background: #080808;">
     <a href="/dlss-5-report-1-1/" style="color: #76B900; font-weight: bold; font-family: Monaco, monospace; font-size: 0.86rem; text-decoration: none;">NVIDIA DLSS 5 main report (+ PDF)</a>
     <span style="color: #3a5200; font-family: Monaco, monospace; font-size: 0.75rem;"> &mdash; March 17/18 2026. Archived: tied to specific announcement cycle (see Core Research for the timeless Lighting vs. Shading primer).</span>
-  </li>
-
-  <li style="margin-bottom: 0.55rem; padding: 0.6rem 0.9rem; border: 1px solid #2a1010; border-left: 3px solid #ff2a2a; border-radius: 8px; background: #080808;">
-    <a href="/copyright-threshold-1.html" style="color: #8b949e; font-weight: bold; font-family: Monaco, monospace; font-size: 0.86rem; text-decoration: none;">AI Copyright Threshold Demo</a>
-    <span style="color: #555; font-family: Monaco, monospace; font-size: 0.75rem;"> &mdash; Standalone interactive on U.S. copyright law thresholds (Tailwind/Chart.js). Archived: not promoted on hubs; personal/legal demo.</span>
-  </li>
-
-  <li style="margin-bottom: 0.55rem; padding: 0.6rem 0.9rem; border: 1px solid #2a1010; border-left: 3px solid #ff2a2a; border-radius: 8px; background: #080808;">
-    <a href="/ai-sentiment-analysis-1.html" style="color: #8b949e; font-weight: bold; font-family: Monaco, monospace; font-size: 0.86rem; text-decoration: none;">AI Sentiment Analysis (placeholder)</a>
-    <span style="color: #555; font-family: Monaco, monospace; font-size: 0.75rem;"> &mdash; Appears to be an unfinished/template file. Archived per "any other page not on hubs".</span>
   </li>
 
 </ul>
@@ -102,6 +87,29 @@ title: "Archive | bra-khet"
   <li style="margin-bottom: 0.55rem; padding: 0.65rem 0.9rem; border: 1px solid #2a1010; border-left: 3px solid #888; border-radius: 8px; background: #080808;">
     <a href="/ai-energy-compare/" style="color: #9ab8d0; font-weight: bold; font-family: Monaco, monospace; font-size: 0.86rem; text-decoration: none;">AI Energy Comparison — Fact Check</a>
     <span style="color: #555; font-family: Monaco, monospace; font-size: 0.75rem;"> &mdash; April 2026. Fact-check of viral "AI uses less energy than scrolling/Netflix/gaming" infographic + data tables. Archived: personal reference (users rarely access).</span>
+  </li>
+
+  <!-- Fourth reference tool: soft hyphen button (retained from index for personal use) -->
+  <li style="margin-bottom: 0.55rem; padding: 0.65rem 0.9rem; border: 1px solid #1a3322; border-left: 3px solid #00ff41; border-radius: 8px; background: #0a1a0c;">
+    <div style="color: #00ff41; font-weight: bold; font-family: Monaco, monospace; font-size: 0.86rem; margin-bottom: 0.25rem;">Soft Hyphen Utility</div>
+    <span style="color: #4a5a4a; font-family: Monaco, monospace; font-size: 0.75rem;"> &mdash; Personal reference. Click to copy a soft hyphen (U+00AD) to the clipboard for precise typography and line-break control.</span>
+    <div style="margin-top: 0.6rem;">
+      <button
+         onclick="navigator.clipboard.writeText('\u00AD');var el=this;var orig=el.innerHTML;el.innerHTML='&#10003; Soft hyphen copied to clipboard.';setTimeout(function(){el.innerHTML=orig;},1800);"
+         style="display: inline-block; width: 100%; padding: 0.7rem 1rem;
+                background: linear-gradient(135deg, #0a1a0c 0%, #0a1424 100%);
+                color: #00ff41; font-family: Monaco, monospace; font-weight: bold;
+                font-size: 0.82rem; border-radius: 6px; cursor: pointer;
+                border: 1px solid #1a3322;
+                letter-spacing: 0.03em;
+                text-shadow: 0 0 8px #00ff41, 0 0 18px rgba(0,255,65,0.45);
+                box-shadow: 0 2px 12px rgba(0,255,65,0.06), inset 0 0 18px rgba(0,255,65,0.02);
+                transition: box-shadow 0.2s, text-shadow 0.2s, border-color 0.2s;"
+         onmouseover="this.style.boxShadow='0 3px 20px rgba(0,255,65,0.16), inset 0 0 24px rgba(0,255,65,0.05)';this.style.borderColor='#2a5a38';this.style.textShadow='0 0 10px #00ff41, 0 0 22px rgba(0,255,65,0.8), 0 0 36px rgba(0,255,65,0.25)';"
+         onmouseout="this.style.boxShadow='0 2px 12px rgba(0,255,65,0.06), inset 0 0 18px rgba(0,255,65,0.02)';this.style.borderColor='#1a3322';this.style.textShadow='0 0 8px #00ff41, 0 0 18px rgba(0,255,65,0.45)';">
+        Click to copy soft&#x2011;hyphen to clipboard
+      </button>
+    </div>
   </li>
 
 </ul>

@@ -255,8 +255,8 @@ title: bra-khet
     Archive — Time-Bound Reports &amp; Reference Tools (curated June 2026)
   </p>
   <p style="color: #6a7a8a; font-size: 0.76rem; font-family: Monaco, monospace; margin: 0; line-height: 1.5;">
-    AI Water Use main report (v1.2 baseline), AI Energy Comparison, Evo 2, DLSS 5 main report, SteamGPT, Altman Attack, GlobalComix case/appeal, Tung Tung Tung Sahur pair, r/antiai cluster + methodology defense, Copyright threshold, AI Sentiment Analysis, and other not-on-hubs pages.
-    <br>Reference tools preserved for hard links / personal use: <a href="/ai-water-use-tool-1/" style="color:#00b4d8;">Water Tool 1</a>, <a href="/ai-water-use-tool-2/" style="color:#7a3fff;">Water Tool 2</a>, <a href="/ai-energy-compare/" style="color:#9ab8d0;">Energy Comparison</a>.
+    AI Water Use main report (v1.2 baseline), AI Energy Comparison, Evo 2, DLSS 5 main report, SteamGPT, Altman Attack, Tung Tung Tung Sahur pair, r/antiai cluster + methodology defense, and other time-bound pages.
+    <br>Reference tools preserved for hard links / personal use: <a href="/ai-water-use-tool-1/" style="color:#00b4d8;">Water Tool 1</a>, <a href="/ai-water-use-tool-2/" style="color:#7a3fff;">Water Tool 2</a>, <a href="/ai-energy-compare/" style="color:#9ab8d0;">Energy Comparison</a>, <a href="/archive" style="color:#00ff41;">Soft Hyphen button</a>.
     <br><a href="/archive" style="color: #9ab8d0; text-decoration: underline;">Full Archive with dates, reasons &amp; direct links →</a>
   </p>
 </div>

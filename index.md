@@ -262,8 +262,8 @@ title: "|0⟩"
     Curated June 2026. Time-sensitive dispatches, community snapshots, and personal references (e.g. energy comparison, water report baseline) have been moved here for clarity. All original permalinks remain live.
   </p>
   <p style="color: #5a6a7a; font-size: 0.76rem; font-family: Monaco, monospace; margin: 0;">
-    <strong>Includes:</strong> AI Water Use report (v1.2 baseline — tools preserved for reference), AI Energy Comparison, Evo 2, DLSS 5 main report, SteamGPT, Altman Attack (Apr 10 2026), GlobalComix case/appeal, Tung Tung Tung Sahur + infographic, r/antiai analyses + methodology defense, Copyright threshold demo, AI Sentiment Analysis, and other not-on-hubs pages.
-    <br><a href="/archive" style="color: #9ab8d0; text-decoration: underline;">Full Archive page with dates, reasons, and direct hard links (including Water calculators &amp; Energy reference) →</a>
+    <strong>Includes:</strong> AI Water Use report (v1.2 baseline — tools preserved for reference), AI Energy Comparison, Evo 2, DLSS 5 main report, SteamGPT, Altman Attack (Apr 10 2026), Tung Tung Tung Sahur + infographic, r/antiai analyses + methodology defense, and other time-bound pages.
+    <br><a href="/archive" style="color: #9ab8d0; text-decoration: underline;">Full Archive page with dates, reasons, and direct hard links (including Water calculators, Energy reference, and Soft Hyphen tool) →</a>
   </p>
 </div>
 
