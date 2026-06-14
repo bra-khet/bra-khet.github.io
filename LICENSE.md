@@ -1,6 +1,7 @@
 # Do What The Fuck You Want To Public License
 
-![WTFPL 2.0 Logo](/assets/svg/WTFPL_logo.svg)
+
+<img src="/assets/svg/WTFPL_logo.svg" width="200" height="125" alt="WTFPL 2.0 Logo">
 
 **Version 2, December 2004**
 
