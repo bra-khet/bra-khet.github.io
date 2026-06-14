@@ -1,12 +1,12 @@
 # Do What The Fuck You Want To Public License
 
-
+<!-- Standard logo for WTFPL, from wikipedia.
 <img src="/assets/svg/WTFPL_logo.svg" width="200" height="125" alt="WTFPL 2.0 Logo">
+-->
+<img src="/assets/svg/WTFPL_logo-modified.svg" width="360" height="225" alt="WTFPL 2.0 Logo">
 
-<img src="/assets/svg/WTFPL_logo-modified.svg" width="400" height="250" alt="WTFPL 2.0 Logo">
-
-**Version 2, December 2004**
-**Modified for bra-khet.github.io**
+**Version 2, December 2004** 
+**⸻ Modified for bra-khet.github.io**
 
 Everyone is permitted to copy and distribute verbatim or modified
 copies of this license document, and changing it is allowed as long
