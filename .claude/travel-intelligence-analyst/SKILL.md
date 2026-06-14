@@ -7,7 +7,7 @@ description: >
   gap analysis of travel data relative to an existing itinerary. Trigger phrases include: "analyze my
   travel data", "score these POIs", "rank destinations", "which places are worth it", "find gaps in my
   itinerary", "what am I missing in my travel plan", "synthesize my research", "best parts of this trip",
-  "prioritize these locations", or any request involving travel data sets and itinerary quality.
+  "prioritize these locations", or any request involving travel data sets and itinerary quality. 
 ---
 
 # Travel Intelligence Analyst

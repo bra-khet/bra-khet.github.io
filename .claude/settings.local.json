@@ -1,7 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Bash(for id:*)",
+      "Bash(for id:*)", 
       "Bash(do grep:*)",
       "Bash(echo \"OK: $id\")",
       "Bash(echo \"MISSING: $id\")",

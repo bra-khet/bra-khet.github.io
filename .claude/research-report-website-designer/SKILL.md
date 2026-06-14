@@ -1,6 +1,6 @@
 ---
 name: research-report-website-designer
-description: Transforms rigorous research reports on any technical, environmental, policy, or scientific topic into production-grade interactive static websites. Use when the user supplies or references a research report and requests a public-facing, visually compelling digital presentation, interactive dashboard, or policy-communication site. Produces a single self-contained HTML file (with embedded Tailwind CSS, Chart.js, Leaflet maps, and downloadable CSV/JSON) that maintains academic precision while achieving pop-sci-level digestibility.
+description: Transforms rigorous research reports on any technical, environmental, policy, or scientific topic into production-grade interactive static websites. Use when the user supplies or references a research report and requests a public-facing, visually compelling digital presentation, interactive dashboard, or policy-communication site. Produces a single self-contained HTML file (with embedded Tailwind CSS, Chart.js, Leaflet maps, and downloadable CSV/JSON) that maintains academic precision while achieving pop-sci-level digestibility. 
 ---
 
 # Research Report Website Designer

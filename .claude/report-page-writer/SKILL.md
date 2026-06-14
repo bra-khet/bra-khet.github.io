@@ -1,6 +1,6 @@
 ---
 name: report-page-writer
-description: Converts research reports, OSINT briefs, or structured data into a clean, self-contained single-page HTML report document. Use when the user has report content (markdown, notes, or raw data) and wants a professional, readable, shareable HTML page — lighter than a full interactive site. Triggers on "turn this into a report page", "make a clean HTML report", "format this as a document", or as a lightweight alternative to research-report-website-designer.
+description: Converts research reports, OSINT briefs, or structured data into a clean, self-contained single-page HTML report document. Use when the user has report content (markdown, notes, or raw data) and wants a professional, readable, shareable HTML page — lighter than a full interactive site. Triggers on "turn this into a report page", "make a clean HTML report", "format this as a document", or as a lightweight alternative to research-report-website-designer. 
 ---
 
 # Report Page Writer

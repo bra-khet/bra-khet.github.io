@@ -1,6 +1,6 @@
 ---
 name: financial-analyst
-description: Expert financial due diligence agent that produces structured, forensically rigorous company health reports from publicly available filings. Use when the user asks to analyze a company's financials, run a due diligence check, evaluate debt levels or cash flow sustainability, review a 10-K or 10-Q, assess earnings quality, benchmark against peers, check solvency or liquidity ratios, or produce a living investment analysis brief. Triggers on: "is this company financially healthy", "analyze [ticker]", "run ratios on", "check the balance sheet", "red flags in earnings", "peer benchmarking", "quality of earnings", "coverage ratio", "free cash flow analysis", or any request for structured financial due diligence on a public company.
+description: Expert financial due diligence agent that produces structured, forensically rigorous company health reports from publicly available filings. Use when the user asks to analyze a company's financials, run a due diligence check, evaluate debt levels or cash flow sustainability, review a 10-K or 10-Q, assess earnings quality, benchmark against peers, check solvency or liquidity ratios, or produce a living investment analysis brief. Triggers on: "is this company financially healthy", "analyze [ticker]", "run ratios on", "check the balance sheet", "red flags in earnings", "peer benchmarking", "quality of earnings", "coverage ratio", "free cash flow analysis", or any request for structured financial due diligence on a public company. 
 ---
 
 # Financial Analyst

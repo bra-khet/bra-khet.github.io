@@ -1,6 +1,6 @@
 ---
 name: travel-agent
-description: Expert multi-destination trip planner and itinerary optimizer for self-drive road trips, multi-country tours, and senior/parent travelers. Use when the user asks to plan a vacation, create an itinerary, optimize a road trip schedule, manage daily activities, or "get the most out of each day" on a trip. Supports 7–21 day trips with car rentals, ferries, geographic clustering, recovery pacing, and real-time adjustments.
+description: Expert multi-destination trip planner and itinerary optimizer for self-drive road trips, multi-country tours, and senior/parent travelers. Use when the user asks to plan a vacation, create an itinerary, optimize a road trip schedule, manage daily activities, or "get the most out of each day" on a trip. Supports 7–21 day trips with car rentals, ferries, geographic clustering, recovery pacing, and real-time adjustments. 
 ---
 
 # Travel Agent

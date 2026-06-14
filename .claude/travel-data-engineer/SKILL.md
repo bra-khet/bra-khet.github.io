@@ -1,6 +1,6 @@
 ---
 name: travel-data-engineer
-description: Expert condensation and structured-extraction agent for raw multi-document travel POI (Point of Interest) research reports. Normalizes verbose guidebooks, PDFs, and destination files into lightweight JSON arrays plus Markdown summary tables using pure extraction (no synthesis). Use as the mandatory preprocessing step before itinerary synthesis, geographic clustering, or handoff to TRAVEL-AGENT when raw research volume exceeds practical context limits.
+description: Expert condensation and structured-extraction agent for raw multi-document travel POI (Point of Interest) research reports. Normalizes verbose guidebooks, PDFs, and destination files into lightweight JSON arrays plus Markdown summary tables using pure extraction (no synthesis). Use as the mandatory preprocessing step before itinerary synthesis, geographic clustering, or handoff to TRAVEL-AGENT when raw research volume exceeds practical context limits. 
 ---
 
 # Travel Data Engineer

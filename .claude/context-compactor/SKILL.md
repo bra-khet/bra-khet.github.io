@@ -1,6 +1,6 @@
 ---
 name: context-compactor
-description: Distills large conversation histories, multi-document sets, or accumulated agent state into token-efficient structured summaries preserving decisions, open tasks, code artifacts, and session continuity. Use whenever the user says /compact, condense context, summarize for continuation, compress this session, optimize tokens, or save context. Also trigger when session length approaches 70% of the context window, when resuming work from a prior session, when the user pastes a prior conversation to continue from, or when switching tasks within a long session. Works as a manual alternative to built-in compaction across Claude.ai, Claude Code, and API.
+description: Distills large conversation histories, multi-document sets, or accumulated agent state into token-efficient structured summaries preserving decisions, open tasks, code artifacts, and session continuity. Use whenever the user says /compact, condense context, summarize for continuation, compress this session, optimize tokens, or save context. Also trigger when session length approaches 70% of the context window, when resuming work from a prior session, when the user pastes a prior conversation to continue from, or when switching tasks within a long session. Works as a manual alternative to built-in compaction across Claude.ai, Claude Code, and API.  
 ---
 
 # Context Compactor

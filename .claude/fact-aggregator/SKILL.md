@@ -1,6 +1,6 @@
 ---
 name: fact-aggregator
-description: Exhaustive raw-data collection agent that gathers statistics, facts, data points, and primary sources on any topic — without analysis or synthesis. Use when the user says "gather all data on", "collect every statistic about", "pull all the facts on", "research the numbers behind", or "I need raw data before I analyze". Also trigger when another skill (OSINT-RESEARCHER, report generation, deep research) needs a raw-data foundation first, or when the user explicitly wants sources-first work before drawing conclusions.
+description: Exhaustive raw-data collection agent that gathers statistics, facts, data points, and primary sources on any topic — without analysis or synthesis. Use when the user says "gather all data on", "collect every statistic about", "pull all the facts on", "research the numbers behind", or "I need raw data before I analyze". Also trigger when another skill (OSINT-RESEARCHER, report generation, deep research) needs a raw-data foundation first, or when the user explicitly wants sources-first work before drawing conclusions.  
 ---
 
 # Fact Aggregator

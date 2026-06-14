@@ -1,6 +1,6 @@
 ---
 name: prompt-reconstructor
-description: Reverse-engineers image generation prompts from uploaded images. Use when a user uploads an image and asks to reconstruct, reverse-engineer, or recreate the prompt — or says "what prompt made this", "prompt from image", "recreate this in [model]", or any similar phrasing. Default target model is Grok Imagine / Flux unless specified.
+description: Reverse-engineers image generation prompts from uploaded images. Use when a user uploads an image and asks to reconstruct, reverse-engineer, or recreate the prompt — or says "what prompt made this", "prompt from image", "recreate this in [model]", or any similar phrasing. Default target model is Grok Imagine / Flux unless specified. 
 ---
 
 # Prompt Reconstruction Specialist

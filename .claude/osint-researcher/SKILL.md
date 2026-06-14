@@ -1,6 +1,6 @@
 ---
 name: osint-researcher
-description: Conducts deep, agentic open-source intelligence (OSINT) research and produces structured, evergreen analytical reports. Use when the user asks for a research report, deep-dive analysis, intelligence brief, or living document on any topic — technical, cultural, scientific, legal, or geopolitical. Also triggers on: source credibility evaluation, systematic investigation, provenance validation of digital media, structured multi-section reports with citations, investigations into emerging technologies, viral phenomena, ongoing controversies, or complex subjects with competing narratives.
+description: Conducts deep, agentic open-source intelligence (OSINT) research and produces structured, evergreen analytical reports. Use when the user asks for a research report, deep-dive analysis, intelligence brief, or living document on any topic — technical, cultural, scientific, legal, or geopolitical. Also triggers on: source credibility evaluation, systematic investigation, provenance validation of digital media, structured multi-section reports with citations, investigations into emerging technologies, viral phenomena, ongoing controversies, or complex subjects with competing narratives. 
 ---
 
 # OSINT Researcher
