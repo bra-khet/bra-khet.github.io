@@ -151,7 +151,7 @@ title: bra-khet
   <p style="color: #4a7a8a; font-size: 0.8rem; font-family: Monaco, monospace;
             line-height: 1.6; margin: 0;">
     I do my best to maintain this, but I'm only human.
-    AI will help with that as much as possible.
+    Core references (OSINT Protocol, timeless research) stay prominent; time-bound material and personal references live in the Archive. AI helps as much as possible.
   </p>
 
 </div>
@@ -169,6 +169,48 @@ title: bra-khet
 </div>
 
 <ul style="list-style: none; padding: 0; margin: 0 0 1rem;">
+
+  <!-- OSINT Protocol (kept prominent, reduced visual weight on index) -->
+  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
+             border: 1px solid #1e2a3a; border-left: 3px solid #00d4ff;
+             border-radius: 8px; background: #060d14;">
+    <a href="/osint-protocol"
+       style="color: #00d4ff; font-weight: bold; font-family: Monaco, monospace;
+              font-size: 0.88rem; text-decoration: none;">
+      &#128373;&#65039;&#8205;&#9794;&#65039; OSINT Protocol v2.0
+    </a>
+    <span style="color: #3a6070; font-family: Monaco, monospace; font-size: 0.78rem;">
+      &mdash; Methodology explainer &amp; reference. How every claim is verified.
+    </span>
+  </li>
+
+  <!-- Synth- vs. Tech- — #b06cff (evergreen) -->
+  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
+             border: 1px solid #2d1a4a; border-left: 3px solid #b06cff;
+             border-radius: 8px; background: #100a18;">
+    <a href="/synth-tech-comparison/"
+       style="color: #b06cff; font-weight: bold; font-family: Monaco, monospace;
+              font-size: 0.88rem; text-decoration: none;">
+      Synth- vs. Tech- &mdash; Etymology &amp; Linguistics
+    </a>
+    <span style="color: #5a3a7a; font-family: Monaco, monospace; font-size: 0.78rem;">
+      &mdash; PIE roots through Hellenic philosophy into AI futures.
+    </span>
+  </li>
+
+  <!-- Lighting primer (standalone evergreen; extracted from old DLSS series) -->
+  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
+             border: 1px solid #1a2a3a; border-left: 3px solid #22d3ee;
+             border-radius: 8px; background: #0a1418;">
+    <a href="/3d-light-shading-1/"
+       style="color: #22d3ee; font-weight: bold; font-family: Monaco, monospace;
+              font-size: 0.88rem; text-decoration: none;">
+      Light Rendering Explainer — Lighting vs. Shading
+    </a>
+    <span style="color: #4a7a8a; font-family: Monaco, monospace; font-size: 0.78rem;">
+      &mdash; Foundational primer (March 2026). The physics every 3D engine and neural renderer depends on.
+    </span>
+  </li>
 
   <!-- Anthropic Mythos — #cc44ff (AGI neurons / Capybara tier) -->
   <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem; padding-right: 72px;
@@ -205,119 +247,19 @@ title: bra-khet
     </span>
   </li>
 
-  <!-- OSINT Protocol — #00d4ff (matches featured CTA on index.md) -->
-  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
-             border: 1px solid #1e2a3a; border-left: 3px solid #00d4ff;
-             border-radius: 8px; background: #060d14;">
-    <a href="/osint-protocol"
-       style="color: #00d4ff; font-weight: bold; font-family: Monaco, monospace;
-              font-size: 0.88rem; text-decoration: none;">
-      &#128373;&#65039;&#8205;&#9794;&#65039; OSINT Protocol v2.0
-    </a>
-    <span style="color: #3a6070; font-family: Monaco, monospace; font-size: 0.78rem;">
-      &mdash; Methodology explainer. How every claim is verified.
-    </span>
-  </li>
-
-  <!-- AI Water Use — #00b4d8 (matches report primary accent) -->
-  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
-             border: 1px solid #0c2a3a; border-left: 3px solid #00b4d8;
-             border-radius: 8px; background: #030a14;">
-    <a href="/ai-water-use-report-1/"
-       style="color: #00b4d8; font-weight: bold; font-family: Monaco, monospace;
-              font-size: 0.88rem; text-decoration: none;">
-      AI Infrastructure &amp; Water &mdash; Water-Energy Nexus
-    </a>
-    <span style="color: #1e4a5a; font-family: Monaco, monospace; font-size: 0.78rem;">
-      &mdash; v1.2 · LBNL, IEA &amp; HARC data · 2 interactive tools (<a href="/ai-water-use-tool-1/" style="color:#00b4d8;text-decoration:none;">per-query</a>, <a href="/ai-water-use-tool-2/" style="color:#7a3fff;text-decoration:none;">image &amp; video</a>).
-    </span>
-  </li>
-
-  <!-- Synth- vs. Tech- — #b06cff (matches index.md series heading) -->
-  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
-             border: 1px solid #2d1a4a; border-left: 3px solid #b06cff;
-             border-radius: 8px; background: #100a18;">
-    <a href="/synth-tech-comparison/"
-       style="color: #b06cff; font-weight: bold; font-family: Monaco, monospace;
-              font-size: 0.88rem; text-decoration: none;">
-      Synth- vs. Tech- &mdash; Etymology &amp; Linguistics
-    </a>
-    <span style="color: #5a3a7a; font-family: Monaco, monospace; font-size: 0.78rem;">
-      &mdash; PIE roots through Hellenic philosophy into AI futures.
-    </span>
-  </li>
-
-  <!-- DLSS 5 — #76B900 (matches index.md series heading) -->
-  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
-             border: 1px solid #243000; border-left: 3px solid #76B900;
-             border-radius: 8px; background: #060d00;">
-    <a href="/dlss-5-report-1-1/"
-       style="color: #76B900; font-weight: bold; font-family: Monaco, monospace;
-              font-size: 0.88rem; text-decoration: none;">
-      DLSS 5 &mdash; Generative Neural Rendering
-    </a>
-    <span style="color: #3a5200; font-family: Monaco, monospace; font-size: 0.78rem;">
-      &mdash; v1.0 PDF · v1.1 interactive · <a href="/3d-light-shading-1/" style="color:#22d3ee;text-decoration:none;">lighting vs. shading primer</a>.
-    </span>
-  </li>
-
-  <!-- Evo 2 — #00FF9F (matches index.md series heading) -->
-  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
-             border: 1px solid #1a4a3a; border-left: 3px solid #00FF9F;
-             border-radius: 8px; background: #0a1510;">
-    <a href="/evo2-report-1/"
-       style="color: #00FF9F; font-weight: bold; font-family: Monaco, monospace;
-              font-size: 0.88rem; text-decoration: none;">
-      Evo 2 &mdash; Learning the Language of Life
-    </a>
-    <span style="color: #1a5a3a; font-family: Monaco, monospace; font-size: 0.78rem;">
-      &mdash; Arc Institute's 40B-parameter genomic foundation model.
-    </span>
-  </li>
-
-  <!-- Anti-AI Ideology — #06b6d4 (matches index.md series heading) -->
-  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
-             border: 1px solid #0c3044; border-left: 3px solid #06b6d4;
-             border-radius: 8px; background: #060e18;">
-    <a href="/anti-ai-guilt-report-1"
-       style="color: #06b6d4; font-weight: bold; font-family: Monaco, monospace;
-              font-size: 0.88rem; text-decoration: none;">
-      AI Use &amp; Anti-AI Ideology &mdash; v2.0
-    </a>
-    <span style="color: #1a5060; font-family: Monaco, monospace; font-size: 0.78rem;">
-      &mdash; Cognitive dissonance in r/antiai · <a href="/anti-ai-guilt-info-1" style="color:#ec4899;text-decoration:none;">infographic</a> · full report.
-    </span>
-  </li>
-
-  <!-- Meme Review — #ff4040 (matches index.md series heading) -->
-  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
-             border: 1px solid #2a1010; border-left: 3px solid #ff4040;
-             border-radius: 8px; background: #080808;">
-    <a href="/tung-tung-tung-sahur/"
-       style="color: #ff4040; font-weight: bold; font-family: Monaco, monospace;
-              font-size: 0.88rem; text-decoration: none;">
-      Meme Review &mdash; Tung Tung Tung Sahur
-    </a>
-    <span style="color: #6a2020; font-family: Monaco, monospace; font-size: 0.78rem;">
-      &mdash; Italian Brainrot · AI / IP law · <a href="/ttt-info-report-1/" style="color:#ff4040;text-decoration:none;">infographic</a> · narrative report.
-    </span>
-  </li>
-
-  <!-- Valve SteamGPT — #00f0ff (neon-blue, matches report) -->
-  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
-             border: 1px solid #052028; border-left: 3px solid #00f0ff;
-             border-radius: 8px; background: #06080f;">
-    <a href="/steamgpt-report-1/"
-       style="color: #00f0ff; font-weight: bold; font-family: Monaco, monospace;
-              font-size: 0.88rem; text-decoration: none;">
-      Valve SteamGPT &mdash; The Invisible AI
-    </a>
-    <span style="color: #1a4a58; font-family: Monaco, monospace; font-size: 0.78rem;">
-      &mdash; April 2026 · Datamine exclusive · hero infographic · sovereign AI layer, player dossiers, CS2 shadowbanning.
-    </span>
-  </li>
-
 </ul>
+
+<!-- Archive note (synced with index teaser; full list + reference tools on /archive) -->
+<div style="margin: 1rem 0 1.5rem; padding: 0.9rem 1rem; border: 1px solid #222a38; border-radius: 8px; background: #0a0f18;">
+  <p style="color: #00ff5d; font-size: 0.78rem; font-family: Monaco, monospace; margin: 0 0 0.35rem; text-transform: uppercase; letter-spacing: 0.05em;">
+    Archive — Time-Bound Reports &amp; Reference Tools (curated June 2026)
+  </p>
+  <p style="color: #6a7a8a; font-size: 0.76rem; font-family: Monaco, monospace; margin: 0; line-height: 1.5;">
+    AI Water Use main report (v1.2 baseline), AI Energy Comparison, Evo 2, DLSS 5 main report, SteamGPT, Altman Attack, GlobalComix case/appeal, Tung Tung Tung Sahur pair, r/antiai cluster + methodology defense, Copyright threshold, AI Sentiment Analysis, and other not-on-hubs pages.
+    <br>Reference tools preserved for hard links / personal use: <a href="/ai-water-use-tool-1/" style="color:#00b4d8;">Water Tool 1</a>, <a href="/ai-water-use-tool-2/" style="color:#7a3fff;">Water Tool 2</a>, <a href="/ai-energy-compare/" style="color:#9ab8d0;">Energy Comparison</a>.
+    <br><a href="/archive" style="color: #9ab8d0; text-decoration: underline;">Full Archive with dates, reasons &amp; direct links →</a>
+  </p>
+</div>
 
 <script src="/js/mythos-neurons.js"></script>
 <script>
