@@ -1,5 +1,7 @@
 # Do What The Fuck You Want To Public License
 
+![WTFPL 2.0 Logo](/assets/svg/WTFPL_logo.svg)
+
 **Version 2, December 2004**
 
 Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
