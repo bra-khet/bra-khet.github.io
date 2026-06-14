@@ -3,7 +3,7 @@
 
 <img src="/assets/svg/WTFPL_logo.svg" width="200" height="125" alt="WTFPL 2.0 Logo">
 
-<img src="/assets/svg/WTFPL_logo-modified.svg" width="200" height="125" alt="WTFPL 2.0 Logo">
+<img src="/assets/svg/WTFPL_logo-modified.svg" width="400" height="250" alt="WTFPL 2.0 Logo">
 
 **Version 2, December 2004**
 **Modified for bra-khet.github.io**
