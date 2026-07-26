@@ -17,38 +17,127 @@ title: "|0⟩"
 <hr style="border-color: #333; margin: 2rem 0;" />
 
 <!-- ════════════════════════════════════════════════════════════════
-     OSINT PROTOCOL FEATURE CTA (kept at top per plan; visual weight reduced slightly for freshness)
-     Update about.md if the promoted status or link text changes.
+     LOCUTORIUM PROJECT HERO
+     Promoted product surface (was OSINT Protocol CTA).
+     Palette mirrors Locutorium Design Studio tokens (Cividis indigo→amber):
+       deep #12001f · panel #1d1f6e · raised #241a4a
+       amber #ffd54f / action #d4a020 / edge #8a6f1a
+       indigo muted #8a86b0 · text #e8e6f0
+     Primary destination: https://bra-khet.github.io/locutorium/
+     Update about.md design tokens + project blurb when this block changes.
 ════════════════════════════════════════════════════════════════ -->
-<div style="margin: 1.25rem 0 0.5rem; text-align: center;">
-  <a href="/osint-protocol"
-     style="display: inline-block; padding: 0.65rem 1.5rem;
-            background: #0a1f2e; color: #00d4ff; font-family: Monaco, monospace; font-weight: bold;
-            font-size: 0.95rem; border-radius: 8px; text-decoration: none;
-            border: 1px solid rgba(0,212,255,0.45);
-            letter-spacing: -0.01em;
-            box-shadow: 0 2px 12px rgba(0,212,255,0.12);
-            transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;"
-     onmouseover="this.style.boxShadow='0 4px 18px rgba(0,212,255,0.28)';this.style.borderColor='#00d4ff';this.style.transform='translateY(-1px)';"
-     onmouseout="this.style.boxShadow='0 2px 12px rgba(0,212,255,0.12)';this.style.borderColor='rgba(0,212,255,0.45)';this.style.transform='translateY(0)';">
-    &#128373;&#65039;&#8205;&#9794;&#65039; OSINT Protocol v2.0 &nbsp;&nbsp;<span style="font-weight: normal; font-size: 0.8rem; opacity: 0.75;">explainer &amp; reference</span>
-  </a>
-</div>
+<style>
+/* CHANGED: Locutorium index hero — Cividis waveform + CTA hover states
+   WHY: Match Studio orientation buttons without pulling extension CSS into Jekyll */
+@keyframes loc-wave {
+  0%, 100% { height: 22%; opacity: 0.55; }
+  50%      { height: var(--pk, 70%); opacity: 0.95; }
+}
+.loc-hero-cta-primary:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 22px rgba(255, 213, 79, 0.38) !important;
+}
+.loc-hero-cta-secondary:hover {
+  transform: translateY(-1px) !important;
+  border-color: rgba(255, 213, 79, 0.55) !important;
+  background: rgba(36, 26, 74, 0.85) !important;
+  color: #ffd54f !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .loc-hero-wave span { animation: none !important; height: var(--pk, 50%) !important; }
+}
+@media (max-width: 560px) {
+  .loc-hero-actions { flex-direction: column !important; align-items: stretch !important; }
+  .loc-hero-cta-primary, .loc-hero-cta-secondary { justify-content: center !important; text-align: center !important; }
+}
+</style>
 
-<!-- ── Featured methodology teaser ──────────────────────────────── -->
-<div style="margin: 1.25rem 0 2.5rem; padding: 1.1rem 1.4rem;
-            border: 1px solid #1e2a3a; border-left: 3px solid #00d4ff;
-            border-radius: 10px; background: #080d14;">
-  <p style="color: #7a9ab8; font-size: 0.72rem; font-family: Monaco, monospace;
-            text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 0.5rem;">
-    Featured &mdash; Understanding My OSINT Methodology
+<div style="margin: 1.25rem 0 2.25rem; padding: 1.4rem 1.5rem 1.35rem;
+            border: 1px solid #8a6f1a;
+            border-radius: 14px;
+            background:
+              radial-gradient(130% 140% at 0% 0%, rgba(255, 213, 79, 0.12), transparent 58%),
+              radial-gradient(90% 120% at 100% 100%, rgba(29, 31, 110, 0.55), transparent 55%),
+              linear-gradient(165deg, #1d1f6e 0%, #241a4a 42%, #12001f 100%);
+            box-shadow: 0 8px 28px rgba(255, 213, 79, 0.08), 0 2px 0 rgba(255, 213, 79, 0.06) inset;">
+
+  <p style="margin: 0 0 0.45rem; color: #c9a63d; font-family: Monaco, monospace;
+            font-size: 0.7rem; font-weight: bold; letter-spacing: 0.14em; text-transform: uppercase;">
+    Project &middot; Local-first voice notes
   </p>
-  <p style="color: #9ab8d0; font-size: 0.88rem; font-family: Monaco, monospace;
-            line-height: 1.65; margin: 0;">
-    Before reading reports, learn how I verify information using a
-    standardized OSINT protocol. This is the framework that makes every 
-    claim verifiable &mdash; reproducible steps and 
-    scored sources.
+
+  <h2 style="margin: 0 0 0.35rem; color: #e8e6f0; font-family: Monaco, monospace;
+             font-size: clamp(1.35rem, 3.5vw, 1.85rem); letter-spacing: -0.02em; font-weight: bold;">
+    Locutorium
+  </h2>
+
+  <p style="margin: 0 0 0.75rem; color: #ffd54f; font-family: Monaco, monospace;
+            font-size: 1.02rem; letter-spacing: -0.01em;">
+    Give your voice <span style="color: #e8e6f0;">a character.</span>
+  </p>
+
+  <p style="margin: 0 0 1rem; color: #a8a4c0; font-family: Monaco, monospace;
+            font-size: 0.86rem; line-height: 1.65; max-width: 58ch;">
+    Privacy-first Design Studio that runs entirely in your browser &mdash; design a look and a voice,
+    record with a live preview, edit captions on a timeline, bake, and download an MP4.
+    Nothing leaves your machine until you choose to share.
+  </p>
+
+  <!-- Decorative waveform (Studio hub motif) -->
+  <div class="loc-hero-wave" aria-hidden="true"
+       style="display: flex; align-items: flex-end; gap: 3px; height: 28px; margin: 0 0 1.15rem;">
+    <span style="width: 4px; border-radius: 2px; background: linear-gradient(180deg, #ffd54f, #8a6f1a); animation: loc-wave 1.6s ease-in-out infinite; animation-delay: 0s; --pk: 38%;"></span>
+    <span style="width: 4px; border-radius: 2px; background: linear-gradient(180deg, #ffd54f, #8a6f1a); animation: loc-wave 1.6s ease-in-out infinite; animation-delay: .10s; --pk: 72%;"></span>
+    <span style="width: 4px; border-radius: 2px; background: linear-gradient(180deg, #ffd54f, #8a6f1a); animation: loc-wave 1.6s ease-in-out infinite; animation-delay: .20s; --pk: 100%;"></span>
+    <span style="width: 4px; border-radius: 2px; background: linear-gradient(180deg, #ffd54f, #8a6f1a); animation: loc-wave 1.6s ease-in-out infinite; animation-delay: .05s; --pk: 58%;"></span>
+    <span style="width: 4px; border-radius: 2px; background: linear-gradient(180deg, #ffd54f, #8a6f1a); animation: loc-wave 1.6s ease-in-out infinite; animation-delay: .15s; --pk: 88%;"></span>
+    <span style="width: 4px; border-radius: 2px; background: linear-gradient(180deg, #ffd54f, #8a6f1a); animation: loc-wave 1.6s ease-in-out infinite; animation-delay: .25s; --pk: 45%;"></span>
+    <span style="width: 4px; border-radius: 2px; background: linear-gradient(180deg, #ffd54f, #8a6f1a); animation: loc-wave 1.6s ease-in-out infinite; animation-delay: .08s; --pk: 66%;"></span>
+    <span style="width: 4px; border-radius: 2px; background: linear-gradient(180deg, #ffd54f, #8a6f1a); animation: loc-wave 1.6s ease-in-out infinite; animation-delay: .18s; --pk: 32%;"></span>
+  </div>
+
+  <div class="loc-hero-actions" style="display: flex; flex-wrap: wrap; gap: 0.65rem; align-items: center;">
+    <!-- Primary CTA — amber bake-button language from Studio -->
+    <a class="loc-hero-cta-primary"
+       href="https://bra-khet.github.io/locutorium/"
+       style="display: inline-flex; align-items: center; gap: 0.4rem;
+              padding: 0.72rem 1.35rem; border-radius: 999px; text-decoration: none;
+              font-family: Monaco, monospace; font-weight: bold; font-size: 0.9rem;
+              color: #12001f;
+              background: linear-gradient(180deg, #ffd54f 0%, #d4a020 100%);
+              border: 1px solid #8a6f1a;
+              box-shadow: 0 2px 12px rgba(255, 213, 79, 0.22);
+              transition: transform 0.08s ease, box-shadow 0.15s ease;">
+      Open Locutorium &#8594;
+    </a>
+    <!-- Secondary — indigo outline chip (nav/secondary Studio language) -->
+    <a class="loc-hero-cta-secondary"
+       href="https://bra-khet.github.io/locutorium/design-studio/"
+       style="display: inline-flex; align-items: center; gap: 0.4rem;
+              padding: 0.68rem 1.15rem; border-radius: 999px; text-decoration: none;
+              font-family: Monaco, monospace; font-weight: bold; font-size: 0.85rem;
+              color: #e8e6f0;
+              background: rgba(10, 0, 20, 0.42);
+              border: 1px solid rgba(138, 134, 176, 0.38);
+              transition: transform 0.08s ease, border-color 0.12s ease, background 0.12s ease, color 0.12s ease;">
+      Design Studio
+    </a>
+    <a class="loc-hero-cta-secondary"
+       href="https://bra-khet.github.io/locutorium/tutorial/"
+       style="display: inline-flex; align-items: center; gap: 0.4rem;
+              padding: 0.68rem 1.15rem; border-radius: 999px; text-decoration: none;
+              font-family: Monaco, monospace; font-size: 0.82rem;
+              color: #8a86b0;
+              background: transparent;
+              border: 1px solid rgba(138, 134, 176, 0.22);
+              transition: transform 0.08s ease, border-color 0.12s ease, background 0.12s ease, color 0.12s ease;">
+      Field Guide
+    </a>
+  </div>
+
+  <p style="margin: 0.9rem 0 0; color: #8a86b0; font-family: Monaco, monospace;
+            font-size: 0.72rem; letter-spacing: 0.03em;">
+    Chromium browsers &middot; no install for the hosted Studio &middot; v6.1.0
   </p>
 </div>
 
@@ -120,7 +209,7 @@ title: "|0⟩"
 
 <!-- Site freshness note -->
 <p style="color: #556677; font-size: 0.7rem; font-family: Monaco, monospace; text-align: center; margin: 0 0 1rem; letter-spacing: 0.03em;">
-  Site curated June 2026 • Core research &amp; OSINT Protocol stay at top (visual weight reduced) • Time-bound &amp; reference material → <a href="/archive" style="color:#7a9ab8; text-decoration:none;">Archive</a>
+  Site curated July 2026 • Locutorium project hero at top • Core research below • OSINT Protocol after reports • Time-bound material → <a href="/archive" style="color:#7a9ab8; text-decoration:none;">Archive</a>
 </p>
 
 <h3 style="color: #00ff5d; margin-top: 1rem; font-family: Monaco, monospace; letter-spacing: -0.02em;">
@@ -243,15 +332,40 @@ title: "|0⟩"
 
 </div>
 
+<!-- ════════════════════════════════════════════════════════════════
+     OSINT PROTOCOL — moved below Core Research (July 2026).
+     Was top-of-page feature CTA; Locutorium now holds that slot.
+     Update about.md if promoted status or link text changes.
+════════════════════════════════════════════════════════════════ -->
+<div style="margin: 2rem 0 0.5rem; text-align: center;">
+  <a href="/osint-protocol"
+     style="display: inline-block; padding: 0.65rem 1.5rem;
+            background: #0a1f2e; color: #00d4ff; font-family: Monaco, monospace; font-weight: bold;
+            font-size: 0.95rem; border-radius: 8px; text-decoration: none;
+            border: 1px solid rgba(0,212,255,0.45);
+            letter-spacing: -0.01em;
+            box-shadow: 0 2px 12px rgba(0,212,255,0.12);
+            transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;"
+     onmouseover="this.style.boxShadow='0 4px 18px rgba(0,212,255,0.28)';this.style.borderColor='#00d4ff';this.style.transform='translateY(-1px)';"
+     onmouseout="this.style.boxShadow='0 2px 12px rgba(0,212,255,0.12)';this.style.borderColor='rgba(0,212,255,0.45)';this.style.transform='translateY(0)';">
+    &#128373;&#65039;&#8205;&#9794;&#65039; OSINT Protocol v2.0 &nbsp;&nbsp;<span style="font-weight: normal; font-size: 0.8rem; opacity: 0.75;">explainer &amp; reference</span>
+  </a>
+</div>
 
-
-
-
-
-
-
-
-
+<div style="margin: 1rem 0 0.5rem; padding: 1.1rem 1.4rem;
+            border: 1px solid #1e2a3a; border-left: 3px solid #00d4ff;
+            border-radius: 10px; background: #080d14;">
+  <p style="color: #7a9ab8; font-size: 0.72rem; font-family: Monaco, monospace;
+            text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 0.5rem;">
+    Methodology &mdash; Understanding My OSINT Protocol
+  </p>
+  <p style="color: #9ab8d0; font-size: 0.88rem; font-family: Monaco, monospace;
+            line-height: 1.65; margin: 0;">
+    Before (or after) reading reports, learn how I verify information using a
+    standardized OSINT protocol. Reproducible steps and scored sources make every
+    claim verifiable.
+  </p>
+</div>
 
 <!-- ── Archive teaser (time-bound + personal references; see /archive for full list with hard links) -->
 <div style="margin-top: 2rem; padding: 1rem 1.1rem; border: 1px solid #222a38; border-radius: 10px; background: #0a0f18;">

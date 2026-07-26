@@ -28,6 +28,10 @@ title: bra-khet
   ║    #cc44ff  Anthropic Mythos / AGI neurons                       ║
   ║    #00e0d0  Project Glasswing (glasswing butterfly teal)         ║
   ║    #00f0ff  Valve SteamGPT                                       ║
+  ║    Locutorium (Cividis indigo→amber, product surface):           ║
+  ║      deep #12001f · panel #1d1f6e · raised #241a4a                ║
+  ║      amber #ffd54f / action #d4a020 / edge #8a6f1a                ║
+  ║      indigo muted #8a86b0 · text #e8e6f0                          ║
   ╚═══════════════════════════════════════════════════════════════════╝
 -->
 
@@ -151,9 +155,39 @@ title: bra-khet
   <p style="color: #4a7a8a; font-size: 0.8rem; font-family: Monaco, monospace;
             line-height: 1.6; margin: 0;">
     I do my best to maintain this, but I'm only human.
-    Core references (OSINT Protocol, timeless research) stay prominent; time-bound material and personal references live in the Archive. AI helps as much as possible.
+    Locutorium is the featured project on the index; timeless research stays prominent;
+    OSINT Protocol sits with methodology after the report list; time-bound material lives in the Archive.
   </p>
 
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     FEATURED PROJECT — Locutorium (sync with index.md hero)
+════════════════════════════════════════════════════════════════ -->
+<div style="margin: 0 0 2rem; padding: 1.1rem 1.35rem;
+            border: 1px solid #8a6f1a; border-left: 3px solid #ffd54f;
+            border-radius: 12px;
+            background: linear-gradient(165deg, #1d1f6e 0%, #241a4a 50%, #12001f 100%);">
+  <p style="margin: 0 0 0.35rem; color: #c9a63d; font-family: Monaco, monospace;
+            font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;">
+    Featured project
+  </p>
+  <p style="margin: 0 0 0.45rem;">
+    <a href="https://bra-khet.github.io/locutorium/"
+       style="color: #ffd54f; font-weight: bold; font-family: Monaco, monospace;
+              font-size: 1rem; text-decoration: none;">
+      Locutorium
+    </a>
+    <span style="color: #8a86b0; font-family: Monaco, monospace; font-size: 0.8rem;">
+      &mdash; privacy-first voice-note Design Studio (browser-only)
+    </span>
+  </p>
+  <p style="margin: 0; color: #a8a4c0; font-family: Monaco, monospace; font-size: 0.78rem; line-height: 1.55;">
+    Design · record · caption · bake · download. Hosted at
+    <a href="https://bra-khet.github.io/locutorium/" style="color: #ffd54f; text-decoration: none;">/locutorium/</a>
+    · <a href="https://bra-khet.github.io/locutorium/design-studio/" style="color: #8a86b0; text-decoration: none;">Design Studio</a>
+    · <a href="https://github.com/bra-khet/locutorium" style="color: #8a86b0; text-decoration: none;">repo</a>
+  </p>
 </div>
 
 <!-- ════════════════════════════════════════════════════════════════
@@ -169,20 +203,6 @@ title: bra-khet
 </div>
 
 <ul style="list-style: none; padding: 0; margin: 0 0 1rem;">
-
-  <!-- OSINT Protocol (kept prominent, reduced visual weight on index) -->
-  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
-             border: 1px solid #1e2a3a; border-left: 3px solid #00d4ff;
-             border-radius: 8px; background: #060d14;">
-    <a href="/osint-protocol"
-       style="color: #00d4ff; font-weight: bold; font-family: Monaco, monospace;
-              font-size: 0.88rem; text-decoration: none;">
-      &#128373;&#65039;&#8205;&#9794;&#65039; OSINT Protocol v2.0
-    </a>
-    <span style="color: #3a6070; font-family: Monaco, monospace; font-size: 0.78rem;">
-      &mdash; Methodology explainer &amp; reference. How every claim is verified.
-    </span>
-  </li>
 
   <!-- Synth- vs. Tech- — #b06cff (evergreen) -->
   <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
@@ -244,6 +264,20 @@ title: bra-khet
     </a>
     <span style="color: #1a5050; font-family: Monaco, monospace; font-size: 0.78rem;">
       &mdash; v1.0 · April 2026 · 10T parameters, autonomous zero-days, $2T market crash, RSP v3.1, model welfare.
+    </span>
+  </li>
+
+  <!-- OSINT Protocol (below report series on index; methodology reference) -->
+  <li style="margin-bottom: 0.6rem; padding: 0.7rem 1rem;
+             border: 1px solid #1e2a3a; border-left: 3px solid #00d4ff;
+             border-radius: 8px; background: #060d14;">
+    <a href="/osint-protocol"
+       style="color: #00d4ff; font-weight: bold; font-family: Monaco, monospace;
+              font-size: 0.88rem; text-decoration: none;">
+      &#128373;&#65039;&#8205;&#9794;&#65039; OSINT Protocol v2.0
+    </a>
+    <span style="color: #3a6070; font-family: Monaco, monospace; font-size: 0.78rem;">
+      &mdash; Methodology explainer &amp; reference. How every claim is verified.
     </span>
   </li>
 
