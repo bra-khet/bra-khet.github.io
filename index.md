@@ -68,7 +68,7 @@ title: "|0⟩"
 
   <h2 style="margin: 0 0 0.35rem; color: #e8e6f0; font-family: Monaco, monospace;
              font-size: clamp(1.35rem, 3.5vw, 1.85rem); letter-spacing: -0.02em; font-weight: bold;">
-    Locutorium
+    The Locutorium
   </h2>
 
   <p style="margin: 0 0 0.75rem; color: #ffd54f; font-family: Monaco, monospace;
@@ -78,10 +78,15 @@ title: "|0⟩"
 
   <p style="margin: 0 0 1rem; color: #a8a4c0; font-family: Monaco, monospace;
             font-size: 0.86rem; line-height: 1.65; max-width: 58ch;">
-    Privacy-first Design Studio that runs entirely in your browser &mdash; design a look and a voice,
-    record with a live preview, edit captions on a timeline, bake, and download an MP4.
-    Nothing leaves your machine until you choose to share.
+    Privacy-first &mdash; produce an audio-visual clip with a look and voice,
+    anonymized with fully-customizable voice filters.
+  
   </p>
+
+  <p style="margin: 0 0 1rem; color: #a8a4c0; font-family: Monaco, monospace;
+            font-size: 0.86rem; line-height: 1.65; max-width: 62ch;">
+    No data leaves your machine until you choose to share it.
+   </p>
 
   <!-- Decorative waveform (Studio hub motif) -->
   <div class="loc-hero-wave" aria-hidden="true"
@@ -108,7 +113,7 @@ title: "|0⟩"
               border: 1px solid #8a6f1a;
               box-shadow: 0 2px 12px rgba(255, 213, 79, 0.22);
               transition: transform 0.08s ease, box-shadow 0.15s ease;">
-      Open Locutorium &#8594;
+      Discover the project... &#8594;
     </a>
     <!-- Secondary — indigo outline chip (nav/secondary Studio language) -->
     <a class="loc-hero-cta-secondary"
@@ -120,7 +125,7 @@ title: "|0⟩"
               background: rgba(10, 0, 20, 0.42);
               border: 1px solid rgba(138, 134, 176, 0.38);
               transition: transform 0.08s ease, border-color 0.12s ease, background 0.12s ease, color 0.12s ease;">
-      Design Studio
+      Locutorium Design Studio
     </a>
     <a class="loc-hero-cta-secondary"
        href="https://bra-khet.github.io/locutorium/tutorial/"
@@ -131,7 +136,7 @@ title: "|0⟩"
               background: transparent;
               border: 1px solid rgba(138, 134, 176, 0.22);
               transition: transform 0.08s ease, border-color 0.12s ease, background 0.12s ease, color 0.12s ease;">
-      Field Guide
+      Field Guide Tutorial
     </a>
   </div>
 
